@@ -6,13 +6,13 @@
 //  Copyright (c) 2013年 SSC. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "TopViewController.h"
 
-@interface ViewController ()
+@interface TopViewController ()
 
 @end
 
-@implementation ViewController
+@implementation TopViewController
 
 - (void)viewDidLoad
 {
@@ -107,14 +107,13 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    [picker.delegate performSelector:@selector(prepareForEditor) withObject:nil];
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     if(picker.sourceType == UIImagePickerControllerSourceTypeCamera){
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
     }
     __block __weak UIImagePickerController* _picker = picker;
-    [picker dismissViewControllerAnimated:NO completion:^{
-        [_picker.delegate performSelector:@selector(prepareForEditor) withObject:nil];
-    }];
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -126,7 +125,7 @@
 {
     EditorViewController* controller = [[EditorViewController alloc] init];
     controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self presentViewController:controller animated:YES completion:nil];    
+    [self.navigationController pushViewController:controller animated:NO];
 }
 
 - (void)didReceiveMemoryWarning

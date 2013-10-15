@@ -15,7 +15,7 @@
 #import "UISettingsButton.h"
 #import "EditorViewController.h"
 
-@interface ViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface TopViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 {
     UIImageView* defaultImageView;
     UIImageView* bgImageView;
