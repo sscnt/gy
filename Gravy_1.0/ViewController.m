@@ -61,7 +61,7 @@
     label.numberOfLines = 0;
     [label setY:[UIScreen screenSize].height - 150.0f];
     [self.view addSubview:label];
-    
+
     if([UIScreen height] >= 568){
         defaultImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default-568h.png"]];
     }else{
@@ -111,13 +111,22 @@
     if(picker.sourceType == UIImagePickerControllerSourceTypeCamera){
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
     }
-    
-    [picker dismissViewControllerAnimated:YES completion:nil];
+    __block __weak UIImagePickerController* _picker = picker;
+    [picker dismissViewControllerAnimated:NO completion:^{
+        [_picker.delegate performSelector:@selector(prepareForEditor) withObject:nil];
+    }];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)prepareForEditor
+{
+    EditorViewController* controller = [[EditorViewController alloc] init];
+    controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentViewController:controller animated:YES completion:nil];    
 }
 
 - (void)didReceiveMemoryWarning

@@ -13,14 +13,18 @@
 #import "UIDockButtonCamera.h"
 #import "UIDockButtonPhotos.h"
 #import "UISettingsButton.h"
+#import "EditorViewController.h"
 
 @interface ViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 {
     UIImageView* defaultImageView;
     UIImageView* bgImageView;
+    UIImageView* editorBgView;
 }
 
 - (void)didClickCameraBtn;
 - (void)didClickPhotosBtn;
+
+- (void)prepareForEditor;
 
 @end
