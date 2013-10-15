@@ -41,8 +41,15 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>rounded-mplus-1p-heavy.ttf</string>
+		<string>rounded-mplus-1p-light.ttf</string>
+		<string>rounded-mplus-1p-bold.ttf</string>
+		<string>rounded-mplus-1p-medium.ttf</string>
+		<string>rounded-mplus-1p-regular.ttf</string>
+		<string>rounded-mplus-1p-thin.ttf</string>
 	</array>
 </dict>
 </plist>

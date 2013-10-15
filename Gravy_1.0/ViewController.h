@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UIScreen+Gravy.h"
+#import "UIView+Gravy.h"
+#import "UIDockView.h"
+#import "UIDockButtonCamera.h"
+#import "UIDockButtonPhotos.h"
 
 @interface ViewController : UIViewController
+{
+    UIImageView* defaultImageView;
+    UIImageView* bgImageView;
+}
 
 @end
