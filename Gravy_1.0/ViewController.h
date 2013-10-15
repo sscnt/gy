@@ -12,11 +12,15 @@
 #import "UIDockView.h"
 #import "UIDockButtonCamera.h"
 #import "UIDockButtonPhotos.h"
+#import "UISettingsButton.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 {
     UIImageView* defaultImageView;
     UIImageView* bgImageView;
 }
+
+- (void)didClickCameraBtn;
+- (void)didClickPhotosBtn;
 
 @end

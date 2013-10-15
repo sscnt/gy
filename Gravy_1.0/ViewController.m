@@ -36,12 +36,19 @@
     //////////// camera button
     UIDockButtonCamera* cameraBtn = [[UIDockButtonCamera alloc] init];
     [cameraBtn setY:[UIScreen screenSize].height - 45.0f];
+    [cameraBtn addTarget:self action:@selector(didClickCameraBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:cameraBtn];
     //////////// photos button
     UIDockButtonPhotos* photoBtn = [[UIDockButtonPhotos alloc] init];
     [photoBtn setY:[UIScreen screenSize].height - 45.0f];
     [photoBtn setX:160.0f];
+    [photoBtn addTarget:self action:@selector(didClickPhotosBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:photoBtn];
+    //////////// settings button
+    UISettingsButton* settingsBtn = [[UISettingsButton alloc] init];
+    [settingsBtn setX:10.0f];
+    [settingsBtn setY:10.0f];
+    [self.view addSubview:settingsBtn];
     
     //////// labels
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 20.0f)];
@@ -70,6 +77,47 @@
 
                      }];
 
+}
+
+#pragma mark button events
+
+- (void)didClickCameraBtn
+{
+    BOOL b = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+    if(!b){
+        return;
+    }
+    UIImagePickerController *pickerController = [[UIImagePickerController alloc] init];
+    pickerController.delegate = self;
+    [pickerController setSourceType:UIImagePickerControllerSourceTypeCamera];
+    pickerController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentViewController:pickerController animated:YES completion:nil];
+}
+
+- (void)didClickPhotosBtn
+{
+    UIImagePickerController *pickerController = [[UIImagePickerController alloc] init];
+    pickerController.delegate = self;
+    [pickerController setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    pickerController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentViewController:pickerController animated:YES completion:nil];
+}
+
+#pragma mark delegates
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    if(picker.sourceType == UIImagePickerControllerSourceTypeCamera){
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+    }
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning
