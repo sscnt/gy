@@ -107,11 +107,11 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    [picker.delegate performSelector:@selector(prepareForEditor) withObject:nil];
-    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    originalImage = [info objectForKey:UIImagePickerControllerOriginalImage];
     if(picker.sourceType == UIImagePickerControllerSourceTypeCamera){
-        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+        UIImageWriteToSavedPhotosAlbum(originalImage, nil, nil, nil);
     }
+    [picker.delegate performSelector:@selector(prepareForEditor) withObject:nil];
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -123,6 +123,7 @@
 - (void)prepareForEditor
 {
     EditorViewController* controller = [[EditorViewController alloc] init];
+    controller.originalImage = originalImage;
     controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self.navigationController pushViewController:controller animated:NO];
 }
