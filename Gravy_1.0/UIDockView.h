@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, UIDockViewType){
+    UIDockViewTypeLight = 1,
+    UIDockViewTypeDark
+};
+
 @interface UIDockView : UIView
+
+- (id) init:(UIDockViewType)type;
 
 @end

@@ -59,6 +59,14 @@
 		5802E820180C2B5C00AA2227 /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5802E81D180C2B5C00AA2227 /* bg.jpg */; };
 		5802E821180C2B5C00AA2227 /* bg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5802E81E180C2B5C00AA2227 /* bg@2x.jpg */; };
 		5802E825180C2E5E00AA2227 /* UIScreen+Gravy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5802E824180C2E5E00AA2227 /* UIScreen+Gravy.m */; };
+		58F471A5180E5D7800C64E46 /* bottomEditorBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471A3180E5D7800C64E46 /* bottomEditorBg.png */; };
+		58F471A6180E5D7800C64E46 /* bottomEditorBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471A4180E5D7800C64E46 /* bottomEditorBg@2x.png */; };
+		58F471B5180E74B000C64E46 /* UIDockButtonBack.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F471B4180E74B000C64E46 /* UIDockButtonBack.m */; };
+		58F471B8180E74ED00C64E46 /* UIDockButtonNext.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F471B7180E74ED00C64E46 /* UIDockButtonNext.m */; };
+		58F471BD180E7AFF00C64E46 /* icon_next.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471BB180E7AFF00C64E46 /* icon_next.png */; };
+		58F471BE180E7AFF00C64E46 /* icon_next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471BC180E7AFF00C64E46 /* icon_next@2x.png */; };
+		58F471C1180E7B0500C64E46 /* icon_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471BF180E7B0500C64E46 /* icon_back.png */; };
+		58F471C2180E7B0500C64E46 /* icon_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471C0180E7B0500C64E46 /* icon_back@2x.png */; };
 		58F7911E180D65E500968648 /* editor_bg-568h@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58F7911B180D65E500968648 /* editor_bg-568h@2x.jpg */; };
 		58F7911F180D65E500968648 /* editor_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58F7911C180D65E500968648 /* editor_bg.jpg */; };
 		58F79120180D65E500968648 /* editor_bg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58F7911D180D65E500968648 /* editor_bg@2x.jpg */; };
@@ -145,6 +153,16 @@
 		5802E81E180C2B5C00AA2227 /* bg@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg@2x.jpg"; sourceTree = "<group>"; };
 		5802E823180C2E5E00AA2227 /* UIScreen+Gravy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScreen+Gravy.h"; sourceTree = "<group>"; };
 		5802E824180C2E5E00AA2227 /* UIScreen+Gravy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScreen+Gravy.m"; sourceTree = "<group>"; };
+		58F471A3180E5D7800C64E46 /* bottomEditorBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottomEditorBg.png; sourceTree = "<group>"; };
+		58F471A4180E5D7800C64E46 /* bottomEditorBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottomEditorBg@2x.png"; sourceTree = "<group>"; };
+		58F471B3180E74B000C64E46 /* UIDockButtonBack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDockButtonBack.h; sourceTree = "<group>"; };
+		58F471B4180E74B000C64E46 /* UIDockButtonBack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIDockButtonBack.m; sourceTree = "<group>"; };
+		58F471B6180E74ED00C64E46 /* UIDockButtonNext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDockButtonNext.h; sourceTree = "<group>"; };
+		58F471B7180E74ED00C64E46 /* UIDockButtonNext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIDockButtonNext.m; sourceTree = "<group>"; };
+		58F471BB180E7AFF00C64E46 /* icon_next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_next.png; sourceTree = "<group>"; };
+		58F471BC180E7AFF00C64E46 /* icon_next@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_next@2x.png"; sourceTree = "<group>"; };
+		58F471BF180E7B0500C64E46 /* icon_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_back.png; sourceTree = "<group>"; };
+		58F471C0180E7B0500C64E46 /* icon_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_back@2x.png"; sourceTree = "<group>"; };
 		58F7911B180D65E500968648 /* editor_bg-568h@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "editor_bg-568h@2x.jpg"; sourceTree = "<group>"; };
 		58F7911C180D65E500968648 /* editor_bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = editor_bg.jpg; sourceTree = "<group>"; };
 		58F7911D180D65E500968648 /* editor_bg@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "editor_bg@2x.jpg"; sourceTree = "<group>"; };
@@ -200,6 +218,10 @@
 				580032B8180D28840021F73C /* UIDockButtonCamera.m */,
 				580032BA180D2C1C0021F73C /* UIDockButtonPhotos.h */,
 				580032BB180D2C1C0021F73C /* UIDockButtonPhotos.m */,
+				58F471B3180E74B000C64E46 /* UIDockButtonBack.h */,
+				58F471B4180E74B000C64E46 /* UIDockButtonBack.m */,
+				58F471B6180E74ED00C64E46 /* UIDockButtonNext.h */,
+				58F471B7180E74ED00C64E46 /* UIDockButtonNext.m */,
 				580032C1180D34490021F73C /* UISettingsButton.h */,
 				580032C2180D34490021F73C /* UISettingsButton.m */,
 			);
@@ -330,6 +352,12 @@
 		5802E81B180C2A2F00AA2227 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				58F471BF180E7B0500C64E46 /* icon_back.png */,
+				58F471C0180E7B0500C64E46 /* icon_back@2x.png */,
+				58F471BB180E7AFF00C64E46 /* icon_next.png */,
+				58F471BC180E7AFF00C64E46 /* icon_next@2x.png */,
+				58F471A3180E5D7800C64E46 /* bottomEditorBg.png */,
+				58F471A4180E5D7800C64E46 /* bottomEditorBg@2x.png */,
 				580032BD180D34310021F73C /* icon_settings.png */,
 				580032BE180D34310021F73C /* icon_settings@2x.png */,
 				580032AB180D275F0021F73C /* icon_camera.png */,
@@ -438,6 +466,7 @@
 			files = (
 				5802E814180C22F900AA2227 /* Localizable.strings in Resources */,
 				5802E7F9180C0F8500AA2227 /* Default@2x.png in Resources */,
+				58F471A5180E5D7800C64E46 /* bottomEditorBg.png in Resources */,
 				5802E80A180C0F9800AA2227 /* icon-100.png in Resources */,
 				58F7911F180D65E500968648 /* editor_bg.jpg in Resources */,
 				5802E805180C0F9800AA2227 /* icon-50.png in Resources */,
@@ -448,12 +477,15 @@
 				580032A8180D16FD0021F73C /* rounded-mplus-1p-medium.ttf in Resources */,
 				5802E808180C0F9800AA2227 /* icon-72.png in Resources */,
 				58F7911E180D65E500968648 /* editor_bg-568h@2x.jpg in Resources */,
+				58F471A6180E5D7800C64E46 /* bottomEditorBg@2x.png in Resources */,
 				5802E80B180C0F9800AA2227 /* icon-114.png in Resources */,
 				580032BF180D34310021F73C /* icon_settings.png in Resources */,
 				5802E807180C0F9800AA2227 /* icon-58.png in Resources */,
 				580032B1180D275F0021F73C /* icon_photos.png in Resources */,
 				5802E7F7180C0F8500AA2227 /* Default-568h@2x.png in Resources */,
+				58F471BE180E7AFF00C64E46 /* icon_next@2x.png in Resources */,
 				580032A5180D16FD0021F73C /* rounded-mplus-1p-bold.ttf in Resources */,
+				58F471C1180E7B0500C64E46 /* icon_back.png in Resources */,
 				5802E804180C0F9800AA2227 /* icon-29.png in Resources */,
 				5800329C180D134D0021F73C /* bottomBg.png in Resources */,
 				580032A6180D16FD0021F73C /* rounded-mplus-1p-heavy.ttf in Resources */,
@@ -463,6 +495,7 @@
 				580032B2180D275F0021F73C /* icon_photos@2x.png in Resources */,
 				5802E809180C0F9800AA2227 /* icon-80.png in Resources */,
 				580032A9180D16FD0021F73C /* rounded-mplus-1p-regular.ttf in Resources */,
+				58F471C2180E7B0500C64E46 /* icon_back@2x.png in Resources */,
 				5802E7D2180C0F1400AA2227 /* Main.storyboard in Resources */,
 				5802E7F8180C0F8500AA2227 /* Default.png in Resources */,
 				5802E806180C0F9800AA2227 /* icon-57.png in Resources */,
@@ -473,6 +506,7 @@
 				580032AA180D16FD0021F73C /* rounded-mplus-1p-thin.ttf in Resources */,
 				580032C0180D34310021F73C /* icon_settings@2x.png in Resources */,
 				580032A7180D16FD0021F73C /* rounded-mplus-1p-light.ttf in Resources */,
+				58F471BD180E7AFF00C64E46 /* icon_next.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,6 +537,8 @@
 				58003299180D10CE0021F73C /* UIView+Gravy.m in Sources */,
 				58003296180D10B10021F73C /* UIDockView.m in Sources */,
 				580032BC180D2C1C0021F73C /* UIDockButtonPhotos.m in Sources */,
+				58F471B5180E74B000C64E46 /* UIDockButtonBack.m in Sources */,
+				58F471B8180E74ED00C64E46 /* UIDockButtonNext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -30,9 +30,9 @@
     
     //// layout subviews
     //////// bottom buttons
-    UIDockView* bottomButtonsView  = [[UIDockView alloc] init];
-    [bottomButtonsView setY:[UIScreen screenSize].height - 50.0f];
-    [self.view addSubview:bottomButtonsView];
+    UIDockView* dockView  = [[UIDockView alloc] init:UIDockViewTypeLight];
+    [dockView setY:[UIScreen screenSize].height - 50.0f];
+    [self.view addSubview:dockView];
     //////////// camera button
     UIDockButtonCamera* cameraBtn = [[UIDockButtonCamera alloc] init];
     [cameraBtn setY:[UIScreen screenSize].height - 45.0f];
@@ -112,7 +112,6 @@
     if(picker.sourceType == UIImagePickerControllerSourceTypeCamera){
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
     }
-    __block __weak UIImagePickerController* _picker = picker;
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 

@@ -30,8 +30,9 @@
             [self setTitleEdgeInsets:UIEdgeInsetsMake(2.0f, 0.0f, 0.0f, -6.0f)];
             
         }
-        [self setTitleColor:[UIColor colorWithWhite:1.0f alpha:0.75f] forState:UIControlStateNormal];
+        [self setTitleColor:[UIColor colorWithWhite:1.0f alpha:0.85f] forState:UIControlStateNormal];
         [self setTitleColor:[UIColor colorWithWhite:1.0f alpha:0.40f] forState:UIControlStateHighlighted];
+        [self setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
     }
     return self;
 }

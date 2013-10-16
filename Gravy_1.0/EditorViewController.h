@@ -10,10 +10,15 @@
 #import "UIScreen+Gravy.h"
 #import "UIView+Gravy.h"
 #import "UIDockView.h"
+#import "UIDockButtonBack.h"
+#import "UIDockButtonNext.h"
 
 @interface EditorViewController : UIViewController
 {
     UIImageView* bgImageView;
 }
+
+- (void)didClickNextButton;
+- (void)didClickBackButton;
 
 @end

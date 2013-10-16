@@ -10,30 +10,21 @@
 
 @implementation UIDockView
 
-- (id)init
+- (id)init:(UIDockViewType)type
 {
     CGRect rect = CGRectMake(0.0f, 0.0f, 320.0f, 50.0f);
-    return [self initWithFrame:rect];
-}
-
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-        [self setBackgroundColor:[UIColor clearColor]];
+    self = [super initWithFrame:rect];
+    [self setBackgroundColor:[UIColor clearColor]];
+    if(type == UIDockViewTypeLight){
         UIImageView* bgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bottomBg.png"]];
         [bgView setAlpha:0.9f];
         [self addSubview:bgView];
     }
+    else if(type == UIDockViewTypeDark){
+        UIImageView* bgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bottomEditorBg.png"]];
+        [self addSubview:bgView];
+    }
     return self;
 }
-
-
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-
 
 @end

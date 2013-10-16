@@ -38,9 +38,34 @@
     
     //// layout subviews
     //////// bottom buttons
-    UIDockView* bottomButtonsView  = [[UIDockView alloc] init];
-    [bottomButtonsView setY:[UIScreen screenSize].height - 50.0f];
-    [self.view addSubview:bottomButtonsView];
+    UIDockView* dockView  = [[UIDockView alloc] init:UIDockViewTypeDark];
+    [dockView setY:[UIScreen screenSize].height - 50.0f];
+    [dockView setAlpha:0.90f];
+    [self.view addSubview:dockView];
+    //////////// camera button
+    UIDockButtonBack* backBtn = [[UIDockButtonBack alloc] init];
+    [backBtn setY:[UIScreen screenSize].height - 45.0f];
+    [backBtn addTarget:self action:@selector(didClickBackButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:backBtn];
+    //////////// photos button
+    UIDockButtonNext* nextBtn = [[UIDockButtonNext alloc] init];
+    [nextBtn setY:[UIScreen screenSize].height - 45.0f];
+    [nextBtn setX:160.0f];
+    [nextBtn addTarget:self action:@selector(didClickNextButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:nextBtn];
+
+}
+
+#pragma mark events
+
+- (void)didClickNextButton
+{
+    
+}
+
+- (void)didClickBackButton
+{
+    
 }
 
 - (void)didReceiveMemoryWarning
