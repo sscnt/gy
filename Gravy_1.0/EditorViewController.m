@@ -70,23 +70,84 @@
     [nextBtn addTarget:self action:@selector(didClickNextButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:nextBtn];
     
-    // wrapper
+    [self layoutWhiteBalanceEditor];
+    [self layoutLevelsEditor];
+    [self layoutSaturationEditor];
+}
+
+#pragma mark layout
+
+- (void)layoutWhiteBalanceEditor
+{
     UIWrapperView* wrapper = [[UIWrapperView alloc] initWithFrame:self.view.bounds];
+    
+    // label
+    UIEditorTitleLabel* label = [[UIEditorTitleLabel alloc] initWithFrame:CGRectMake(0.0f, 30.0f, 320.0f, 20.0f)];
+    label.text = NSLocalizedString(@"White Balance", nil);
+    [wrapper addSubview:label];
     
     // place original image
     CGFloat imageHeight = self.originalImage.size.height * 320.0f / self.originalImage.size.width;
     CGFloat imageY = [UIScreen screenSize].height / 2.0f - imageHeight / 2.0f - 25.0f;
-    UIImageView* imageView = [[UIImageView alloc] initWithImage:self.originalImage];
-    imageView.bounds = CGRectInset(imageView.bounds, 0.0f, 8.0f);
-    imageView.layer.shadowColor = [UIColor blackColor].CGColor;
-    imageView.layer.shadowOffset = CGSizeMake(0, 0);
-    imageView.layer.shadowOpacity = 1;
-    imageView.layer.shadowRadius = 4.0;
-    [imageView setFrame:CGRectMake(0.0f, imageY, 320.0f, imageHeight)];
-    [wrapper addSubview:imageView];
+    whitebalanceImageView = [[UIImageView alloc] initWithImage:self.originalImage];
+    whitebalanceImageView.bounds = CGRectInset(whitebalanceImageView.bounds, 0.0f, 8.0f);
+    whitebalanceImageView.layer.shadowColor = [UIColor blackColor].CGColor;
+    whitebalanceImageView.layer.shadowOffset = CGSizeMake(0, 0);
+    whitebalanceImageView.layer.shadowOpacity = 1;
+    whitebalanceImageView.layer.shadowRadius = 4.0;
+    [whitebalanceImageView setFrame:CGRectMake(0.0f, imageY, 320.0f, imageHeight)];
+    [wrapper addSubview:whitebalanceImageView];
     
     [scrollView addSubview:wrapper];
+}
 
+- (void)layoutLevelsEditor
+{
+    UIWrapperView* wrapper = [[UIWrapperView alloc] initWithFrame:self.view.bounds];
+    
+    // label
+    UIEditorTitleLabel* label = [[UIEditorTitleLabel alloc] initWithFrame:CGRectMake(0.0f, 30.0f, 320.0f, 20.0f)];
+    label.text = NSLocalizedString(@"Levels", nil);
+    [wrapper addSubview:label];
+    
+    // place original image
+    CGFloat imageHeight = self.originalImage.size.height * 320.0f / self.originalImage.size.width;
+    CGFloat imageY = [UIScreen screenSize].height / 2.0f - imageHeight / 2.0f - 25.0f;
+    levelsImageView = [[UIImageView alloc] initWithImage:self.originalImage];
+    levelsImageView.bounds = CGRectInset(levelsImageView.bounds, 0.0f, 8.0f);
+    levelsImageView.layer.shadowColor = [UIColor blackColor].CGColor;
+    levelsImageView.layer.shadowOffset = CGSizeMake(0, 0);
+    levelsImageView.layer.shadowOpacity = 1;
+    levelsImageView.layer.shadowRadius = 4.0;
+    [levelsImageView setFrame:CGRectMake(0.0f, imageY, 320.0f, imageHeight)];
+    [wrapper addSubview:levelsImageView];
+    [wrapper setX:320.0f];
+    [scrollView addSubview:wrapper];
+    
+}
+
+- (void)layoutSaturationEditor
+{
+    UIWrapperView* wrapper = [[UIWrapperView alloc] initWithFrame:self.view.bounds];
+    
+    // label
+    UIEditorTitleLabel* label = [[UIEditorTitleLabel alloc] initWithFrame:CGRectMake(0.0f, 30.0f, 320.0f, 20.0f)];
+    label.text = NSLocalizedString(@"Saturation", nil);
+    [wrapper addSubview:label];
+    
+    // place original image
+    CGFloat imageHeight = self.originalImage.size.height * 320.0f / self.originalImage.size.width;
+    CGFloat imageY = [UIScreen screenSize].height / 2.0f - imageHeight / 2.0f - 25.0f;
+    saturationImageView = [[UIImageView alloc] initWithImage:self.originalImage];
+    saturationImageView.bounds = CGRectInset(saturationImageView.bounds, 0.0f, 8.0f);
+    saturationImageView.layer.shadowColor = [UIColor blackColor].CGColor;
+    saturationImageView.layer.shadowOffset = CGSizeMake(0, 0);
+    saturationImageView.layer.shadowOpacity = 1;
+    saturationImageView.layer.shadowRadius = 4.0;
+    [saturationImageView setFrame:CGRectMake(0.0f, imageY, 320.0f, imageHeight)];
+    [wrapper addSubview:saturationImageView];
+    [wrapper setX:640.0f];
+    [scrollView addSubview:wrapper];
 }
 
 #pragma mark events
@@ -109,7 +170,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
     
     // UIScrollViewのページ切替時イベント:UIPageControlの現在ページを切り替える処理
-    pageControl.currentPage = sender.contentOffset.x / 320.0f;
+    //pageControl.currentPage = sender.contentOffset.x / 320.0f;
 }
 
 - (void)changePageControl {

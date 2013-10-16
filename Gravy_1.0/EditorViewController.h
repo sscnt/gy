@@ -14,17 +14,25 @@
 #import "UIDockButtonBack.h"
 #import "UIDockButtonNext.h"
 #import "UIWrapperView.h"
+#import "UIEditorTitleLabel.h"
 
 @interface EditorViewController : UIViewController <UIScrollViewDelegate>
 {
     UIImageView* bgImageView;
     UIScrollView* scrollView;
     UIPageControl* pageControl;
+    UIImageView* whitebalanceImageView;
+    UIImageView* levelsImageView;
+    UIImageView* saturationImageView;
 }
 
 @property (nonatomic, strong) UIImage* originalImage;
 
 - (void)didClickNextButton;
 - (void)didClickBackButton;
+
+- (void)layoutWhiteBalanceEditor;
+- (void)layoutLevelsEditor;
+- (void)layoutSaturationEditor;
 
 @end

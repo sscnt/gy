@@ -60,6 +60,7 @@
 		5802E821180C2B5C00AA2227 /* bg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5802E81E180C2B5C00AA2227 /* bg@2x.jpg */; };
 		5802E825180C2E5E00AA2227 /* UIScreen+Gravy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5802E824180C2E5E00AA2227 /* UIScreen+Gravy.m */; };
 		5809B4FF180EB902007670D1 /* UIWrapperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5809B4FE180EB902007670D1 /* UIWrapperView.m */; };
+		5809B503180EBAD2007670D1 /* UIEditorTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5809B502180EBAD2007670D1 /* UIEditorTitleLabel.m */; };
 		58F471A5180E5D7800C64E46 /* bottomEditorBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471A3180E5D7800C64E46 /* bottomEditorBg.png */; };
 		58F471A6180E5D7800C64E46 /* bottomEditorBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471A4180E5D7800C64E46 /* bottomEditorBg@2x.png */; };
 		58F471B5180E74B000C64E46 /* UIDockButtonBack.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F471B4180E74B000C64E46 /* UIDockButtonBack.m */; };
@@ -156,6 +157,8 @@
 		5802E824180C2E5E00AA2227 /* UIScreen+Gravy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScreen+Gravy.m"; sourceTree = "<group>"; };
 		5809B4FD180EB902007670D1 /* UIWrapperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWrapperView.h; sourceTree = "<group>"; };
 		5809B4FE180EB902007670D1 /* UIWrapperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIWrapperView.m; sourceTree = "<group>"; };
+		5809B501180EBAD2007670D1 /* UIEditorTitleLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIEditorTitleLabel.h; sourceTree = "<group>"; };
+		5809B502180EBAD2007670D1 /* UIEditorTitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIEditorTitleLabel.m; sourceTree = "<group>"; };
 		58F471A3180E5D7800C64E46 /* bottomEditorBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottomEditorBg.png; sourceTree = "<group>"; };
 		58F471A4180E5D7800C64E46 /* bottomEditorBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottomEditorBg@2x.png"; sourceTree = "<group>"; };
 		58F471B3180E74B000C64E46 /* UIDockButtonBack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDockButtonBack.h; sourceTree = "<group>"; };
@@ -396,6 +399,8 @@
 			children = (
 				5809B4FD180EB902007670D1 /* UIWrapperView.h */,
 				5809B4FE180EB902007670D1 /* UIWrapperView.m */,
+				5809B501180EBAD2007670D1 /* UIEditorTitleLabel.h */,
+				5809B502180EBAD2007670D1 /* UIEditorTitleLabel.m */,
 			);
 			name = Editor;
 			sourceTree = "<group>";
@@ -544,6 +549,7 @@
 				58F79126180D6CCB00968648 /* RootViewController.m in Sources */,
 				5802E7CF180C0F1400AA2227 /* AppDelegate.m in Sources */,
 				58F79123180D696700968648 /* EditorViewController.m in Sources */,
+				5809B503180EBAD2007670D1 /* UIEditorTitleLabel.m in Sources */,
 				580032B9180D28840021F73C /* UIDockButtonCamera.m in Sources */,
 				580032C3180D34490021F73C /* UISettingsButton.m in Sources */,
 				5802E7CB180C0F1400AA2227 /* main.m in Sources */,
