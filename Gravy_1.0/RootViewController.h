@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UIFadeNavigationController.h"
 #import "TopViewController.h"
 
-@interface RootViewController : UINavigationController
+@interface RootViewController : UIFadeNavigationController
 
 @end

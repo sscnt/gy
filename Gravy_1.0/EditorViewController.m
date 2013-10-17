@@ -27,6 +27,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    state = EditorStateWhiteBalance;
     
     //// bg.png
     if([UIScreen height] >= 568){
@@ -43,13 +44,14 @@
     scrollView.contentSize = CGSizeMake(320.0f * 4.0f, self.view.bounds.size.height);
     scrollView.bounces = NO;
     scrollView.delegate = self;
-    scrollView.scrollEnabled = NO;
+    scrollView.showsHorizontalScrollIndicator = NO;
+    scrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:scrollView];
     //// page control
     pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0.0f, [UIScreen screenSize].height - 80.0f, 320.0f, 20.0f)];
     pageControl.numberOfPages = 4;
     pageControl.currentPage = 0;
-    [pageControl setAlpha:0.8f];
+    pageControl.currentPageIndicatorTintColor = [UIColor colorWithWhite:0.7f alpha:1.0f];
     pageControl.enabled = NO;
     [self.view addSubview:pageControl];
     //// bottom buttons
@@ -160,6 +162,18 @@
 
 - (void)didClickBackButton
 {
+    if (state == EditorStateWhiteBalance) {
+        [self.navigationController popViewControllerAnimated:YES];
+        self.originalImage = nil;
+        return;
+    }
+    if (state == EditorStateLevels){
+        
+    } else if (state == EditorStateSaturation){
+        
+    } else if (state == EditorStateSharing){
+        
+    }
     pageControl.currentPage--;
     [self changePageControl];
 }

@@ -16,6 +16,13 @@
 #import "UIWrapperView.h"
 #import "UIEditorTitleLabel.h"
 
+typedef NS_ENUM(NSInteger, EditorState){
+    EditorStateWhiteBalance = 1,
+    EditorStateLevels,
+    EditorStateSaturation,
+    EditorStateSharing
+};
+
 @interface EditorViewController : UIViewController <UIScrollViewDelegate>
 {
     UIImageView* bgImageView;
@@ -24,6 +31,7 @@
     UIImageView* whitebalanceImageView;
     UIImageView* levelsImageView;
     UIImageView* saturationImageView;
+    EditorState state;
 }
 
 @property (nonatomic, strong) UIImage* originalImage;

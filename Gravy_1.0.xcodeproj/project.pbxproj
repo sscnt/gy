@@ -74,6 +74,7 @@
 		58F79120180D65E500968648 /* editor_bg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58F7911D180D65E500968648 /* editor_bg@2x.jpg */; };
 		58F79123180D696700968648 /* EditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F79122180D696700968648 /* EditorViewController.m */; };
 		58F79126180D6CCB00968648 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F79125180D6CCB00968648 /* RootViewController.m */; };
+		58FEFFD818101550008B4E8D /* UIFadeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FEFFD718101550008B4E8D /* UIFadeNavigationController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -176,6 +177,8 @@
 		58F79122180D696700968648 /* EditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditorViewController.m; sourceTree = "<group>"; };
 		58F79124180D6CCB00968648 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		58F79125180D6CCB00968648 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		58FEFFD618101550008B4E8D /* UIFadeNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIFadeNavigationController.h; sourceTree = "<group>"; };
+		58FEFFD718101550008B4E8D /* UIFadeNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIFadeNavigationController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,6 +270,7 @@
 		5802E7C4180C0F1400AA2227 /* Gravy_1.0 */ = {
 			isa = PBXGroup;
 			children = (
+				58FEFFD518101535008B4E8D /* Subclasses */,
 				5800329E180D16DB0021F73C /* fonts */,
 				5802E822180C2E3E00AA2227 /* Categories */,
 				5802E7F4180C0F8500AA2227 /* Default-568h@2x.png */,
@@ -403,6 +407,15 @@
 				5809B502180EBAD2007670D1 /* UIEditorTitleLabel.m */,
 			);
 			name = Editor;
+			sourceTree = "<group>";
+		};
+		58FEFFD518101535008B4E8D /* Subclasses */ = {
+			isa = PBXGroup;
+			children = (
+				58FEFFD618101550008B4E8D /* UIFadeNavigationController.h */,
+				58FEFFD718101550008B4E8D /* UIFadeNavigationController.m */,
+			);
+			name = Subclasses;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -545,6 +558,7 @@
 			files = (
 				5802E7D5180C0F1400AA2227 /* TopViewController.m in Sources */,
 				5809B4FF180EB902007670D1 /* UIWrapperView.m in Sources */,
+				58FEFFD818101550008B4E8D /* UIFadeNavigationController.m in Sources */,
 				5802E825180C2E5E00AA2227 /* UIScreen+Gravy.m in Sources */,
 				58F79126180D6CCB00968648 /* RootViewController.m in Sources */,
 				5802E7CF180C0F1400AA2227 /* AppDelegate.m in Sources */,
