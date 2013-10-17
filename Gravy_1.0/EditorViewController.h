@@ -15,6 +15,8 @@
 #import "UIDockButtonNext.h"
 #import "UIWrapperView.h"
 #import "UIEditorTitleLabel.h"
+#import "UIThumbnailView.h"
+#import "UIDevice+Gravy.h"
 
 typedef NS_ENUM(NSInteger, EditorState){
     EditorStateWhiteBalance = 1,
@@ -28,10 +30,11 @@ typedef NS_ENUM(NSInteger, EditorState){
     UIImageView* bgImageView;
     UIScrollView* scrollView;
     UIPageControl* pageControl;
-    UIImageView* whitebalanceImageView;
-    UIImageView* levelsImageView;
-    UIImageView* saturationImageView;
+    UIThumbnailView* whitebalanceImageView;
+    UIThumbnailView* levelsImageView;
+    UIThumbnailView* saturationImageView;
     EditorState state;
+    UIImage* originalImageResized;
 }
 
 @property (nonatomic, strong) UIImage* originalImage;
@@ -42,5 +45,7 @@ typedef NS_ENUM(NSInteger, EditorState){
 - (void)layoutWhiteBalanceEditor;
 - (void)layoutLevelsEditor;
 - (void)layoutSaturationEditor;
+
+- (void)resizeOriginalImage;
 
 @end

@@ -75,6 +75,9 @@
 		58F79123180D696700968648 /* EditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F79122180D696700968648 /* EditorViewController.m */; };
 		58F79126180D6CCB00968648 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F79125180D6CCB00968648 /* RootViewController.m */; };
 		58FEFFD818101550008B4E8D /* UIFadeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FEFFD718101550008B4E8D /* UIFadeNavigationController.m */; };
+		58FEFFDA18101C08008B4E8D /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58FEFFD918101C08008B4E8D /* CoreImage.framework */; };
+		58FEFFDD18101D2C008B4E8D /* UIThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FEFFDC18101D2C008B4E8D /* UIThumbnailView.m */; };
+		58FEFFE018101EB5008B4E8D /* UIDevice+Gravy.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FEFFDF18101EB5008B4E8D /* UIDevice+Gravy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -179,6 +182,11 @@
 		58F79125180D6CCB00968648 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		58FEFFD618101550008B4E8D /* UIFadeNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIFadeNavigationController.h; sourceTree = "<group>"; };
 		58FEFFD718101550008B4E8D /* UIFadeNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIFadeNavigationController.m; sourceTree = "<group>"; };
+		58FEFFD918101C08008B4E8D /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		58FEFFDB18101D2C008B4E8D /* UIThumbnailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIThumbnailView.h; sourceTree = "<group>"; };
+		58FEFFDC18101D2C008B4E8D /* UIThumbnailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIThumbnailView.m; sourceTree = "<group>"; };
+		58FEFFDE18101EB5008B4E8D /* UIDevice+Gravy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Gravy.h"; sourceTree = "<group>"; };
+		58FEFFDF18101EB5008B4E8D /* UIDevice+Gravy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+Gravy.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58FEFFDA18101C08008B4E8D /* CoreImage.framework in Frameworks */,
 				5802E7C1180C0F1400AA2227 /* CoreGraphics.framework in Frameworks */,
 				5802E7C3180C0F1400AA2227 /* UIKit.framework in Frameworks */,
 				5802E7BF180C0F1400AA2227 /* Foundation.framework in Frameworks */,
@@ -259,6 +268,7 @@
 		5802E7BD180C0F1400AA2227 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				58FEFFD918101C08008B4E8D /* CoreImage.framework */,
 				5802E7BE180C0F1400AA2227 /* Foundation.framework */,
 				5802E7C0180C0F1400AA2227 /* CoreGraphics.framework */,
 				5802E7C2180C0F1400AA2227 /* UIKit.framework */,
@@ -390,6 +400,8 @@
 		5802E822180C2E3E00AA2227 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				58FEFFDE18101EB5008B4E8D /* UIDevice+Gravy.h */,
+				58FEFFDF18101EB5008B4E8D /* UIDevice+Gravy.m */,
 				5802E823180C2E5E00AA2227 /* UIScreen+Gravy.h */,
 				5802E824180C2E5E00AA2227 /* UIScreen+Gravy.m */,
 				58003297180D10CE0021F73C /* UIView+Gravy.h */,
@@ -405,6 +417,8 @@
 				5809B4FE180EB902007670D1 /* UIWrapperView.m */,
 				5809B501180EBAD2007670D1 /* UIEditorTitleLabel.h */,
 				5809B502180EBAD2007670D1 /* UIEditorTitleLabel.m */,
+				58FEFFDB18101D2C008B4E8D /* UIThumbnailView.h */,
+				58FEFFDC18101D2C008B4E8D /* UIThumbnailView.m */,
 			);
 			name = Editor;
 			sourceTree = "<group>";
@@ -559,6 +573,7 @@
 				5802E7D5180C0F1400AA2227 /* TopViewController.m in Sources */,
 				5809B4FF180EB902007670D1 /* UIWrapperView.m in Sources */,
 				58FEFFD818101550008B4E8D /* UIFadeNavigationController.m in Sources */,
+				58FEFFE018101EB5008B4E8D /* UIDevice+Gravy.m in Sources */,
 				5802E825180C2E5E00AA2227 /* UIScreen+Gravy.m in Sources */,
 				58F79126180D6CCB00968648 /* RootViewController.m in Sources */,
 				5802E7CF180C0F1400AA2227 /* AppDelegate.m in Sources */,
@@ -573,6 +588,7 @@
 				580032BC180D2C1C0021F73C /* UIDockButtonPhotos.m in Sources */,
 				58F471B5180E74B000C64E46 /* UIDockButtonBack.m in Sources */,
 				58F471B8180E74ED00C64E46 /* UIDockButtonNext.m in Sources */,
+				58FEFFDD18101D2C008B4E8D /* UIThumbnailView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
