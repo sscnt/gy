@@ -84,6 +84,8 @@
     levelsAppliedImage = originalImageResized;
     saturationAppliedImage = originalImageResized;
     
+    recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
+    
     [self layoutWhiteBalanceEditor];
     [self layoutLevelsEditor];
     [self layoutSaturationEditor];
@@ -105,6 +107,16 @@
     whitebalanceImageView = [[UIThumbnailView alloc] initWithImage:whiteBalanceAppliedImage];
     [whitebalanceImageView setY:imageY];
     [wrapper addSubview:whitebalanceImageView];
+    
+    // knob
+    whiteBalanceKnob = [[UIKnobView alloc] init];
+    whiteBalanceKnob.tag = KnobIdWhiteBalance;
+    [whiteBalanceKnob addGestureRecognizer:recognizer];
+    CGFloat posX = [UIScreen screenSize].width  / 2.0f - whiteBalanceKnob.bounds.size.width / 2.0f;
+    CGFloat posY = imageY + whiteBalanceAppliedImage.size.height / 2.0f - whiteBalanceKnob.bounds.size.height / 2.0f;
+    [whiteBalanceKnob setX:posX];
+    [whiteBalanceKnob setY:posY];
+    [wrapper addSubview:whiteBalanceKnob];
     
     [scrollView addSubview:wrapper];
 }
@@ -147,7 +159,7 @@
 }
 
 #pragma mark test
-- (void)grayImage
+- (void)grayImage:(NSInteger)weight
 {
 	// CGImageを取得する
 	CGImageRef cgImage;
@@ -200,7 +212,8 @@
 			b = *(tmp + 2);
             
 			// 輝度値を計算する
-			UInt8 y = (77 * r + 28 * g + 151 * b) / 256;
+			UInt8 y = (77 * r + 28 * g + weight * b) / 256;
+
             
 			// 輝度の値をRGB値として設定する
 			*(tmp + 2) = y;//b
@@ -224,7 +237,7 @@
                                                colorSpace, bitmapInfo, effectedDataProvider,
                                                NULL, shouldInterpolate, intent);
     
-    levelsAppliedImage = [[UIImage alloc] initWithCGImage:effectedCgImage];
+    whiteBalanceAppliedImage = [[UIImage alloc] initWithCGImage:effectedCgImage];
     
 	// 作成したデータを解放する
 	CGImageRelease(effectedCgImage);
@@ -233,8 +246,8 @@
 	CFRelease(data);
     CFRelease(mutableData);
     
-    [levelsImageView setImage:levelsAppliedImage];
-    [levelsImageView setNeedsDisplay];
+    [whitebalanceImageView setImage:whiteBalanceAppliedImage];
+    //[whitebalanceImageView setNeedsDisplay];
     
 }
 
@@ -242,7 +255,9 @@
 
 - (void)didClickNextButton
 {
-    [self grayImage];
+    if (state == EditorStateWhiteBalance) {
+        state = EditorStateLevels;
+    }
     pageControl.currentPage++;
     [self changePageControl];
 }
@@ -255,7 +270,7 @@
         return;
     }
     if (state == EditorStateLevels){
-        
+        state = EditorStateWhiteBalance;
     } else if (state == EditorStateSaturation){
         
     } else if (state == EditorStateSharing){
@@ -263,6 +278,17 @@
     }
     pageControl.currentPage--;
     [self changePageControl];
+}
+
+- (void)didDragView:(UIPanGestureRecognizer *)sender
+{
+    UIView *targetView = sender.view;
+    CGPoint p = [sender translationInView:targetView];
+    CGPoint movedPoint = CGPointMake(targetView.center.x + p.x, targetView.center.y + p.y);
+    targetView.center = movedPoint;
+    [sender setTranslation:CGPointZero inView:targetView];
+    [self grayImage:(NSInteger)movedPoint.x];
+
 }
 
 #pragma mark delegates

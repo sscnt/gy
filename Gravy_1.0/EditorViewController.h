@@ -16,6 +16,7 @@
 #import "UIWrapperView.h"
 #import "UIEditorTitleLabel.h"
 #import "UIThumbnailView.h"
+#import "UIKnobView.h"
 
 
 typedef NS_ENUM(NSInteger, EditorState){
@@ -23,6 +24,12 @@ typedef NS_ENUM(NSInteger, EditorState){
     EditorStateLevels,
     EditorStateSaturation,
     EditorStateSharing
+};
+
+typedef NS_ENUM(NSInteger, KnobId){
+    KnobIdWhiteBalance = 1,
+    KnobIdLevels,
+    KnobIdSaturation
 };
 
 @interface EditorViewController : UIViewController <UIScrollViewDelegate>
@@ -38,12 +45,17 @@ typedef NS_ENUM(NSInteger, EditorState){
     UIImage* whiteBalanceAppliedImage;
     UIImage* levelsAppliedImage;
     UIImage* saturationAppliedImage;
+    UIKnobView* whiteBalanceKnob;
+    UIKnobView* levelsKnobView;
+    UIKnobView* saturationKnobView;
+    UIPanGestureRecognizer* recognizer;
 }
 
 @property (nonatomic, strong) UIImage* originalImage;
 
 - (void)didClickNextButton;
 - (void)didClickBackButton;
+- (void)didDragView:(UIPanGestureRecognizer *)sender;
 
 - (void)layoutWhiteBalanceEditor;
 - (void)layoutLevelsEditor;
