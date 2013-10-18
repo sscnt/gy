@@ -6,11 +6,11 @@
 //  Copyright (c) 2013年 SSC. All rights reserved.
 //
 
-#import "UIDevice+resolution.h"
+#import "UIDevice+Gravy.h"
 
 @implementation UIDevice (Gravy)
 
-- (UIDeviceResolution)resolution
++ (UIDeviceResolution)resolution
 {
     UIDeviceResolution resolution = UIDeviceResolution_Unknown;
     UIScreen *mainScreen = [UIScreen mainScreen];

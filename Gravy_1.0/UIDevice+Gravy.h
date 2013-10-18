@@ -20,6 +20,6 @@ enum {
 
 @interface UIDevice (Gravy)
 
-- (UIDeviceResolution)resolution;
++ (UIDeviceResolution)resolution;
 
 @end

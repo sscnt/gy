@@ -80,6 +80,10 @@
     [nextBtn addTarget:self action:@selector(didClickNextButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:nextBtn];
     
+    whiteBalanceAppliedImage = originalImageResized;
+    levelsAppliedImage = originalImageResized;
+    saturationAppliedImage = originalImageResized;
+    
     [self layoutWhiteBalanceEditor];
     [self layoutLevelsEditor];
     [self layoutSaturationEditor];
@@ -98,7 +102,7 @@
     
     // place original image
     CGFloat imageY = [UIScreen screenSize].height / 2.0f - originalImageResized.size.height / 2.0f - 25.0f;
-    whitebalanceImageView = [[UIThumbnailView alloc] initWithImage:originalImageResized];
+    whitebalanceImageView = [[UIThumbnailView alloc] initWithImage:whiteBalanceAppliedImage];
     [whitebalanceImageView setY:imageY];
     [wrapper addSubview:whitebalanceImageView];
     
@@ -116,7 +120,7 @@
     
     // place original image
     CGFloat imageY = [UIScreen screenSize].height / 2.0f - originalImageResized.size.height / 2.0f - 25.0f;
-    levelsImageView = [[UIThumbnailView alloc] initWithImage:originalImageResized];
+    levelsImageView = [[UIThumbnailView alloc] initWithImage:levelsAppliedImage];
     [levelsImageView setY:imageY];
     [wrapper addSubview:levelsImageView];
     [wrapper setX:320.0f];
@@ -135,17 +139,110 @@
     
     // place original image
     CGFloat imageY = [UIScreen screenSize].height / 2.0f - originalImageResized.size.height / 2.0f - 25.0f;
-    saturationImageView = [[UIThumbnailView alloc] initWithImage:originalImageResized];
+    saturationImageView = [[UIThumbnailView alloc] initWithImage:saturationAppliedImage];
     [saturationImageView setY:imageY];
     [wrapper addSubview:saturationImageView];
     [wrapper setX:640.0f];
     [scrollView addSubview:wrapper];
 }
 
+#pragma mark test
+- (void)grayImage
+{
+	// CGImageを取得する
+	CGImageRef cgImage;
+	cgImage = originalImageResized.CGImage;
+
+    
+	// 画像情報を取得する
+	size_t width;
+	size_t height;
+	size_t bitsPerComponent;
+	size_t bitsPerPixel;
+	size_t bytesPerRow;
+	CGColorSpaceRef colorSpace;
+	CGBitmapInfo bitmapInfo;
+	bool shouldInterpolate;
+	CGColorRenderingIntent intent;
+	width = CGImageGetWidth(cgImage);
+	height = CGImageGetHeight(cgImage);
+	bitsPerComponent = CGImageGetBitsPerComponent(cgImage);
+	bitsPerPixel = CGImageGetBitsPerPixel(cgImage);
+	bytesPerRow = CGImageGetBytesPerRow(cgImage);
+	colorSpace = CGImageGetColorSpace(cgImage);
+	bitmapInfo = CGImageGetBitmapInfo(cgImage);
+	shouldInterpolate = CGImageGetShouldInterpolate(cgImage);
+	intent = CGImageGetRenderingIntent(cgImage);
+    
+	// データプロバイダを取得する
+	CGDataProviderRef dataProvider = CGImageGetDataProvider(cgImage);
+    
+    
+	// ビットマップデータを取得する
+	CFDataRef data = CGDataProviderCopyData(dataProvider);
+    CFMutableDataRef mutableData = CFDataCreateMutableCopy(0, 0, data);
+	UInt8* buffer = (UInt8*)CFDataGetMutableBytePtr(mutableData);
+    
+	// ビットマップに効果を与える
+    
+	NSUInteger i, j;
+	for (j = 0 ; j < height; j++)
+	{
+		for (i = 0; i < width; i++)
+		{
+			// ピクセルのポインタを取得する
+			UInt8* tmp = buffer + j * bytesPerRow + i * 4;
+            
+			// RGBの値を取得する
+			UInt8 r, g, b;
+			r = *(tmp + 0);
+			g = *(tmp + 1);
+			b = *(tmp + 2);
+            
+			// 輝度値を計算する
+			UInt8 y = (77 * r + 28 * g + 151 * b) / 256;
+            
+			// 輝度の値をRGB値として設定する
+			*(tmp + 2) = y;//b
+			*(tmp + 1) = y;//g
+			*(tmp + 0) = y;//r
+		}
+    }
+    
+	// 効果を与えたデータを作成する
+	CFDataRef effectedData;
+	effectedData = CFDataCreate(NULL, buffer, CFDataGetLength(data));
+    
+	// 効果を与えたデータプロバイダを作成する
+	CGDataProviderRef effectedDataProvider;
+	effectedDataProvider = CGDataProviderCreateWithCFData(effectedData);
+    
+	// 画像を作成する
+	CGImageRef effectedCgImage = CGImageCreate(
+                                               width, height,
+                                               bitsPerComponent, bitsPerPixel, bytesPerRow,
+                                               colorSpace, bitmapInfo, effectedDataProvider,
+                                               NULL, shouldInterpolate, intent);
+    
+    levelsAppliedImage = [[UIImage alloc] initWithCGImage:effectedCgImage];
+    
+	// 作成したデータを解放する
+	CGImageRelease(effectedCgImage);
+	CFRelease(effectedDataProvider);
+	CFRelease(effectedData);
+	CFRelease(data);
+    CFRelease(mutableData);
+    
+    [levelsImageView setImage:levelsAppliedImage];
+    [levelsImageView setNeedsDisplay];
+    
+}
+
 #pragma mark events
 
 - (void)didClickNextButton
 {
+    [self grayImage];
     pageControl.currentPage++;
     [self changePageControl];
 }
@@ -192,8 +289,10 @@
 {
     if(self.originalImage){
         CIImage* ciImage = [[CIImage alloc] initWithImage:self.originalImage];
-        CGFloat scale = [UIScreen screenSize].width / self.originalImage.size.width;
-        CIImage* filteredImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(scale, scale)];
+        UIScreen *mainScreen = [UIScreen mainScreen];
+        CGFloat scale = ([mainScreen respondsToSelector:@selector(scale)] ? mainScreen.scale : 1.0f);
+        CGFloat zoom = [UIScreen screenSize].width * scale / self.originalImage.size.width;
+        CIImage* filteredImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(zoom, zoom)];
         originalImageResized = [self uiImageFromCIImage:filteredImage];
     }
 }

@@ -16,7 +16,7 @@
 #import "UIWrapperView.h"
 #import "UIEditorTitleLabel.h"
 #import "UIThumbnailView.h"
-#import "UIDevice+Gravy.h"
+
 
 typedef NS_ENUM(NSInteger, EditorState){
     EditorStateWhiteBalance = 1,
@@ -35,6 +35,9 @@ typedef NS_ENUM(NSInteger, EditorState){
     UIThumbnailView* saturationImageView;
     EditorState state;
     UIImage* originalImageResized;
+    UIImage* whiteBalanceAppliedImage;
+    UIImage* levelsAppliedImage;
+    UIImage* saturationAppliedImage;
 }
 
 @property (nonatomic, strong) UIImage* originalImage;
