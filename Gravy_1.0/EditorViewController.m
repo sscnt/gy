@@ -28,6 +28,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     state = EditorStateWhiteBalance;
+    screenHeight = [UIScreen screenSize].height;
+    screenWidth = [UIScreen screenSize].width;
     
     // image processing
     [self resizeOriginalImage];
@@ -112,10 +114,10 @@
     whiteBalanceKnob = [[UIKnobView alloc] init];
     whiteBalanceKnob.tag = KnobIdWhiteBalance;
     [whiteBalanceKnob addGestureRecognizer:recognizer];
-    CGFloat posX = [UIScreen screenSize].width  / 2.0f - whiteBalanceKnob.bounds.size.width / 2.0f;
-    CGFloat posY = imageY + whiteBalanceAppliedImage.size.height / 2.0f - whiteBalanceKnob.bounds.size.height / 2.0f;
-    [whiteBalanceKnob setX:posX];
-    [whiteBalanceKnob setY:posY];
+    knobDefaultPosX = [UIScreen screenSize].width  / 2.0f - whiteBalanceKnob.bounds.size.width / 2.0f;
+    knobDefaultPosY = imageY + whiteBalanceAppliedImage.size.height / 2.0f - whiteBalanceKnob.bounds.size.height / 2.0f;
+    [whiteBalanceKnob setX:knobDefaultPosX];
+    [whiteBalanceKnob setY:knobDefaultPosY];
     [wrapper addSubview:whiteBalanceKnob];
     
     [scrollView addSubview:wrapper];
@@ -158,13 +160,111 @@
     [scrollView addSubview:wrapper];
 }
 
-#pragma mark test
-- (void)grayImage:(NSInteger)weight
+#pragma mark events
+
+- (void)didClickNextButton
 {
+    if (state == EditorStateWhiteBalance) {
+        state = EditorStateLevels;
+    }
+    pageControl.currentPage++;
+    [self changePageControl];
+}
+
+- (void)didClickBackButton
+{
+    if (state == EditorStateWhiteBalance) {
+        [self.navigationController popViewControllerAnimated:YES];
+        self.originalImage = nil;
+        return;
+    }
+    if (state == EditorStateLevels){
+        state = EditorStateWhiteBalance;
+    } else if (state == EditorStateSaturation){
+        
+    } else if (state == EditorStateSharing){
+        
+    }
+    pageControl.currentPage--;
+    [self changePageControl];
+}
+
+- (void)didDragView:(UIPanGestureRecognizer *)sender
+{
+    UIView *targetView = sender.view;
+    CGPoint p = [sender translationInView:targetView];
+    CGFloat deltaX = targetView.center.x + p.x;
+    CGFloat deltaY = targetView.center.y + p.y;
+    deltaY = MAX(0, MIN(screenHeight, deltaY));
+    
+    if(targetView.tag == KnobIdWhiteBalance){
+        deltaX = MAX(0, MIN(screenWidth, deltaX));
+        
+        CGFloat redWeight = targetView.center.y - knobDefaultPosY;
+        CGFloat blueWeight = targetView.center.x - knobDefaultPosX;
+        redWeight /= 4.0f;
+        blueWeight /= 4.0f;
+        [self processWhiteBalanceRed:(NSInteger)redWeight Blue:(NSInteger)blueWeight];
+    }
+    
+    CGPoint movedPoint = CGPointMake(deltaX, deltaY);
+    targetView.center = movedPoint;
+    [sender setTranslation:CGPointZero inView:targetView];
+
+
+}
+
+#pragma mark delegates
+
+
+- (void)scrollViewDidScroll:(UIScrollView *)sender {
+    
+    // UIScrollViewのページ切替時イベント:UIPageControlの現在ページを切り替える処理
+    //pageControl.currentPage = sender.contentOffset.x / 320.0f;
+}
+
+- (void)changePageControl {
+    // ページコントロールが変更された場合、それに合わせてページングスクロールビューを該当ページまでスクロールさせる
+    CGRect frame = scrollView.frame;
+    frame.origin.x = frame.size.width * pageControl.currentPage;
+    frame.origin.y = 0;
+    // 可視領域まで移動
+    [scrollView scrollRectToVisible:frame animated:YES];
+}
+
+#pragma mark Image Processing
+
+- (void)resizeOriginalImage
+{
+    if(self.originalImage){
+        CIImage* ciImage = [[CIImage alloc] initWithImage:self.originalImage];
+        UIScreen *mainScreen = [UIScreen mainScreen];
+        CGFloat scale = ([mainScreen respondsToSelector:@selector(scale)] ? mainScreen.scale : 1.0f);
+        CGFloat zoom = [UIScreen screenSize].width * scale / self.originalImage.size.width;
+        CIImage* filteredImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(zoom, zoom)];
+        originalImageResized = [self uiImageFromCIImage:filteredImage];
+    }
+}
+
+- (UIImage*)uiImageFromCIImage:(CIImage*)ciImage
+{
+    CIContext *ciContext = [CIContext contextWithOptions:@{kCIContextUseSoftwareRenderer : @NO }];
+    CGImageRef imgRef = [ciContext createCGImage:ciImage fromRect:[ciImage extent]];
+    UIImage *newImg  = [UIImage imageWithCGImage:imgRef scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
+    CGImageRelease(imgRef);
+    return newImg;
+    
+    /* iOS6.0以降だと以下が使用可能 */
+    //  [[UIImage alloc] initWithCIImage:ciImage scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
+}
+
+- (void)processWhiteBalanceRed:(NSInteger)redWeight Blue:(NSInteger)blueWeight
+{
+    
 	// CGImageを取得する
 	CGImageRef cgImage;
 	cgImage = originalImageResized.CGImage;
-
+    
     
 	// 画像情報を取得する
 	size_t width;
@@ -211,14 +311,15 @@
 			g = *(tmp + 1);
 			b = *(tmp + 2);
             
-			// 輝度値を計算する
-			UInt8 y = (77 * r + 28 * g + weight * b) / 256;
-
+            r = MAX(0, MIN(255, r + redWeight));
+            b = MAX(0, MIN(255, b + blueWeight));
+            g = MAX(0, MIN(255, g + 0));
+            
             
 			// 輝度の値をRGB値として設定する
-			*(tmp + 2) = y;//b
-			*(tmp + 1) = y;//g
-			*(tmp + 0) = y;//r
+			*(tmp + 0) = r;
+			*(tmp + 1) = g;
+			*(tmp + 2) = b;
 		}
     }
     
@@ -248,91 +349,6 @@
     
     [whitebalanceImageView setImage:whiteBalanceAppliedImage];
     //[whitebalanceImageView setNeedsDisplay];
-    
-}
-
-#pragma mark events
-
-- (void)didClickNextButton
-{
-    if (state == EditorStateWhiteBalance) {
-        state = EditorStateLevels;
-    }
-    pageControl.currentPage++;
-    [self changePageControl];
-}
-
-- (void)didClickBackButton
-{
-    if (state == EditorStateWhiteBalance) {
-        [self.navigationController popViewControllerAnimated:YES];
-        self.originalImage = nil;
-        return;
-    }
-    if (state == EditorStateLevels){
-        state = EditorStateWhiteBalance;
-    } else if (state == EditorStateSaturation){
-        
-    } else if (state == EditorStateSharing){
-        
-    }
-    pageControl.currentPage--;
-    [self changePageControl];
-}
-
-- (void)didDragView:(UIPanGestureRecognizer *)sender
-{
-    UIView *targetView = sender.view;
-    CGPoint p = [sender translationInView:targetView];
-    CGPoint movedPoint = CGPointMake(targetView.center.x + p.x, targetView.center.y + p.y);
-    targetView.center = movedPoint;
-    [sender setTranslation:CGPointZero inView:targetView];
-    [self grayImage:(NSInteger)movedPoint.x];
-
-}
-
-#pragma mark delegates
-
-
-- (void)scrollViewDidScroll:(UIScrollView *)sender {
-    
-    // UIScrollViewのページ切替時イベント:UIPageControlの現在ページを切り替える処理
-    //pageControl.currentPage = sender.contentOffset.x / 320.0f;
-}
-
-- (void)changePageControl {
-    // ページコントロールが変更された場合、それに合わせてページングスクロールビューを該当ページまでスクロールさせる
-    CGRect frame = scrollView.frame;
-    frame.origin.x = frame.size.width * pageControl.currentPage;
-    frame.origin.y = 0;
-    // 可視領域まで移動
-    [scrollView scrollRectToVisible:frame animated:YES];
-}
-
-#pragma mark Image Processing
-
-- (void)resizeOriginalImage
-{
-    if(self.originalImage){
-        CIImage* ciImage = [[CIImage alloc] initWithImage:self.originalImage];
-        UIScreen *mainScreen = [UIScreen mainScreen];
-        CGFloat scale = ([mainScreen respondsToSelector:@selector(scale)] ? mainScreen.scale : 1.0f);
-        CGFloat zoom = [UIScreen screenSize].width * scale / self.originalImage.size.width;
-        CIImage* filteredImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(zoom, zoom)];
-        originalImageResized = [self uiImageFromCIImage:filteredImage];
-    }
-}
-
-- (UIImage*)uiImageFromCIImage:(CIImage*)ciImage
-{
-    CIContext *ciContext = [CIContext contextWithOptions:@{kCIContextUseSoftwareRenderer : @NO }];
-    CGImageRef imgRef = [ciContext createCGImage:ciImage fromRect:[ciImage extent]];
-    UIImage *newImg  = [UIImage imageWithCGImage:imgRef scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
-    CGImageRelease(imgRef);
-    return newImg;
-    
-    /* iOS6.0以降だと以下が使用可能 */
-    //  [[UIImage alloc] initWithCIImage:ciImage scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
 }
 
 - (void)didReceiveMemoryWarning

@@ -12,7 +12,7 @@
 
 - (id)init
 {
-    CGRect rect = CGRectMake(0.0f, 0.0f, 30.0f, 30.0f);
+    CGRect rect = CGRectMake(0.0f, 0.0f, 60.0f, 60.0f);
     return [self initWithFrame:rect];
 }
 

@@ -49,6 +49,10 @@ typedef NS_ENUM(NSInteger, KnobId){
     UIKnobView* levelsKnobView;
     UIKnobView* saturationKnobView;
     UIPanGestureRecognizer* recognizer;
+    CGFloat knobDefaultPosX;
+    CGFloat knobDefaultPosY;
+    CGFloat screenWidth;
+    CGFloat screenHeight;
 }
 
 @property (nonatomic, strong) UIImage* originalImage;
@@ -60,6 +64,8 @@ typedef NS_ENUM(NSInteger, KnobId){
 - (void)layoutWhiteBalanceEditor;
 - (void)layoutLevelsEditor;
 - (void)layoutSaturationEditor;
+
+- (void)processWhiteBalanceRed:(NSInteger)redWeight Blue:(NSInteger)blueWeight;
 
 - (void)resizeOriginalImage;
 
