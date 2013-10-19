@@ -451,6 +451,11 @@
         float dblLow = 1.0f / (float)diffMidAndLow;
         
         float _lvMidWeight = (float)lvMidWeight;
+        UInt8* tmp;
+        
+        // RGBの値を取得する
+        UInt8 r, g, b;
+        float y, u, v, _r, _g, _b, _y;
         
         
         // ビットマップに効果を与える
@@ -462,15 +467,15 @@
             {
                 if(dragStarted){
                     processRunning = NO;
+                    CFRelease(data);
+                    CFRelease(mutableData);                    
                     return;
                 }
                 
                 // ピクセルのポインタを取得する
-                UInt8* tmp = buffer + j * bytesPerRow + i * 4;
+                tmp = buffer + j * bytesPerRow + i * 4;
                 
                 // RGBの値を取得する
-                UInt8 r, g, b;
-                float y, u, v, _r, _g, _b, _y;
                 r = *(tmp + 0);
                 g = *(tmp + 1);
                 b = *(tmp + 2);
