@@ -118,14 +118,14 @@
     [wrapper addSubview:whitebalanceImageView];
     
     // knob
-    whiteBalanceKnob = [[UIKnobView alloc] init];
-    whiteBalanceKnob.tag = KnobIdWhiteBalance;
-    [whiteBalanceKnob addGestureRecognizer:recognizer];
-    knobDefaultPosX = [UIScreen screenSize].width  / 2.0f - whiteBalanceKnob.bounds.size.width / 2.0f;
-    knobDefaultPosY = imageY + whiteBalanceAppliedImage.size.height / 2.0f - whiteBalanceKnob.bounds.size.height / 2.0f;
-    [whiteBalanceKnob setX:knobDefaultPosX];
-    [whiteBalanceKnob setY:knobDefaultPosY];
-    [wrapper addSubview:whiteBalanceKnob];
+    whiteBalanceKnobView = [[UIKnobView alloc] init];
+    whiteBalanceKnobView.tag = KnobIdWhiteBalance;
+    [whiteBalanceKnobView addGestureRecognizer:recognizer];
+    knobDefaultPosX = [UIScreen screenSize].width  / 2.0f - whiteBalanceKnobView.bounds.size.width / 2.0f;
+    knobDefaultPosY = imageY + whiteBalanceAppliedImage.size.height / 2.0f - whiteBalanceKnobView.bounds.size.height / 2.0f;
+    [whiteBalanceKnobView setX:knobDefaultPosX];
+    [whiteBalanceKnobView setY:knobDefaultPosY];
+    [wrapper addSubview:whiteBalanceKnobView];
     
     [scrollView addSubview:wrapper];
 }
@@ -145,6 +145,16 @@
     [levelsImageView setY:imageY];
     [wrapper addSubview:levelsImageView];
     [wrapper setX:320.0f];
+    
+    // knob
+    levelsKnobView = [[UIKnobView alloc] init];
+    levelsKnobView.tag = KnobIdLevels;
+    [levelsKnobView addGestureRecognizer:recognizer];
+    [levelsKnobView setX:knobDefaultPosX];
+    [levelsKnobView setY:knobDefaultPosY];
+    [wrapper addSubview:levelsKnobView];
+    
+    
     [scrollView addSubview:wrapper];
     
 }
@@ -164,6 +174,15 @@
     [saturationImageView setY:imageY];
     [wrapper addSubview:saturationImageView];
     [wrapper setX:640.0f];
+    
+    // knob
+    saturationKnobView = [[UIKnobView alloc] init];
+    saturationKnobView.tag = KnobIdSaturation;
+    [saturationKnobView addGestureRecognizer:recognizer];
+    [saturationKnobView setX:knobDefaultPosX];
+    [saturationKnobView setY:knobDefaultPosY];
+    [wrapper addSubview:saturationKnobView];
+    
     [scrollView addSubview:wrapper];
 }
 
@@ -207,6 +226,7 @@
     CGFloat deltaX = targetView.center.x + p.x;
     CGFloat deltaY = targetView.center.y + p.y;
     deltaY = MAX(0, MIN(screenHeight, deltaY));
+    dlog(@"a");
     
     if(targetView.tag == KnobIdWhiteBalance){
         deltaX = MAX(0, MIN(screenWidth, deltaX));
@@ -215,6 +235,9 @@
         wbRedWeight /= 4.0f;
         wbBlueWeight /= 4.0f;
         [self processWhiteBalance];
+    } else if(targetView.tag == KnobIdLevels){
+        deltaX = MAX(screenWidth, MIN(screenWidth * 2, deltaX));
+        [self processLevels];
     }
     
     CGPoint movedPoint = CGPointMake(deltaX, deltaY);
@@ -365,8 +388,104 @@
     
     //[whitebalanceImageView setNeedsDisplay];
 }
+
 - (void)processLevels
 {
+    
+    // CGImageを取得する
+    CGImageRef cgImage;
+    cgImage = whiteBalanceAppliedImage.CGImage;
+    
+    
+    // 画像情報を取得する
+    size_t width;
+    size_t height;
+    size_t bitsPerComponent;
+    size_t bitsPerPixel;
+    size_t bytesPerRow;
+    CGColorSpaceRef colorSpace;
+    CGBitmapInfo bitmapInfo;
+    bool shouldInterpolate;
+    CGColorRenderingIntent intent;
+    width = CGImageGetWidth(cgImage);
+    height = CGImageGetHeight(cgImage);
+    bitsPerComponent = CGImageGetBitsPerComponent(cgImage);
+    bitsPerPixel = CGImageGetBitsPerPixel(cgImage);
+    bytesPerRow = CGImageGetBytesPerRow(cgImage);
+    colorSpace = CGImageGetColorSpace(cgImage);
+    bitmapInfo = CGImageGetBitmapInfo(cgImage);
+    shouldInterpolate = CGImageGetShouldInterpolate(cgImage);
+    intent = CGImageGetRenderingIntent(cgImage);
+    
+    // データプロバイダを取得する
+    CGDataProviderRef dataProvider = CGImageGetDataProvider(cgImage);
+    
+    
+    // ビットマップデータを取得する
+    CFDataRef data = CGDataProviderCopyData(dataProvider);
+    CFMutableDataRef mutableData = CFDataCreateMutableCopy(0, 0, data);
+    UInt8* buffer = (UInt8*)CFDataGetMutableBytePtr(mutableData);
+    
+    // ビットマップに効果を与える
+    
+    NSUInteger i, j;
+    for (j = 0 ; j < height; j++)
+    {
+        for (i = 0; i < width; i++)
+        {
+            
+            // ピクセルのポインタを取得する
+            UInt8* tmp = buffer + j * bytesPerRow + i * 4;
+            
+            // RGBの値を取得する
+            UInt8 r, g, b;
+            r = *(tmp + 0);
+            g = *(tmp + 1);
+            b = *(tmp + 2);
+            
+            r = MAX(0, MIN(255, r + wbRedWeight));
+            b = MAX(0, MIN(255, b + wbBlueWeight));
+            g = MAX(0, MIN(255, g + 0));
+            
+            
+            // 輝度の値をRGB値として設定する
+            *(tmp + 0) = r;
+            *(tmp + 1) = g;
+            *(tmp + 2) = b;
+        }
+    }
+    
+    // 効果を与えたデータを作成する
+    CFDataRef effectedData;
+    effectedData = CFDataCreate(NULL, buffer, CFDataGetLength(data));
+    
+    // 効果を与えたデータプロバイダを作成する
+    CGDataProviderRef effectedDataProvider;
+    effectedDataProvider = CGDataProviderCreateWithCFData(effectedData);
+    
+    // 画像を作成する
+    CGImageRef effectedCgImage = CGImageCreate(
+                                               width, height,
+                                               bitsPerComponent, bitsPerPixel, bytesPerRow,
+                                               colorSpace, bitmapInfo, effectedDataProvider,
+                                               NULL, shouldInterpolate, intent);
+    
+    
+    whiteBalanceAppliedImage = [[UIImage alloc] initWithCGImage:effectedCgImage];
+    
+    // 作成したデータを解放する
+    CGImageRelease(effectedCgImage);
+    CFRelease(effectedDataProvider);
+    CFRelease(effectedData);
+    CFRelease(data);
+    CFRelease(mutableData);
+    
+    
+    
+    [whitebalanceImageView setImage:whiteBalanceAppliedImage];
+    
+    
+    //[whitebalanceImageView setNeedsDisplay];
     
 }
 

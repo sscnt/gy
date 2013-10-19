@@ -45,7 +45,7 @@ typedef NS_ENUM(NSInteger, KnobId){
     UIImage* whiteBalanceAppliedImage;
     UIImage* levelsAppliedImage;
     UIImage* saturationAppliedImage;
-    UIKnobView* whiteBalanceKnob;
+    UIKnobView* whiteBalanceKnobView;
     UIKnobView* levelsKnobView;
     UIKnobView* saturationKnobView;
     UIPanGestureRecognizer* recognizer;
