@@ -88,6 +88,13 @@
     
     recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
     
+    wbBlueWeight = 0;
+    wbRedWeight = 0;
+    lvHighWeight = 0;
+    lvLowWeight = 0;
+    stSaturationWeight = 0;
+    stVibranceWeight = 0;
+    
     [self layoutWhiteBalanceEditor];
     [self layoutLevelsEditor];
     [self layoutSaturationEditor];
@@ -166,6 +173,10 @@
 {
     if (state == EditorStateWhiteBalance) {
         state = EditorStateLevels;
+        [self processLevels];
+    } else if (state == EditorStateLevels) {
+        state = EditorStateSaturation;
+        [self processSaturation];
     }
     pageControl.currentPage++;
     [self changePageControl];
@@ -199,12 +210,11 @@
     
     if(targetView.tag == KnobIdWhiteBalance){
         deltaX = MAX(0, MIN(screenWidth, deltaX));
-        
-        CGFloat redWeight = targetView.center.y - knobDefaultPosY;
-        CGFloat blueWeight = targetView.center.x - knobDefaultPosX;
-        redWeight /= 4.0f;
-        blueWeight /= 4.0f;
-        [self processWhiteBalanceRed:(NSInteger)redWeight Blue:(NSInteger)blueWeight];
+        wbRedWeight = targetView.center.y - knobDefaultPosY;
+        wbBlueWeight = targetView.center.x - knobDefaultPosX;
+        wbRedWeight /= 4.0f;
+        wbBlueWeight /= 4.0f;
+        [self processWhiteBalance];
     }
     
     CGPoint movedPoint = CGPointMake(deltaX, deltaY);
@@ -258,97 +268,111 @@
     //  [[UIImage alloc] initWithCIImage:ciImage scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
 }
 
-- (void)processWhiteBalanceRed:(NSInteger)redWeight Blue:(NSInteger)blueWeight
-{
-    
-	// CGImageを取得する
-	CGImageRef cgImage;
-	cgImage = originalImageResized.CGImage;
-    
-    
-	// 画像情報を取得する
-	size_t width;
-	size_t height;
-	size_t bitsPerComponent;
-	size_t bitsPerPixel;
-	size_t bytesPerRow;
-	CGColorSpaceRef colorSpace;
-	CGBitmapInfo bitmapInfo;
-	bool shouldInterpolate;
-	CGColorRenderingIntent intent;
-	width = CGImageGetWidth(cgImage);
-	height = CGImageGetHeight(cgImage);
-	bitsPerComponent = CGImageGetBitsPerComponent(cgImage);
-	bitsPerPixel = CGImageGetBitsPerPixel(cgImage);
-	bytesPerRow = CGImageGetBytesPerRow(cgImage);
-	colorSpace = CGImageGetColorSpace(cgImage);
-	bitmapInfo = CGImageGetBitmapInfo(cgImage);
-	shouldInterpolate = CGImageGetShouldInterpolate(cgImage);
-	intent = CGImageGetRenderingIntent(cgImage);
-    
-	// データプロバイダを取得する
-	CGDataProviderRef dataProvider = CGImageGetDataProvider(cgImage);
+- (void)processWhiteBalance
+{    
+    // CGImageを取得する
+    CGImageRef cgImage;
+    cgImage = originalImageResized.CGImage;
     
     
-	// ビットマップデータを取得する
-	CFDataRef data = CGDataProviderCopyData(dataProvider);
+    // 画像情報を取得する
+    size_t width;
+    size_t height;
+    size_t bitsPerComponent;
+    size_t bitsPerPixel;
+    size_t bytesPerRow;
+    CGColorSpaceRef colorSpace;
+    CGBitmapInfo bitmapInfo;
+    bool shouldInterpolate;
+    CGColorRenderingIntent intent;
+    width = CGImageGetWidth(cgImage);
+    height = CGImageGetHeight(cgImage);
+    bitsPerComponent = CGImageGetBitsPerComponent(cgImage);
+    bitsPerPixel = CGImageGetBitsPerPixel(cgImage);
+    bytesPerRow = CGImageGetBytesPerRow(cgImage);
+    colorSpace = CGImageGetColorSpace(cgImage);
+    bitmapInfo = CGImageGetBitmapInfo(cgImage);
+    shouldInterpolate = CGImageGetShouldInterpolate(cgImage);
+    intent = CGImageGetRenderingIntent(cgImage);
+    
+    // データプロバイダを取得する
+    CGDataProviderRef dataProvider = CGImageGetDataProvider(cgImage);
+    
+    
+    // ビットマップデータを取得する
+    CFDataRef data = CGDataProviderCopyData(dataProvider);
     CFMutableDataRef mutableData = CFDataCreateMutableCopy(0, 0, data);
-	UInt8* buffer = (UInt8*)CFDataGetMutableBytePtr(mutableData);
+    UInt8* buffer = (UInt8*)CFDataGetMutableBytePtr(mutableData);
     
-	// ビットマップに効果を与える
+    // ビットマップに効果を与える
     
-	NSUInteger i, j;
-	for (j = 0 ; j < height; j++)
-	{
-		for (i = 0; i < width; i++)
-		{
-			// ピクセルのポインタを取得する
-			UInt8* tmp = buffer + j * bytesPerRow + i * 4;
+    NSUInteger i, j;
+    for (j = 0 ; j < height; j++)
+    {
+        for (i = 0; i < width; i++)
+        {
             
-			// RGBの値を取得する
-			UInt8 r, g, b;
-			r = *(tmp + 0);
-			g = *(tmp + 1);
-			b = *(tmp + 2);
+            // ピクセルのポインタを取得する
+            UInt8* tmp = buffer + j * bytesPerRow + i * 4;
             
-            r = MAX(0, MIN(255, r + redWeight));
-            b = MAX(0, MIN(255, b + blueWeight));
+            // RGBの値を取得する
+            UInt8 r, g, b;
+            r = *(tmp + 0);
+            g = *(tmp + 1);
+            b = *(tmp + 2);
+            
+            r = MAX(0, MIN(255, r + wbRedWeight));
+            b = MAX(0, MIN(255, b + wbBlueWeight));
             g = MAX(0, MIN(255, g + 0));
             
             
-			// 輝度の値をRGB値として設定する
-			*(tmp + 0) = r;
-			*(tmp + 1) = g;
-			*(tmp + 2) = b;
-		}
+            // 輝度の値をRGB値として設定する
+            *(tmp + 0) = r;
+            *(tmp + 1) = g;
+            *(tmp + 2) = b;
+        }
     }
     
-	// 効果を与えたデータを作成する
-	CFDataRef effectedData;
-	effectedData = CFDataCreate(NULL, buffer, CFDataGetLength(data));
+    // 効果を与えたデータを作成する
+    CFDataRef effectedData;
+    effectedData = CFDataCreate(NULL, buffer, CFDataGetLength(data));
     
-	// 効果を与えたデータプロバイダを作成する
-	CGDataProviderRef effectedDataProvider;
-	effectedDataProvider = CGDataProviderCreateWithCFData(effectedData);
+    // 効果を与えたデータプロバイダを作成する
+    CGDataProviderRef effectedDataProvider;
+    effectedDataProvider = CGDataProviderCreateWithCFData(effectedData);
     
-	// 画像を作成する
-	CGImageRef effectedCgImage = CGImageCreate(
+    // 画像を作成する
+    CGImageRef effectedCgImage = CGImageCreate(
                                                width, height,
                                                bitsPerComponent, bitsPerPixel, bytesPerRow,
                                                colorSpace, bitmapInfo, effectedDataProvider,
                                                NULL, shouldInterpolate, intent);
     
+    
     whiteBalanceAppliedImage = [[UIImage alloc] initWithCGImage:effectedCgImage];
     
-	// 作成したデータを解放する
-	CGImageRelease(effectedCgImage);
-	CFRelease(effectedDataProvider);
-	CFRelease(effectedData);
-	CFRelease(data);
+    // 作成したデータを解放する
+    CGImageRelease(effectedCgImage);
+    CFRelease(effectedDataProvider);
+    CFRelease(effectedData);
+    CFRelease(data);
     CFRelease(mutableData);
     
+    
+    
     [whitebalanceImageView setImage:whiteBalanceAppliedImage];
+    
+    
     //[whitebalanceImageView setNeedsDisplay];
+}
+- (void)processLevels
+{
+    
+}
+
+- (void)processSaturation
+{
+    
 }
 
 - (void)didReceiveMemoryWarning

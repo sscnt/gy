@@ -53,6 +53,14 @@ typedef NS_ENUM(NSInteger, KnobId){
     CGFloat knobDefaultPosY;
     CGFloat screenWidth;
     CGFloat screenHeight;
+    
+    NSInteger wbRedWeight;
+    NSInteger wbBlueWeight;
+    NSInteger lvHighWeight;
+    NSInteger lvMidWeight;
+    NSInteger lvLowWeight;
+    NSInteger stSaturationWeight;
+    NSInteger stVibranceWeight;
 }
 
 @property (nonatomic, strong) UIImage* originalImage;
@@ -65,7 +73,10 @@ typedef NS_ENUM(NSInteger, KnobId){
 - (void)layoutLevelsEditor;
 - (void)layoutSaturationEditor;
 
-- (void)processWhiteBalanceRed:(NSInteger)redWeight Blue:(NSInteger)blueWeight;
+- (void)cancelProcessing;
+- (void)processWhiteBalance;
+- (void)processLevels;
+- (void)processSaturation;
 
 - (void)resizeOriginalImage;
 
