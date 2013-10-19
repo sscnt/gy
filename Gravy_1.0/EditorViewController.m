@@ -86,6 +86,9 @@
     levelsAppliedImage = originalImageResized;
     saturationAppliedImage = originalImageResized;
     
+    processRunning = NO;
+    dragStarted = NO;
+    
     wbBlueWeight = 0;
     wbRedWeight = 0;
     lvHighWeight = 255;
@@ -227,6 +230,8 @@
 
 - (void)didDragView:(UIPanGestureRecognizer *)sender
 {
+    dragStarted = YES;
+    
     UIView *targetView = sender.view;
     CGPoint p = [sender translationInView:targetView];
     CGFloat deltaX = targetView.center.x + p.x;
@@ -397,141 +402,157 @@
 
 - (void)processLevels
 {
-    
-    // CGImageを取得する
-    CGImageRef cgImage;
-    cgImage = whiteBalanceAppliedImage.CGImage;
-    
-    
-    // 画像情報を取得する
-    size_t width;
-    size_t height;
-    size_t bitsPerComponent;
-    size_t bitsPerPixel;
-    size_t bytesPerRow;
-    CGColorSpaceRef colorSpace;
-    CGBitmapInfo bitmapInfo;
-    bool shouldInterpolate;
-    CGColorRenderingIntent intent;
-    width = CGImageGetWidth(cgImage);
-    height = CGImageGetHeight(cgImage);
-    bitsPerComponent = CGImageGetBitsPerComponent(cgImage);
-    bitsPerPixel = CGImageGetBitsPerPixel(cgImage);
-    bytesPerRow = CGImageGetBytesPerRow(cgImage);
-    colorSpace = CGImageGetColorSpace(cgImage);
-    bitmapInfo = CGImageGetBitmapInfo(cgImage);
-    shouldInterpolate = CGImageGetShouldInterpolate(cgImage);
-    intent = CGImageGetRenderingIntent(cgImage);
-    
-    // データプロバイダを取得する
-    CGDataProviderRef dataProvider = CGImageGetDataProvider(cgImage);
-    
-    
-    // ビットマップデータを取得する
-    CFDataRef data = CGDataProviderCopyData(dataProvider);
-    CFMutableDataRef mutableData = CFDataCreateMutableCopy(0, 0, data);
-    UInt8* buffer = (UInt8*)CFDataGetMutableBytePtr(mutableData);
-    
-    NSInteger diffHighAndMid = lvHighWeight - lvMidWeight;
-    NSInteger diffMidAndLow = lvMidWeight - lvLowWeight;
-
-    
-    // ビットマップに効果を与える
-    NSUInteger i, j;
-    for (j = 0 ; j < 1; j++)
-    {
-        for (i = 0; i < width; i++)
-        {
-            
-            // ピクセルのポインタを取得する
-            UInt8* tmp = buffer + j * bytesPerRow + i * 4;
-            
-            // RGBの値を取得する
-            UInt8 r, g, b;
-            float y, u, v, _r, _g, _b, _y;
-            r = *(tmp + 0);
-            g = *(tmp + 1);
-            b = *(tmp + 2);
-            
-            _r = (float)r * 0.8588f + 16.0f;
-            _g = (float)g * 0.8588f + 16.0f;
-            _b = (float)b * 0.8588f + 16.0f;
-            
-            
-            
-            y = 0.299 * _r + 0.587 * _g + 0.114 * _b;
-            u = -0.169 * _r - 0.331 * _g + 0.500 * _b;
-            v = 0.500 * _r - 0.419 * _g - 0.081 * _b;
-            
-            
-            y = MAX(16.0f, MIN(235.0f, y));
-            u = MAX(-112.0f, MIN(112.0f, u));
-            v = MAX(-112.0f, MIN(112.0f, v));
-            
-            
-            if(y >= (float)lvMidWeight){
-                _y = (y - (float)lvMidWeight) * 127.0f;
-                _y = (_y / (float)diffHighAndMid) + 127.0f;
-                
-            } else {
-                _y = y * 127.0f;
-                _y = (_y / (float)diffMidAndLow);
-            }
-            
-
-            
-            _r = 1.000f * _y + 1.402f * v - 16.0f;
-            _g = 1.000f * _y - 0.344f * u - 0.714f * v - 16.0f;
-            _b = 1.000f * _y + 1.772f * u - 16.0f;
-                
-            _r *= 1.164;
-            _g *= 1.164;
-            _b *= 1.164;
-            
-            
-            _r = MAX(0.0f, MIN(255.0f, _r));
-            _g = MAX(0.0f, MIN(255.0f, _g));
-            _b = MAX(0.0f, MIN(255.0f, _b));
-            
-            r = (UInt8)roundf(_r);
-            g = (UInt8)roundf(_g);
-            b = (UInt8)roundf(_b);
-            
-            
-            
-            // 輝度の値をRGB値として設定する
-            *(tmp + 0) = r;
-            *(tmp + 1) = g;
-            *(tmp + 2) = b;
-        }
+    dragStarted = NO;
+    if(processRunning){
+        return;
     }
+    processRunning = YES;
     
-    // 効果を与えたデータを作成する
-    CFDataRef effectedData;
-    effectedData = CFDataCreate(NULL, buffer, CFDataGetLength(data));
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        // CGImageを取得する
+        CGImageRef cgImage;
+        cgImage = whiteBalanceAppliedImage.CGImage;
+        
+        
+        // 画像情報を取得する
+        size_t width;
+        size_t height;
+        size_t bitsPerComponent;
+        size_t bitsPerPixel;
+        size_t bytesPerRow;
+        CGColorSpaceRef colorSpace;
+        CGBitmapInfo bitmapInfo;
+        bool shouldInterpolate;
+        CGColorRenderingIntent intent;
+        width = CGImageGetWidth(cgImage);
+        height = CGImageGetHeight(cgImage);
+        bitsPerComponent = CGImageGetBitsPerComponent(cgImage);
+        bitsPerPixel = CGImageGetBitsPerPixel(cgImage);
+        bytesPerRow = CGImageGetBytesPerRow(cgImage);
+        colorSpace = CGImageGetColorSpace(cgImage);
+        bitmapInfo = CGImageGetBitmapInfo(cgImage);
+        shouldInterpolate = CGImageGetShouldInterpolate(cgImage);
+        intent = CGImageGetRenderingIntent(cgImage);
+        
+        // データプロバイダを取得する
+        CGDataProviderRef dataProvider = CGImageGetDataProvider(cgImage);
+        
+        
+        // ビットマップデータを取得する
+        CFDataRef data = CGDataProviderCopyData(dataProvider);
+        CFMutableDataRef mutableData = CFDataCreateMutableCopy(0, 0, data);
+        UInt8* buffer = (UInt8*)CFDataGetMutableBytePtr(mutableData);
+        
+        NSInteger diffHighAndMid = lvHighWeight - lvMidWeight;
+        NSInteger diffMidAndLow = lvMidWeight - lvLowWeight;
+        
+        float dblMid = 1.0f / (float)diffHighAndMid;
+        float dblLow = 1.0f / (float)diffMidAndLow;
+        
+        float _lvMidWeight = (float)lvMidWeight;
+        
+        
+        // ビットマップに効果を与える
+        NSUInteger i, j;
+        for (j = 0 ; j < height; j++)
+        {
+        
+            for (i = 0; i < width; i++)
+            {
+                if(dragStarted){
+                    processRunning = NO;
+                    return;
+                }
+                
+                // ピクセルのポインタを取得する
+                UInt8* tmp = buffer + j * bytesPerRow + i * 4;
+                
+                // RGBの値を取得する
+                UInt8 r, g, b;
+                float y, u, v, _r, _g, _b, _y;
+                r = *(tmp + 0);
+                g = *(tmp + 1);
+                b = *(tmp + 2);
+                
+                _r = (float)r * 0.8588f + 16.0f;
+                _g = (float)g * 0.8588f + 16.0f;
+                _b = (float)b * 0.8588f + 16.0f;
+                
+                
+                
+                y = 0.299 * _r + 0.587 * _g + 0.114 * _b;
+                u = -0.169 * _r - 0.331 * _g + 0.500 * _b;
+                v = 0.500 * _r - 0.419 * _g - 0.081 * _b;
+                
+                
+                if(y >= _lvMidWeight){
+                    _y = (y - _lvMidWeight) * 127.0f * dblMid + 127.0f;
+                } else {
+                    _y = y * 127.0f * dblLow;
+                }
+                
+                
+                
+                _r = 1.000f * _y + 1.402f * v - 16.0f;
+                _g = 1.000f * _y - 0.344f * u - 0.714f * v - 16.0f;
+                _b = 1.000f * _y + 1.772f * u - 16.0f;
+                
+                _r *= 1.164;
+                _g *= 1.164;
+                _b *= 1.164;
+                
+                
+                _r = MAX(0.0f, MIN(255.0f, _r));
+                _g = MAX(0.0f, MIN(255.0f, _g));
+                _b = MAX(0.0f, MIN(255.0f, _b));
+                
+                r = (UInt8)roundf(_r);
+                g = (UInt8)roundf(_g);
+                b = (UInt8)roundf(_b);
+                
+                
+                // 輝度の値をRGB値として設定する
+                *(tmp + 0) = r;
+                *(tmp + 1) = g;
+                *(tmp + 2) = b;
+            }
+        }
+        
+        // 効果を与えたデータを作成する
+        CFDataRef effectedData;
+        effectedData = CFDataCreate(NULL, buffer, CFDataGetLength(data));
+        
+        // 効果を与えたデータプロバイダを作成する
+        CGDataProviderRef effectedDataProvider;
+        effectedDataProvider = CGDataProviderCreateWithCFData(effectedData);
+        
+        // 画像を作成する
+        CGImageRef effectedCgImage = CGImageCreate(
+                                                   width, height,
+                                                   bitsPerComponent, bitsPerPixel, bytesPerRow,
+                                                   colorSpace, bitmapInfo, effectedDataProvider,
+                                                   NULL, shouldInterpolate, intent);
+        
+        
+        levelsAppliedImage = [[UIImage alloc] initWithCGImage:effectedCgImage];
+        
+        // 作成したデータを解放する
+        CGImageRelease(effectedCgImage);
+        CFRelease(effectedDataProvider);
+        CFRelease(effectedData);
+        CFRelease(data);
+        CFRelease(mutableData);
+        
+        
+        
+        //メインスレッド
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [levelsImageView setImage:levelsAppliedImage];
+            processRunning = NO;
+        });
+    });
     
-    // 効果を与えたデータプロバイダを作成する
-    CGDataProviderRef effectedDataProvider;
-    effectedDataProvider = CGDataProviderCreateWithCFData(effectedData);
-    
-    // 画像を作成する
-    CGImageRef effectedCgImage = CGImageCreate(
-                                               width, height,
-                                               bitsPerComponent, bitsPerPixel, bytesPerRow,
-                                               colorSpace, bitmapInfo, effectedDataProvider,
-                                               NULL, shouldInterpolate, intent);
-    
-    
-    levelsAppliedImage = [[UIImage alloc] initWithCGImage:effectedCgImage];
-    
-    // 作成したデータを解放する
-    CGImageRelease(effectedCgImage);
-    CFRelease(effectedDataProvider);
-    CFRelease(effectedData);
-    CFRelease(data);
-    CFRelease(mutableData);
-    
-    [levelsImageView setImage:levelsAppliedImage];
     
 }
 

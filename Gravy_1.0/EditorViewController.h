@@ -60,6 +60,9 @@ typedef NS_ENUM(NSInteger, KnobId){
     NSInteger lvLowWeight;
     NSInteger stSaturationWeight;
     NSInteger stVibranceWeight;
+    
+    BOOL processRunning;
+    BOOL dragStarted;
 }
 
 @property (nonatomic, strong) UIImage* originalImage;
