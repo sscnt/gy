@@ -237,10 +237,12 @@
     if(targetView.tag == KnobIdWhiteBalance){
         wbRedWeight = targetView.center.y - knobDefaultPosY;
         wbBlueWeight = targetView.center.x - knobDefaultPosX;
-        wbRedWeight /= 4.0f;
-        wbBlueWeight /= 4.0f;
+        wbRedWeight /= 4;
+        wbBlueWeight /= 4;
         [self processWhiteBalance];
     } else if(targetView.tag == KnobIdLevels){
+        lvMidWeight = (NSInteger)roundf((targetView.center.x - knobDefaultPosX) / 3.0f) + 127;
+        lvMidWeight = MAX(0, MIN(255, lvMidWeight));
         [self processLevels];
     }
     
@@ -432,10 +434,11 @@
     
     NSInteger diffHighAndMid = lvHighWeight - lvMidWeight;
     NSInteger diffMidAndLow = lvMidWeight - lvLowWeight;
+
     
     // ビットマップに効果を与える
     NSUInteger i, j;
-    for (j = 0 ; j < height; j++)
+    for (j = 0 ; j < 1; j++)
     {
         for (i = 0; i < width; i++)
         {
@@ -445,24 +448,55 @@
             
             // RGBの値を取得する
             UInt8 r, g, b;
-            float y;
+            float y, u, v, _r, _g, _b, _y;
             r = *(tmp + 0);
             g = *(tmp + 1);
             b = *(tmp + 2);
             
-            y = 0.298912 * r + 0.586611 * g + 0.114478 * b;
+            _r = (float)r * 0.8588f + 16.0f;
+            _g = (float)g * 0.8588f + 16.0f;
+            _b = (float)b * 0.8588f + 16.0f;
+            
+            
+            
+            y = 0.299 * _r + 0.587 * _g + 0.114 * _b;
+            u = -0.169 * _r - 0.331 * _g + 0.500 * _b;
+            v = 0.500 * _r - 0.419 * _g - 0.081 * _b;
+            
+            
+            y = MAX(16.0f, MIN(235.0f, y));
+            u = MAX(-112.0f, MIN(112.0f, u));
+            v = MAX(-112.0f, MIN(112.0f, v));
+            
+            
             if(y >= (float)lvMidWeight){
-                float _y = (y - (float)lvMidWeight) * 127.0f;
-                int s = (int)roundf(_y / diffHighAndMid);
-            }else{
+                _y = (y - (float)lvMidWeight) * 127.0f;
+                _y = (_y / (float)diffHighAndMid) + 127.0f;
                 
+            } else {
+                _y = y * 127.0f;
+                _y = (_y / (float)diffMidAndLow);
             }
             
- 
+
             
-            r = MAX(0, MIN(255, r + wbRedWeight));
-            b = MAX(0, MIN(255, b + wbBlueWeight));
-            g = MAX(0, MIN(255, g + 0));
+            _r = 1.000f * _y + 1.402f * v - 16.0f;
+            _g = 1.000f * _y - 0.344f * u - 0.714f * v - 16.0f;
+            _b = 1.000f * _y + 1.772f * u - 16.0f;
+                
+            _r *= 1.164;
+            _g *= 1.164;
+            _b *= 1.164;
+            
+            
+            _r = MAX(0.0f, MIN(255.0f, _r));
+            _g = MAX(0.0f, MIN(255.0f, _g));
+            _b = MAX(0.0f, MIN(255.0f, _b));
+            
+            r = (UInt8)roundf(_r);
+            g = (UInt8)roundf(_g);
+            b = (UInt8)roundf(_b);
+            
             
             
             // 輝度の値をRGB値として設定する
@@ -488,7 +522,7 @@
                                                NULL, shouldInterpolate, intent);
     
     
-    whiteBalanceAppliedImage = [[UIImage alloc] initWithCGImage:effectedCgImage];
+    levelsAppliedImage = [[UIImage alloc] initWithCGImage:effectedCgImage];
     
     // 作成したデータを解放する
     CGImageRelease(effectedCgImage);
@@ -497,12 +531,7 @@
     CFRelease(data);
     CFRelease(mutableData);
     
-    
-    
-    [whitebalanceImageView setImage:whiteBalanceAppliedImage];
-    
-    
-    //[whitebalanceImageView setNeedsDisplay];
+    [levelsImageView setImage:levelsAppliedImage];
     
 }
 
