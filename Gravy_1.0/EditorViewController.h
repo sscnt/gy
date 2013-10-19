@@ -48,7 +48,6 @@ typedef NS_ENUM(NSInteger, KnobId){
     UIKnobView* whiteBalanceKnobView;
     UIKnobView* levelsKnobView;
     UIKnobView* saturationKnobView;
-    UIPanGestureRecognizer* recognizer;
     CGFloat knobDefaultPosX;
     CGFloat knobDefaultPosY;
     CGFloat screenWidth;

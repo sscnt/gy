@@ -86,11 +86,10 @@
     levelsAppliedImage = originalImageResized;
     saturationAppliedImage = originalImageResized;
     
-    recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
-    
     wbBlueWeight = 0;
     wbRedWeight = 0;
-    lvHighWeight = 0;
+    lvHighWeight = 255;
+    lvMidWeight = 127;
     lvLowWeight = 0;
     stSaturationWeight = 0;
     stVibranceWeight = 0;
@@ -116,6 +115,8 @@
     whitebalanceImageView = [[UIThumbnailView alloc] initWithImage:whiteBalanceAppliedImage];
     [whitebalanceImageView setY:imageY];
     [wrapper addSubview:whitebalanceImageView];
+    
+    UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
     
     // knob
     whiteBalanceKnobView = [[UIKnobView alloc] init];
@@ -146,6 +147,9 @@
     [wrapper addSubview:levelsImageView];
     [wrapper setX:320.0f];
     
+    
+    UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
+    
     // knob
     levelsKnobView = [[UIKnobView alloc] init];
     levelsKnobView.tag = KnobIdLevels;
@@ -174,6 +178,8 @@
     [saturationImageView setY:imageY];
     [wrapper addSubview:saturationImageView];
     [wrapper setX:640.0f];
+    
+    UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
     
     // knob
     saturationKnobView = [[UIKnobView alloc] init];
@@ -226,17 +232,15 @@
     CGFloat deltaX = targetView.center.x + p.x;
     CGFloat deltaY = targetView.center.y + p.y;
     deltaY = MAX(0, MIN(screenHeight, deltaY));
-    dlog(@"a");
+    deltaX = MAX(0, MIN(screenWidth, deltaX));
     
     if(targetView.tag == KnobIdWhiteBalance){
-        deltaX = MAX(0, MIN(screenWidth, deltaX));
         wbRedWeight = targetView.center.y - knobDefaultPosY;
         wbBlueWeight = targetView.center.x - knobDefaultPosX;
         wbRedWeight /= 4.0f;
         wbBlueWeight /= 4.0f;
         [self processWhiteBalance];
     } else if(targetView.tag == KnobIdLevels){
-        deltaX = MAX(screenWidth, MIN(screenWidth * 2, deltaX));
         [self processLevels];
     }
     
@@ -426,8 +430,10 @@
     CFMutableDataRef mutableData = CFDataCreateMutableCopy(0, 0, data);
     UInt8* buffer = (UInt8*)CFDataGetMutableBytePtr(mutableData);
     
-    // ビットマップに効果を与える
+    NSInteger diffHighAndMid = lvHighWeight - lvMidWeight;
+    NSInteger diffMidAndLow = lvMidWeight - lvLowWeight;
     
+    // ビットマップに効果を与える
     NSUInteger i, j;
     for (j = 0 ; j < height; j++)
     {
@@ -439,9 +445,20 @@
             
             // RGBの値を取得する
             UInt8 r, g, b;
+            float y;
             r = *(tmp + 0);
             g = *(tmp + 1);
             b = *(tmp + 2);
+            
+            y = 0.298912 * r + 0.586611 * g + 0.114478 * b;
+            if(y >= (float)lvMidWeight){
+                float _y = (y - (float)lvMidWeight) * 127.0f;
+                int s = (int)roundf(_y / diffHighAndMid);
+            }else{
+                
+            }
+            
+ 
             
             r = MAX(0, MIN(255, r + wbRedWeight));
             b = MAX(0, MIN(255, b + wbBlueWeight));
