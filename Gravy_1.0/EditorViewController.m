@@ -199,12 +199,18 @@
 
 - (void)didClickNextButton
 {
+    processRunning = NO;
+    dragStarted = NO;
     if (state == EditorStateWhiteBalance) {
         state = EditorStateLevels;
+        [levelsImageView setImage:whiteBalanceAppliedImage];
         [self processLevels];
     } else if (state == EditorStateLevels) {
         state = EditorStateSaturation;
+        [saturationImageView setImage:levelsAppliedImage];
         [self processSaturation];
+    } else if (state == EditorStateSaturation) {
+        state = EditorStateSharing;
     }
     pageControl.currentPage++;
     [self changePageControl];
@@ -220,9 +226,9 @@
     if (state == EditorStateLevels){
         state = EditorStateWhiteBalance;
     } else if (state == EditorStateSaturation){
-        
+        state = EditorStateLevels;
     } else if (state == EditorStateSharing){
-        
+        state = EditorStateSaturation;
     }
     pageControl.currentPage--;
     [self changePageControl];
@@ -468,7 +474,7 @@
                 if(dragStarted){
                     processRunning = NO;
                     CFRelease(data);
-                    CFRelease(mutableData);                    
+                    CFRelease(mutableData);
                     return;
                 }
                 
