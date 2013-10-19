@@ -6,9 +6,9 @@
 //  Copyright (c) 2013年 SSC. All rights reserved.
 //
 
-#import "UIKnobView.h"
+#import "UISliderView.h"
 
-@implementation UIKnobView
+@implementation UISliderView
 
 - (id)init
 {
@@ -21,7 +21,10 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.backgroundColor = [UIColor colorWithRed:1.0f green:0.0f blue:0.0f alpha:1.0f];
+        self.backgroundColor = [UIColor clearColor];
+        UIImageView* sliderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"test4.png"]];
+        sliderView.center = self.center;
+        [self addSubview:sliderView];
     }
     return self;
 }

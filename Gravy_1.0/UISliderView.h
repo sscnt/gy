@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIKnobView : UIView
+@interface UISliderView : UIView
 
 @end

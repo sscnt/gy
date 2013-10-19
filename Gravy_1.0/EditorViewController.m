@@ -88,7 +88,7 @@
     
     processRunning = NO;
     dragStarted = NO;
-    
+
     wbBlueWeight = 0;
     wbRedWeight = 0;
     lvHighWeight = 255;
@@ -122,13 +122,13 @@
     UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
     
     // knob
-    whiteBalanceKnobView = [[UIKnobView alloc] init];
+    whiteBalanceKnobView = [[UISliderView alloc] init];
     whiteBalanceKnobView.tag = KnobIdWhiteBalance;
     [whiteBalanceKnobView addGestureRecognizer:recognizer];
-    knobDefaultPosX = [UIScreen screenSize].width  / 2.0f - whiteBalanceKnobView.bounds.size.width / 2.0f;
-    knobDefaultPosY = imageY + whiteBalanceAppliedImage.size.height / 2.0f - whiteBalanceKnobView.bounds.size.height / 2.0f;
-    [whiteBalanceKnobView setX:knobDefaultPosX];
-    [whiteBalanceKnobView setY:knobDefaultPosY];
+    knobDefaultCenterX = [UIScreen screenSize].width / 2.0f;
+    knobDefaultCenterY = imageY + whiteBalanceAppliedImage.size.height / 2.0f;
+    CGPoint center = CGPointMake(knobDefaultCenterX, knobDefaultCenterY);
+    whiteBalanceKnobView.center = center;
     [wrapper addSubview:whiteBalanceKnobView];
     
     [scrollView addSubview:wrapper];
@@ -154,11 +154,11 @@
     UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
     
     // knob
-    levelsKnobView = [[UIKnobView alloc] init];
+    levelsKnobView = [[UISliderView alloc] init];
     levelsKnobView.tag = KnobIdLevels;
     [levelsKnobView addGestureRecognizer:recognizer];
-    [levelsKnobView setX:knobDefaultPosX];
-    [levelsKnobView setY:knobDefaultPosY];
+    CGPoint center = CGPointMake(knobDefaultCenterX, knobDefaultCenterY);
+    levelsKnobView.center = center;
     [wrapper addSubview:levelsKnobView];
     
     
@@ -185,11 +185,11 @@
     UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
     
     // knob
-    saturationKnobView = [[UIKnobView alloc] init];
+    saturationKnobView = [[UISliderView alloc] init];
     saturationKnobView.tag = KnobIdSaturation;
     [saturationKnobView addGestureRecognizer:recognizer];
-    [saturationKnobView setX:knobDefaultPosX];
-    [saturationKnobView setY:knobDefaultPosY];
+    CGPoint center = CGPointMake(knobDefaultCenterX, knobDefaultCenterY);
+    saturationKnobView.center = center;
     [wrapper addSubview:saturationKnobView];
     
     [scrollView addSubview:wrapper];
@@ -246,14 +246,21 @@
     deltaX = MAX(0, MIN(screenWidth, deltaX));
     
     if(targetView.tag == KnobIdWhiteBalance){
-        wbRedWeight = targetView.center.y - knobDefaultPosY;
-        wbBlueWeight = targetView.center.x - knobDefaultPosX;
+        wbRedWeight = targetView.center.y - knobDefaultCenterY;
+        wbBlueWeight = targetView.center.x - knobDefaultCenterX;
         wbRedWeight /= 4;
         wbBlueWeight /= 4;
         [self processWhiteBalance];
     } else if(targetView.tag == KnobIdLevels){
-        lvMidWeight = (NSInteger)roundf((targetView.center.x - knobDefaultPosX) / 3.0f) + 127;
+        lvMidWeight = (NSInteger)roundf((targetView.center.x - knobDefaultCenterX) / 3.0f) + 127;
         lvMidWeight = MAX(0, MIN(255, lvMidWeight));
+        NSInteger diff = (NSInteger)roundf((targetView.center.y - knobDefaultCenterY) / 3.0f);
+        lvHighWeight = histHighestValue - abs(diff);
+        if(diff < 0){
+            lvLowWeight = histLowestValue + abs(diff);
+        }
+        lvHighWeight = MAX(lvMidWeight, MIN(255, lvHighWeight));
+        lvLowWeight = MAX(0, MIN(lvMidWeight, lvLowWeight));
         [self processLevels];
     }
     
@@ -293,23 +300,17 @@
         CGFloat zoom = [UIScreen screenSize].width * scale / self.originalImage.size.width;
         CIImage* filteredImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(zoom, zoom)];
         originalImageResized = [self uiImageFromCIImage:filteredImage];
+        [self makeHistogram];
     }
 }
 
-- (UIImage*)uiImageFromCIImage:(CIImage*)ciImage
+- (void)makeHistogram
 {
-    CIContext *ciContext = [CIContext contextWithOptions:@{kCIContextUseSoftwareRenderer : @NO }];
-    CGImageRef imgRef = [ciContext createCGImage:ciImage fromRect:[ciImage extent]];
-    UIImage *newImg  = [UIImage imageWithCGImage:imgRef scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
-    CGImageRelease(imgRef);
-    return newImg;
     
-    /* iOS6.0以降だと以下が使用可能 */
-    //  [[UIImage alloc] initWithCIImage:ciImage scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
-}
-
-- (void)processWhiteBalance
-{    
+    for(int i = 0;i  < 256;i++){
+        hist[i] = 0;
+    }
+    
     // CGImageを取得する
     CGImageRef cgImage;
     cgImage = originalImageResized.CGImage;
@@ -343,64 +344,186 @@
     CFDataRef data = CGDataProviderCopyData(dataProvider);
     CFMutableDataRef mutableData = CFDataCreateMutableCopy(0, 0, data);
     UInt8* buffer = (UInt8*)CFDataGetMutableBytePtr(mutableData);
+    UInt8* tmp;
     
-    // ビットマップに効果を与える
+    UInt8 r, g, b;
+    int _y;
+    float y, _r, _g, _b;
     
     NSUInteger i, j;
     for (j = 0 ; j < height; j++)
     {
+        
         for (i = 0; i < width; i++)
         {
             
             // ピクセルのポインタを取得する
-            UInt8* tmp = buffer + j * bytesPerRow + i * 4;
+            tmp = buffer + j * bytesPerRow + i * 4;
             
             // RGBの値を取得する
-            UInt8 r, g, b;
             r = *(tmp + 0);
             g = *(tmp + 1);
             b = *(tmp + 2);
             
-            r = MAX(0, MIN(255, r + wbRedWeight));
-            b = MAX(0, MIN(255, b + wbBlueWeight));
-            g = MAX(0, MIN(255, g + 0));
+            _r = (float)r * 0.8588f + 16.0f;
+            _g = (float)g * 0.8588f + 16.0f;
+            _b = (float)b * 0.8588f + 16.0f;
+            y = 0.299 * _r + 0.587 * _g + 0.114 * _b;
             
+            y = MAX(0.0f, MIN(255.0f, y));
+            _y = (int)y;
             
-            // 輝度の値をRGB値として設定する
-            *(tmp + 0) = r;
-            *(tmp + 1) = g;
-            *(tmp + 2) = b;
+            hist[_y] += 1;
         }
     }
     
-    // 効果を与えたデータを作成する
-    CFDataRef effectedData;
-    effectedData = CFDataCreate(NULL, buffer, CFDataGetLength(data));
+    BOOL rev = NO;
     
-    // 効果を与えたデータプロバイダを作成する
-    CGDataProviderRef effectedDataProvider;
-    effectedDataProvider = CGDataProviderCreateWithCFData(effectedData);
+    for(int i = 0;i  < 256;i++){
+        if(rev){
+            if(hist[i] != 0){
+                histLowestValue = i;
+                rev = YES;
+                i = 0;
+            }
+        } else {
+            if(hist[255 - i] == 0){
+                histHighestValue = 255 - i;
+                break;
+            }
+        }
+    }
     
-    // 画像を作成する
-    CGImageRef effectedCgImage = CGImageCreate(
-                                               width, height,
-                                               bitsPerComponent, bitsPerPixel, bytesPerRow,
-                                               colorSpace, bitmapInfo, effectedDataProvider,
-                                               NULL, shouldInterpolate, intent);
-    
-    
-    whiteBalanceAppliedImage = [[UIImage alloc] initWithCGImage:effectedCgImage];
-    
-    // 作成したデータを解放する
-    CGImageRelease(effectedCgImage);
-    CFRelease(effectedDataProvider);
-    CFRelease(effectedData);
+    lvHighWeight = histHighestValue;
+    lvLowWeight = histLowestValue;
+
     CFRelease(data);
     CFRelease(mutableData);
+}
+
+- (UIImage*)uiImageFromCIImage:(CIImage*)ciImage
+{
+    CIContext *ciContext = [CIContext contextWithOptions:@{kCIContextUseSoftwareRenderer : @NO }];
+    CGImageRef imgRef = [ciContext createCGImage:ciImage fromRect:[ciImage extent]];
+    UIImage *newImg  = [UIImage imageWithCGImage:imgRef scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
+    CGImageRelease(imgRef);
+    return newImg;
     
+    /* iOS6.0以降だと以下が使用可能 */
+    //  [[UIImage alloc] initWithCIImage:ciImage scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
+}
+
+- (void)processWhiteBalance
+{
+    dragStarted = NO;
+    if(processRunning){
+        return;
+    }
+    processRunning = YES;
     
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        // CGImageを取得する
+        CGImageRef cgImage;
+        cgImage = originalImageResized.CGImage;
+        
+        // 画像情報を取得する
+        size_t width;
+        size_t height;
+        size_t bitsPerComponent;
+        size_t bitsPerPixel;
+        size_t bytesPerRow;
+        CGColorSpaceRef colorSpace;
+        CGBitmapInfo bitmapInfo;
+        bool shouldInterpolate;
+        CGColorRenderingIntent intent;
+        width = CGImageGetWidth(cgImage);
+        height = CGImageGetHeight(cgImage);
+        bitsPerComponent = CGImageGetBitsPerComponent(cgImage);
+        bitsPerPixel = CGImageGetBitsPerPixel(cgImage);
+        bytesPerRow = CGImageGetBytesPerRow(cgImage);
+        colorSpace = CGImageGetColorSpace(cgImage);
+        bitmapInfo = CGImageGetBitmapInfo(cgImage);
+        shouldInterpolate = CGImageGetShouldInterpolate(cgImage);
+        intent = CGImageGetRenderingIntent(cgImage);
+        
+        // データプロバイダを取得する
+        CGDataProviderRef dataProvider = CGImageGetDataProvider(cgImage);
+        
+        
+        // ビットマップデータを取得する
+        CFDataRef data = CGDataProviderCopyData(dataProvider);
+        CFMutableDataRef mutableData = CFDataCreateMutableCopy(0, 0, data);
+        UInt8* buffer = (UInt8*)CFDataGetMutableBytePtr(mutableData);
+        
+        // ビットマップに効果を与える
+        
+        NSUInteger i, j;
+        for (j = 0 ; j < height; j++)
+        {
+            for (i = 0; i < width; i++)
+            {
+                if(dragStarted){
+                    processRunning = NO;
+                    CFRelease(data);
+                    CFRelease(mutableData);
+                    return;
+                }
+                
+                // ピクセルのポインタを取得する
+                UInt8* tmp = buffer + j * bytesPerRow + i * 4;
+                
+                // RGBの値を取得する
+                UInt8 r, g, b;
+                r = *(tmp + 0);
+                g = *(tmp + 1);
+                b = *(tmp + 2);
+                
+                r = MAX(0, MIN(255, r + wbRedWeight));
+                b = MAX(0, MIN(255, b + wbBlueWeight));
+                g = MAX(0, MIN(255, g + 0));
+                
+                
+                // 輝度の値をRGB値として設定する
+                *(tmp + 0) = r;
+                *(tmp + 1) = g;
+                *(tmp + 2) = b;
+            }
+        }
+        
+        // 効果を与えたデータを作成する
+        CFDataRef effectedData;
+        effectedData = CFDataCreate(NULL, buffer, CFDataGetLength(data));
+        
+        // 効果を与えたデータプロバイダを作成する
+        CGDataProviderRef effectedDataProvider;
+        effectedDataProvider = CGDataProviderCreateWithCFData(effectedData);
+        
+        // 画像を作成する
+        CGImageRef effectedCgImage = CGImageCreate(
+                                                   width, height,
+                                                   bitsPerComponent, bitsPerPixel, bytesPerRow,
+                                                   colorSpace, bitmapInfo, effectedDataProvider,
+                                                   NULL, shouldInterpolate, intent);
+        
+        
+        whiteBalanceAppliedImage = [[UIImage alloc] initWithCGImage:effectedCgImage];
+        
+        // 作成したデータを解放する
+        CGImageRelease(effectedCgImage);
+        CFRelease(effectedDataProvider);
+        CFRelease(effectedData);
+        CFRelease(data);
+        CFRelease(mutableData);
+        
+        
+        
+        //メインスレッド
+        dispatch_async(dispatch_get_main_queue(), ^{            
+            [whitebalanceImageView setImage:whiteBalanceAppliedImage];
+            processRunning = NO;
+        });
+    });
     
-    [whitebalanceImageView setImage:whiteBalanceAppliedImage];
     
     
     //[whitebalanceImageView setNeedsDisplay];
@@ -500,9 +623,9 @@
                 if(y >= _lvMidWeight){
                     _y = (y - _lvMidWeight) * 127.0f * dblMid + 127.0f;
                 } else {
-                    _y = y * 127.0f * dblLow;
+                    _y = (y - lvLowWeight) * 127.0f * dblLow;
                 }
-                
+                _y = MAX(0.0f, MIN(255.0f, _y));
                 
                 
                 _r = 1.000f * _y + 1.402f * v - 16.0f;
@@ -570,6 +693,11 @@
 - (void)processSaturation
 {
     
+}
+
+- (void)dealloc
+{
+    free(hist);
 }
 
 - (void)didReceiveMemoryWarning

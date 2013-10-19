@@ -16,7 +16,7 @@
 #import "UIWrapperView.h"
 #import "UIEditorTitleLabel.h"
 #import "UIThumbnailView.h"
-#import "UIKnobView.h"
+#import "UISliderView.h"
 
 
 typedef NS_ENUM(NSInteger, EditorState){
@@ -34,6 +34,9 @@ typedef NS_ENUM(NSInteger, KnobId){
 
 @interface EditorViewController : UIViewController <UIScrollViewDelegate>
 {
+    int hist[256];
+    int histLowestValue;
+    int histHighestValue;
     UIImageView* bgImageView;
     UIScrollView* scrollView;
     UIPageControl* pageControl;
@@ -45,11 +48,11 @@ typedef NS_ENUM(NSInteger, KnobId){
     UIImage* whiteBalanceAppliedImage;
     UIImage* levelsAppliedImage;
     UIImage* saturationAppliedImage;
-    UIKnobView* whiteBalanceKnobView;
-    UIKnobView* levelsKnobView;
-    UIKnobView* saturationKnobView;
-    CGFloat knobDefaultPosX;
-    CGFloat knobDefaultPosY;
+    UISliderView* whiteBalanceKnobView;
+    UISliderView* levelsKnobView;
+    UISliderView* saturationKnobView;
+    CGFloat knobDefaultCenterX;
+    CGFloat knobDefaultCenterY;
     CGFloat screenWidth;
     CGFloat screenHeight;
     
@@ -81,5 +84,6 @@ typedef NS_ENUM(NSInteger, KnobId){
 - (void)processSaturation;
 
 - (void)resizeOriginalImage;
+- (void)makeHistogram;
 
 @end

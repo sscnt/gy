@@ -61,6 +61,7 @@
 		5802E825180C2E5E00AA2227 /* UIScreen+Gravy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5802E824180C2E5E00AA2227 /* UIScreen+Gravy.m */; };
 		5809B4FF180EB902007670D1 /* UIWrapperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5809B4FE180EB902007670D1 /* UIWrapperView.m */; };
 		5809B503180EBAD2007670D1 /* UIEditorTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5809B502180EBAD2007670D1 /* UIEditorTitleLabel.m */; };
+		58EDFE221812DC0B00B93020 /* test4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58EDFE211812DC0B00B93020 /* test4@2x.png */; };
 		58F471A5180E5D7800C64E46 /* bottomEditorBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471A3180E5D7800C64E46 /* bottomEditorBg.png */; };
 		58F471A6180E5D7800C64E46 /* bottomEditorBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471A4180E5D7800C64E46 /* bottomEditorBg@2x.png */; };
 		58F471B5180E74B000C64E46 /* UIDockButtonBack.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F471B4180E74B000C64E46 /* UIDockButtonBack.m */; };
@@ -74,7 +75,7 @@
 		58F79120180D65E500968648 /* editor_bg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58F7911D180D65E500968648 /* editor_bg@2x.jpg */; };
 		58F79123180D696700968648 /* EditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F79122180D696700968648 /* EditorViewController.m */; };
 		58F79126180D6CCB00968648 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F79125180D6CCB00968648 /* RootViewController.m */; };
-		58FAB9C818115C4F00B95F02 /* UIKnobView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FAB9C718115C4F00B95F02 /* UIKnobView.m */; };
+		58FAB9C818115C4F00B95F02 /* UISliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FAB9C718115C4F00B95F02 /* UISliderView.m */; };
 		58FEFFD818101550008B4E8D /* UIFadeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FEFFD718101550008B4E8D /* UIFadeNavigationController.m */; };
 		58FEFFDA18101C08008B4E8D /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58FEFFD918101C08008B4E8D /* CoreImage.framework */; };
 		58FEFFDD18101D2C008B4E8D /* UIThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FEFFDC18101D2C008B4E8D /* UIThumbnailView.m */; };
@@ -164,6 +165,7 @@
 		5809B4FE180EB902007670D1 /* UIWrapperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIWrapperView.m; sourceTree = "<group>"; };
 		5809B501180EBAD2007670D1 /* UIEditorTitleLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIEditorTitleLabel.h; sourceTree = "<group>"; };
 		5809B502180EBAD2007670D1 /* UIEditorTitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIEditorTitleLabel.m; sourceTree = "<group>"; };
+		58EDFE211812DC0B00B93020 /* test4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "test4@2x.png"; sourceTree = "<group>"; };
 		58F471A3180E5D7800C64E46 /* bottomEditorBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottomEditorBg.png; sourceTree = "<group>"; };
 		58F471A4180E5D7800C64E46 /* bottomEditorBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottomEditorBg@2x.png"; sourceTree = "<group>"; };
 		58F471B3180E74B000C64E46 /* UIDockButtonBack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDockButtonBack.h; sourceTree = "<group>"; };
@@ -181,8 +183,8 @@
 		58F79122180D696700968648 /* EditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditorViewController.m; sourceTree = "<group>"; };
 		58F79124180D6CCB00968648 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		58F79125180D6CCB00968648 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
-		58FAB9C618115C4F00B95F02 /* UIKnobView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIKnobView.h; sourceTree = "<group>"; };
-		58FAB9C718115C4F00B95F02 /* UIKnobView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIKnobView.m; sourceTree = "<group>"; };
+		58FAB9C618115C4F00B95F02 /* UISliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISliderView.h; sourceTree = "<group>"; };
+		58FAB9C718115C4F00B95F02 /* UISliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UISliderView.m; sourceTree = "<group>"; };
 		58FEFFD618101550008B4E8D /* UIFadeNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIFadeNavigationController.h; sourceTree = "<group>"; };
 		58FEFFD718101550008B4E8D /* UIFadeNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIFadeNavigationController.m; sourceTree = "<group>"; };
 		58FEFFD918101C08008B4E8D /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
@@ -376,6 +378,7 @@
 		5802E81B180C2A2F00AA2227 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				58EDFE211812DC0B00B93020 /* test4@2x.png */,
 				58F471BF180E7B0500C64E46 /* icon_back.png */,
 				58F471C0180E7B0500C64E46 /* icon_back@2x.png */,
 				58F471BB180E7AFF00C64E46 /* icon_next.png */,
@@ -422,8 +425,8 @@
 				5809B502180EBAD2007670D1 /* UIEditorTitleLabel.m */,
 				58FEFFDB18101D2C008B4E8D /* UIThumbnailView.h */,
 				58FEFFDC18101D2C008B4E8D /* UIThumbnailView.m */,
-				58FAB9C618115C4F00B95F02 /* UIKnobView.h */,
-				58FAB9C718115C4F00B95F02 /* UIKnobView.m */,
+				58FAB9C618115C4F00B95F02 /* UISliderView.h */,
+				58FAB9C718115C4F00B95F02 /* UISliderView.m */,
 			);
 			name = Editor;
 			sourceTree = "<group>";
@@ -543,6 +546,7 @@
 				5802E81F180C2B5C00AA2227 /* bg-568h@2x.jpg in Resources */,
 				5802E7C9180C0F1400AA2227 /* InfoPlist.strings in Resources */,
 				580032B2180D275F0021F73C /* icon_photos@2x.png in Resources */,
+				58EDFE221812DC0B00B93020 /* test4@2x.png in Resources */,
 				5802E809180C0F9800AA2227 /* icon-80.png in Resources */,
 				580032A9180D16FD0021F73C /* rounded-mplus-1p-regular.ttf in Resources */,
 				58F471C2180E7B0500C64E46 /* icon_back@2x.png in Resources */,
@@ -589,7 +593,7 @@
 				5802E7CB180C0F1400AA2227 /* main.m in Sources */,
 				580032B6180D28170021F73C /* UIDockButtonBase.m in Sources */,
 				58003299180D10CE0021F73C /* UIView+Gravy.m in Sources */,
-				58FAB9C818115C4F00B95F02 /* UIKnobView.m in Sources */,
+				58FAB9C818115C4F00B95F02 /* UISliderView.m in Sources */,
 				58003296180D10B10021F73C /* UIDockView.m in Sources */,
 				580032BC180D2C1C0021F73C /* UIDockButtonPhotos.m in Sources */,
 				58F471B5180E74B000C64E46 /* UIDockButtonBack.m in Sources */,
