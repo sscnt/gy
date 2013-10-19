@@ -695,11 +695,6 @@
     
 }
 
-- (void)dealloc
-{
-    free(hist);
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
