@@ -25,7 +25,6 @@
 
 - (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
 {
-    dlog(@"b");
     // ここで、タッチが開始されたときの処理を実装します。
     [self.delegate touchesBegan:self];
     

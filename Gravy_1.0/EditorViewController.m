@@ -291,7 +291,6 @@
 - (void)touchesBegan:(UIThumbnailView *)view
 {
     view.image = originalImageResized;
-    dlog(@"a");
 }
 
 - (void)touchesEnded:(UIThumbnailView *)view
