@@ -28,14 +28,14 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     state = EditorStateWhiteBalance;
-    screenHeight = [UIScreen screenSize].height;
-    screenWidth = [UIScreen screenSize].width;
+    screenHeight = [UIScreen height];
+    screenWidth = [UIScreen width];
     
     // image processing
     [self resizeOriginalImage];
     
     //// bg.png
-    if([UIScreen height] >= 568){
+    if(screenHeight >= 568){
         bgImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"editor_bg-568h.jpg"]];
     }else{
         bgImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"editor_bg.jpg"]];
@@ -242,7 +242,8 @@
     CGPoint p = [sender translationInView:targetView];
     CGFloat deltaX = targetView.center.x + p.x;
     CGFloat deltaY = targetView.center.y + p.y;
-    deltaY = MAX(0, MIN(screenHeight, deltaY));
+    CGFloat rest = (screenHeight - 480) * 0.5;
+    deltaY = MAX(knobDefaultCenterY - screenWidth * 0.5 - rest, MIN(knobDefaultCenterY + screenWidth * 0.5 + rest,  deltaY));
     deltaX = MAX(0, MIN(screenWidth, deltaX));
     
     if(targetView.tag == KnobIdWhiteBalance){
