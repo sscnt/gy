@@ -263,8 +263,8 @@
         lvLowWeight = MAX(0, MIN(lvMidWeight, lvLowWeight));
         [self processLevels];
     } else if(targetView.tag == KnobIdSaturation){
-        stSaturationWeight = -(NSInteger)roundf((targetView.center.x - knobDefaultCenterX) * 1.50f);
-        stVibranceWeight = (NSInteger)roundf((targetView.center.y - knobDefaultCenterY) * 1.50f);
+        stSaturationWeight = -(NSInteger)roundf((targetView.center.x - knobDefaultCenterX));
+        stVibranceWeight = (NSInteger)roundf((targetView.center.y - knobDefaultCenterY));
         [self processSaturation];
     }
     
@@ -743,9 +743,12 @@
         // RGBの値を取得する
         UInt8 r, g, b;
         int hi;
-        float h, s, v, _r, _g, _b, max, min, multi, _multi, f, p, q, t, spx, spy;
-        multi = 1.0f / 60.0f;
-        _multi =  1.0f / 255.0f;
+        float h, s, v, _r, _g, _b, max, min,m6, m60, m255, f, p, q, t, spx, spy, _s, b1, b2, b3, b4, x2, x3;
+        m6 = 1.0f/ 6.0f;
+        m60 = 1.0f / 60.0f;
+        m255 =  1.0f / 255.0f;
+        
+        dlog(@"%d", stVibranceWeight);
         
         
         for(int i = 0;i < 1000;i++){
@@ -755,9 +758,22 @@
                 CFRelease(mutableData);
                 return;
             }
-            t = (float)i * 0.001;
-            spx = 2.0f * t * (1.0f - t) * 164.0f + t * t * 255.0f;
-            spy = 2.0f * t * (1.0f - t) * (float)abs(stSaturationWeight);
+            if(stVibranceWeight >= 0){
+                t = (float)i * 0.001;
+                spx = 2.0f * t * (1.0f - t) * 200.0f + t * t * 255.0f;
+                spy = 2.0f * t * (1.0f - t) * (float)abs(stSaturationWeight) + t * t * MAX(0.0f, (float)(stVibranceWeight));
+            } else {
+                t = (float)i * 0.001;
+                b1 = (-1.0f * t * t * t + 3.0f * t * t - 3.0f * t + 1.0f) * m6;
+                b2 = (3.0f * t * t * t - 6.0f * t * t + 4.0f) * m6;
+                b3 = (-3.0f * t * t * t + 3.0f * t * t - 3.0f * t + 1.0f) * m6;
+                b4 = (t * t * t) * m6;
+                stVibranceWeight = MIN(127, stVibranceWeight);
+                x2 = 127.0f - (float)stVibranceWeight;
+                x3 = 127.0f + (float)stVibranceWeight;
+                spx = x2 * b2 + x3 * b3 + 255.0f * b4;
+                spy = (float)abs(stSaturationWeight) * (b2 + b3);
+            }
             spx = MAX(0.0f, MIN(255.0f, spx));
             spy = MAX(0.0f, MIN(255.0f, spy));
             saturationSpline[(int)roundf(spx)] = spy;
@@ -765,21 +781,22 @@
         }
         
         
-        for(int i = 0;i < 1000;i++){
+        for(int i = 0;i < 0;i++){
             if(dragStarted){
                 processRunning = NO;
                 CFRelease(data);
                 CFRelease(mutableData);
                 return;
             }
-            t = (float)i * 0.001;
-            spx = 2.0f * t * (1.0f - t) * 180.0f + t * t * 361.0f;
+            t = (float)i * 0.0002;
+            spx = 2.0f * t * (1.0f - t) * 180.0f + t * t * 360.0f;
             spy = 2.0f * t * (1.0f - t) * (float)abs(stVibranceWeight);
-            spx = MAX(0.0f, MIN(361.0f, spx));
+            spx = MAX(0.0f, MIN(360.0f, spx));
             spy = MAX(0.0f, MIN(255.0f, spy));
             vibranceSpline[(int)roundf(spx)] = spy;
             
         }
+        
         
         // ビットマップに効果を与える
         NSUInteger i, j;
@@ -826,24 +843,27 @@
                 if(max == 0.0f) s = 0.0f;
                 v = max;
                 
+                
                 if(stSaturationWeight > 0){
-                    s += saturationSpline[(int)roundf(s)];
+                    _s = saturationSpline[(int)roundf(s)];
+                    _s *= saturationSpline[(int)roundf(v)];
+                    _s *= m255 * 3.0f;
+                    s += _s;
                 } else {
-                    s -= saturationSpline[(int)roundf(s)];
+                    _s = saturationSpline[(int)roundf(s)];
+                    _s *= saturationSpline[(int)roundf(v)];
+                    _s *= m255 * 3.0f;
+                    s -= _s;
                 }
-                if(stVibranceWeight > 0){
-                    s += vibranceSpline[(int)roundf(h)];
-                } else {
-                    s -= vibranceSpline[(int)roundf(h)];
-                }
+
                 s = MAX(0.0f, MIN(255.0f, s));
                 
                 
-                hi = (int)(h * multi) % 6;
-                f = (h * multi) - floorf(h * multi);
-                p = roundf(v * (1.0f - (s * _multi)));
-                q = roundf(v * (1.0f - (s * _multi) * f));
-                t = roundf(v * (1.0f - (s * _multi) * (1.0f - f)));
+                hi = (int)(h * m60) % 6;
+                f = (h * m60) - floorf(h * m60);
+                p = roundf(v * (1.0f - (s * m255)));
+                q = roundf(v * (1.0f - (s * m255) * f));
+                t = roundf(v * (1.0f - (s * m255) * (1.0f - f)));
                 
                 switch (hi) {
                     case 0:
