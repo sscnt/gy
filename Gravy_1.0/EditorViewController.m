@@ -263,7 +263,7 @@
         lvLowWeight = MAX(0, MIN(lvMidWeight, lvLowWeight));
         [self processLevels];
     } else if(targetView.tag == KnobIdSaturation){
-        stSaturationWeight = (NSInteger)roundf((targetView.center.x - knobDefaultCenterX) / 3.0f);
+        stSaturationWeight = -(NSInteger)roundf((targetView.center.x - knobDefaultCenterX) / 1.0f);
         [self processSaturation];
     }
     
@@ -742,10 +742,26 @@
         // RGBの値を取得する
         UInt8 r, g, b;
         int hi;
-        float h, s, v, _r, _g, _b, max, min, multi, _multi, f, p, q, t;
+        float h, s, v, _r, _g, _b, max, min, multi, _multi, f, p, q, t, spx, spy;
         multi = 1.0f / 60.0f;
         _multi =  1.0f / 255.0f;
         
+        
+        for(int i = 0;i < 1000;i++){
+            if(dragStarted){
+                processRunning = NO;
+                CFRelease(data);
+                CFRelease(mutableData);
+                return;
+            }
+            t = (float)i * 0.001;
+            spx = 2.0f * t * (1.0f - t) * 127.0f + t * t * 255.0f;
+            spy = 2.0f * t * (1.0f - t) * (float)abs(stSaturationWeight);
+            spx = MAX(0.0f, MIN(255.0f, spx));
+            spy = MAX(0.0f, MIN(255.0f, spy));
+            saturationSpline[(int)roundf(spx)] = spy;
+            
+        }
         
         // ビットマップに効果を与える
         NSUInteger i, j;
@@ -775,6 +791,7 @@
                 
                 max = MAX(_r, MAX(_g, _b));
                 min = MIN(_r, MIN(_g, _b));
+                
                 if(max == min){
                     h = 0.0f;
                 } else if(max == _r){
@@ -787,13 +804,15 @@
                 
                 if(h < 0.0f) h += 360.0f;
                 
-                s =  (max - min) / max;
+                s =  255.0f * (max - min) / max;
                 if(max == 0.0f) s = 0.0f;
                 v = max;
                 
-                s += (float)stSaturationWeight;
+                s += saturationSpline[(int)roundf(s)];
+                s = MAX(0.0f, MIN(255.0f, s));
                 
-                hi = (int)floorf(h * multi) % 6;
+                
+                hi = (int)(h * multi) % 6;
                 f = (h * multi) - floorf(h * multi);
                 p = roundf(v * (1.0f - (s * _multi)));
                 q = roundf(v * (1.0f - (s * _multi) * f));
