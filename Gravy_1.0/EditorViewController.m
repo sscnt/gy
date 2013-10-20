@@ -262,8 +262,12 @@
         lvHighWeight = MAX(lvMidWeight, MIN(255, lvHighWeight));
         lvLowWeight = MAX(0, MIN(lvMidWeight, lvLowWeight));
         [self processLevels];
+    } else if(targetView.tag == KnobIdSaturation){
+        stSaturationWeight = (NSInteger)roundf((targetView.center.x - knobDefaultCenterX) / 3.0f);
+        [self processSaturation];
     }
     
+
     CGPoint movedPoint = CGPointMake(deltaX, deltaY);
     targetView.center = movedPoint;
     [sender setTranslation:CGPointZero inView:targetView];
@@ -692,6 +696,193 @@
 
 - (void)processSaturation
 {
+    dragStarted = NO;
+    if(processRunning){
+        return;
+    }
+    processRunning = YES;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        // CGImageを取得する
+        CGImageRef cgImage;
+        cgImage = levelsAppliedImage.CGImage;
+        
+        
+        // 画像情報を取得する
+        size_t width;
+        size_t height;
+        size_t bitsPerComponent;
+        size_t bitsPerPixel;
+        size_t bytesPerRow;
+        CGColorSpaceRef colorSpace;
+        CGBitmapInfo bitmapInfo;
+        bool shouldInterpolate;
+        CGColorRenderingIntent intent;
+        width = CGImageGetWidth(cgImage);
+        height = CGImageGetHeight(cgImage);
+        bitsPerComponent = CGImageGetBitsPerComponent(cgImage);
+        bitsPerPixel = CGImageGetBitsPerPixel(cgImage);
+        bytesPerRow = CGImageGetBytesPerRow(cgImage);
+        colorSpace = CGImageGetColorSpace(cgImage);
+        bitmapInfo = CGImageGetBitmapInfo(cgImage);
+        shouldInterpolate = CGImageGetShouldInterpolate(cgImage);
+        intent = CGImageGetRenderingIntent(cgImage);
+        
+        // データプロバイダを取得する
+        CGDataProviderRef dataProvider = CGImageGetDataProvider(cgImage);
+        
+        
+        // ビットマップデータを取得する
+        CFDataRef data = CGDataProviderCopyData(dataProvider);
+        CFMutableDataRef mutableData = CFDataCreateMutableCopy(0, 0, data);
+        UInt8* buffer = (UInt8*)CFDataGetMutableBytePtr(mutableData);
+        UInt8* tmp;
+        
+        // RGBの値を取得する
+        UInt8 r, g, b;
+        int hi;
+        float h, s, v, _r, _g, _b, max, min, multi, _multi, f, p, q, t;
+        multi = 1.0f / 60.0f;
+        _multi =  1.0f / 255.0f;
+        
+        
+        // ビットマップに効果を与える
+        NSUInteger i, j;
+        for (j = 0 ; j < height; j++)
+        {
+            
+            for (i = 0; i < width; i++)
+            {
+                if(dragStarted){
+                    processRunning = NO;
+                    CFRelease(data);
+                    CFRelease(mutableData);
+                    return;
+                }
+                
+                // ピクセルのポインタを取得する
+                tmp = buffer + j * bytesPerRow + i * 4;
+                
+                // RGBの値を取得する
+                r = *(tmp + 0);
+                g = *(tmp + 1);
+                b = *(tmp + 2);
+                
+                _r = (float)r;
+                _g = (float)g;
+                _b = (float)b;
+                
+                max = MAX(_r, MAX(_g, _b));
+                min = MIN(_r, MIN(_g, _b));
+                if(max == min){
+                    h = 0.0f;
+                } else if(max == _r){
+                    h = 60.0f * (_g - _b) / (max - min);
+                } else if (max == _g){
+                    h = 60.0f * (_b - _r) / (max - min) + 120.0f;
+                } else if (max == _b){
+                    h = 60.0f * (_r - _g) / (max - min) + 240.0f;
+                }
+                
+                if(h < 0.0f) h += 360.0f;
+                
+                s =  (max - min) / max;
+                if(max == 0.0f) s = 0.0f;
+                v = max;
+                
+                s += (float)stSaturationWeight;
+                
+                hi = (int)floorf(h * multi) % 6;
+                f = (h * multi) - floorf(h * multi);
+                p = roundf(v * (1.0f - (s * _multi)));
+                q = roundf(v * (1.0f - (s * _multi) * f));
+                t = roundf(v * (1.0f - (s * _multi) * (1.0f - f)));
+                
+                switch (hi) {
+                    case 0:
+                        _r = v;
+                        _g = t;
+                        _b = p;
+                        break;
+                    case 1:
+                        _r = q;
+                        _g = v;
+                        _b = p;
+                        break;
+                    case 2:
+                        _r = p;
+                        _g = v;
+                        _b = t;
+                        break;
+                    case 3:
+                        _r = p;
+                        _g = q;
+                        _b = v;
+                        break;
+                    case 4:
+                        _r = t;
+                        _g = p;
+                        _b = v;
+                        break;
+                    case 5:
+                        _r = v;
+                        _g = p;
+                        _b = q;
+                        break;
+                    default:
+                        break;
+                }
+                
+                _r = MAX(0.0f, MIN(255.0f, _r));
+                _g = MAX(0.0f, MIN(255.0f, _g));
+                _b = MAX(0.0f, MIN(255.0f, _b));
+                
+                r = (UInt8)roundf(_r);
+                g = (UInt8)roundf(_g);
+                b = (UInt8)roundf(_b);
+                
+                
+                // 輝度の値をRGB値として設定する
+                *(tmp + 0) = r;
+                *(tmp + 1) = g;
+                *(tmp + 2) = b;
+            }
+        }
+        
+        // 効果を与えたデータを作成する
+        CFDataRef effectedData;
+        effectedData = CFDataCreate(NULL, buffer, CFDataGetLength(data));
+        
+        // 効果を与えたデータプロバイダを作成する
+        CGDataProviderRef effectedDataProvider;
+        effectedDataProvider = CGDataProviderCreateWithCFData(effectedData);
+        
+        // 画像を作成する
+        CGImageRef effectedCgImage = CGImageCreate(
+                                                   width, height,
+                                                   bitsPerComponent, bitsPerPixel, bytesPerRow,
+                                                   colorSpace, bitmapInfo, effectedDataProvider,
+                                                   NULL, shouldInterpolate, intent);
+        
+        
+        saturationAppliedImage = [[UIImage alloc] initWithCGImage:effectedCgImage];
+        
+        // 作成したデータを解放する
+        CGImageRelease(effectedCgImage);
+        CFRelease(effectedDataProvider);
+        CFRelease(effectedData);
+        CFRelease(data);
+        CFRelease(mutableData);
+        
+        
+        
+        //メインスレッド
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [saturationImageView setImage:saturationAppliedImage];
+            processRunning = NO;
+        });
+    });
     
 }
 
