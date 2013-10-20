@@ -743,13 +743,13 @@
         // RGBの値を取得する
         UInt8 r, g, b;
         int hi;
-        float h, s, v, _r, _g, _b, max, min,m6, m60, m255, f, p, q, t, spx, spy, _s, b1, b2, b3, b4, x2, x3;
+        float h, s, v, _r, _g, _b, max, min,m6, m60, m255, f, p, q, t, spx, spy, _s, b1, b2, b3, b4,x0, x1, x2, x3, x4, x5, y0, y1, y2, y3, y4, y5;
         m6 = 1.0f/ 6.0f;
         m60 = 1.0f / 60.0f;
         m255 =  1.0f / 255.0f;
+    
         
-        dlog(@"%d", stVibranceWeight);
-        
+        stVibranceWeight = MAX(24, MIN(127, abs(stVibranceWeight / 2)));
         
         for(int i = 0;i < 1000;i++){
             if(dragStarted){
@@ -758,42 +758,45 @@
                 CFRelease(mutableData);
                 return;
             }
-            if(stVibranceWeight >= 0){
+            if(stVibranceWeight < 0){
                 t = (float)i * 0.001;
                 spx = 2.0f * t * (1.0f - t) * 200.0f + t * t * 255.0f;
-                spy = 2.0f * t * (1.0f - t) * (float)abs(stSaturationWeight) + t * t * MAX(0.0f, (float)(stVibranceWeight));
+                spy = 2.0f * t * (1.0f - t) * (float)abs(stSaturationWeight) + t * t * MAX(0.0f, (float)abs(stVibranceWeight));
+                if(spx < 0.0f || spx > 255.0f) continue;
+                if(spy < 0.0f || spy > 255.0f) continue;
+                saturationSpline[(int)roundf(spx)] = spy;
             } else {
                 t = (float)i * 0.001;
                 b1 = (-1.0f * t * t * t + 3.0f * t * t - 3.0f * t + 1.0f) * m6;
                 b2 = (3.0f * t * t * t - 6.0f * t * t + 4.0f) * m6;
-                b3 = (-3.0f * t * t * t + 3.0f * t * t - 3.0f * t + 1.0f) * m6;
+                b3 = (-3.0f * t * t * t + 3.0f * t * t + 3.0f * t + 1.0f) * m6;
                 b4 = (t * t * t) * m6;
-                stVibranceWeight = MIN(127, stVibranceWeight);
                 x2 = 127.0f - (float)stVibranceWeight;
                 x3 = 127.0f + (float)stVibranceWeight;
-                spx = x2 * b2 + x3 * b3 + 255.0f * b4;
-                spy = (float)abs(stSaturationWeight) * (b2 + b3);
+                x0 = -x2;
+                x5 = 510.0f - x3;
+                x1 = 0;
+                x4 = 255.0f;
+                y2 = y3 = (float)abs(stSaturationWeight);
+                y1 = y4 = 0;
+                y0 = y5 = -y2;
+                
+                spx = x1 * b1 + x2 * b2 + x3 * b3 + x4 * b4;
+                spy = y1 * b1 + y2 * b2 + y3 * b3 + y4 * b4;
+                if(spx < 0.0f || spx > 255.0f) continue;
+                if(spy < 0.0f || spy > 255.0f) continue;
+                saturationSpline[(int)roundf(spx)] = spy;
+                spx = x0 * b1 + x1 * b2 + x2 * b3 + x3 * b4;
+                spy = y0 * b1 + y1 * b2 + y2 * b3 + y3 * b4;
+                if(spx < 0.0f || spx > 255.0f) continue;
+                if(spy < 0.0f || spy > 255.0f) continue;
+                saturationSpline[(int)roundf(spx)] = spy;
+                spx = x2 * b1 + x3 * b2 + x4 * b3 + x5 * b4;
+                spy = y2 * b1 + y3 * b2 + y4 * b3 + y5 * b4;
+                if(spx < 0.0f || spx > 255.0f) continue;
+                if(spy < 0.0f || spy > 255.0f) continue;
+                saturationSpline[(int)roundf(spx)] = spy;
             }
-            spx = MAX(0.0f, MIN(255.0f, spx));
-            spy = MAX(0.0f, MIN(255.0f, spy));
-            saturationSpline[(int)roundf(spx)] = spy;
-            
-        }
-        
-        
-        for(int i = 0;i < 0;i++){
-            if(dragStarted){
-                processRunning = NO;
-                CFRelease(data);
-                CFRelease(mutableData);
-                return;
-            }
-            t = (float)i * 0.0002;
-            spx = 2.0f * t * (1.0f - t) * 180.0f + t * t * 360.0f;
-            spy = 2.0f * t * (1.0f - t) * (float)abs(stVibranceWeight);
-            spx = MAX(0.0f, MIN(360.0f, spx));
-            spy = MAX(0.0f, MIN(255.0f, spy));
-            vibranceSpline[(int)roundf(spx)] = spy;
             
         }
         
