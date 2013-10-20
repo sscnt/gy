@@ -263,7 +263,8 @@
         lvLowWeight = MAX(0, MIN(lvMidWeight, lvLowWeight));
         [self processLevels];
     } else if(targetView.tag == KnobIdSaturation){
-        stSaturationWeight = -(NSInteger)roundf((targetView.center.x - knobDefaultCenterX) / 1.0f);
+        stSaturationWeight = -(NSInteger)roundf((targetView.center.x - knobDefaultCenterX) * 1.50f);
+        stVibranceWeight = (NSInteger)roundf((targetView.center.y - knobDefaultCenterY) * 1.50f);
         [self processSaturation];
     }
     
@@ -755,11 +756,28 @@
                 return;
             }
             t = (float)i * 0.001;
-            spx = 2.0f * t * (1.0f - t) * 127.0f + t * t * 255.0f;
+            spx = 2.0f * t * (1.0f - t) * 164.0f + t * t * 255.0f;
             spy = 2.0f * t * (1.0f - t) * (float)abs(stSaturationWeight);
             spx = MAX(0.0f, MIN(255.0f, spx));
             spy = MAX(0.0f, MIN(255.0f, spy));
             saturationSpline[(int)roundf(spx)] = spy;
+            
+        }
+        
+        
+        for(int i = 0;i < 1000;i++){
+            if(dragStarted){
+                processRunning = NO;
+                CFRelease(data);
+                CFRelease(mutableData);
+                return;
+            }
+            t = (float)i * 0.001;
+            spx = 2.0f * t * (1.0f - t) * 180.0f + t * t * 361.0f;
+            spy = 2.0f * t * (1.0f - t) * (float)abs(stVibranceWeight);
+            spx = MAX(0.0f, MIN(361.0f, spx));
+            spy = MAX(0.0f, MIN(255.0f, spy));
+            vibranceSpline[(int)roundf(spx)] = spy;
             
         }
         
@@ -808,7 +826,16 @@
                 if(max == 0.0f) s = 0.0f;
                 v = max;
                 
-                s += saturationSpline[(int)roundf(s)];
+                if(stSaturationWeight > 0){
+                    s += saturationSpline[(int)roundf(s)];
+                } else {
+                    s -= saturationSpline[(int)roundf(s)];
+                }
+                if(stVibranceWeight > 0){
+                    s += vibranceSpline[(int)roundf(h)];
+                } else {
+                    s -= vibranceSpline[(int)roundf(h)];
+                }
                 s = MAX(0.0f, MIN(255.0f, s));
                 
                 

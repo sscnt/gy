@@ -38,6 +38,7 @@ typedef NS_ENUM(NSInteger, KnobId){
     int histLowestValue;
     int histHighestValue;
     int saturationSpline[256];
+    int vibranceSpline[361];
     UIImageView* bgImageView;
     UIScrollView* scrollView;
     UIPageControl* pageControl;
