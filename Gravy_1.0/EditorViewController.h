@@ -17,6 +17,7 @@
 #import "UIEditorTitleLabel.h"
 #import "UIThumbnailView.h"
 #import "UISliderView.h"
+#import "UIScrollView+Gravy.h"
 
 
 typedef NS_ENUM(NSInteger, EditorState){
@@ -32,7 +33,7 @@ typedef NS_ENUM(NSInteger, KnobId){
     KnobIdSaturation
 };
 
-@interface EditorViewController : UIViewController <UIScrollViewDelegate>
+@interface EditorViewController : UIViewController <UIScrollViewDelegate, UIThumbnailViewDelegate>
 {
     int hist[256];
     int histLowestValue;

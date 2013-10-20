@@ -117,6 +117,9 @@
     CGFloat imageY = [UIScreen screenSize].height / 2.0f - originalImageResized.size.height / 2.0f - 25.0f;
     whitebalanceImageView = [[UIThumbnailView alloc] initWithImage:whiteBalanceAppliedImage];
     [whitebalanceImageView setY:imageY];
+    whitebalanceImageView.thumbnailId = ThumbnailViewIdWhiteBalance;
+    whitebalanceImageView.delegate = self;
+    whitebalanceImageView.userInteractionEnabled = YES;
     [wrapper addSubview:whitebalanceImageView];
     
     UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
@@ -147,6 +150,9 @@
     CGFloat imageY = [UIScreen screenSize].height / 2.0f - originalImageResized.size.height / 2.0f - 25.0f;
     levelsImageView = [[UIThumbnailView alloc] initWithImage:levelsAppliedImage];
     [levelsImageView setY:imageY];
+    levelsImageView.delegate = self;
+    levelsImageView.userInteractionEnabled = YES;
+    levelsImageView.thumbnailId = ThumbnailViewIdLevels;
     [wrapper addSubview:levelsImageView];
     [wrapper setX:320.0f];
     
@@ -179,6 +185,9 @@
     CGFloat imageY = [UIScreen screenSize].height / 2.0f - originalImageResized.size.height / 2.0f - 25.0f;
     saturationImageView = [[UIThumbnailView alloc] initWithImage:saturationAppliedImage];
     [saturationImageView setY:imageY];
+    saturationImageView.delegate = self;
+    saturationImageView.userInteractionEnabled = YES;
+    saturationImageView.thumbnailId = ThumbnailViewIdSaturation;
     [wrapper addSubview:saturationImageView];
     [wrapper setX:640.0f];
     
@@ -278,6 +287,28 @@
 }
 
 #pragma mark delegates
+
+- (void)touchesBegan:(UIThumbnailView *)view
+{
+    view.image = originalImageResized;
+    dlog(@"a");
+}
+
+- (void)touchesEnded:(UIThumbnailView *)view
+{
+    if(view.thumbnailId == ThumbnailViewIdWhiteBalance){
+        view.image = whiteBalanceAppliedImage;
+        return;
+    }
+    if(view.thumbnailId == ThumbnailViewIdLevels){
+        view.image = levelsAppliedImage;
+        return;
+    }
+    if(view.thumbnailId == ThumbnailViewIdSaturation){
+        view.image = saturationAppliedImage;
+        return;
+    }
+}
 
 
 - (void)scrollViewDidScroll:(UIScrollView *)sender {

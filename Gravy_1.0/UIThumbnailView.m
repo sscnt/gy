@@ -23,13 +23,31 @@
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
 {
-    // Drawing code
+    dlog(@"b");
+    // ここで、タッチが開始されたときの処理を実装します。
+    [self.delegate touchesBegan:self];
+    
 }
-*/
+
+- (void)touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event
+{
+    // ここで、タッチが動かされたときの処理を実装します。
+    
+}
+
+- (void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
+{
+    // ここで、タッチが離されたときの処理を実装します。
+    [self.delegate touchesEnded:self];
+    
+}
+
+- (void)touchesCanceled:(NSSet*)touches withEvent:(UIEvent*)event
+{
+    // ここで、タッチがキャンセルされたときの処理を実装します。
+    [self.delegate touchesEnded:self];
+}
 
 @end
