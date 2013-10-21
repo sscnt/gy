@@ -13,6 +13,7 @@
 #import "UIDockView.h"
 #import "UIDockButtonBack.h"
 #import "UIDockButtonNext.h"
+#import "UIDockButtonSave.h"
 #import "UIWrapperView.h"
 #import "UIEditorTitleLabel.h"
 #import "UIThumbnailView.h"
@@ -47,6 +48,9 @@ typedef NS_ENUM(NSInteger, KnobId){
     UIThumbnailView* levelsImageView;
     UIThumbnailView* saturationImageView;
     EditorState state;
+    UIDockButtonBack* backBtn;
+    UIDockButtonNext* nextBtn;
+    UIDockButtonSave* saveBtn;
     UIImage* originalImageResized;
     UIImage* whiteBalanceAppliedImage;
     UIImage* levelsAppliedImage;

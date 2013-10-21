@@ -69,18 +69,25 @@
     [dockView setY:[UIScreen screenSize].height - 50.0f];
     [self.view addSubview:dockView];
     ////// camera button
-    UIDockButtonBack* backBtn = [[UIDockButtonBack alloc] init];
+    backBtn = [[UIDockButtonBack alloc] init];
     [backBtn setY:[UIScreen screenSize].height - 45.0f];
     [backBtn addTarget:self action:@selector(didClickBackButton) forControlEvents:UIControlEventTouchUpInside];
     [backBtn setAlpha:0.90f];
     [self.view addSubview:backBtn];
     ////// photos button
-    UIDockButtonNext* nextBtn = [[UIDockButtonNext alloc] init];
+    nextBtn = [[UIDockButtonNext alloc] init];
     [nextBtn setY:[UIScreen screenSize].height - 45.0f];
     [nextBtn setX:160.0f];
     [nextBtn setAlpha:0.90f];
     [nextBtn addTarget:self action:@selector(didClickNextButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:nextBtn];
+    saveBtn = [[UIDockButtonSave alloc] init];
+    [saveBtn setY:[UIScreen screenSize].height - 45.0f];
+    [saveBtn setX:160.0f];
+    [saveBtn setAlpha:0.90f];
+    [saveBtn setHidden:YES];
+    [saveBtn addTarget:self action:@selector(didClickNextButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:saveBtn];
     
     whiteBalanceAppliedImage = originalImageResized;
     levelsAppliedImage = originalImageResized;
@@ -210,6 +217,8 @@
 {
     processRunning = NO;
     dragStarted = NO;
+    saveBtn.hidden = YES;
+    nextBtn.hidden = NO;
     if (state == EditorStateWhiteBalance) {
         state = EditorStateLevels;
         [levelsImageView setImage:whiteBalanceAppliedImage];
@@ -217,9 +226,12 @@
     } else if (state == EditorStateLevels) {
         state = EditorStateSaturation;
         [saturationImageView setImage:levelsAppliedImage];
+        nextBtn.hidden = YES;
+        saveBtn.hidden = NO;
         [self processSaturation];
     } else if (state == EditorStateSaturation) {
         state = EditorStateSharing;
+        nextBtn.hidden = YES;
     }
     pageControl.currentPage++;
     [self changePageControl];
@@ -227,9 +239,10 @@
 
 - (void)didClickBackButton
 {
+    saveBtn.hidden = YES;
+    nextBtn.hidden = NO;
     if (state == EditorStateWhiteBalance) {
         [self.navigationController popViewControllerAnimated:YES];
-        self.originalImage = nil;
         return;
     }
     if (state == EditorStateLevels){
@@ -238,6 +251,9 @@
         state = EditorStateLevels;
     } else if (state == EditorStateSharing){
         state = EditorStateSaturation;
+        nextBtn.hidden = YES;
+        saveBtn.hidden = NO;
+
     }
     pageControl.currentPage--;
     [self changePageControl];

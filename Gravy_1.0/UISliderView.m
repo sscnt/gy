@@ -22,7 +22,7 @@
     if (self) {
         // Initialization code
         self.backgroundColor = [UIColor clearColor];
-        UIImageView* sliderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"test4.png"]];
+        UIImageView* sliderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slider.png"]];
         sliderView.center = self.center;
         [self addSubview:sliderView];
     }
