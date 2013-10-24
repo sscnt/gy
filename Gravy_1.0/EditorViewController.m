@@ -243,6 +243,7 @@
     nextBtn.hidden = NO;
     if (state == EditorStateWhiteBalance) {
         [self.navigationController popViewControllerAnimated:YES];
+        scrollView.delegate = nil;
         return;
     }
     if (state == EditorStateLevels){
@@ -794,7 +795,57 @@
         m6 = 1.0f/ 6.0f;
         m60 = 1.0f / 60.0f;
         m255 =  1.0f / 255.0f;
-    
+        
+        
+        for(int i = 0;i < 361;i++){
+            vibranceSpline[i] = 1.0f;
+        }
+        
+        for(int i = 0;i < 1000;i++){
+            if(dragStarted){
+                processRunning = NO;
+                CFRelease(data);
+                CFRelease(mutableData);
+                return;
+            }
+            t = (float)i * 0.001;
+            b1 = (-1.0f * t * t * t + 3.0f * t * t - 3.0f * t + 1.0f) * m6;
+            b2 = (3.0f * t * t * t - 6.0f * t * t + 4.0f) * m6;
+            b3 = (-3.0f * t * t * t + 3.0f * t * t + 3.0f * t + 1.0f) * m6;
+            b4 = (t * t * t) * m6;
+            x2 = 10.0f;
+            x3 = 20.0f;
+            x0 = -x2;
+            x5 = 45.0f;
+            x1 = 0;
+            x4 = 30.0f;
+            y2 = 0.85f;
+            y3 = 0.95f;
+            y1 = 0.8f;
+            y0 = 0.8f;
+            y3 = y4 = y5 = 1.0f;
+            
+            spx = x1 * b1 + x2 * b2 + x3 * b3 + x4 * b4;
+            spy = y1 * b1 + y2 * b2 + y3 * b3 + y4 * b4;
+            if(spx < 0.0f || spx > 30.0f) continue;
+            if(spy < 0.0f || spy > 1.0f) continue;
+            vibranceSpline[(int)roundf(spx)] = spy;
+            spx = x0 * b1 + x1 * b2 + x2 * b3 + x3 * b4;
+            spy = y0 * b1 + y1 * b2 + y2 * b3 + y3 * b4;
+            if(spx < 0.0f || spx > 30.0f) continue;
+            if(spy < 0.0f || spy > 1.0f) continue;
+            vibranceSpline[(int)roundf(spx)] = spy;
+            spx = x2 * b1 + x3 * b2 + x4 * b3 + x5 * b4;
+            spy = y2 * b1 + y3 * b2 + y4 * b3 + y5 * b4;
+            if(spx < 0.0f || spx > 30.0f) continue;
+            if(spy < 0.0f || spy > 1.0f) continue;
+            vibranceSpline[(int)roundf(spx)] = spy;
+        }
+
+        
+        for(int i = 0;i < 30;i++){
+            vibranceSpline[360 - i] = vibranceSpline[i];
+        }
         
         stVibranceWeight = MAX(24, MIN(127, abs(stVibranceWeight / 2)));
         
@@ -893,18 +944,15 @@
                 if(max == 0.0f) s = 0.0f;
                 v = max;
                 
+            
                 
-                if(stSaturationWeight > 0){
-                    _s = saturationSpline[(int)roundf(s)];
-                    _s *= saturationSpline[(int)roundf(v)];
-                    _s *= m255 * 3.0f;
-                    s += _s;
-                } else {
-                    _s = saturationSpline[(int)roundf(s)];
-                    _s *= saturationSpline[(int)roundf(v)];
-                    _s *= m255 * 3.0f;
-                    s -= _s;
-                }
+                
+                _s = saturationSpline[(int)roundf(s)];
+                _s *= saturationSpline[(int)roundf(v)];
+                _s *= m255 * 3.0f;
+                _s *= vibranceSpline[(int)round(h)];
+                s += _s;
+
 
                 s = MAX(0.0f, MIN(255.0f, s));
                 
