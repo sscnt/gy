@@ -229,6 +229,7 @@
         [self processSaturationAsync];
     } else if (state == EditorStateSaturation) {
         nextBtn.hidden = YES;
+        saveBtn.hidden = NO;
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
         [self saveImage];
         return;
