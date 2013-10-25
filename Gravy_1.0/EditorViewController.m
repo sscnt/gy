@@ -1081,6 +1081,7 @@
         //メインスレッド
         dispatch_async(dispatch_get_main_queue(), ^{
             UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil);
+            resultImage = nil;
             state = EditorStateFinishedSaving;
             [_self didClickNextButton];
         });
