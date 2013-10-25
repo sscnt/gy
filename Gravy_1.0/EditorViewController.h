@@ -19,13 +19,15 @@
 #import "UIThumbnailView.h"
 #import "UISliderView.h"
 #import "UIScrollView+Gravy.h"
+#import "SVProgressHUD.h"
 
 
 typedef NS_ENUM(NSInteger, EditorState){
     EditorStateWhiteBalance = 1,
     EditorStateLevels,
     EditorStateSaturation,
-    EditorStateSharing
+    EditorStateSharing,
+    EditorStateFinishedSaving
 };
 
 typedef NS_ENUM(NSInteger, KnobId){
@@ -51,6 +53,7 @@ typedef NS_ENUM(NSInteger, KnobId){
     UIDockButtonBack* backBtn;
     UIDockButtonNext* nextBtn;
     UIDockButtonSave* saveBtn;
+    __strong UIImage** iad;
     UIImage* originalImageResized;
     UIImage* whiteBalanceAppliedImage;
     UIImage* levelsAppliedImage;
@@ -85,10 +88,13 @@ typedef NS_ENUM(NSInteger, KnobId){
 - (void)layoutLevelsEditor;
 - (void)layoutSaturationEditor;
 
-- (void)cancelProcessing;
-- (void)processWhiteBalance;
-- (void)processLevels;
-- (void)processSaturation;
+- (void)processWhiteBalanceAsync;
+- (void)processWhiteBalance:(UIImage* __strong *)sourceImage applyTo:(UIImage* __strong *)destImage;
+- (void)processLevelsAsync;
+- (void)processLevels:(UIImage* __strong *)sourceImage applyTo:(UIImage* __strong *)destImage;
+- (void)processSaturationAsync;
+- (void)processSaturation:(UIImage* __strong *)sourceImage applyTo:(UIImage* __strong *)destImage;
+- (void)saveImage;
 
 - (void)resizeOriginalImage;
 - (void)makeHistogram;
