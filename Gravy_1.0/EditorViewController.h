@@ -20,6 +20,10 @@
 #import "UISliderView.h"
 #import "UIScrollView+Gravy.h"
 #import "SVProgressHUD.h"
+#import "WhiteBalanceProcessor.h"
+#import "LevelsProcessor.h"
+#import "SaturationProcessor.h"
+
 
 
 typedef NS_ENUM(NSInteger, EditorState){
@@ -36,13 +40,13 @@ typedef NS_ENUM(NSInteger, KnobId){
     KnobIdSaturation
 };
 
-@interface EditorViewController : UIViewController <UIScrollViewDelegate, UIThumbnailViewDelegate>
+@interface EditorViewController : UIViewController <UIScrollViewDelegate, UIThumbnailViewDelegate, ImageProcessorDelegate>
 {
-    int hist[256];
-    int histLowestValue;
-    int histHighestValue;
-    int saturationSpline[256];
-    float vibranceSpline[361];
+    
+    WhiteBalanceProcessor* processorWb;
+    LevelsProcessor* processorLv;
+    SaturationProcessor* processorSt;
+
     UIImageView* bgImageView;
     UIScrollView* scrollView;
     UIPageControl* pageControl;
@@ -65,14 +69,7 @@ typedef NS_ENUM(NSInteger, KnobId){
     CGFloat knobDefaultCenterY;
     CGFloat screenWidth;
     CGFloat screenHeight;
-    
-    NSInteger wbRedWeight;
-    NSInteger wbBlueWeight;
-    NSInteger lvHighWeight;
-    NSInteger lvMidWeight;
-    NSInteger lvLowWeight;
-    NSInteger stSaturationWeight;
-    NSInteger stVibranceWeight;
+
     
     BOOL processRunning;
     BOOL dragStarted;
@@ -89,17 +86,8 @@ typedef NS_ENUM(NSInteger, KnobId){
 - (void)layoutWhiteBalanceEditor;
 - (void)layoutLevelsEditor;
 - (void)layoutSaturationEditor;
-
-
-- (void)processWhiteBalanceAsync;
-- (void)processWhiteBalance:(UIImage* __strong *)sourceImage applyTo:(UIImage* __strong *)destImage;
-- (void)processLevelsAsync;
-- (void)processLevels:(UIImage* __strong *)sourceImage applyTo:(UIImage* __strong *)destImage;
-- (void)processSaturationAsync;
-- (void)processSaturation:(UIImage* __strong *)sourceImage applyTo:(UIImage* __strong *)destImage;
 - (void)saveImage;
 
 - (void)resizeOriginalImage;
-- (void)makeHistogram;
 
 @end

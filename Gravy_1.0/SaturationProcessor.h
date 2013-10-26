@@ -9,6 +9,10 @@
 #import "ImageProcessor.h"
 
 @interface SaturationProcessor : ImageProcessor
+{
+    int saturationSpline[256];
+    float vibranceSpline[361];
+}
 
 @property (nonatomic, assign) int stVibranceWeight;
 @property (nonatomic, assign) int stSaturationWeight;

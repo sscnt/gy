@@ -9,9 +9,20 @@
 #import "ImageProcessor.h"
 
 @interface LevelsProcessor : ImageProcessor
+{
+    
+    float dblMid;
+    float dblLow;
+    float _lvMidWeight;
+    int hist[256];
+}
 
 @property (nonatomic, assign) float lvLowWeight;
 @property (nonatomic, assign) float lvMidWeight;
 @property (nonatomic, assign) float lvHighWeight;
+@property (nonatomic, assign) int histLowestValue;
+@property (nonatomic, assign) int histHighestValue;
+
+- (void)makeHistogram;
 
 @end

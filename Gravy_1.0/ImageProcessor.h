@@ -8,27 +8,55 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, ProcessorId){
+    ProcessorIdWhiteBalance = 1,
+    ProcessorIdLevels,
+    ProcessorIdSaturation
+};
+
+@protocol ImageProcessorDelegate <NSObject>
+
+- (void)didFinishedExecute:(BOOL)success sender:(ProcessorId)identifier;
+
+@end
+
+
 @interface ImageProcessor : NSObject
-{
-    int hist[256];
-    int histLowestValue;
-    int histHighestValue;
-    int saturationSpline[256];
-    float vibranceSpline[361];
+{   
+    size_t width;
+    size_t height;
+    size_t bitsPerComponent;
+    size_t bitsPerPixel;
+    size_t bytesPerRow;
+    CGColorSpaceRef colorSpace;
+    CGBitmapInfo bitmapInfo;
+    bool shouldInterpolate;
+    CGColorRenderingIntent intent;
     
-    CFMutableDataRef mutableData;
+    CFMutableDataRef mutableDataOriginal;
+    CFMutableDataRef mutableDataProcessing;
     UInt8* buffer;
+    
+    CFIndex length;
+    
 }
 
 
 @property (nonatomic, assign) BOOL processRunning;
 @property (nonatomic, assign) BOOL dragStarted;
+@property (nonatomic, assign) id<ImageProcessorDelegate> delegate;
+@property (nonatomic, assign) ProcessorId identifier;
 
+- (void)before;
+- (BOOL)execute;
+- (void)after;
+- (void)copy;
+- (void)executeAsync:(dispatch_queue_t)queue;
+- (BOOL)calc;
+- (void)calcPixel:(UInt8*)pixel;
+
+- (UIImage*)appliedImage;
 - (void)loadBytes:(UIImage*)image;
-- (void)execute;
-
-- (void)calcPixelWhiteBalance:(UInt8*)pixel;
-- (void)calcPixecLevels:(UInt8*)pixel;
-- (void)calcPixelSaturation:(UInt8*)pixel;
+- (void)setBuffer:(UInt8*)buffer;
 
 @end
