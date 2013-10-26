@@ -69,11 +69,6 @@ typedef NS_ENUM(NSInteger, KnobId){
     CGFloat knobDefaultCenterY;
     CGFloat screenWidth;
     CGFloat screenHeight;
-
-    
-    BOOL processRunning;
-    BOOL dragStarted;
-    
     dispatch_queue_t processingQueue;
 }
 

@@ -10,9 +10,37 @@
 
 @implementation ImageProcessor
 
+
+- (void)loadImage:(UIImage *)image
+{
+    [self getValues:image];
+    [self loadBytes:image];
+}
+
 - (void)loadBytes:(UIImage *)image
 {
+    if(!image){
+        dlog(@"nil image recieved. %d", self.identifier);
+    }
+    if(mutableDataOriginal){
+        CFRelease(mutableDataOriginal);
+        mutableDataOriginal = nil;
+    }
+    // データプロバイダを取得する
+    CGDataProviderRef dataProvider = CGImageGetDataProvider(image.CGImage);
     
+    // ビットマップデータを取得する
+    CFDataRef data = CGDataProviderCopyData(dataProvider);
+    mutableDataOriginal = CFDataCreateMutableCopy(0, 0, data);
+    length = CFDataGetLength(mutableDataOriginal);
+    CFRelease(data);
+}
+
+- (void)getValues:(UIImage *)image
+{
+    if(colorSpace){
+        CGColorSpaceRelease(colorSpace);
+    }
     // 画像情報を取得する
     width = CGImageGetWidth(image.CGImage);
     height = CGImageGetHeight(image.CGImage);
@@ -23,21 +51,14 @@
     bitmapInfo = CGImageGetBitmapInfo(image.CGImage);
     shouldInterpolate = CGImageGetShouldInterpolate(image.CGImage);
     intent = CGImageGetRenderingIntent(image.CGImage);
-    
-    // データプロバイダを取得する
-    CGDataProviderRef dataProvider = CGImageGetDataProvider(image.CGImage);
-    
-    // ビットマップデータを取得する
-    CFDataRef data = CGDataProviderCopyData(dataProvider);
-    mutableDataOriginal = CFDataCreateMutableCopy(0, 0, CGDataProviderCopyData(dataProvider));
-    length = CFDataGetLength(mutableDataOriginal);
-    CFRelease(data);
+
 }
 
 - (UIImage*)appliedImage
 {
     if(!mutableDataProcessing){
-        dlog(@"Error!");
+        dlog(@"Error! %d", self.identifier);
+        return nil;
     }
     // 効果を与えたデータを作成する
     CFDataRef effectedData;
@@ -46,6 +67,7 @@
     // 効果を与えたデータプロバイダを作成する
     CGDataProviderRef effectedDataProvider;
     effectedDataProvider = CGDataProviderCreateWithCFData(effectedData);
+    CFRelease(effectedData);
     
     // 画像を作成する
     CGImageRef effectedCgImage = CGImageCreate(
@@ -58,9 +80,8 @@
     UIImage* image = [[UIImage alloc] initWithCGImage:effectedCgImage];
     
     // 作成したデータを解放する
-    CGImageRelease(effectedCgImage);
     CFRelease(effectedDataProvider);
-    CFRelease(effectedData);
+    CGImageRelease(effectedCgImage);
     
     return image;
 }
@@ -137,13 +158,24 @@
     
 }
 
-- (void)dealloc
+- (void)clean
 {
-    CFRelease(mutableDataOriginal);
+    if(mutableDataOriginal){
+        CFRelease(mutableDataOriginal);
+        mutableDataOriginal = nil;
+    }
     if(mutableDataProcessing){
         CFRelease(mutableDataProcessing);
+        mutableDataProcessing = nil;
     }
-    CGColorSpaceRelease(colorSpace);
+    if(colorSpace){
+        CGColorSpaceRelease(colorSpace);
+    }
+}
+
+- (void)dealloc
+{
+    [self clean];
 }
 
 @end

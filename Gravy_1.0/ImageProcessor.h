@@ -41,7 +41,6 @@ typedef NS_ENUM(NSInteger, ProcessorId){
     
 }
 
-
 @property (nonatomic, assign) BOOL processRunning;
 @property (nonatomic, assign) BOOL dragStarted;
 @property (nonatomic, assign) id<ImageProcessorDelegate> delegate;
@@ -56,7 +55,10 @@ typedef NS_ENUM(NSInteger, ProcessorId){
 - (void)calcPixel:(UInt8*)pixel;
 
 - (UIImage*)appliedImage;
+- (void)loadImage:(UIImage*)image;
+- (void)getValues:(UIImage*)image;
 - (void)loadBytes:(UIImage*)image;
 - (void)setBuffer:(UInt8*)buffer;
+- (void)clean;
 
 @end

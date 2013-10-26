@@ -43,8 +43,8 @@
  
 
     [self resizeOriginalImage];
-    [processorWb loadBytes:originalImageResized];
-    [processorLv loadBytes:originalImageResized];
+    [processorWb loadImage:originalImageResized];
+    [processorLv loadImage:originalImageResized];
     [processorLv makeHistogram];
 
     
@@ -218,38 +218,47 @@
 
 - (void)didClickNextButton
 {
-    processRunning = NO;
-    dragStarted = NO;
+    __weak EditorViewController* _self = self;
     saveBtn.hidden = YES;
     nextBtn.hidden = NO;
     if (state == EditorStateWhiteBalance) {
-        state = EditorStateLevels;
+        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
         dispatch_async(processingQueue, ^{
-            @autoreleasepool {
-                UIImage* image = [processorWb appliedImage];
-                [processorLv loadBytes:image];
-            }
+            [processorWb execute];
+            UIImage* image = [processorWb appliedImage];
+            [processorLv loadImage:image];
             [processorLv execute];
-            UIImage* image = [processorLv appliedImage];
+            image = [processorLv appliedImage];
             //メインスレッド
             dispatch_async(dispatch_get_main_queue(), ^{
                 [levelsImageView setImage:image];
+                [SVProgressHUD dismiss];
+                processorLv.dragStarted = NO;
+                processorLv.processRunning = NO;
+                state = EditorStateLevels;
+                pageControl.currentPage++;
+                [_self changePageControl];
             });
         });        
     } else if (state == EditorStateLevels) {
-        state = EditorStateSaturation;
-        nextBtn.hidden = YES;
-        saveBtn.hidden = NO;
+        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
         dispatch_async(processingQueue, ^{
-            @autoreleasepool {
-                UIImage* image = [processorLv appliedImage];
-                [processorSt loadBytes:image];
-            }
+            [processorLv execute];
+            UIImage* image = [processorLv appliedImage];
+            [processorSt loadImage:image];
             [processorSt execute];
-            UIImage* image = [processorSt appliedImage];
+            image = [processorSt appliedImage];
             //メインスレッド
             dispatch_async(dispatch_get_main_queue(), ^{
                 [saturationImageView setImage:image];
+                [SVProgressHUD dismiss];
+                processorSt.dragStarted = NO;
+                processorSt.processRunning = NO;
+                state = EditorStateSaturation;
+                nextBtn.hidden = YES;
+                saveBtn.hidden = NO;
+                pageControl.currentPage++;
+                [_self changePageControl];
             });
         });
 
@@ -257,15 +266,21 @@
         nextBtn.hidden = YES;
         saveBtn.hidden = NO;
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-        [self saveImage];
+        dispatch_async(processingQueue, ^{
+            [processorSt execute];
+            //メインスレッド
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [_self saveImage];
+            });
+        });
         return;
     } else if (state == EditorStateFinishedSaving) {
         [SVProgressHUD dismiss];
         state = EditorStateSharing;
         nextBtn.hidden = YES;
+        pageControl.currentPage++;
+        [self changePageControl];
     }
-    pageControl.currentPage++;
-    [self changePageControl];
 }
 
 - (void)didClickBackButton
@@ -279,13 +294,33 @@
     }
     if (state == EditorStateLevels){
         state = EditorStateWhiteBalance;
+        processorWb.dragStarted = NO;
+        processorWb.processRunning = NO;
     } else if (state == EditorStateSaturation){
+        processorLv.dragStarted = NO;
+        processorLv.processRunning = NO;
         state = EditorStateLevels;
     } else if (state == EditorStateSharing){
-        state = EditorStateSaturation;
-        nextBtn.hidden = YES;
-        saveBtn.hidden = NO;
-        
+        __weak EditorViewController* _self = self;
+        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+        dispatch_async(processingQueue, ^{
+            [processorWb loadImage:originalImageResized];
+            [processorWb execute];
+            [processorLv loadImage:[processorWb appliedImage]];
+            [processorLv execute];
+            [processorSt loadImage:[processorLv appliedImage]];
+            [processorSt execute];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SVProgressHUD dismiss];
+                state = EditorStateSaturation;
+                nextBtn.hidden = YES;
+                saveBtn.hidden = NO;
+                pageControl.currentPage--;
+                [_self changePageControl];
+            });
+
+        });
+        return;
     }
     pageControl.currentPage--;
     [self changePageControl];
@@ -351,30 +386,30 @@
     if(success){
         if(identifier == ProcessorIdWhiteBalance){
             dispatch_async(processingQueue, ^{
-                 UIImage* image = [processorWb appliedImage];
+                whiteBalanceAppliedImage = [processorWb appliedImage];
                 //メインスレッド
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [whitebalanceImageView setImage:image];
+                    [whitebalanceImageView setImage:whiteBalanceAppliedImage];
                 });
             });
             return;
         }
         if(identifier == ProcessorIdLevels){
             dispatch_async(processingQueue, ^{
-                UIImage* image = [processorLv appliedImage];
+                levelsAppliedImage = [processorLv appliedImage];
                 //メインスレッド
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [levelsImageView setImage:image];
+                    [levelsImageView setImage:levelsAppliedImage];
                 });
             });
             return;
         }
         if(identifier == ProcessorIdSaturation){
             dispatch_async(processingQueue, ^{
-                UIImage* image = [processorSt appliedImage];
+                saturationAppliedImage = [processorSt appliedImage];
                 //メインスレッド
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [saturationImageView setImage:image];
+                    [saturationImageView setImage:saturationAppliedImage];
                 });
             });
             return;
@@ -450,26 +485,12 @@
 
 - (void)saveImage
 {
+    [processorWb clean];
+    [processorLv clean];
+    [processorSt clean];
     __weak EditorViewController* _self = self;
     dispatch_async(processingQueue, ^{
         UIImage* resultImage;
-        
-        // データプロバイダを取得する
-        CGDataProviderRef dataProvider = CGImageGetDataProvider(self.originalImage.CGImage);
-        
-        // ビットマップデータを取得する
-        CFDataRef data = CGDataProviderCopyData(dataProvider);
-        CFMutableDataRef mutableData = CFDataCreateMutableCopy(0, 0, CGDataProviderCopyData(dataProvider));
-        CFRelease(data);
-        
-        UInt8* buffer = (UInt8*)CFDataGetMutableBytePtr(mutableData);
-        [processorWb setBuffer:buffer];
-        [processorWb calc];
-        [processorLv setBuffer:buffer];
-        [processorLv calc];
-        [processorSt setBuffer:buffer];
-        [processorSt calc];
-        
         
         size_t width = CGImageGetWidth(self.originalImage.CGImage);
         size_t height = CGImageGetHeight(self.originalImage.CGImage);
@@ -481,9 +502,33 @@
         BOOL shouldInterpolate = CGImageGetShouldInterpolate(self.originalImage.CGImage);
         CGColorRenderingIntent intent = CGImageGetRenderingIntent(self.originalImage.CGImage);
         
+        // データプロバイダを取得する
+        CGDataProviderRef dataProvider = CGImageGetDataProvider(self.originalImage.CGImage);
+        
+        // ビットマップデータを取得する
+        CFDataRef data = CGDataProviderCopyData(dataProvider);
+        CFMutableDataRef mutableData = CFDataCreateMutableCopy(0, 0, data);
+        CFRelease(data);
+        
+        UInt8* buffer = (UInt8*)CFDataGetMutableBytePtr(mutableData);
+        NSUInteger i, j;
+        UInt8* pixel;
+        for (j = 0 ; j < height; j++)
+        {
+            for (i = 0; i < width; i++)
+            {
+                // ピクセルのポインタを取得する
+                pixel = buffer + j * bytesPerRow + i * 4;
+                [processorWb calcPixel:pixel];
+                [processorLv calcPixel:pixel];
+                [processorSt calcPixel:pixel];
+            }
+        }
+                
         // 効果を与えたデータを作成する
         CFDataRef effectedData;
         effectedData = CFDataCreate(NULL, buffer, CFDataGetLength(mutableData));
+        CFRelease(mutableData);
         
         // 効果を与えたデータプロバイダを作成する
         CGDataProviderRef effectedDataProvider;
@@ -506,14 +551,6 @@
         
         
         UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil);
-        
-        // Restore
-        [processorWb loadBytes:originalImageResized];
-        [processorWb execute];
-        [processorLv loadBytes:[processorWb appliedImage]];
-        [processorLv execute];
-        [processorSt loadBytes:[processorLv appliedImage]];
-        [processorSt execute];        
         
         //メインスレッド
         dispatch_async(dispatch_get_main_queue(), ^{
