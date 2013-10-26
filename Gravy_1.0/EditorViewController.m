@@ -1076,11 +1076,11 @@
 {
     __weak EditorViewController* _self = self;
     dispatch_async(processingQueue, ^{
-            UIImage* resultImage;
-            [_self processWhiteBalance:&_originalImage applyTo:&resultImage];
-            [_self processLevels:&resultImage applyTo:&resultImage];
-            [_self processSaturation:&resultImage applyTo:&resultImage];
-            UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil);
+        UIImage* resultImage;
+        [_self processWhiteBalance:&_originalImage applyTo:&resultImage];
+        [_self processLevels:&resultImage applyTo:&resultImage];
+        [_self processSaturation:&resultImage applyTo:&resultImage];
+        UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil);
         //メインスレッド
         dispatch_async(dispatch_get_main_queue(), ^{
             state = EditorStateFinishedSaving;
