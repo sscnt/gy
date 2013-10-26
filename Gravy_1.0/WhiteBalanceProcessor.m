@@ -33,8 +33,8 @@
     g = *(pixel + 1);
     b = *(pixel + 2);
     
-    r = MAX(0, MIN(255, r + self.wbRedWeight));
-    b = MAX(0, MIN(255, b + self.wbBlueWeight));
+    r = MAX(0, MIN(255, r + _wbRedWeight));
+    b = MAX(0, MIN(255, b + _wbBlueWeight));
     g = MAX(0, MIN(255, g + 0));
     
     

@@ -225,13 +225,13 @@
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
         dispatch_async(processingQueue, ^{
             [processorWb execute];
-            UIImage* image = [processorWb appliedImage];
-            [processorLv loadImage:image];
+            levelsAppliedImage = [processorWb appliedImage];
+            [processorLv loadImage:levelsAppliedImage];
             [processorLv execute];
-            image = [processorLv appliedImage];
+            levelsAppliedImage = [processorLv appliedImage];
             //メインスレッド
             dispatch_async(dispatch_get_main_queue(), ^{
-                [levelsImageView setImage:image];
+                [levelsImageView setImage:levelsAppliedImage];
                 [SVProgressHUD dismiss];
                 processorLv.dragStarted = NO;
                 processorLv.processRunning = NO;
@@ -244,13 +244,13 @@
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
         dispatch_async(processingQueue, ^{
             [processorLv execute];
-            UIImage* image = [processorLv appliedImage];
-            [processorSt loadImage:image];
+            saturationAppliedImage = [processorLv appliedImage];
+            [processorSt loadImage:saturationAppliedImage];
             [processorSt execute];
-            image = [processorSt appliedImage];
+            saturationAppliedImage = [processorSt appliedImage];
             //メインスレッド
             dispatch_async(dispatch_get_main_queue(), ^{
-                [saturationImageView setImage:image];
+                [saturationImageView setImage:saturationAppliedImage];
                 [SVProgressHUD dismiss];
                 processorSt.dragStarted = NO;
                 processorSt.processRunning = NO;
@@ -328,7 +328,6 @@
 
 - (void)didDragView:(UIPanGestureRecognizer *)sender
 {
-   
     UIView *targetView = sender.view;
     CGPoint p = [sender translationInView:targetView];
     CGFloat deltaX = targetView.center.x + p.x;
@@ -338,7 +337,7 @@
     deltaX = MAX(0, MIN(screenWidth, deltaX));
     
     if(targetView.tag == KnobIdWhiteBalance){
-        processorWb.dragStarted = YES;
+        processorWb.doForce = (sender.state == UIGestureRecognizerStateEnded);
         float redWeight = targetView.center.y - knobDefaultCenterY;
         float blueWeight = targetView.center.x - knobDefaultCenterX;
         redWeight /= 4.0f;
@@ -349,7 +348,7 @@
         processorWb.wbBlueWeight = (int)roundf(blueWeight);
         [processorWb executeAsync:processingQueue];
     } else if(targetView.tag == KnobIdLevels){
-        processorLv.dragStarted = YES;
+        processorLv.doForce = (sender.state == UIGestureRecognizerStateEnded);
         int lvMidWeight = (NSInteger)roundf((targetView.center.x - knobDefaultCenterX) / 3.0f) + 127;
         lvMidWeight = MAX(0, MIN(255, lvMidWeight));
         int diff = (NSInteger)roundf((targetView.center.y - knobDefaultCenterY) / 3.0f);
@@ -365,7 +364,7 @@
         processorLv.lvLowWeight = lvLowWeight;
         [processorLv executeAsync:processingQueue];
     } else if(targetView.tag == KnobIdSaturation){
-        processorSt.dragStarted = YES;
+        processorSt.doForce = (sender.state == UIGestureRecognizerStateEnded);
         int stSaturationWeight = -(NSInteger)roundf((targetView.center.x - knobDefaultCenterX));
         int stVibranceWeight = (NSInteger)roundf((targetView.center.y - knobDefaultCenterY));
         processorSt.stSaturationWeight = stSaturationWeight;
@@ -522,6 +521,7 @@
                 [processorWb calcPixel:pixel];
                 [processorLv calcPixel:pixel];
                 [processorSt calcPixel:pixel];
+                 
             }
         }
                 

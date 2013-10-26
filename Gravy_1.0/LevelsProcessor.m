@@ -59,7 +59,7 @@
     if(y >= _lvMidWeight){
         _y = (y - _lvMidWeight) * 127.0f * dblMid + 127.0f;
     } else {
-        _y = (y - self.lvLowWeight) * 127.0f * dblLow;
+        _y = (y - _lvLowWeight) * 127.0f * dblLow;
     }
     _y = MAX(0.0f, MIN(255.0f, _y));
     
@@ -86,7 +86,6 @@
     *(pixel + 0) = r;
     *(pixel + 1) = g;
     *(pixel + 2) = b;
-
     
 }
 

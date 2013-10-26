@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger, ProcessorId){
     size_t bytesPerRow;
     CGColorSpaceRef colorSpace;
     CGBitmapInfo bitmapInfo;
-    bool shouldInterpolate;
+    BOOL shouldInterpolate;
     CGColorRenderingIntent intent;
     
     CFMutableDataRef mutableDataOriginal;
@@ -39,8 +39,10 @@ typedef NS_ENUM(NSInteger, ProcessorId){
     
     CFIndex length;
     
+    BOOL skipCanceling;
 }
 
+@property (nonatomic, assign) BOOL doForce;
 @property (nonatomic, assign) BOOL processRunning;
 @property (nonatomic, assign) BOOL dragStarted;
 @property (nonatomic, assign) id<ImageProcessorDelegate> delegate;

@@ -19,6 +19,9 @@
         self.identifier = ProcessorIdSaturation;
         self.stSaturationWeight = 0;
         self.stVibranceWeight = 0;
+        m6 = 1.0f/ 6.0f;
+        m60 = 1.0f / 60.0f;
+        m255 =  1.0f / 255.0f;
     }
     return self;
 }
@@ -26,12 +29,7 @@
 - (void)before
 {
     [super before];
-
-    float m6, m60, m255, t, spx, spy, b1, b2, b3, b4,x0, x1, x2, x3, x4, x5, y0, y1, y2, y3, y4, y5;
-    m6 = 1.0f/ 6.0f;
-    m60 = 1.0f / 60.0f;
-    m255 =  1.0f / 255.0f;
-    
+    float t, spx, spy, b1, b2, b3, b4,x0, x1, x2, x3, x4, x5, y0, y1, y2, y3, y4, y5;
     
     for(int i = 0;i < 361;i++){
         vibranceSpline[i] = 1.0f;
@@ -139,10 +137,7 @@
     
     UInt8 r, g, b;
     int hi;
-    float h, s, v, _r, _g, _b, max, min,m6, m60, m255, f, p, q, t, _s;
-    m6 = 1.0f/ 6.0f;
-    m60 = 1.0f / 60.0f;
-    m255 =  1.0f / 255.0f;
+    float h, s, v, _r, _g, _b, max, min, f, p, q, t, _s;
     
     // RGBの値を取得する
     r = *(pixel + 0);
@@ -158,7 +153,7 @@
     
     h = 0.0f;
     if(max == min){
-        h = 0.0f;
+        
     } else if(max == _r){
         h = 60.0f * (_g - _b) / (max - min);
     } else if (max == _g){

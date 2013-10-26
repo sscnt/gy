@@ -12,6 +12,7 @@
 {
     int saturationSpline[256];
     float vibranceSpline[361];
+    float m6, m60, m255;
 }
 
 @property (nonatomic, assign) int stVibranceWeight;

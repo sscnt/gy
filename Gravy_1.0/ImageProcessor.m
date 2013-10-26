@@ -103,6 +103,7 @@
 {
     [self before];
     BOOL success = [self calc];
+    dlog(@"%d", success);
     [self after];
     return success;
 }
@@ -114,8 +115,7 @@
     {
         for (i = 0; i < width; i++)
         {
-            if(self.dragStarted){
-                self.processRunning = NO;
+            if(!skipCanceling && self.dragStarted){
                 [self after];
                 return NO;
             }
@@ -136,22 +136,27 @@
 
 - (void)after
 {
+    self.processRunning = NO;
 }
 
 - (void)executeAsync:(dispatch_queue_t)queue
 {
-    if(self.processRunning){
+    if(!self.doForce && self.processRunning){
         return;
+    }
+    skipCanceling = NO;
+    if(self.doForce){
+        skipCanceling = YES;
+        self.doForce = NO;
     }
     self.processRunning = YES;
     self.dragStarted = NO;
     __block BOOL success = NO;
-    __weak ImageProcessor* _self = self;
+    __block __weak ImageProcessor* _self = self;
     dispatch_async(queue, ^{
         success = [_self execute];
         //メインスレッド
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.processRunning = NO;
             [_self.delegate didFinishedExecute:success sender:self.identifier];
         });
     });
