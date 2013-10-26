@@ -76,6 +76,8 @@ typedef NS_ENUM(NSInteger, KnobId){
     
     BOOL processRunning;
     BOOL dragStarted;
+    
+    dispatch_queue_t processingQueue;
 }
 
 @property (nonatomic, strong) UIImage* originalImage;
@@ -87,6 +89,7 @@ typedef NS_ENUM(NSInteger, KnobId){
 - (void)layoutWhiteBalanceEditor;
 - (void)layoutLevelsEditor;
 - (void)layoutSaturationEditor;
+
 
 - (void)processWhiteBalanceAsync;
 - (void)processWhiteBalance:(UIImage* __strong *)sourceImage applyTo:(UIImage* __strong *)destImage;

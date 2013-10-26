@@ -19,6 +19,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
+        processingQueue = dispatch_queue_create("jp.ssctech.gravy.processing", 0);
     }
     return self;
 }
@@ -471,6 +473,7 @@
     //  [[UIImage alloc] initWithCIImage:ciImage scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
 }
 
+
 - (void)processWhiteBalanceAsync
 {
     dragStarted = NO;
@@ -480,7 +483,7 @@
     processRunning = YES;
     
     __weak EditorViewController* _self = self;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(processingQueue, ^{
         [_self processWhiteBalance:&originalImageResized applyTo:&whiteBalanceAppliedImage];
         //メインスレッド
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -529,6 +532,8 @@
     CFMutableDataRef mutableData = CFDataCreateMutableCopy(0, 0, data);
     CFRelease(data);
     UInt8* buffer = (UInt8*)CFDataGetMutableBytePtr(mutableData);
+    UInt8* tmp;
+    UInt8 r,g,b;
     
     // ビットマップに効果を与える
     
@@ -544,10 +549,9 @@
             }
             
             // ピクセルのポインタを取得する
-            UInt8* tmp = buffer + j * bytesPerRow + i * 4;
+            tmp = buffer + j * bytesPerRow + i * 4;
             
             // RGBの値を取得する
-            UInt8 r, g, b;
             r = *(tmp + 0);
             g = *(tmp + 1);
             b = *(tmp + 2);
@@ -602,7 +606,7 @@
     processRunning = YES;
     
     __weak EditorViewController* _self = self;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(processingQueue, ^{
         [_self processLevels:&whiteBalanceAppliedImage applyTo:&levelsAppliedImage];
         //メインスレッド
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -756,8 +760,6 @@
     CFRelease(effectedDataProvider);
     CFRelease(effectedData);
     CFRelease(mutableData);
-    
-    
 }
 
 
@@ -770,7 +772,7 @@
     processRunning = YES;
     
     __weak EditorViewController* _self = self;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(processingQueue, ^{
         [_self processSaturation:&levelsAppliedImage applyTo:&saturationAppliedImage];
         //メインスレッド
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -1073,15 +1075,14 @@
 - (void)saveImage
 {
     __weak EditorViewController* _self = self;
-    __block UIImage* resultImage;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [_self processWhiteBalance:&_originalImage applyTo:&resultImage];
-        [_self processLevels:&resultImage applyTo:&resultImage];
-        [_self processSaturation:&resultImage applyTo:&resultImage];
+    dispatch_async(processingQueue, ^{
+            UIImage* resultImage;
+            [_self processWhiteBalance:&_originalImage applyTo:&resultImage];
+            [_self processLevels:&resultImage applyTo:&resultImage];
+            [_self processSaturation:&resultImage applyTo:&resultImage];
+            UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil);
         //メインスレッド
         dispatch_async(dispatch_get_main_queue(), ^{
-            UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil);
-            resultImage = nil;
             state = EditorStateFinishedSaving;
             [_self didClickNextButton];
         });
