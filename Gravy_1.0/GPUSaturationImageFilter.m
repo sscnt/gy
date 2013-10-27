@@ -18,6 +18,15 @@ NSString *const kGravySaturationFragmentShaderString = SHADER_STRING
  uniform mediump float splineTableSaturation[1001];
  uniform mediump float splineTableVibrance[361];
  
+ float round(float a){
+     float b = floor(a);
+     b = floor((a - b) * 10.0);
+     if(int(b) < 5){
+         return floor(a);
+     }
+     return ceil(a);
+ }
+ 
  void main()
  {
      highp vec4 pixel   = texture2D(inputImageTexture, textureCoordinate);
@@ -32,7 +41,9 @@ NSString *const kGravySaturationFragmentShaderString = SHADER_STRING
      mediump float min = min(r, min(g, b));
      mediump float h = 0.0;
      
-     if(max == r){
+     if(max == min){
+         
+     } else if(max == r){
          h = 60.0 * (g - b) / (max - min);
      } else if(max == g){
          h = 60.0 * (b - r) / (max - min) + 120.0;
@@ -41,6 +52,8 @@ NSString *const kGravySaturationFragmentShaderString = SHADER_STRING
      }
      if(h < 0.0){
          h += 360.0;
+     } else if(h > 360.0){
+         h = 360.0 - h;
      }
      
      mediump float s;
@@ -53,9 +66,9 @@ NSString *const kGravySaturationFragmentShaderString = SHADER_STRING
      mediump float _s;
      int index = 0;
      
-     index = int(max(0.0, min(1000.0, float(floor(s * 1000.0)))));
+     index = int(max(0.0, min(1000.0, float(round(s * 1000.0)))));
      _s = splineTableSaturation[index];
-     index = int(max(0.0, min(1000.0, float(floor(v * 1000.0)))));
+     index = int(max(0.0, min(1000.0, float(round(v * 1000.0)))));
      _s *= splineTableSaturation[index];
      s += _s;
      
@@ -78,18 +91,22 @@ NSString *const kGravySaturationFragmentShaderString = SHADER_STRING
          r = p;
          g = v;
          b = t;         
-     } else if(hi == 2){
+     } else if(hi == 3){
          r = p;
          g = q;
          b = v;
-     } else if(hi == 2){
+     } else if(hi == 4){
          r = t;
          g = p;
          b = v;
-     } else if(hi == 2){
+     } else if(hi == 5){
          r = v;
          g = p;
          b = q;
+     } else {
+         r = v;
+         g = t;
+         b = p;
      }
      
      r = max(0.0, min(1.0, r));

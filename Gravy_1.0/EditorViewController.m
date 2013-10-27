@@ -227,8 +227,6 @@
             imageFilterLevels = [[GPULevelsImageFilter alloc] init];
         }
         [pictureLevels addTarget:imageFilterLevels];
-        [pictureLevels processImage];
-        levelsAppliedImage = [imageFilterLevels imageFromCurrentlyProcessedOutput];
         [levelsImageView setImage:levelsAppliedImage];
         [SVProgressHUD dismiss];
         state = EditorStateLevels;
@@ -246,8 +244,6 @@
             imageFilterSaturation = [[GPUSaturationImageFilter alloc] init];
         }
         [pictureSaturation addTarget:imageFilterSaturation];
-        [pictureSaturation processImage];
-        saturationAppliedImage = [imageFilterSaturation imageFromCurrentlyProcessedOutput];
         [saturationImageView setImage:saturationAppliedImage];
         [SVProgressHUD dismiss];
         state = EditorStateSaturation;
