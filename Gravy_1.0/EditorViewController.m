@@ -14,21 +14,17 @@
 
 @implementation EditorViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-        
-    
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    [self resizeOriginalImage];
+    imageFilterWhiteBalance = [[GPUWhitebalanceImageFilter alloc] init];
+    pictureWhiteBalance = [[GPUImagePicture alloc] initWithImage:originalImageResized];
+    [pictureWhiteBalance addTarget:imageFilterWhiteBalance];
+    
     processingQueue = dispatch_queue_create("jp.ssctech.gravy.processing", 0);
     state = EditorStateWhiteBalance;
     screenHeight = [UIScreen height];
@@ -42,7 +38,6 @@
     processorSt.delegate = self;
  
 
-    [self resizeOriginalImage];
     [processorWb loadImage:originalImageResized];
     [processorLv loadImage:originalImageResized];
     [processorLv makeHistogram];
@@ -223,51 +218,46 @@
     nextBtn.hidden = NO;
     if (state == EditorStateWhiteBalance) {
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-        dispatch_async(processingQueue, ^{
-            [processorWb execute];
-            levelsAppliedImage = [processorWb appliedImage];
-            [processorLv loadImage:levelsAppliedImage];
-            [processorLv execute];
-            levelsAppliedImage = [processorLv appliedImage];
-            //メインスレッド
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [levelsImageView setImage:levelsAppliedImage];
-                [SVProgressHUD dismiss];
-                processorLv.dragStarted = NO;
-                processorLv.processRunning = NO;
-                state = EditorStateLevels;
-                pageControl.currentPage++;
-                [_self changePageControl];
-            });
-        });        
+        [pictureWhiteBalance processImage];
+        levelsAppliedImage = [imageFilterWhiteBalance imageFromCurrentlyProcessedOutput];
+        if(!pictureLevels){
+            pictureLevels = [[GPUImagePicture alloc] initWithImage:levelsAppliedImage];
+        }
+        if(!imageFilterLevels){
+            imageFilterLevels = [[GPULevelsImageFilter alloc] init];
+        }
+        [pictureLevels addTarget:imageFilterLevels];
+        [pictureLevels processImage];
+        levelsAppliedImage = [imageFilterLevels imageFromCurrentlyProcessedOutput];
+        [levelsImageView setImage:levelsAppliedImage];
+        [SVProgressHUD dismiss];
+        state = EditorStateLevels;
+        pageControl.currentPage++;
+        [_self changePageControl];
+        
     } else if (state == EditorStateLevels) {
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-        dispatch_async(processingQueue, ^{
-            [processorLv execute];
-            saturationAppliedImage = [processorLv appliedImage];
-            [processorSt loadImage:saturationAppliedImage];
-            [processorSt execute];
-            saturationAppliedImage = [processorSt appliedImage];
-            //メインスレッド
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [saturationImageView setImage:saturationAppliedImage];
-                [SVProgressHUD dismiss];
-                processorSt.dragStarted = NO;
-                processorSt.processRunning = NO;
-                state = EditorStateSaturation;
-                nextBtn.hidden = YES;
-                saveBtn.hidden = NO;
-                pageControl.currentPage++;
-                [_self changePageControl];
-            });
-        });
-
+        [pictureLevels processImage];
+        saturationAppliedImage = [imageFilterLevels imageFromCurrentlyProcessedOutput];
+        if(!pictureSaturation){
+            pictureSaturation = [[GPUImagePicture alloc] initWithImage:saturationAppliedImage];
+        }
+        if(!imageFilterSaturation){
+            imageFilterSaturation = [[GPUSaturationImageFilter alloc] init];
+        }
+        [pictureSaturation addTarget:imageFilterSaturation];
+        [pictureSaturation processImage];
+        saturationAppliedImage = [imageFilterSaturation imageFromCurrentlyProcessedOutput];
+        [saturationImageView setImage:saturationAppliedImage];
+        [SVProgressHUD dismiss];
+        state = EditorStateSaturation;
+        pageControl.currentPage++;
+        [_self changePageControl];
     } else if (state == EditorStateSaturation) {
         nextBtn.hidden = YES;
         saveBtn.hidden = NO;
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
         dispatch_async(processingQueue, ^{
-            [processorSt execute];
             //メインスレッド
             dispatch_async(dispatch_get_main_queue(), ^{
                 [_self saveImage];
@@ -294,8 +284,6 @@
     }
     if (state == EditorStateLevels){
         state = EditorStateWhiteBalance;
-        processorWb.dragStarted = NO;
-        processorWb.processRunning = NO;
     } else if (state == EditorStateSaturation){
         processorLv.dragStarted = NO;
         processorLv.processRunning = NO;
@@ -337,19 +325,33 @@
     deltaX = MAX(0, MIN(screenWidth, deltaX));
     
     if(targetView.tag == KnobIdWhiteBalance){
-        processorWb.doForce = (sender.state == UIGestureRecognizerStateEnded);
         float redWeight = targetView.center.y - knobDefaultCenterY;
         float blueWeight = targetView.center.x - knobDefaultCenterX;
-        redWeight /= 4.0f;
-        blueWeight /= 4.0f;
-        redWeight = MAX(0.0f, MIN(255.0f, redWeight));
-        blueWeight = MAX(0.0f, MIN(255.0f, blueWeight));
-        processorWb.wbRedWeight = (int)roundf(redWeight);
-        processorWb.wbBlueWeight = (int)roundf(blueWeight);
-        [processorWb executeAsync:processingQueue];
+        redWeight *= 0.00098039215;
+        blueWeight *= 0.00098039215;
+        redWeight = MAX(0.0f, MIN(1.0f, redWeight));
+        blueWeight = MAX(0.0f, MIN(1.0f, blueWeight));
+        imageFilterWhiteBalance.redWeight = redWeight;
+        imageFilterWhiteBalance.blueWeight = blueWeight;
+        [pictureWhiteBalance processImage];
+        
+        whiteBalanceAppliedImage = [imageFilterWhiteBalance imageFromCurrentlyProcessedOutput];
+        [whitebalanceImageView setImage:whiteBalanceAppliedImage];
     } else if(targetView.tag == KnobIdLevels){
+        float  lvMidWeight = (targetView.center.x - knobDefaultCenterX) * 0.001307f + 0.500f;
+        lvMidWeight = MAX(0.0f, MIN(1.0f, lvMidWeight));
+        float  lvHighWeight = 1.0f - (targetView.center.y - knobDefaultCenterY) * 0.001961;
+        lvHighWeight = MAX(0.0f, MIN(1.0f, lvHighWeight));
+        imageFilterLevels.lvMidWeight = lvMidWeight;
+        imageFilterLevels.lvHighWeight = lvHighWeight;
+        [pictureLevels processImage];
+        
+        levelsAppliedImage = [imageFilterLevels imageFromCurrentlyProcessedOutput];
+        [levelsImageView setImage:levelsAppliedImage];
+        
+        /*
         processorLv.doForce = (sender.state == UIGestureRecognizerStateEnded);
-        int lvMidWeight = (NSInteger)roundf((targetView.center.x - knobDefaultCenterX) / 3.0f) + 127;
+        int lvMidWeight = (NSInteger)roundf() + 127;
         lvMidWeight = MAX(0, MIN(255, lvMidWeight));
         int diff = (NSInteger)roundf((targetView.center.y - knobDefaultCenterY) / 3.0f);
         int lvHighWeight = processorLv.histHighestValue - abs(diff);
@@ -363,6 +365,7 @@
         processorLv.lvMidWeight = lvMidWeight;
         processorLv.lvLowWeight = lvLowWeight;
         [processorLv executeAsync:processingQueue];
+         */
     } else if(targetView.tag == KnobIdSaturation){
         processorSt.doForce = (sender.state == UIGestureRecognizerStateEnded);
         int stSaturationWeight = -(NSInteger)roundf((targetView.center.x - knobDefaultCenterX));

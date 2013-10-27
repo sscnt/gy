@@ -70,6 +70,8 @@
 		58F3C42F181C8A9C00F7129D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F3C42E181C8A9C00F7129D /* QuartzCore.framework */; };
 		58F3C430181C8AA800F7129D /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F3C423181C89FC00F7129D /* libGPUImage.a */; };
 		58F3C434181C8EB700F7129D /* GPUWhitebalanceImageFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F3C433181C8EB700F7129D /* GPUWhitebalanceImageFilter.m */; };
+		58F3C439181CA13C00F7129D /* GPULevelsImageFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F3C438181CA13C00F7129D /* GPULevelsImageFilter.m */; };
+		58F3C43F181CC55200F7129D /* GPUSaturationImageFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F3C43E181CC55200F7129D /* GPUSaturationImageFilter.m */; };
 		58F471A5180E5D7800C64E46 /* bottomEditorBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471A3180E5D7800C64E46 /* bottomEditorBg.png */; };
 		58F471A6180E5D7800C64E46 /* bottomEditorBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471A4180E5D7800C64E46 /* bottomEditorBg@2x.png */; };
 		58F471B5180E74B000C64E46 /* UIDockButtonBack.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F471B4180E74B000C64E46 /* UIDockButtonBack.m */; };
@@ -208,6 +210,10 @@
 		58F3C42E181C8A9C00F7129D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		58F3C432181C8EB700F7129D /* GPUWhitebalanceImageFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUWhitebalanceImageFilter.h; sourceTree = "<group>"; };
 		58F3C433181C8EB700F7129D /* GPUWhitebalanceImageFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUWhitebalanceImageFilter.m; sourceTree = "<group>"; };
+		58F3C437181CA13C00F7129D /* GPULevelsImageFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPULevelsImageFilter.h; sourceTree = "<group>"; };
+		58F3C438181CA13C00F7129D /* GPULevelsImageFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPULevelsImageFilter.m; sourceTree = "<group>"; };
+		58F3C43D181CC55200F7129D /* GPUSaturationImageFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUSaturationImageFilter.h; sourceTree = "<group>"; };
+		58F3C43E181CC55200F7129D /* GPUSaturationImageFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUSaturationImageFilter.m; sourceTree = "<group>"; };
 		58F471A3180E5D7800C64E46 /* bottomEditorBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottomEditorBg.png; sourceTree = "<group>"; };
 		58F471A4180E5D7800C64E46 /* bottomEditorBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottomEditorBg@2x.png"; sourceTree = "<group>"; };
 		58F471B3180E74B000C64E46 /* UIDockButtonBack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDockButtonBack.h; sourceTree = "<group>"; };
@@ -543,6 +549,10 @@
 			children = (
 				58F3C432181C8EB700F7129D /* GPUWhitebalanceImageFilter.h */,
 				58F3C433181C8EB700F7129D /* GPUWhitebalanceImageFilter.m */,
+				58F3C437181CA13C00F7129D /* GPULevelsImageFilter.h */,
+				58F3C438181CA13C00F7129D /* GPULevelsImageFilter.m */,
+				58F3C43D181CC55200F7129D /* GPUSaturationImageFilter.h */,
+				58F3C43E181CC55200F7129D /* GPUSaturationImageFilter.m */,
 			);
 			name = GPUImageFilters;
 			sourceTree = "<group>";
@@ -759,6 +769,7 @@
 				5809B503180EBAD2007670D1 /* UIEditorTitleLabel.m in Sources */,
 				580032B9180D28840021F73C /* UIDockButtonCamera.m in Sources */,
 				58F0271C181A8B6600938725 /* SVProgressHUD.m in Sources */,
+				58F3C439181CA13C00F7129D /* GPULevelsImageFilter.m in Sources */,
 				580032C3180D34490021F73C /* UISettingsButton.m in Sources */,
 				58FBB40518155FE4001CFDC8 /* UIDockButtonSave.m in Sources */,
 				5802E7CB180C0F1400AA2227 /* main.m in Sources */,
@@ -772,6 +783,7 @@
 				58F471B5180E74B000C64E46 /* UIDockButtonBack.m in Sources */,
 				58F471B8180E74ED00C64E46 /* UIDockButtonNext.m in Sources */,
 				58FEFFDD18101D2C008B4E8D /* UIThumbnailView.m in Sources */,
+				58F3C43F181CC55200F7129D /* GPUSaturationImageFilter.m in Sources */,
 				58F3C434181C8EB700F7129D /* GPUWhitebalanceImageFilter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
