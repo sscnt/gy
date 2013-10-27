@@ -12,14 +12,11 @@ extern NSString *const kGravySaturationFragmentShaderString;
 
 @interface GPUSaturationImageFilter : GPUImageFilter
 {
-    GLuint splineTableSaturationUniform;
-    GLuint splineTableVibranceUniform;
+    GLuint stSaturationWeightUniform;
+    GLuint stVibranceWeightUniform;
 }
 
 @property (nonatomic, readwrite) float stVibranceWeight;
 @property (nonatomic, readwrite) float stSaturationWeight;
-
-- (void)initSaturationSpline;
-- (void)initVibranceSpline;
 
 @end

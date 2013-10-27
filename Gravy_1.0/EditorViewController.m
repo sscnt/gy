@@ -220,13 +220,13 @@
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
         [pictureWhiteBalance processImage];
         levelsAppliedImage = [imageFilterWhiteBalance imageFromCurrentlyProcessedOutput];
-        if(!pictureLevels){
-            pictureLevels = [[GPUImagePicture alloc] initWithImage:levelsAppliedImage];
-        }
+        pictureLevels = [[GPUImagePicture alloc] initWithImage:levelsAppliedImage];
         if(!imageFilterLevels){
             imageFilterLevels = [[GPULevelsImageFilter alloc] init];
         }
         [pictureLevels addTarget:imageFilterLevels];
+        [pictureLevels processImage];
+        levelsAppliedImage = [imageFilterLevels imageFromCurrentlyProcessedOutput];
         [levelsImageView setImage:levelsAppliedImage];
         [SVProgressHUD dismiss];
         state = EditorStateLevels;
@@ -237,13 +237,13 @@
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
         [pictureLevels processImage];
         saturationAppliedImage = [imageFilterLevels imageFromCurrentlyProcessedOutput];
-        if(!pictureSaturation){
-            pictureSaturation = [[GPUImagePicture alloc] initWithImage:saturationAppliedImage];
-        }
+        pictureSaturation = [[GPUImagePicture alloc] initWithImage:saturationAppliedImage];
         if(!imageFilterSaturation){
             imageFilterSaturation = [[GPUSaturationImageFilter alloc] init];
         }
         [pictureSaturation addTarget:imageFilterSaturation];
+        [pictureSaturation processImage];
+        saturationAppliedImage = [imageFilterSaturation imageFromCurrentlyProcessedOutput];
         [saturationImageView setImage:saturationAppliedImage];
         [SVProgressHUD dismiss];
         state = EditorStateSaturation;
@@ -349,13 +349,11 @@
         float stWeight = targetView.center.x - knobDefaultCenterX;
         float vbWeight = targetView.center.y - knobDefaultCenterY;
         
-        stWeight *= 0.00625;
+        stWeight *= -0.00625;
         vbWeight *= 0.00625;
         
         imageFilterSaturation.stSaturationWeight = stWeight;
         imageFilterSaturation.stVibranceWeight = vbWeight;
-        [imageFilterSaturation initSaturationSpline];
-        [imageFilterSaturation initVibranceSpline];
         [pictureSaturation processImage];
         
         saturationAppliedImage = [imageFilterSaturation imageFromCurrentlyProcessedOutput];
