@@ -31,7 +31,7 @@ NSString *const kGravySaturationFragmentShaderString = SHADER_STRING
  {
      highp vec4 pixel   = texture2D(inputImageTexture, textureCoordinate);
      
-     mediump float m60 = 0.0166667;
+     mediump float m60 = 0.0166665;
      
      mediump float r = pixel.r;
      mediump float g = pixel.g;
@@ -52,10 +52,9 @@ NSString *const kGravySaturationFragmentShaderString = SHADER_STRING
      }
      if(h < 0.0){
          h += 360.0;
-     } else if(h > 360.0){
-         h = 360.0 - h;
+
      }
-     
+    
      mediump float s;
      if(max == 0.0) {
          s = 0.0;
@@ -63,16 +62,18 @@ NSString *const kGravySaturationFragmentShaderString = SHADER_STRING
          s = (max - min) / max;
      }
      mediump float v = max;
+     
      mediump float _s;
      int index = 0;
      
-     index = int(max(0.0, min(1000.0, float(round(s * 1000.0)))));
+     index = int(round(max(0.0, min(1000.0, (round(s * 1000.0))))));
      _s = splineTableSaturation[index];
-     index = int(max(0.0, min(1000.0, float(round(v * 1000.0)))));
+     index = int(round(max(0.0, min(1000.0, (round(v * 1000.0))))));
      _s *= splineTableSaturation[index];
      s += _s;
      
      s = max(0.0, min(1.0, s));
+     
      int hi = int(floor(mod(h * m60, 6.0)));
      mediump float f = (h * m60) - float(floor(h * m60));
      mediump float p = v * (1.0 - s);
