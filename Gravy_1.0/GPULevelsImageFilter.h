@@ -12,17 +12,17 @@ extern NSString *const kGravyLevelsFragmentShaderString;
 
 @interface GPULevelsImageFilter : GPUImageFilter
 {
-    float lvLowWeightUniform;
-    float lvMidWeightUniform;
-    float lvHighWeightUniform;
-    float histLowestValueUniform;
-    float histHighestValueUniform;
+    GLuint lvLowWeightUniform;
+    GLuint lvMidWeightUniform;
+    GLuint lvHighWeightUniform;
+    GLuint histLowestValueUniform;
+    GLuint histHighestValueUniform;
     
-    float diffHighAndMidUniform;
-    float diffMidAndLowUniform;
+    GLuint diffHighAndMidUniform;
+    GLuint diffMidAndLowUniform;
     
-    float mtplHMUniform;
-    float mtplMLUniform;
+    GLuint mtplHMUniform;
+    GLuint mtplMLUniform;
 }
 
 @property (nonatomic, readwrite) float lvLowWeight;

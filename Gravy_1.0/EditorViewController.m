@@ -349,30 +349,22 @@
         levelsAppliedImage = [imageFilterLevels imageFromCurrentlyProcessedOutput];
         [levelsImageView setImage:levelsAppliedImage];
         
-        /*
-        processorLv.doForce = (sender.state == UIGestureRecognizerStateEnded);
-        int lvMidWeight = (NSInteger)roundf() + 127;
-        lvMidWeight = MAX(0, MIN(255, lvMidWeight));
-        int diff = (NSInteger)roundf((targetView.center.y - knobDefaultCenterY) / 3.0f);
-        int lvHighWeight = processorLv.histHighestValue - abs(diff);
-        int lvLowWeight = 0;
-        if(diff < 0){
-            lvLowWeight = processorLv.histLowestValue + abs(diff);
-        }
-        lvHighWeight = MAX(lvMidWeight, MIN(255, lvHighWeight));
-        lvLowWeight = MAX(0, MIN(lvMidWeight, lvLowWeight));
-        processorLv.lvHighWeight = lvHighWeight;
-        processorLv.lvMidWeight = lvMidWeight;
-        processorLv.lvLowWeight = lvLowWeight;
-        [processorLv executeAsync:processingQueue];
-         */
     } else if(targetView.tag == KnobIdSaturation){
-        processorSt.doForce = (sender.state == UIGestureRecognizerStateEnded);
-        int stSaturationWeight = -(NSInteger)roundf((targetView.center.x - knobDefaultCenterX));
-        int stVibranceWeight = (NSInteger)roundf((targetView.center.y - knobDefaultCenterY));
-        processorSt.stSaturationWeight = stSaturationWeight;
-        processorSt.stVibranceWeight = stVibranceWeight;
-        [processorSt executeAsync:processingQueue];
+        float stWeight = targetView.center.x - knobDefaultCenterX;
+        float vbWeight = targetView.center.y - knobDefaultCenterY;
+        
+        stWeight *= 0.00625;
+        vbWeight *= 0.00625;
+        
+        imageFilterSaturation.stSaturationWeight = stWeight;
+        imageFilterSaturation.stVibranceWeight = vbWeight;
+        [imageFilterSaturation initSaturationSpline];
+        [imageFilterSaturation initVibranceSpline];
+        [pictureSaturation processImage];
+        
+        saturationAppliedImage = [imageFilterSaturation imageFromCurrentlyProcessedOutput];
+        [saturationImageView setImage:saturationAppliedImage];
+
     }
     
     

@@ -76,7 +76,6 @@ NSString *const kGravyLevelsFragmentShaderString = SHADER_STRING
     {
         return nil;
     }
-    
     lvLowWeightUniform = [filterProgram uniformIndex:@"lvLowWeight"];
     self.lvLowWeight = 0.0f;
     
