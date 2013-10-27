@@ -63,6 +63,13 @@
 		5809B503180EBAD2007670D1 /* UIEditorTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5809B502180EBAD2007670D1 /* UIEditorTitleLabel.m */; };
 		58F0271B181A8B6600938725 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 58F02718181A8B6600938725 /* SVProgressHUD.bundle */; };
 		58F0271C181A8B6600938725 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F0271A181A8B6600938725 /* SVProgressHUD.m */; };
+		58F3C427181C8A7100F7129D /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F3C426181C8A7100F7129D /* CoreMedia.framework */; };
+		58F3C429181C8A7900F7129D /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F3C428181C8A7900F7129D /* CoreVideo.framework */; };
+		58F3C42B181C8A8300F7129D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F3C42A181C8A8300F7129D /* OpenGLES.framework */; };
+		58F3C42D181C8A9200F7129D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F3C42C181C8A9200F7129D /* AVFoundation.framework */; };
+		58F3C42F181C8A9C00F7129D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F3C42E181C8A9C00F7129D /* QuartzCore.framework */; };
+		58F3C430181C8AA800F7129D /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F3C423181C89FC00F7129D /* libGPUImage.a */; };
+		58F3C434181C8EB700F7129D /* GPUWhitebalanceImageFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F3C433181C8EB700F7129D /* GPUWhitebalanceImageFilter.m */; };
 		58F471A5180E5D7800C64E46 /* bottomEditorBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471A3180E5D7800C64E46 /* bottomEditorBg.png */; };
 		58F471A6180E5D7800C64E46 /* bottomEditorBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471A4180E5D7800C64E46 /* bottomEditorBg@2x.png */; };
 		58F471B5180E74B000C64E46 /* UIDockButtonBack.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F471B4180E74B000C64E46 /* UIDockButtonBack.m */; };
@@ -100,6 +107,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5802E7BA180C0F1400AA2227;
 			remoteInfo = Gravy_1.0;
+		};
+		58F3C422181C89FC00F7129D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 58F3C41C181C89FB00F7129D /* GPUImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCF1A33414DDB1EC00852800;
+			remoteInfo = GPUImage;
+		};
+		58F3C424181C89FC00F7129D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 58F3C41C181C89FB00F7129D /* GPUImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCF1A34414DDB1EC00852800;
+			remoteInfo = GPUImageTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -179,6 +200,14 @@
 		58F02718181A8B6600938725 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		58F02719181A8B6600938725 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		58F0271A181A8B6600938725 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		58F3C41C181C89FB00F7129D /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = GPUImage/framework/GPUImage.xcodeproj; sourceTree = "<group>"; };
+		58F3C426181C8A7100F7129D /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		58F3C428181C8A7900F7129D /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		58F3C42A181C8A8300F7129D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		58F3C42C181C8A9200F7129D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		58F3C42E181C8A9C00F7129D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		58F3C432181C8EB700F7129D /* GPUWhitebalanceImageFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUWhitebalanceImageFilter.h; sourceTree = "<group>"; };
+		58F3C433181C8EB700F7129D /* GPUWhitebalanceImageFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUWhitebalanceImageFilter.m; sourceTree = "<group>"; };
 		58F471A3180E5D7800C64E46 /* bottomEditorBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottomEditorBg.png; sourceTree = "<group>"; };
 		58F471A4180E5D7800C64E46 /* bottomEditorBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottomEditorBg@2x.png"; sourceTree = "<group>"; };
 		58F471B3180E74B000C64E46 /* UIDockButtonBack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDockButtonBack.h; sourceTree = "<group>"; };
@@ -228,6 +257,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58F3C430181C8AA800F7129D /* libGPUImage.a in Frameworks */,
+				58F3C42F181C8A9C00F7129D /* QuartzCore.framework in Frameworks */,
+				58F3C42D181C8A9200F7129D /* AVFoundation.framework in Frameworks */,
+				58F3C42B181C8A8300F7129D /* OpenGLES.framework in Frameworks */,
+				58F3C429181C8A7900F7129D /* CoreVideo.framework in Frameworks */,
+				58F3C427181C8A7100F7129D /* CoreMedia.framework in Frameworks */,
 				58FEFFDA18101C08008B4E8D /* CoreImage.framework in Frameworks */,
 				5802E7C1180C0F1400AA2227 /* CoreGraphics.framework in Frameworks */,
 				5802E7C3180C0F1400AA2227 /* UIKit.framework in Frameworks */,
@@ -304,6 +339,12 @@
 		5802E7BD180C0F1400AA2227 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				58F3C42E181C8A9C00F7129D /* QuartzCore.framework */,
+				58F3C42C181C8A9200F7129D /* AVFoundation.framework */,
+				58F3C42A181C8A8300F7129D /* OpenGLES.framework */,
+				58F3C428181C8A7900F7129D /* CoreVideo.framework */,
+				58F3C426181C8A7100F7129D /* CoreMedia.framework */,
+				58F3C41C181C89FB00F7129D /* GPUImage.xcodeproj */,
 				58FEFFD918101C08008B4E8D /* CoreImage.framework */,
 				5802E7BE180C0F1400AA2227 /* Foundation.framework */,
 				5802E7C0180C0F1400AA2227 /* CoreGraphics.framework */,
@@ -330,6 +371,7 @@
 				5802E7D0180C0F1400AA2227 /* Main.storyboard */,
 				5802E7D6180C0F1400AA2227 /* Images.xcassets */,
 				5802E81A180C278B00AA2227 /* Views */,
+				58F3C431181C8E7A00F7129D /* GPUImageFilters */,
 				58F9C50E181B59B800FA3DE1 /* Model */,
 				5802E819180C24DF00AA2227 /* ViewControllers */,
 				5802E7C5180C0F1400AA2227 /* Supporting Files */,
@@ -487,6 +529,24 @@
 			name = SVProgressHUD;
 			sourceTree = "<group>";
 		};
+		58F3C41D181C89FB00F7129D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				58F3C423181C89FC00F7129D /* libGPUImage.a */,
+				58F3C425181C89FC00F7129D /* GPUImageTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		58F3C431181C8E7A00F7129D /* GPUImageFilters */ = {
+			isa = PBXGroup;
+			children = (
+				58F3C432181C8EB700F7129D /* GPUWhitebalanceImageFilter.h */,
+				58F3C433181C8EB700F7129D /* GPUWhitebalanceImageFilter.m */,
+			);
+			name = GPUImageFilters;
+			sourceTree = "<group>";
+		};
 		58F9C50E181B59B800FA3DE1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -583,6 +643,12 @@
 			mainGroup = 5802E7B2180C0F1400AA2227;
 			productRefGroup = 5802E7BC180C0F1400AA2227 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 58F3C41D181C89FB00F7129D /* Products */;
+					ProjectRef = 58F3C41C181C89FB00F7129D /* GPUImage.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				5802E7BA180C0F1400AA2227 /* Gravy_1.0 */,
@@ -590,6 +656,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		58F3C423181C89FC00F7129D /* libGPUImage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGPUImage.a;
+			remoteRef = 58F3C422181C89FC00F7129D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		58F3C425181C89FC00F7129D /* GPUImageTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = GPUImageTests.octest;
+			remoteRef = 58F3C424181C89FC00F7129D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		5802E7B9180C0F1400AA2227 /* Resources */ = {
@@ -689,6 +772,7 @@
 				58F471B5180E74B000C64E46 /* UIDockButtonBack.m in Sources */,
 				58F471B8180E74ED00C64E46 /* UIDockButtonNext.m in Sources */,
 				58FEFFDD18101D2C008B4E8D /* UIThumbnailView.m in Sources */,
+				58F3C434181C8EB700F7129D /* GPUWhitebalanceImageFilter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -830,9 +914,15 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Gravy_1.0/Gravy_1.0-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
 				INFOPLIST_FILE = "Gravy_1.0/Gravy_1.0-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "./GPUImage/framework/Source/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -845,9 +935,15 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Gravy_1.0/Gravy_1.0-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
 				INFOPLIST_FILE = "Gravy_1.0/Gravy_1.0-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "./GPUImage/framework/Source/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

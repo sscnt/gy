@@ -23,8 +23,7 @@
 #import "WhiteBalanceProcessor.h"
 #import "LevelsProcessor.h"
 #import "SaturationProcessor.h"
-
-
+#import "GPUImage.h"
 
 typedef NS_ENUM(NSInteger, EditorState){
     EditorStateWhiteBalance = 1,
@@ -70,6 +69,10 @@ typedef NS_ENUM(NSInteger, KnobId){
     CGFloat screenWidth;
     CGFloat screenHeight;
     dispatch_queue_t processingQueue;
+    
+    GPUImagePicture* pictureWhiteBalance;
+    GPUImagePicture* pictureLevels;
+    GPUImagePicture* pictureSaturation;
 }
 
 @property (nonatomic, strong) UIImage* originalImage;
