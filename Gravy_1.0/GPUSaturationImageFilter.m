@@ -36,6 +36,7 @@ NSString *const kGravySaturationFragmentShaderString = SHADER_STRING
      mediump float r = pixel.r;
      mediump float g = pixel.g;
      mediump float b = pixel.b;
+     mediump float y = 0.299 * r + 0.587 * g + 0.114 * b;
      
      mediump float max = max(r, max(g, b));
      mediump float min = min(r, min(g, b));
@@ -67,8 +68,8 @@ NSString *const kGravySaturationFragmentShaderString = SHADER_STRING
      int index = 0;
 
      _s = (1.0 - cos(s * 3.1415927)) * stSaturationWeight;
-     _s *= (1.0 - cos(v * 3.1415927)) * stVibranceWeight;
-     _s *= 0.2 * (0.8 - cos(h * 0.00872665)) + 1.0;
+     _s *= (1.0 - cos(y * 3.1415927)) * stVibranceWeight;
+     _s *= 0.4 * (0.5 - cos(h * 0.00872665)) + 1.0;
      s += _s;
      
      s = max(0.0, min(1.0, s));
