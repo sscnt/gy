@@ -219,7 +219,6 @@
         state = EditorStateLevels;
         pageControl.currentPage++;
         [self changePageControl];
-        
     } else if (state == EditorStateLevels) {
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
         [pictureLevels processImage];
@@ -404,26 +403,33 @@
     __weak EditorViewController* _self = self;
     dispatch_async(processingQueue, ^{
         UIImage* resultImage;
-        pictureWhiteBalance = [[GPUImagePicture alloc] initWithImage:_originalImage];
-        [pictureWhiteBalance addTarget:imageFilterWhiteBalance];
-        [pictureWhiteBalance processImage];
-        resultImage = [imageFilterWhiteBalance imageFromCurrentlyProcessedOutput];
+        GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:_originalImage];
+        GPUImageFilterGroup *filterGroup = [[GPUImageFilterGroup alloc] init];
+        GPUWhitebalanceImageFilter* filterWb = [[GPUWhitebalanceImageFilter alloc] init];
+        filterWb.redWeight = imageFilterWhiteBalance.redWeight;
+        filterWb.blueWeight = imageFilterWhiteBalance.blueWeight;
+        [filterGroup addFilter:filterWb];
+        GPULevelsImageFilter* filterLv = [[GPULevelsImageFilter alloc] init];
+        filterLv.lvHighWeight = imageFilterLevels.lvHighWeight;
+        filterLv.lvMidWeight = imageFilterLevels.lvMidWeight;
+        filterLv.lvLowWeight = imageFilterLevels.lvLowWeight;
+        [filterGroup addFilter:filterLv];
+        GPUSaturationImageFilter* filterSt = [[GPUSaturationImageFilter alloc] init];
+        filterSt.stSaturationWeight = imageFilterSaturation.stSaturationWeight;
+        filterSt.stVibranceWeight = imageFilterSaturation.stVibranceWeight;
+        [filterGroup addFilter:filterSt];
         
-        pictureLevels = [[GPUImagePicture alloc] initWithImage:resultImage];
-        [pictureLevels addTarget:imageFilterLevels];
-        [pictureLevels processImage];
-        resultImage = [imageFilterLevels imageFromCurrentlyProcessedOutput];
+        [filterGroup setInitialFilters:@[filterWb]];
+        [filterGroup setTerminalFilter:filterSt];
         
-        pictureSaturation = [[GPUImagePicture alloc] initWithImage:resultImage];
-        [pictureSaturation addTarget:imageFilterSaturation];
-        [pictureSaturation processImage];
-        resultImage = [imageFilterSaturation imageFromCurrentlyProcessedOutput];
+        [filterWb addTarget:filterLv];
+        [filterLv addTarget:filterSt];
+        
+        [picture addTarget:filterGroup];
+        [picture processImage];
+        resultImage = [filterSt imageFromCurrentlyProcessedOutput];
         
         UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil);
-        
-        pictureWhiteBalance = [[GPUImagePicture alloc] initWithImage:whiteBalanceAppliedImage];
-        pictureLevels = [[GPUImagePicture alloc] initWithImage:levelsAppliedImage];
-        pictureSaturation = [[GPUImagePicture alloc] initWithImage:saturationAppliedImage];        
         
         //メインスレッド
         dispatch_async(dispatch_get_main_queue(), ^{
