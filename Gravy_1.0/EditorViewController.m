@@ -209,6 +209,7 @@
     [scrollView addSubview:wrapper];
 }
 
+
 #pragma mark events
 
 - (void)didClickNextButton
@@ -325,8 +326,8 @@
         float blueWeight = targetView.center.x - knobDefaultCenterX;
         redWeight *= 0.00098039215;
         blueWeight *= 0.00098039215;
-        redWeight = MAX(0.0f, MIN(1.0f, redWeight));
-        blueWeight = MAX(0.0f, MIN(1.0f, blueWeight));
+        redWeight = MAX(-1.0f, MIN(1.0f, redWeight));
+        blueWeight = MAX(-1.0f, MIN(1.0f, blueWeight));
         imageFilterWhiteBalance.redWeight = redWeight;
         imageFilterWhiteBalance.blueWeight = blueWeight;
         [pictureWhiteBalance processImage];
@@ -473,76 +474,35 @@
 
 - (void)saveImage
 {
-    [processorWb clean];
-    [processorLv clean];
-    [processorSt clean];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     __weak EditorViewController* _self = self;
     dispatch_async(processingQueue, ^{
         UIImage* resultImage;
         
-        size_t width = CGImageGetWidth(self.originalImage.CGImage);
-        size_t height = CGImageGetHeight(self.originalImage.CGImage);
-        size_t bitsPerComponent = CGImageGetBitsPerComponent(self.originalImage.CGImage);
-        size_t bitsPerPixel = CGImageGetBitsPerPixel(self.originalImage.CGImage);
-        size_t bytesPerRow = CGImageGetBytesPerRow(self.originalImage.CGImage);
-        CGColorSpaceRef colorSpace = CGImageGetColorSpace(self.originalImage.CGImage);
-        CGBitmapInfo bitmapInfo = CGImageGetBitmapInfo(self.originalImage.CGImage);
-        BOOL shouldInterpolate = CGImageGetShouldInterpolate(self.originalImage.CGImage);
-        CGColorRenderingIntent intent = CGImageGetRenderingIntent(self.originalImage.CGImage);
+        pictureWhiteBalance = [[GPUImagePicture alloc] initWithImage:_originalImage];
+        [pictureWhiteBalance addTarget:imageFilterWhiteBalance];
+        [pictureWhiteBalance processImage];
+        resultImage = [imageFilterWhiteBalance imageFromCurrentlyProcessedOutput];
         
-        // データプロバイダを取得する
-        CGDataProviderRef dataProvider = CGImageGetDataProvider(self.originalImage.CGImage);
+        pictureLevels = [[GPUImagePicture alloc] initWithImage:resultImage];
+        [pictureLevels addTarget:imageFilterLevels];
+        [pictureLevels processImage];
+        resultImage = [imageFilterLevels imageFromCurrentlyProcessedOutput];
         
-        // ビットマップデータを取得する
-        CFDataRef data = CGDataProviderCopyData(dataProvider);
-        CFMutableDataRef mutableData = CFDataCreateMutableCopy(0, 0, data);
-        CFRelease(data);
-        
-        UInt8* buffer = (UInt8*)CFDataGetMutableBytePtr(mutableData);
-        NSUInteger i, j;
-        UInt8* pixel;
-        for (j = 0 ; j < height; j++)
-        {
-            for (i = 0; i < width; i++)
-            {
-                // ピクセルのポインタを取得する
-                pixel = buffer + j * bytesPerRow + i * 4;
-                [processorWb calcPixel:pixel];
-                [processorLv calcPixel:pixel];
-                [processorSt calcPixel:pixel];
-                 
-            }
-        }
-                
-        // 効果を与えたデータを作成する
-        CFDataRef effectedData;
-        effectedData = CFDataCreate(NULL, buffer, CFDataGetLength(mutableData));
-        CFRelease(mutableData);
-        
-        // 効果を与えたデータプロバイダを作成する
-        CGDataProviderRef effectedDataProvider;
-        effectedDataProvider = CGDataProviderCreateWithCFData(effectedData);
-        
-        // 画像を作成する
-        CGImageRef effectedCgImage = CGImageCreate(
-                                                   width, height,
-                                                   bitsPerComponent, bitsPerPixel, bytesPerRow,
-                                                   colorSpace, bitmapInfo, effectedDataProvider,
-                                                   NULL, shouldInterpolate, intent);
-        
-        
-        resultImage = [[UIImage alloc] initWithCGImage:effectedCgImage];
-        
-        // 作成したデータを解放する
-        CGImageRelease(effectedCgImage);
-        CFRelease(effectedDataProvider);
-        CFRelease(effectedData);
-        
+        pictureSaturation = [[GPUImagePicture alloc] initWithImage:resultImage];
+        [pictureSaturation addTarget:imageFilterSaturation];
+        [pictureSaturation processImage];
+        resultImage = [imageFilterSaturation imageFromCurrentlyProcessedOutput];
         
         UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil);
         
+        pictureWhiteBalance = [[GPUImagePicture alloc] initWithImage:whiteBalanceAppliedImage];
+        pictureLevels = [[GPUImagePicture alloc] initWithImage:levelsAppliedImage];
+        pictureSaturation = [[GPUImagePicture alloc] initWithImage:saturationAppliedImage];        
+        
         //メインスレッド
         dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
             state = EditorStateFinishedSaving;
             [_self didClickNextButton];
         });

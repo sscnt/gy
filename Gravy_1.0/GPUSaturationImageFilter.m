@@ -68,6 +68,7 @@ NSString *const kGravySaturationFragmentShaderString = SHADER_STRING
 
      _s = (1.0 - cos(s * 3.1415927)) * stSaturationWeight;
      _s *= (1.0 - cos(v * 3.1415927)) * stVibranceWeight;
+     _s *= 0.2 * (0.8 - cos(h * 0.00872665)) + 1.0;
      s += _s;
      
      s = max(0.0, min(1.0, s));
