@@ -20,9 +20,6 @@
 #import "UISliderView.h"
 #import "UIScrollView+Gravy.h"
 #import "SVProgressHUD.h"
-#import "WhiteBalanceProcessor.h"
-#import "LevelsProcessor.h"
-#import "SaturationProcessor.h"
 #import "GPUImage.h"
 #import "GPUWhitebalanceImageFilter.h"
 #import "GPULevelsImageFilter.h"
@@ -42,7 +39,7 @@ typedef NS_ENUM(NSInteger, KnobId){
     KnobIdSaturation
 };
 
-@interface EditorViewController : UIViewController <UIScrollViewDelegate, UIThumbnailViewDelegate, ImageProcessorDelegate>
+@interface EditorViewController : UIViewController <UIScrollViewDelegate, UIThumbnailViewDelegate>
 {
     GPUWhitebalanceImageFilter* imageFilterWhiteBalance;
     GPULevelsImageFilter* imageFilterLevels;
@@ -51,10 +48,7 @@ typedef NS_ENUM(NSInteger, KnobId){
     GPUImagePicture* pictureWhiteBalance;
     GPUImagePicture* pictureLevels;
     GPUImagePicture* pictureSaturation;
-    
-    WhiteBalanceProcessor* processorWb;
-    LevelsProcessor* processorLv;
-    SaturationProcessor* processorSt;
+
 
     UIImageView* bgImageView;
     UIScrollView* scrollView;

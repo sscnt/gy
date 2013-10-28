@@ -30,19 +30,6 @@
     screenHeight = [UIScreen height];
     screenWidth = [UIScreen width];
     
-    processorWb = [[WhiteBalanceProcessor alloc] init];
-    processorWb.delegate = self;
-    processorLv = [[LevelsProcessor alloc] init];
-    processorLv.delegate = self;
-    processorSt = [[SaturationProcessor alloc] init];
-    processorSt.delegate = self;
- 
-
-    [processorWb loadImage:originalImageResized];
-    [processorLv loadImage:originalImageResized];
-    [processorLv makeHistogram];
-
-    
     //// bg.png
     if(screenHeight >= 568){
         bgImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"editor_bg-568h.jpg"]];
@@ -214,7 +201,6 @@
 
 - (void)didClickNextButton
 {
-    __weak EditorViewController* _self = self;
     saveBtn.hidden = YES;
     nextBtn.hidden = NO;
     if (state == EditorStateWhiteBalance) {
@@ -232,7 +218,7 @@
         [SVProgressHUD dismiss];
         state = EditorStateLevels;
         pageControl.currentPage++;
-        [_self changePageControl];
+        [self changePageControl];
         
     } else if (state == EditorStateLevels) {
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
@@ -247,20 +233,15 @@
         saturationAppliedImage = [imageFilterSaturation imageFromCurrentlyProcessedOutput];
         [saturationImageView setImage:saturationAppliedImage];
         [SVProgressHUD dismiss];
+        nextBtn.hidden = YES;
+        saveBtn.hidden = NO;
         state = EditorStateSaturation;
         pageControl.currentPage++;
-        [_self changePageControl];
+        [self changePageControl];
     } else if (state == EditorStateSaturation) {
         nextBtn.hidden = YES;
         saveBtn.hidden = NO;
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-        dispatch_async(processingQueue, ^{
-            //メインスレッド
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [_self saveImage];
-            });
-        });
-        return;
+        [self saveImage];
     } else if (state == EditorStateFinishedSaving) {
         [SVProgressHUD dismiss];
         state = EditorStateSharing;
@@ -282,30 +263,11 @@
     if (state == EditorStateLevels){
         state = EditorStateWhiteBalance;
     } else if (state == EditorStateSaturation){
-        processorLv.dragStarted = NO;
-        processorLv.processRunning = NO;
         state = EditorStateLevels;
     } else if (state == EditorStateSharing){
-        __weak EditorViewController* _self = self;
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-        dispatch_async(processingQueue, ^{
-            [processorWb loadImage:originalImageResized];
-            [processorWb execute];
-            [processorLv loadImage:[processorWb appliedImage]];
-            [processorLv execute];
-            [processorSt loadImage:[processorLv appliedImage]];
-            [processorSt execute];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [SVProgressHUD dismiss];
-                state = EditorStateSaturation;
-                nextBtn.hidden = YES;
-                saveBtn.hidden = NO;
-                pageControl.currentPage--;
-                [_self changePageControl];
-            });
-
-        });
-        return;
+        state = EditorStateSaturation;
+        nextBtn.hidden = YES;
+        saveBtn.hidden = NO; 
     }
     pageControl.currentPage--;
     [self changePageControl];
@@ -368,42 +330,6 @@
     [sender setTranslation:CGPointZero inView:targetView];
     
     
-}
-
-- (void)didFinishedExecute:(BOOL)success sender:(ProcessorId)identifier
-{
-    if(success){
-        if(identifier == ProcessorIdWhiteBalance){
-            dispatch_async(processingQueue, ^{
-                whiteBalanceAppliedImage = [processorWb appliedImage];
-                //メインスレッド
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [whitebalanceImageView setImage:whiteBalanceAppliedImage];
-                });
-            });
-            return;
-        }
-        if(identifier == ProcessorIdLevels){
-            dispatch_async(processingQueue, ^{
-                levelsAppliedImage = [processorLv appliedImage];
-                //メインスレッド
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [levelsImageView setImage:levelsAppliedImage];
-                });
-            });
-            return;
-        }
-        if(identifier == ProcessorIdSaturation){
-            dispatch_async(processingQueue, ^{
-                saturationAppliedImage = [processorSt appliedImage];
-                //メインスレッド
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [saturationImageView setImage:saturationAppliedImage];
-                });
-            });
-            return;
-        }
-    }
 }
 
 #pragma mark delegates
@@ -478,7 +404,6 @@
     __weak EditorViewController* _self = self;
     dispatch_async(processingQueue, ^{
         UIImage* resultImage;
-        
         pictureWhiteBalance = [[GPUImagePicture alloc] initWithImage:_originalImage];
         [pictureWhiteBalance addTarget:imageFilterWhiteBalance];
         [pictureWhiteBalance processImage];
@@ -512,9 +437,6 @@
 
 - (void)dealloc
 {
-    processorLv.delegate = nil;
-    processorSt.delegate = nil;
-    processorWb.delegate = nil;
     scrollView.delegate = nil;
 }
 

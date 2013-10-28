@@ -80,15 +80,11 @@
 		58F471BE180E7AFF00C64E46 /* icon_next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471BC180E7AFF00C64E46 /* icon_next@2x.png */; };
 		58F471C1180E7B0500C64E46 /* icon_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471BF180E7B0500C64E46 /* icon_back.png */; };
 		58F471C2180E7B0500C64E46 /* icon_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471C0180E7B0500C64E46 /* icon_back@2x.png */; };
-		58F6A467181B67C6003FF1C4 /* SaturationProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F6A466181B67C6003FF1C4 /* SaturationProcessor.m */; };
 		58F7911E180D65E500968648 /* editor_bg-568h@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58F7911B180D65E500968648 /* editor_bg-568h@2x.jpg */; };
 		58F7911F180D65E500968648 /* editor_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58F7911C180D65E500968648 /* editor_bg.jpg */; };
 		58F79120180D65E500968648 /* editor_bg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58F7911D180D65E500968648 /* editor_bg@2x.jpg */; };
 		58F79123180D696700968648 /* EditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F79122180D696700968648 /* EditorViewController.m */; };
 		58F79126180D6CCB00968648 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F79125180D6CCB00968648 /* RootViewController.m */; };
-		58F9C511181B59DD00FA3DE1 /* ImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F9C510181B59DD00FA3DE1 /* ImageProcessor.m */; };
-		58F9C515181B660800FA3DE1 /* WhiteBalanceProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F9C514181B660800FA3DE1 /* WhiteBalanceProcessor.m */; };
-		58F9C518181B662800FA3DE1 /* LevelsProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F9C517181B662800FA3DE1 /* LevelsProcessor.m */; };
 		58FA2E291813F3EC00DFB4FB /* UIScrollView+Gravy.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FA2E281813F3EC00DFB4FB /* UIScrollView+Gravy.m */; };
 		58FAB9C818115C4F00B95F02 /* UISliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FAB9C718115C4F00B95F02 /* UISliderView.m */; };
 		58FBB40118155FB4001CFDC8 /* slider.png in Resources */ = {isa = PBXBuildFile; fileRef = 58FBB3FF18155FB4001CFDC8 /* slider.png */; };
@@ -224,8 +220,6 @@
 		58F471BC180E7AFF00C64E46 /* icon_next@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_next@2x.png"; sourceTree = "<group>"; };
 		58F471BF180E7B0500C64E46 /* icon_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_back.png; sourceTree = "<group>"; };
 		58F471C0180E7B0500C64E46 /* icon_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_back@2x.png"; sourceTree = "<group>"; };
-		58F6A465181B67C6003FF1C4 /* SaturationProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaturationProcessor.h; sourceTree = "<group>"; };
-		58F6A466181B67C6003FF1C4 /* SaturationProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaturationProcessor.m; sourceTree = "<group>"; };
 		58F7911B180D65E500968648 /* editor_bg-568h@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "editor_bg-568h@2x.jpg"; sourceTree = "<group>"; };
 		58F7911C180D65E500968648 /* editor_bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = editor_bg.jpg; sourceTree = "<group>"; };
 		58F7911D180D65E500968648 /* editor_bg@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "editor_bg@2x.jpg"; sourceTree = "<group>"; };
@@ -233,12 +227,6 @@
 		58F79122180D696700968648 /* EditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditorViewController.m; sourceTree = "<group>"; };
 		58F79124180D6CCB00968648 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		58F79125180D6CCB00968648 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
-		58F9C50F181B59DD00FA3DE1 /* ImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessor.h; sourceTree = "<group>"; };
-		58F9C510181B59DD00FA3DE1 /* ImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProcessor.m; sourceTree = "<group>"; };
-		58F9C513181B660800FA3DE1 /* WhiteBalanceProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhiteBalanceProcessor.h; sourceTree = "<group>"; };
-		58F9C514181B660800FA3DE1 /* WhiteBalanceProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhiteBalanceProcessor.m; sourceTree = "<group>"; };
-		58F9C516181B662800FA3DE1 /* LevelsProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelsProcessor.h; sourceTree = "<group>"; };
-		58F9C517181B662800FA3DE1 /* LevelsProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelsProcessor.m; sourceTree = "<group>"; };
 		58FA2E271813F3EC00DFB4FB /* UIScrollView+Gravy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Gravy.h"; sourceTree = "<group>"; };
 		58FA2E281813F3EC00DFB4FB /* UIScrollView+Gravy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Gravy.m"; sourceTree = "<group>"; };
 		58FAB9C618115C4F00B95F02 /* UISliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISliderView.h; sourceTree = "<group>"; };
@@ -378,7 +366,6 @@
 				5802E7D6180C0F1400AA2227 /* Images.xcassets */,
 				5802E81A180C278B00AA2227 /* Views */,
 				58F3C431181C8E7A00F7129D /* GPUImageFilters */,
-				58F9C50E181B59B800FA3DE1 /* Model */,
 				5802E819180C24DF00AA2227 /* ViewControllers */,
 				5802E7C5180C0F1400AA2227 /* Supporting Files */,
 			);
@@ -557,29 +544,6 @@
 			name = GPUImageFilters;
 			sourceTree = "<group>";
 		};
-		58F9C50E181B59B800FA3DE1 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				58F9C512181B65E200FA3DE1 /* Processors */,
-				58F9C50F181B59DD00FA3DE1 /* ImageProcessor.h */,
-				58F9C510181B59DD00FA3DE1 /* ImageProcessor.m */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		58F9C512181B65E200FA3DE1 /* Processors */ = {
-			isa = PBXGroup;
-			children = (
-				58F9C513181B660800FA3DE1 /* WhiteBalanceProcessor.h */,
-				58F9C514181B660800FA3DE1 /* WhiteBalanceProcessor.m */,
-				58F9C516181B662800FA3DE1 /* LevelsProcessor.h */,
-				58F9C517181B662800FA3DE1 /* LevelsProcessor.m */,
-				58F6A465181B67C6003FF1C4 /* SaturationProcessor.h */,
-				58F6A466181B67C6003FF1C4 /* SaturationProcessor.m */,
-			);
-			name = Processors;
-			sourceTree = "<group>";
-		};
 		58FEFFD518101535008B4E8D /* Subclasses */ = {
 			isa = PBXGroup;
 			children = (
@@ -756,7 +720,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5802E7D5180C0F1400AA2227 /* TopViewController.m in Sources */,
-				58F6A467181B67C6003FF1C4 /* SaturationProcessor.m in Sources */,
 				5809B4FF180EB902007670D1 /* UIWrapperView.m in Sources */,
 				58FEFFD818101550008B4E8D /* UIFadeNavigationController.m in Sources */,
 				58FEFFE018101EB5008B4E8D /* UIDevice+Gravy.m in Sources */,
@@ -764,8 +727,6 @@
 				58F79126180D6CCB00968648 /* RootViewController.m in Sources */,
 				5802E7CF180C0F1400AA2227 /* AppDelegate.m in Sources */,
 				58F79123180D696700968648 /* EditorViewController.m in Sources */,
-				58F9C511181B59DD00FA3DE1 /* ImageProcessor.m in Sources */,
-				58F9C518181B662800FA3DE1 /* LevelsProcessor.m in Sources */,
 				5809B503180EBAD2007670D1 /* UIEditorTitleLabel.m in Sources */,
 				580032B9180D28840021F73C /* UIDockButtonCamera.m in Sources */,
 				58F0271C181A8B6600938725 /* SVProgressHUD.m in Sources */,
@@ -778,7 +739,6 @@
 				58FAB9C818115C4F00B95F02 /* UISliderView.m in Sources */,
 				58003296180D10B10021F73C /* UIDockView.m in Sources */,
 				58FA2E291813F3EC00DFB4FB /* UIScrollView+Gravy.m in Sources */,
-				58F9C515181B660800FA3DE1 /* WhiteBalanceProcessor.m in Sources */,
 				580032BC180D2C1C0021F73C /* UIDockButtonPhotos.m in Sources */,
 				58F471B5180E74B000C64E46 /* UIDockButtonBack.m in Sources */,
 				58F471B8180E74ED00C64E46 /* UIDockButtonNext.m in Sources */,
