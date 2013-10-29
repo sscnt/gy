@@ -52,7 +52,7 @@
     
     //////// labels
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 20.0f)];
-    label.font = [UIFont fontWithName:@"rounded-mplus-1p-light" size:16.0f];
+    label.font = [UIFont fontWithName:@"rounded-mplus-1p-light" size:15.0f];
     label.alpha = 0.9f;
     label.text = NSLocalizedString(@"Subtitle", nil);
     label.textAlignment = NSTextAlignmentCenter;
