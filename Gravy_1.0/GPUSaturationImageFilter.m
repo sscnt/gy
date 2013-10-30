@@ -31,7 +31,7 @@ NSString *const kGravySaturationFragmentShaderString = SHADER_STRING
  {
      highp vec4 pixel   = texture2D(inputImageTexture, textureCoordinate);
      
-     mediump float m60 = 0.0166665;
+     mediump float m60 = 0.01665;
      
      mediump float r = pixel.r;
      mediump float g = pixel.g;
@@ -41,6 +41,10 @@ NSString *const kGravySaturationFragmentShaderString = SHADER_STRING
      mediump float max = max(r, max(g, b));
      mediump float min = min(r, min(g, b));
      mediump float h = 0.0;
+     if(max < min){
+         max = 0.0;
+         min = 0.0;
+     }
      
      if(max == min){
          
@@ -53,8 +57,8 @@ NSString *const kGravySaturationFragmentShaderString = SHADER_STRING
      }
      if(h < 0.0){
          h += 360.0;
-
      }
+     h = mod(h, 360.0);
     
      mediump float s;
      if(max == 0.0) {
@@ -69,13 +73,14 @@ NSString *const kGravySaturationFragmentShaderString = SHADER_STRING
 
      _s = (1.0 - cos(s * 3.1415927)) * stSaturationWeight;
      _s *= (1.0 - cos(y * 3.1415927)) * stVibranceWeight;
-     _s *= 0.4 * (0.5 - cos(h * 0.00872665)) + 0.8;
+     _s *= 0.4 * (0.5 - cos(h * 0.0174533)) + 0.8;
      s += _s;
+     //s += stSaturationWeight;
      
      s = max(0.0, min(1.0, s));
      
-     int hi = int(floor(mod(h * m60, 6.0)));
-     mediump float f = (h * m60) - float(floor(h * m60));
+     int hi = int(mod(float(floor(h * m60)), 6.0));
+     mediump float f = (h * m60) - float(hi);
      mediump float p = v * (1.0 - s);
      mediump float q = v * (1.0 - s * f);
      mediump float t = v * (1.0 - s * (1.0 - f));
