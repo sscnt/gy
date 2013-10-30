@@ -91,9 +91,9 @@ NSString *const kGravyLevelsFragmentShaderString = SHADER_STRING
      mediump float _s;
      int index = 0;
      
-     _s = (1.0 - cos(s * 3.1415927)) * min(0.5, 0.5 - lvMidWeight);
-     _s *= (1.0 - cos(y * 3.1415927)) * min(1.0, 1.0 - lvHighWeight) * 3.0;
-     //_s *= 0.4 * (0.5 - cos(h * 0.00872665)) + 0.8;
+     _s = (1.0 - cos(s * 3.1415927)) * min(1.0, max(0.0, (0.5 - lvMidWeight) * 2.4));
+     _s *= (1.0 - cos(y * 3.1415927)) * min(1.0, max(0.0, (1.0 - lvHighWeight) * 2.4));
+     _s *= 0.4 * (0.5 - cos(h * 0.00872665)) + 0.8;
      s += _s;
      
      s = max(0.0, min(1.0, s));
