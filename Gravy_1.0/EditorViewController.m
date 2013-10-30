@@ -242,7 +242,6 @@
         saveBtn.hidden = NO;
         [self saveImage];
     } else if (state == EditorStateFinishedSaving) {
-        [SVProgressHUD dismiss];
         state = EditorStateSharing;
         nextBtn.hidden = YES;
         pageControl.currentPage++;
@@ -434,6 +433,7 @@
         //メインスレッド
         dispatch_async(dispatch_get_main_queue(), ^{
             [SVProgressHUD dismiss];
+            [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Saved successfully", nil)];
             state = EditorStateFinishedSaving;
             [_self didClickNextButton];
         });

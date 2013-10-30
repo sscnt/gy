@@ -37,12 +37,14 @@ NSString *const kGravyLevelsFragmentShaderString = SHADER_STRING
      mediump float y = 0.299 * r + 0.587 * g + 0.114 * b;
      mediump float u = -0.169 * r - 0.331 * g + 0.500 * b;
      mediump float v = 0.500 * r - 0.419 * g - 0.081 * b;
+     mediump float _y;
      
      if(y > lvMidWeight){
-         y = (y - lvMidWeight) * 0.500 * mtplHM + 0.500;
+         _y = (y - lvMidWeight) * 0.500 * mtplHM + 0.500;
      } else {
-         y = (y - lvLowWeight) * 0.500 * mtplML;
+         _y = (y - lvLowWeight) * 0.500 * mtplML;
      }
+     y = y + (_y - y) * ((1.0 / (1.0 + pow(2.718282, y * 12.0 - 6.0))) + 0.5);
      
      y = max(0.0 , min(1.0, y));
      
@@ -53,6 +55,84 @@ NSString *const kGravyLevelsFragmentShaderString = SHADER_STRING
      r *= 1.164;
      g *= 1.164;
      b *= 1.164;
+     
+     r = max(0.0, min(1.0, r));
+     g = max(0.0, min(1.0, g));
+     b = max(0.0, min(1.0, b));
+     
+     // saturation
+     mediump float m60 = 0.0166665;
+     mediump float max = max(r, max(g, b));
+     mediump float min = min(r, min(g, b));
+     mediump float h = 0.0;
+     
+     if(max == min){
+         
+     } else if(max == r){
+         h = 60.0 * (g - b) / (max - min);
+     } else if(max == g){
+         h = 60.0 * (b - r) / (max - min) + 120.0;
+     } else if(max == b){
+         h = 60.0 * (r - g) / (max - min) + 240.0;
+     }
+     if(h < 0.0){
+         h += 360.0;
+         
+     }
+     
+     mediump float s;
+     if(max == 0.0) {
+         s = 0.0;
+     } else {
+         s = (max - min) / max;
+     }
+     v = max;
+     
+     mediump float _s;
+     int index = 0;
+     
+     _s = (1.0 - cos(s * 3.1415927)) * min(0.5, 0.5 - lvMidWeight);
+     _s *= (1.0 - cos(y * 3.1415927)) * min(1.0, 1.0 - lvHighWeight) * 3.0;
+     //_s *= 0.4 * (0.5 - cos(h * 0.00872665)) + 0.8;
+     s += _s;
+     
+     s = max(0.0, min(1.0, s));
+     
+     int hi = int(floor(mod(h * m60, 6.0)));
+     mediump float f = (h * m60) - float(floor(h * m60));
+     mediump float p = v * (1.0 - s);
+     mediump float q = v * (1.0 - s * f);
+     mediump float t = v * (1.0 - s * (1.0 - f));
+     
+     if(hi == 0){
+         r = v;
+         g = t;
+         b = p;
+     } else if(hi == 1){
+         r = q;
+         g = v;
+         b = p;
+     } else if(hi == 2){
+         r = p;
+         g = v;
+         b = t;
+     } else if(hi == 3){
+         r = p;
+         g = q;
+         b = v;
+     } else if(hi == 4){
+         r = t;
+         g = p;
+         b = v;
+     } else if(hi == 5){
+         r = v;
+         g = p;
+         b = q;
+     } else {
+         r = v;
+         g = t;
+         b = p;
+     }
      
      r = max(0.0, min(1.0, r));
      g = max(0.0, min(1.0, g));
