@@ -295,8 +295,13 @@
         whiteBalanceAppliedImage = [imageFilterWhiteBalance imageFromCurrentlyProcessedOutput];
         [whitebalanceImageView setImage:whiteBalanceAppliedImage];
     } else if(targetView.tag == KnobIdLevels){
+        imageFilterLevels.sigmoid = 0;
         float  lvMidWeight = (targetView.center.x - knobDefaultCenterX) * 0.001307f + 0.500f;
         lvMidWeight = MAX(0.0f, MIN(1.0f, lvMidWeight));
+        if(lvMidWeight > 0.5){
+            lvMidWeight = 1.0 - lvMidWeight;
+            imageFilterLevels.sigmoid = 1;
+        }
         float  lvHighWeight = 1.0f - (targetView.center.y - knobDefaultCenterY) * 0.001961;
         lvHighWeight = MAX(0.0f, MIN(1.0f, lvHighWeight));
         imageFilterLevels.lvMidWeight = lvMidWeight;

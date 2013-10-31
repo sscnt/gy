@@ -23,6 +23,8 @@ extern NSString *const kGravyLevelsFragmentShaderString;
     
     GLuint mtplHMUniform;
     GLuint mtplMLUniform;
+    
+    GLuint sigmoidUniform;
 }
 
 @property (nonatomic, readwrite) float lvLowWeight;
@@ -36,5 +38,7 @@ extern NSString *const kGravyLevelsFragmentShaderString;
 
 @property (nonatomic, readwrite) float mtplHM;
 @property (nonatomic, readwrite) float mtplML;
+
+@property (nonatomic, readwrite) int sigmoid;
 
 @end

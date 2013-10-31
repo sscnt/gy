@@ -24,6 +24,7 @@ NSString *const kGravyLevelsFragmentShaderString = SHADER_STRING
  uniform mediump float diffMidAndLow;
  uniform mediump float mtplHM;
  uniform mediump float mtplML;
+ uniform int sigmoid;
  
  void main()
  {
@@ -44,7 +45,13 @@ NSString *const kGravyLevelsFragmentShaderString = SHADER_STRING
      } else {
          _y = (y - lvLowWeight) * 0.500 * mtplML;
      }
-     y = y + (_y - y) * ((1.0 / (1.0 + pow(2.718282, y * 12.0 - 6.0))) + 0.5);
+     if(sigmoid == 0){
+         y = _y;
+         
+     } else{
+         y = y + (_y - y) * ((1.0 / (1.0 + pow(2.718282, y * 12.0 - 6.0))) + 0.5);
+     }
+     
      
      y = max(0.0 , min(1.0, y));
      
@@ -91,8 +98,8 @@ NSString *const kGravyLevelsFragmentShaderString = SHADER_STRING
      mediump float _s;
      int index = 0;
      
-     _s = (1.0 - cos(s * 3.1415927)) * min(1.0, max(0.0, (0.5 - lvMidWeight) * 2.8));
-     _s *= (1.0 - cos(y * 3.1415927)) * min(1.0, max(0.0, (1.0 - lvHighWeight) * 2.8));
+     _s = (1.0 - cos(s * 3.1415927)) * min(1.0, max(0.0, (0.5 - lvMidWeight) * 2.3));
+     _s *= (1.0 - cos(y * 3.1415927)) * min(1.0, max(0.0, (1.0 - lvHighWeight) * 2.3));
      _s *= 0.4 * (0.5 - cos(h * 0.0174533)) + 0.8;
      s += _s;
      
@@ -183,6 +190,8 @@ NSString *const kGravyLevelsFragmentShaderString = SHADER_STRING
     mtplMLUniform = [filterProgram uniformIndex:@"mtplML"];
     self.mtplML = 1.0 / self.diffMidAndLow;
     
+    sigmoidUniform = [filterProgram uniformIndex:@"sigmoid"];
+    self.sigmoid = 0;
     return self;
 }
 
@@ -246,4 +255,9 @@ NSString *const kGravyLevelsFragmentShaderString = SHADER_STRING
     [self setFloat:_mtplML forUniform:mtplMLUniform program:filterProgram];
 }
 
+- (void)setSigmoid:(int)sigmoid
+{
+    _sigmoid = sigmoid;
+    [self setInteger:_sigmoid forUniform:sigmoidUniform program:filterProgram];
+}
 @end

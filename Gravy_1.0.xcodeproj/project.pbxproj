@@ -372,6 +372,7 @@
 				5802E7D6180C0F1400AA2227 /* Images.xcassets */,
 				5802E81A180C278B00AA2227 /* Views */,
 				58F3C431181C8E7A00F7129D /* GPUImageFilters */,
+				58832B8E182282AA003E0DDB /* GPUImageEffects */,
 				5802E819180C24DF00AA2227 /* ViewControllers */,
 				5802E7C5180C0F1400AA2227 /* Supporting Files */,
 			);
@@ -511,6 +512,13 @@
 				58FAB9C718115C4F00B95F02 /* UISliderView.m */,
 			);
 			name = Editor;
+			sourceTree = "<group>";
+		};
+		58832B8E182282AA003E0DDB /* GPUImageEffects */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = GPUImageEffects;
 			sourceTree = "<group>";
 		};
 		58F02716181A8B1D00938725 /* Libraries */ = {
