@@ -14,8 +14,7 @@
 {
     CGFloat size = sqrt(pow(_imageToProcess.size.width, 2.0) + pow(_imageToProcess.size.height, 2.0));
     size *= 1.5f;
-    CGFloat offsetX = size * 0.226;
-    CGFloat offsetY = size * -0.291;
+    
     GPUImageSolidColorGenerator* gen = [[GPUImageSolidColorGenerator alloc] init];
     [gen forceProcessingAtSize:CGSizeMake(size, size)];
     [gen setColorRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
@@ -37,9 +36,16 @@
     
     [pictureBase processImage];
     UIImage* gFill1Image = [transformFilter imageFromCurrentlyProcessedOutput];
+    CGFloat offsetX = size * -0.226 / size;
+    CGFloat offsetY = 0.0F;
+    CGFloat sizeX = MAX(0.0f,MIN(1.0f,(gFill1Image.size.width - _imageToProcess.size.width) / 2.0f / gFill1Image.size.width + offsetX));
+    CGFloat sizeY = MAX(0.0f,MIN(1.0f,(gFill1Image.size.height - _imageToProcess.size.height) / 2.0f / gFill1Image.size.height + offsetY));
+    CGFloat sizeW = MAX(0.0f,MIN(1.0f,_imageToProcess.size.width / gFill1Image.size.width));
+    CGFloat sizeH = MAX(0.0f,MIN(1.0f,_imageToProcess.size.height / gFill1Image.size.height));
+    
     
     GPUImageCropFilter* crop = [[GPUImageCropFilter alloc] init];
-    [crop setCropRegion:CGRectMake( (gFill1Image.size.width - _imageToProcess.size.width) / 2.0f / gFill1Image.size.width + offsetX, (gFill1Image.size.height - _imageToProcess.size.height) / 2.0f / gFill1Image.size.height + offsetY, _imageToProcess.size.width / gFill1Image.size.width, _imageToProcess.size.height / gFill1Image.size.height)];
+    [crop setCropRegion:CGRectMake(sizeX, sizeY, sizeW, sizeH)];
     GPUImagePicture* resultPicture = [[GPUImagePicture alloc] initWithImage:gFill1Image];
     [resultPicture addTarget:crop];
     [resultPicture processImage];
@@ -89,7 +95,7 @@
     pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
     pictureBlend = [[GPUImagePicture alloc] initWithImage:gFill1];
     opacity = [[GPUImageOpacityFilter alloc] init];
-    [opacity setOpacity:1.0f];
+    [opacity setOpacity:0.34F];
     [pictureBlend addTarget:opacity];
     [pictureBlend processImage];
     pictureBlend = [[GPUImagePicture alloc] initWithImage:[opacity imageFromCurrentlyProcessedOutput]];
