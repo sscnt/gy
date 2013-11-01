@@ -275,18 +275,33 @@
         effectAppliedImage = [imageFilterSaturation imageFromCurrentlyProcessedOutput];
         pictureEffect = [[GPUImagePicture alloc] initWithImage:effectAppliedImage];
         [effectImageView setImage:effectAppliedImage];
+
+        __block EditorViewController* _self = self;
         
-        GPUHaze3Effect* haze = [[GPUHaze3Effect alloc] init];
-        haze.imageToProcess = effectAppliedImage;
-        effectAppliedImage = [haze process];
-        [effectImageView setImage:effectAppliedImage];
+        dispatch_async(processingQueue, ^{
+
+            GPUColorfulCandyEffect* candy = [[GPUColorfulCandyEffect alloc] init];
+            candy.imageToProcess = effectAppliedImage;
+            effectAppliedImage = [candy process];
+            
+            /*
+            GPUHaze3Effect* haze = [[GPUHaze3Effect alloc] init];
+            haze.imageToProcess = effectAppliedImage;
+            effectAppliedImage = [haze process];
+             */
+            
+            //メインスレッド
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SVProgressHUD dismiss];
+                [effectImageView setImage:effectAppliedImage];
+                nextBtn.hidden = YES;
+                saveBtn.hidden = NO;
+                state = EditorStateEffect;
+                pageControl.currentPage++;
+                [_self changePageControl];
+            });
+        });
         
-        [SVProgressHUD dismiss];
-        nextBtn.hidden = YES;
-        saveBtn.hidden = NO;
-        state = EditorStateEffect;
-        pageControl.currentPage++;
-        [self changePageControl];
     } else if (state == EditorStateEffect) {
         nextBtn.hidden = YES;
         saveBtn.hidden = NO;

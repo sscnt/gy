@@ -40,7 +40,7 @@ NSString *const kGravySaturationFragmentShaderString = SHADER_STRING
      
      mediump float max = max(r, max(g, b));
      mediump float min = min(r, min(g, b));
-     mediump float h = 0.0;
+     highp float h = 0.0;
      if(max < min){
          max = 0.0;
          min = 0.0;

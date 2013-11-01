@@ -26,6 +26,7 @@
 #import "GPUSaturationImageFilter.h"
 
 #import "GPUHaze3Effect.h"
+#import "GPUColorfulCandyEffect.h"
 
 typedef NS_ENUM(NSInteger, EditorState){
     EditorStateWhiteBalance = 1,

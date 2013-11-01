@@ -87,6 +87,9 @@
 		58F79123180D696700968648 /* EditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F79122180D696700968648 /* EditorViewController.m */; };
 		58F79126180D6CCB00968648 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F79125180D6CCB00968648 /* RootViewController.m */; };
 		58F9FD6A182330CB003D32F4 /* GPUHaze3Effect.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F9FD69182330CB003D32F4 /* GPUHaze3Effect.m */; };
+		58F9FD7318234F33003D32F4 /* GPUAutumn6Effect.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F9FD7218234F33003D32F4 /* GPUAutumn6Effect.m */; };
+		58F9FD7718235040003D32F4 /* GPUColorfulCandyEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F9FD7618235040003D32F4 /* GPUColorfulCandyEffect.m */; };
+		58F9FD7B182363F8003D32F4 /* GPUColorfulCandyGradientFill1ImageFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F9FD7A182363F8003D32F4 /* GPUColorfulCandyGradientFill1ImageFilter.m */; };
 		58FA2E291813F3EC00DFB4FB /* UIScrollView+Gravy.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FA2E281813F3EC00DFB4FB /* UIScrollView+Gravy.m */; };
 		58FAB9C818115C4F00B95F02 /* UISliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FAB9C718115C4F00B95F02 /* UISliderView.m */; };
 		58FAE695181FFBEA00C4FE15 /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58FAE693181FFBEA00C4FE15 /* bg.jpg */; };
@@ -234,6 +237,12 @@
 		58F79125180D6CCB00968648 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		58F9FD68182330CB003D32F4 /* GPUHaze3Effect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUHaze3Effect.h; sourceTree = "<group>"; };
 		58F9FD69182330CB003D32F4 /* GPUHaze3Effect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUHaze3Effect.m; sourceTree = "<group>"; };
+		58F9FD7118234F33003D32F4 /* GPUAutumn6Effect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUAutumn6Effect.h; sourceTree = "<group>"; };
+		58F9FD7218234F33003D32F4 /* GPUAutumn6Effect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUAutumn6Effect.m; sourceTree = "<group>"; };
+		58F9FD7518235040003D32F4 /* GPUColorfulCandyEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUColorfulCandyEffect.h; sourceTree = "<group>"; };
+		58F9FD7618235040003D32F4 /* GPUColorfulCandyEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUColorfulCandyEffect.m; sourceTree = "<group>"; };
+		58F9FD79182363F8003D32F4 /* GPUColorfulCandyGradientFill1ImageFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUColorfulCandyGradientFill1ImageFilter.h; sourceTree = "<group>"; };
+		58F9FD7A182363F8003D32F4 /* GPUColorfulCandyGradientFill1ImageFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUColorfulCandyGradientFill1ImageFilter.m; sourceTree = "<group>"; };
 		58FA2E271813F3EC00DFB4FB /* UIScrollView+Gravy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Gravy.h"; sourceTree = "<group>"; };
 		58FA2E281813F3EC00DFB4FB /* UIScrollView+Gravy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Gravy.m"; sourceTree = "<group>"; };
 		58FAB9C618115C4F00B95F02 /* UISliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISliderView.h; sourceTree = "<group>"; };
@@ -520,6 +529,8 @@
 		58832B8E182282AA003E0DDB /* GPUImageEffects */ = {
 			isa = PBXGroup;
 			children = (
+				58F9FD7418235027003D32F4 /* ColorfulCandy */,
+				58F9FD7018234E5F003D32F4 /* Autumn6 */,
 				58F9FD6E18233572003D32F4 /* Haze3 */,
 			);
 			name = GPUImageEffects;
@@ -568,16 +579,36 @@
 		58F9FD6E18233572003D32F4 /* Haze3 */ = {
 			isa = PBXGroup;
 			children = (
-				58F9FD6F1823357E003D32F4 /* Filters */,
 				58F9FD68182330CB003D32F4 /* GPUHaze3Effect.h */,
 				58F9FD69182330CB003D32F4 /* GPUHaze3Effect.m */,
 			);
 			name = Haze3;
 			sourceTree = "<group>";
 		};
-		58F9FD6F1823357E003D32F4 /* Filters */ = {
+		58F9FD7018234E5F003D32F4 /* Autumn6 */ = {
 			isa = PBXGroup;
 			children = (
+				58F9FD7118234F33003D32F4 /* GPUAutumn6Effect.h */,
+				58F9FD7218234F33003D32F4 /* GPUAutumn6Effect.m */,
+			);
+			name = Autumn6;
+			sourceTree = "<group>";
+		};
+		58F9FD7418235027003D32F4 /* ColorfulCandy */ = {
+			isa = PBXGroup;
+			children = (
+				58F9FD78182354A0003D32F4 /* Filters */,
+				58F9FD7518235040003D32F4 /* GPUColorfulCandyEffect.h */,
+				58F9FD7618235040003D32F4 /* GPUColorfulCandyEffect.m */,
+			);
+			name = ColorfulCandy;
+			sourceTree = "<group>";
+		};
+		58F9FD78182354A0003D32F4 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				58F9FD79182363F8003D32F4 /* GPUColorfulCandyGradientFill1ImageFilter.h */,
+				58F9FD7A182363F8003D32F4 /* GPUColorfulCandyGradientFill1ImageFilter.m */,
 			);
 			name = Filters;
 			sourceTree = "<group>";
@@ -763,6 +794,7 @@
 				5802E7D5180C0F1400AA2227 /* TopViewController.m in Sources */,
 				5809B4FF180EB902007670D1 /* UIWrapperView.m in Sources */,
 				58FEFFD818101550008B4E8D /* UIFadeNavigationController.m in Sources */,
+				58F9FD7718235040003D32F4 /* GPUColorfulCandyEffect.m in Sources */,
 				58FEFFE018101EB5008B4E8D /* UIDevice+Gravy.m in Sources */,
 				5802E825180C2E5E00AA2227 /* UIScreen+Gravy.m in Sources */,
 				58F79126180D6CCB00968648 /* RootViewController.m in Sources */,
@@ -770,7 +802,9 @@
 				58F79123180D696700968648 /* EditorViewController.m in Sources */,
 				5809B503180EBAD2007670D1 /* UIEditorTitleLabel.m in Sources */,
 				580032B9180D28840021F73C /* UIDockButtonCamera.m in Sources */,
+				58F9FD7318234F33003D32F4 /* GPUAutumn6Effect.m in Sources */,
 				58F0271C181A8B6600938725 /* SVProgressHUD.m in Sources */,
+				58F9FD7B182363F8003D32F4 /* GPUColorfulCandyGradientFill1ImageFilter.m in Sources */,
 				58F3C439181CA13C00F7129D /* GPULevelsImageFilter.m in Sources */,
 				580032C3180D34490021F73C /* UISettingsButton.m in Sources */,
 				58FBB40518155FE4001CFDC8 /* UIDockButtonSave.m in Sources */,
