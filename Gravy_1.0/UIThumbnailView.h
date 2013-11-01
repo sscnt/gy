@@ -12,7 +12,8 @@
 typedef NS_ENUM(NSInteger, ThumbnailViewId){
     ThumbnailViewIdWhiteBalance = 1,
     ThumbnailViewIdLevels,
-    ThumbnailViewIdSaturation
+    ThumbnailViewIdSaturation,
+    ThumbnailViewIdEffect
 };
 
 

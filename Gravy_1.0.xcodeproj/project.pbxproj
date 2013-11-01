@@ -86,6 +86,7 @@
 		58F79120180D65E500968648 /* editor_bg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58F7911D180D65E500968648 /* editor_bg@2x.jpg */; };
 		58F79123180D696700968648 /* EditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F79122180D696700968648 /* EditorViewController.m */; };
 		58F79126180D6CCB00968648 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F79125180D6CCB00968648 /* RootViewController.m */; };
+		58F9FD6A182330CB003D32F4 /* GPUHaze3Effect.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F9FD69182330CB003D32F4 /* GPUHaze3Effect.m */; };
 		58FA2E291813F3EC00DFB4FB /* UIScrollView+Gravy.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FA2E281813F3EC00DFB4FB /* UIScrollView+Gravy.m */; };
 		58FAB9C818115C4F00B95F02 /* UISliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FAB9C718115C4F00B95F02 /* UISliderView.m */; };
 		58FAE695181FFBEA00C4FE15 /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58FAE693181FFBEA00C4FE15 /* bg.jpg */; };
@@ -231,6 +232,8 @@
 		58F79122180D696700968648 /* EditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditorViewController.m; sourceTree = "<group>"; };
 		58F79124180D6CCB00968648 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		58F79125180D6CCB00968648 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		58F9FD68182330CB003D32F4 /* GPUHaze3Effect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUHaze3Effect.h; sourceTree = "<group>"; };
+		58F9FD69182330CB003D32F4 /* GPUHaze3Effect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUHaze3Effect.m; sourceTree = "<group>"; };
 		58FA2E271813F3EC00DFB4FB /* UIScrollView+Gravy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Gravy.h"; sourceTree = "<group>"; };
 		58FA2E281813F3EC00DFB4FB /* UIScrollView+Gravy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Gravy.m"; sourceTree = "<group>"; };
 		58FAB9C618115C4F00B95F02 /* UISliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISliderView.h; sourceTree = "<group>"; };
@@ -517,6 +520,7 @@
 		58832B8E182282AA003E0DDB /* GPUImageEffects */ = {
 			isa = PBXGroup;
 			children = (
+				58F9FD6E18233572003D32F4 /* Haze3 */,
 			);
 			name = GPUImageEffects;
 			sourceTree = "<group>";
@@ -559,6 +563,23 @@
 				58F3C43E181CC55200F7129D /* GPUSaturationImageFilter.m */,
 			);
 			name = GPUImageFilters;
+			sourceTree = "<group>";
+		};
+		58F9FD6E18233572003D32F4 /* Haze3 */ = {
+			isa = PBXGroup;
+			children = (
+				58F9FD6F1823357E003D32F4 /* Filters */,
+				58F9FD68182330CB003D32F4 /* GPUHaze3Effect.h */,
+				58F9FD69182330CB003D32F4 /* GPUHaze3Effect.m */,
+			);
+			name = Haze3;
+			sourceTree = "<group>";
+		};
+		58F9FD6F1823357E003D32F4 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Filters;
 			sourceTree = "<group>";
 		};
 		58FEFFD518101535008B4E8D /* Subclasses */ = {
@@ -763,6 +784,7 @@
 				58F471B5180E74B000C64E46 /* UIDockButtonBack.m in Sources */,
 				58F471B8180E74ED00C64E46 /* UIDockButtonNext.m in Sources */,
 				58FEFFDD18101D2C008B4E8D /* UIThumbnailView.m in Sources */,
+				58F9FD6A182330CB003D32F4 /* GPUHaze3Effect.m in Sources */,
 				58F3C43F181CC55200F7129D /* GPUSaturationImageFilter.m in Sources */,
 				58F3C434181C8EB700F7129D /* GPUWhitebalanceImageFilter.m in Sources */,
 			);

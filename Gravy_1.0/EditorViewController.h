@@ -25,10 +25,13 @@
 #import "GPULevelsImageFilter.h"
 #import "GPUSaturationImageFilter.h"
 
+#import "GPUHaze3Effect.h"
+
 typedef NS_ENUM(NSInteger, EditorState){
     EditorStateWhiteBalance = 1,
     EditorStateLevels,
     EditorStateSaturation,
+    EditorStateEffect,
     EditorStateSharing,
     EditorStateFinishedSaving
 };
@@ -36,7 +39,8 @@ typedef NS_ENUM(NSInteger, EditorState){
 typedef NS_ENUM(NSInteger, KnobId){
     KnobIdWhiteBalance = 1,
     KnobIdLevels,
-    KnobIdSaturation
+    KnobIdSaturation,
+    KnobIdEffect
 };
 
 @interface EditorViewController : UIViewController <UIScrollViewDelegate, UIThumbnailViewDelegate>
@@ -48,6 +52,7 @@ typedef NS_ENUM(NSInteger, KnobId){
     GPUImagePicture* pictureWhiteBalance;
     GPUImagePicture* pictureLevels;
     GPUImagePicture* pictureSaturation;
+    GPUImagePicture* pictureEffect;
 
 
     UIImageView* bgImageView;
@@ -56,6 +61,7 @@ typedef NS_ENUM(NSInteger, KnobId){
     UIThumbnailView* whitebalanceImageView;
     UIThumbnailView* levelsImageView;
     UIThumbnailView* saturationImageView;
+    UIThumbnailView* effectImageView;
     EditorState state;
     UIDockButtonBack* backBtn;
     UIDockButtonNext* nextBtn;
@@ -65,9 +71,11 @@ typedef NS_ENUM(NSInteger, KnobId){
     UIImage* whiteBalanceAppliedImage;
     UIImage* levelsAppliedImage;
     UIImage* saturationAppliedImage;
+    UIImage* effectAppliedImage;
     UISliderView* whiteBalanceKnobView;
     UISliderView* levelsKnobView;
     UISliderView* saturationKnobView;
+    UISliderView* effectKnobView;
     CGFloat knobDefaultCenterX;
     CGFloat knobDefaultCenterY;
     CGFloat screenWidth;
@@ -85,6 +93,7 @@ typedef NS_ENUM(NSInteger, KnobId){
 - (void)layoutWhiteBalanceEditor;
 - (void)layoutLevelsEditor;
 - (void)layoutSaturationEditor;
+- (void)layoutEffectEditor;
 - (void)saveImage;
 
 - (void)resizeOriginalImage;

@@ -42,7 +42,7 @@
     //// scrollview
     scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     scrollView.pagingEnabled = YES;
-    scrollView.contentSize = CGSizeMake(320.0f * 4.0f, self.view.bounds.size.height);
+    scrollView.contentSize = CGSizeMake(320.0f * 5.0f, self.view.bounds.size.height);
     scrollView.bounces = NO;
     scrollView.delegate = self;
     scrollView.scrollEnabled = NO;
@@ -51,7 +51,7 @@
     [self.view addSubview:scrollView];
     //// page control
     pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0.0f, [UIScreen screenSize].height - 80.0f, 320.0f, 20.0f)];
-    pageControl.numberOfPages = 4;
+    pageControl.numberOfPages = 5;
     pageControl.currentPage = 0;
     if([UIPageControl instancesRespondToSelector:@selector(currentPageIndicatorTintColor)]){
         pageControl.currentPageIndicatorTintColor = [UIColor colorWithWhite:0.7f alpha:1.0f];
@@ -88,10 +88,12 @@
     whiteBalanceAppliedImage = originalImageResized;
     levelsAppliedImage = originalImageResized;
     saturationAppliedImage = originalImageResized;
+    effectAppliedImage = originalImageResized;
     
     [self layoutWhiteBalanceEditor];
     [self layoutLevelsEditor];
     [self layoutSaturationEditor];
+    [self layoutEffectEditor];
 }
 
 #pragma mark layout
@@ -196,6 +198,38 @@
     [scrollView addSubview:wrapper];
 }
 
+- (void)layoutEffectEditor
+{
+    UIWrapperView* wrapper = [[UIWrapperView alloc] initWithFrame:self.view.bounds];
+    
+    // label
+    UIEditorTitleLabel* label = [[UIEditorTitleLabel alloc] initWithFrame:CGRectMake(0.0f, 30.0f, 320.0f, 20.0f)];
+    label.text = NSLocalizedString(@"Effect", nil);
+    [wrapper addSubview:label];
+    
+    // place original image
+    CGFloat imageY = [UIScreen screenSize].height / 2.0f - originalImageResized.size.height / 2.0f - 25.0f;
+    effectImageView = [[UIThumbnailView alloc] initWithImage:effectAppliedImage];
+    [effectImageView setY:imageY];
+    effectImageView.delegate = self;
+    effectImageView.userInteractionEnabled = YES;
+    effectImageView.thumbnailId = ThumbnailViewIdEffect;
+    [wrapper addSubview:effectImageView];
+    [wrapper setX:960.0f];
+    
+    UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
+    
+    // knob
+    effectKnobView = [[UISliderView alloc] init];
+    effectKnobView.tag = KnobIdEffect;
+    [effectKnobView addGestureRecognizer:recognizer];
+    CGPoint center = CGPointMake(knobDefaultCenterX, knobDefaultCenterY);
+    effectKnobView.center = center;
+    [wrapper addSubview:effectKnobView];
+    
+    [scrollView addSubview:wrapper];
+}
+
 
 #pragma mark events
 
@@ -232,12 +266,28 @@
         saturationAppliedImage = [imageFilterSaturation imageFromCurrentlyProcessedOutput];
         [saturationImageView setImage:saturationAppliedImage];
         [SVProgressHUD dismiss];
-        nextBtn.hidden = YES;
-        saveBtn.hidden = NO;
         state = EditorStateSaturation;
         pageControl.currentPage++;
         [self changePageControl];
     } else if (state == EditorStateSaturation) {
+        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+        [pictureSaturation processImage];
+        effectAppliedImage = [imageFilterSaturation imageFromCurrentlyProcessedOutput];
+        pictureEffect = [[GPUImagePicture alloc] initWithImage:effectAppliedImage];
+        [effectImageView setImage:effectAppliedImage];
+        
+        GPUHaze3Effect* haze = [[GPUHaze3Effect alloc] init];
+        haze.imageToProcess = effectAppliedImage;
+        effectAppliedImage = [haze process];
+        [effectImageView setImage:effectAppliedImage];
+        
+        [SVProgressHUD dismiss];
+        nextBtn.hidden = YES;
+        saveBtn.hidden = NO;
+        state = EditorStateEffect;
+        pageControl.currentPage++;
+        [self changePageControl];
+    } else if (state == EditorStateEffect) {
         nextBtn.hidden = YES;
         saveBtn.hidden = NO;
         [self saveImage];
@@ -262,6 +312,8 @@
         state = EditorStateWhiteBalance;
     } else if (state == EditorStateSaturation){
         state = EditorStateLevels;
+    } else if (state == EditorStateEffect){
+        state = EditorStateSaturation;
     } else if (state == EditorStateSharing){
         state = EditorStateSaturation;
         nextBtn.hidden = YES;
@@ -325,6 +377,8 @@
         saturationAppliedImage = [imageFilterSaturation imageFromCurrentlyProcessedOutput];
         [saturationImageView setImage:saturationAppliedImage];
 
+    } else if(targetView.tag == KnobIdEffect){
+        
     }
     
     
