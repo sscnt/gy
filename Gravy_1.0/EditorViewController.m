@@ -425,6 +425,10 @@
         view.image = saturationAppliedImage;
         return;
     }
+    if(view.thumbnailId == ThumbnailViewIdEffect){
+        view.image = effectAppliedImage;
+        return;
+    }
 }
 
 

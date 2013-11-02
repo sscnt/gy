@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "GPUImage.h"
+#import "GPUColorfulCandyChannelMixer1ImageFilter.h"
 #import "GPUColorfulCandyGradientFill1ImageFilter.h"
 
 

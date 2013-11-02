@@ -67,7 +67,6 @@
 
 - (UIImage*)process
 {
-    
     UIImage* gFill1 = [self generateGradientFill1];
     UIImage* fill1 = [self generateColorFill1];
     UIImage* resultImage = _imageToProcess;
@@ -75,35 +74,13 @@
     GPUImagePicture* pictureOriginal;
     GPUImagePicture* pictureBlend;
     
-    // Layer 1
-    GPUImageHueBlendFilter* hueBlend = [[GPUImageHueBlendFilter alloc] init];
+    // Channel Mixer
+    GPUColorfulCandyChannelMixer1ImageFilter* mixer = [[GPUColorfulCandyChannelMixer1ImageFilter alloc] init];
     pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
-    pictureBlend = [[GPUImagePicture alloc] initWithImage:fill1];
-    opacity = [[GPUImageOpacityFilter alloc] init];
-    [opacity setOpacity:0.3f];
-    [pictureBlend addTarget:opacity];
-    [pictureBlend processImage];
-    pictureBlend = [[GPUImagePicture alloc] initWithImage:[opacity imageFromCurrentlyProcessedOutput]];
-    [pictureOriginal addTarget:hueBlend];
-    [pictureBlend addTarget:hueBlend];
+    [pictureOriginal addTarget:mixer];
     [pictureOriginal processImage];
-    [pictureBlend processImage];
-    resultImage = [hueBlend imageFromCurrentlyProcessedOutput];
-    
-    // Layer 2
-    GPUImageHardLightBlendFilter* hardBlend = [[GPUImageHardLightBlendFilter alloc] init];
-    pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
-    pictureBlend = [[GPUImagePicture alloc] initWithImage:gFill1];
-    opacity = [[GPUImageOpacityFilter alloc] init];
-    [opacity setOpacity:0.34F];
-    [pictureBlend addTarget:opacity];
-    [pictureBlend processImage];
-    pictureBlend = [[GPUImagePicture alloc] initWithImage:[opacity imageFromCurrentlyProcessedOutput]];
-    [pictureOriginal addTarget:hardBlend];
-    [pictureBlend addTarget:hardBlend];
-    [pictureOriginal processImage];
-    [pictureBlend processImage];
-    resultImage = [hardBlend imageFromCurrentlyProcessedOutput];
+    resultImage = [mixer imageFromCurrentlyProcessedOutput];
+
 
     return resultImage;
 }

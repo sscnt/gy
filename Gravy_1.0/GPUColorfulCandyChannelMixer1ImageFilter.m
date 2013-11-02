@@ -16,6 +16,7 @@ NSString *const kGPUColorfulCandyChannelMixer1ImageFilterFragmentShaderString = 
  varying vec2 textureCoordinate;
  uniform sampler2D inputImageTexture;
  
+
  void main()
  {
      // Sample the input pixel
@@ -23,66 +24,31 @@ NSString *const kGPUColorfulCandyChannelMixer1ImageFilterFragmentShaderString = 
      highp float r = pixel.r;
      highp float g = pixel.g;
      highp float b = pixel.b;
+     highp float _r;
+     highp float _g;
+     highp float _b;
      
-     highp float h = 0.0;
-     highp float s = 0.0;
-     highp float v = 0.0;
+     highp float redRed = 0.0; // 1.0 base
+     highp float redGreen = 2.0; // 0.0 base
+     highp float redBlue = 0.0; // 0.0 base
+     highp float redConstant = -0.5;
+     highp float greenRed = -0.05;
+     highp float greenGreen = -0.65;
+     highp float greenBlue = -0.32;
+     highp float greenConstant = 0.58;
+     highp float blueRed = 0.0;
+     highp float blueGreen = 0.0;
+     highp float blueBlue = -0.38;
+     highp float blueConstant = -0.24;
      
-     highp float redRed = 0.92;
-     highp float redGreen = 0.26;
-     highp float redBlue = -0.2;
-     highp float greenRed = 0.0;
-     highp float greenGreen = 1.0;
-     highp float greenBlue = 0.0;
-     highp float blueRed = -0.08;
-     highp float blueGreen = 0.04;
-     highp float blueBlue = 1.08;
+     _r = r * redRed + r + redConstant + g * redGreen + b * redBlue;
+     _g = g * greenGreen + g + greenConstant + r * greenRed + b * greenBlue;
+     _b = b * blueBlue + b + blueConstant + r * blueRed + g * blueGreen;
      
-     highp float max = max(r, max(g, b));
-     highp float min = min(r, min(g, b));
-     h = 0.0;
-     if(max < min){
-         max = 0.0;
-         min = 0.0;
-     }
-     if(max == min){
-         
-     } else if(max == r){
-         h = 60.0 * (g - b) / (max - min);
-     } else if(max == g){
-         h = 60.0 * (b - r) / (max - min) + 120.0;
-     } else if(max == b){
-         h = 60.0 * (r - g) / (max - min) + 240.0;
-     }
-     if(h < 0.0){
-         h += 360.0;
-     }
-     h = mod(h, 360.0);
-     if(max == 0.0) {
-         s = 0.0;
-     } else {
-         s = (max - min) / max;
-     }
-     v = max;
-
-     // Process
-     if(h <= 60.0 || h > 300.0){   // Red
-         r += r * redRed;
-         g += g * redGreen;
-         b += b * redBlue;
-     } else if(h > 60.0 && h <= 180.0){     // Green
-         r += r * greenRed;
-         g += g * greenGreen;
-         b += b * greenBlue;
-     } else{    // Blue
-         r += r * blueRed;
-         g += g * blueGreen;
-         b += b * blueBlue;
-     }
      
-     r = max(0.0, min(1.0, r));
-     g = max(0.0, min(1.0, g));
-     b = max(0.0, min(1.0, b));
+     r = max(0.0, min(1.0, _r));
+     g = max(0.0, min(1.0, _g));
+     b = max(0.0, min(1.0, _b));
      
      pixel.r = r;
      pixel.g = g;
