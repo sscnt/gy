@@ -10,7 +10,7 @@
 #import "GPUImage.h"
 #import "GPUImageGradientLayerImageFilter.h"
 
-@interface GPUImageGradientLayer : NSObject
+@interface GPUImageGradientLayerFilterGroup : NSObject
 {
     GPUImageGradientLayerImageFilter* _filter;
     __weak UIImage* _imageToProcess;
@@ -34,7 +34,6 @@
  * y 0.0 - 100.0
  */
 - (void)setOffsetX:(CGFloat)x Y:(CGFloat)y;
-- (UIImage *)process;
 - (GPUImageFilterGroup *)filterGroup;
 
 @end

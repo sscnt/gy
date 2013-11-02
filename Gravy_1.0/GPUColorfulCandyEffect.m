@@ -116,10 +116,11 @@
     [solid setColorRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
     [solid forceProcessingAtSize:CGSizeMake(resultImage.size.width, resultImage.size.height)];
     UIImage* solidImage = [solid imageFromCurrentlyProcessedOutput];
-    GPUImageOpacityFilter* opacity;
-    GPUImageHardLightBlendFilter* hardlight;
+    GPUImageOpacityFilter* opacityFilter;
+    GPUImageHardLightBlendFilter* hardlightFilter;
     GPUImagePicture* pictureOriginal;
     GPUImagePicture* pictureBlend;
+    GPUImageFilterGroup* filterGroup;
     
     
     // Channel Mixer
@@ -131,32 +132,35 @@
     
     // Gradient Fill
     
-    GPUImageGradientLayer* layer = [[GPUImageGradientLayer alloc] initWithImageToProcess:solidImage];
-    [layer setScale:150 Angle:-90];
-    [layer setOffsetX:0.0f Y:15.0f];
-    [layer addColorRed:231.996f Green:114.008f Blue:42.763f Opacity:100.0f Location:0 Midpoint:50];
-    [layer addColorRed:255.0f Green:255.0f Blue:255.0f Opacity:0.0f Location:4096 Midpoint:50];
-    layerImage = [layer process];
+    GPUImageGradientLayerFilterGroup* gradientFilterGroup = [[GPUImageGradientLayerFilterGroup alloc] initWithImageToProcess:solidImage];
+    [gradientFilterGroup setScale:150 Angle:-90];
+    [gradientFilterGroup setOffsetX:0.0f Y:15.0f];
+    [gradientFilterGroup addColorRed:231.996f Green:114.008f Blue:42.763f Opacity:100.0f Location:0 Midpoint:50];
+    [gradientFilterGroup addColorRed:255.0f Green:255.0f Blue:255.0f Opacity:0.0f Location:4096 Midpoint:50];
+    GPUImageFilterGroup* gradientFilter = [gradientFilterGroup filterGroup];
+    filterGroup = [[GPUImageFilterGroup alloc] init]
     
-    
+    pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
+    [pictureOriginal addTarget:filterGroup];
+    [pictureOriginal processImage];
+    return [filterGroup imageFromCurrentlyProcessedOutput];
+
     // Opacity
-    pictureBlend = [[GPUImagePicture alloc] initWithImage:layerImage];
-    opacity = [[GPUImageOpacityFilter alloc] init];
-    [opacity setOpacity:1.0f];
-    [pictureBlend addTarget:opacity];
-    [pictureBlend processImage];
-    layerImage = [opacity imageFromCurrentlyProcessedOutput];
+    opacityFilter = [[GPUImageOpacityFilter alloc] init];
+    [opacityFilter setOpacity:1.0f];
+    [filterGroup.terminalFilter addTarget:opacityFilter];
     
     // Merge
     pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
-    pictureBlend = [[GPUImagePicture alloc] initWithImage:layerImage];
-    hardlight = [[GPUImageHardLightBlendFilter alloc] init];
-    [pictureOriginal addTarget:hardlight];
-    [pictureBlend addTarget:hardlight atTextureLocation:1];
-    [pictureBlend processImage];
+    pictureBlend = [[GPUImagePicture alloc] init];
+    hardlightFilter = [[GPUImageHardLightBlendFilter alloc] init];
+    [pictureOriginal addTarget:hardlightFilter];
+    [opacityFilter addTarget:hardlightFilter atTextureLocation:1];
+    [filterGroup setTerminalFilter:hardlightFilter];
+    [pictureBlend addTarget:filterGroup];
     [pictureOriginal processImage];
-    resultImage = [hardlight imageFromCurrentlyProcessedOutput];
-
+    [pictureBlend processImage];
+    resultImage = [hardlightFilter imageFromCurrentlyProcessedOutput];
 
     return resultImage;
 }

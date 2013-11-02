@@ -15,12 +15,17 @@ extern NSString *const kGPUImageGradientLayerFragmentShaderString;
     GLuint locationsUniform;
     GLuint colorsUniform;
     GLuint midpointUniform;
+    GLuint angleUniform;
+    GLuint scaleUniform;
     
     int index;
     float locations[20];
     float midpoints[20];
     GPUVector4 colors[20];
 }
+
+@property (nonatomic, assign) float angle;
+@property (nonatomic, assign) float scale;
 
 /*
  * red      0.0 - 255.0

@@ -18,6 +18,8 @@ NSString *const kGPUImageGradientLayerFragmentShaderString = SHADER_STRING
  uniform highp float locations[20];
  uniform highp float midpoints[20];
  uniform highp vec4 colors[20];
+ uniform highp float angle;
+ uniform highp float scale;
  
  float round(float a){
      float b = floor(a);
@@ -46,6 +48,8 @@ NSString *const kGPUImageGradientLayerFragmentShaderString = SHADER_STRING
      mediump float m60 = 0.01665;
      
      highp float x = textureCoordinate.x;
+     highp float y = textureCoordinate.y;
+     
      int index = index(x);
      highp float startLocation = locations[index];
      highp float endLocation = locations[index + 1];
@@ -95,6 +99,8 @@ NSString *const kGPUImageGradientLayerFragmentShaderString = SHADER_STRING
     locationsUniform = [filterProgram uniformIndex:@"locations"];
     midpointUniform = [filterProgram uniformIndex:@"midpoints"];
     colorsUniform = [filterProgram uniformIndex:@"colors"];
+    angleUniform = [filterProgram uniformIndex:@"angle"];
+    scaleUniform = [filterProgram uniformIndex:@"scale"];
     index = 0;
     return self;
 }
@@ -109,6 +115,18 @@ NSString *const kGPUImageGradientLayerFragmentShaderString = SHADER_STRING
     [self setFloatArray:locations length:20 forUniform:locationsUniform program:filterProgram];
     [self setFloatArray:midpoints length:20 forUniform:midpointUniform program:filterProgram];
     [self setVec4Array:colors length:20 forUniform:colorsUniform program:filterProgram];
+}
+
+- (void)setAngle:(float)angle
+{
+    _angle = angle;
+    [self setFloat:_angle forUniform:angleUniform program:filterProgram];
+}
+
+- (void)setScale:(float)scale
+{
+    _scale = scale;
+    [self setFloat:_scale forUniform:scaleUniform program:filterProgram];
 }
 
 

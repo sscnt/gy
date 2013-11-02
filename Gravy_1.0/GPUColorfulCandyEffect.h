@@ -12,7 +12,7 @@
 #import "GPUColorfulCandyGradientFill1ImageFilter.h"
 #import "GPUColorfulCandyGradientFill10ImageFilter.h"
 
-#import "GPUImageGradientLayer.h"
+#import "GPUImageGradientLayerFilterGroup.h"
 
 @interface GPUColorfulCandyEffect : NSObject
 
