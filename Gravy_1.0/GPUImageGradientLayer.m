@@ -23,13 +23,13 @@
 - (void)addColorRed:(float)red Green:(float)green Blue:(float)blue Opacity:(float)opacity Location:(int)location Midpoint:(int)midpoint
 {
     if(_filter){
-        [_filter addColorRed:red Green:green Blue:blue Opacity:opacity Location:location];
+        [_filter addColorRed:red Green:green Blue:blue Opacity:opacity Location:location Midpoint:midpoint];
     }
 }
 
 - (void)setScale:(CGFloat)scale Angle:(CGFloat)angle
 {
-    _scale = scale;
+    _scale = scale / 100.0f;
     if(_scale < 1.0){
         _scale = 1.0f;
     }
@@ -38,8 +38,8 @@
 
 - (void)setOffsetX:(CGFloat)x Y:(CGFloat)y
 {
-    _offsetX = x;
-    _offsetY = y;
+    _offsetX = x / 100.0f;
+    _offsetY = y / 100.0f;
 }
 
 - (UIImage *)process

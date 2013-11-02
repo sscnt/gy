@@ -124,8 +124,12 @@
     resultImage = [mixer imageFromCurrentlyProcessedOutput];
     
     // Gradient Fill
-    GPUImageGradientLayer* layer = [[GPUImageGradientLayer alloc] init];
+    GPUImageGradientLayer* layer = [[GPUImageGradientLayer alloc] initWithImageToProcess:resultImage];
+    [layer setScale:150 Angle:-90];
+    [layer setOffsetX:0.0f Y:15.0f];
     [layer addColorRed:231.996f Green:114.008f Blue:42.763f Opacity:100.0f Location:0 Midpoint:50];
+    [layer addColorRed:231.996f Green:114.008f Blue:42.763f Opacity:0.0f Location:4096 Midpoint:50];
+    resultImage = [layer process];
     
 
     return resultImage;
