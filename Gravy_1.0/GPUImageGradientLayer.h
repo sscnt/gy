@@ -35,5 +35,6 @@
  */
 - (void)setOffsetX:(CGFloat)x Y:(CGFloat)y;
 - (UIImage *)process;
+- (GPUImageFilterGroup *)filterGroup;
 
 @end

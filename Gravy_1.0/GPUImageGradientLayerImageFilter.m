@@ -111,9 +111,5 @@ NSString *const kGPUImageGradientLayerFragmentShaderString = SHADER_STRING
     [self setVec4Array:colors length:20 forUniform:colorsUniform program:filterProgram];
 }
 
-- (UIImage*)process
-{
-    return nil;
-}
 
 @end

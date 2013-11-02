@@ -42,6 +42,53 @@
     _offsetY = -y / 100.0f;
 }
 
+- (GPUImageFilterGroup *)filterGroup
+{
+    GPUImageFilterGroup* filterGroup = [[GPUImageFilterGroup alloc] init];
+    
+    CGFloat diagonal = sqrt(pow(_imageToProcess.size.width, 2.0) + pow(_imageToProcess.size.height, 2.0));
+    CGFloat radius = diagonal / 2.0f;
+    CGFloat angleA = asinf(_imageToProcess.size.height / 2.0 / radius);
+    CGFloat angleB = _angle;
+    CGFloat width = sinf(angleA + angleB) * radius;
+    
+    CGFloat size = width * 2.0f;
+    size *= _scale;
+    
+    // make base
+    GPUImageSolidColorGenerator* solidGenerator = [[GPUImageSolidColorGenerator alloc] init];
+    [solidGenerator forceProcessingAtSize:CGSizeMake(size, size)];
+    [solidGenerator setColorRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
+    [filterGroup addFilter:solidGenerator];
+
+    // fill gradient
+    [filterGroup addFilter:_filter];
+    
+    // rotate
+    GPUImageTransformFilter* transformFilter = [[GPUImageTransformFilter alloc] init];
+    CGAffineTransform trans;
+    trans = CGAffineTransformMakeRotation(_angle);
+    [transformFilter setAffineTransform:trans];
+    [filterGroup addFilter:transformFilter];
+    
+    // crop
+    UIImage* filledImage = [transformFilter imageFromCurrentlyProcessedOutput];
+    CGFloat offsetX = size * _offsetX / size;
+    CGFloat offsetY = size * _offsetY / size;
+    CGFloat sizeX = MAX(0.0f,MIN(1.0f,(filledImage.size.width - _imageToProcess.size.width) / 2.0f / filledImage.size.width + offsetX));
+    CGFloat sizeY = MAX(0.0f,MIN(1.0f,(filledImage.size.height - _imageToProcess.size.height) / 2.0f / filledImage.size.height + offsetY));
+    CGFloat sizeW = MAX(0.0f,MIN(1.0f,_imageToProcess.size.width / filledImage.size.width));
+    CGFloat sizeH = MAX(0.0f,MIN(1.0f,_imageToProcess.size.height / filledImage.size.height));
+    GPUImageCropFilter* cropFilter = [[GPUImageCropFilter alloc] init];
+    [cropFilter setCropRegion:CGRectMake(sizeX, sizeY, sizeW, sizeH)];
+    GPUImagePicture* resultPicture = [[GPUImagePicture alloc] initWithImage:filledImage];
+    [resultPicture addTarget:cropFilter];
+    [resultPicture processImage];
+    UIImage* resultImage = [cropFilter imageFromCurrentlyProcessedOutput];
+    
+    return resultImage;
+}
+
 - (UIImage *)process
 {
     CGFloat diagonal = sqrt(pow(_imageToProcess.size.width, 2.0) + pow(_imageToProcess.size.height, 2.0));
@@ -57,9 +104,6 @@
     GPUImageSolidColorGenerator* gen = [[GPUImageSolidColorGenerator alloc] init];
     [gen forceProcessingAtSize:CGSizeMake(size, size)];
     [gen setColorRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
-    GPUImagePicture* solidPicture = [[GPUImagePicture alloc] initWithImage:_imageToProcess];
-    [solidPicture addTarget:gen];
-    [solidPicture processImage];
     UIImage* solidImage = [gen imageFromCurrentlyProcessedOutput];
     
     // set gradient

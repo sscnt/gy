@@ -121,6 +121,7 @@
     GPUImagePicture* pictureOriginal;
     GPUImagePicture* pictureBlend;
     
+    
     // Channel Mixer
     GPUColorfulCandyChannelMixer1ImageFilter* mixer = [[GPUColorfulCandyChannelMixer1ImageFilter alloc] init];
     pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
@@ -137,6 +138,7 @@
     [layer addColorRed:255.0f Green:255.0f Blue:255.0f Opacity:0.0f Location:4096 Midpoint:50];
     layerImage = [layer process];
     
+    
     // Opacity
     pictureBlend = [[GPUImagePicture alloc] initWithImage:layerImage];
     opacity = [[GPUImageOpacityFilter alloc] init];
@@ -151,8 +153,8 @@
     hardlight = [[GPUImageHardLightBlendFilter alloc] init];
     [pictureOriginal addTarget:hardlight];
     [pictureBlend addTarget:hardlight atTextureLocation:1];
-    [pictureOriginal processImage];
     [pictureBlend processImage];
+    [pictureOriginal processImage];
     resultImage = [hardlight imageFromCurrentlyProcessedOutput];
 
 

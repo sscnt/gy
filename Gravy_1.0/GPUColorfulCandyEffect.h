@@ -14,7 +14,6 @@
 
 #import "GPUImageGradientLayer.h"
 
-
 @interface GPUColorfulCandyEffect : NSObject
 
 @property (nonatomic, weak) UIImage* imageToProcess;
