@@ -16,11 +16,14 @@
     __weak UIImage* _imageToProcess;
     CGFloat _scale;
     CGFloat _angle;
+    CGFloat _offsetX;
+    CGFloat _offsetY;
 }
 
 - (id)initWithImageToProcess:(UIImage *)image;
 - (void)addColorRed:(float)red Green:(float)green Blue:(float)blue Opacity:(float)opacity Location:(int)location;
 - (void)setScale:(CGFloat)scale Angle:(CGFloat)angle;
+- (void)setOffsetX:(CGFloat)x Y:(CGFloat)y;
 - (UIImage *)process;
 
 @end
