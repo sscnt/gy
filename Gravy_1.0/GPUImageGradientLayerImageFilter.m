@@ -74,7 +74,7 @@ NSString *const kGPUImageGradientLayerFragmentShaderString = SHADER_STRING
      g = max(0.0, min(1.0, g));
      b = max(0.0, min(1.0, b));
      a = max(0.0, min(1.0, a));
-     
+        
      pixel.r = r;
      pixel.g = g;
      pixel.b = b;
@@ -108,7 +108,7 @@ NSString *const kGPUImageGradientLayerFragmentShaderString = SHADER_STRING
     index++;
     [self setFloatArray:locations length:20 forUniform:locationsUniform program:filterProgram];
     [self setFloatArray:midpoints length:20 forUniform:midpointUniform program:filterProgram];
-    [self setVec4Array:colors forUniform:colorsUniform program:filterProgram];
+    [self setVec4Array:colors length:20 forUniform:colorsUniform program:filterProgram];
 }
 
 - (UIImage*)process

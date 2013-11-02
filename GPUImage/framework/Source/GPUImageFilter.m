@@ -732,13 +732,13 @@ void dataProviderUnlockCallback (void *info, const void *data, size_t size)
     });
 }
 
-- (void)setVec4Array:(GPUVector4 *)vectorValue forUniform:(GLint)uniform program:(GLProgram *)shaderProgram;
+- (void)setVec4Array:(GPUVector4 *)vectorValue length:(GLsizei)arrayLength forUniform:(GLint)uniform program:(GLProgram *)shaderProgram;
 {
     runAsynchronouslyOnVideoProcessingQueue(^{
         [GPUImageContext setActiveShaderProgram:shaderProgram];
         
         [self setAndExecuteUniformStateCallbackAtIndex:uniform forProgram:shaderProgram toBlock:^{
-            glUniform4fv(uniform, 1, (GLfloat *)vectorValue);
+            glUniform4fv(uniform, arrayLength, (GLfloat *)vectorValue);
         }];
     });
 }

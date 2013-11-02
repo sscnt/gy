@@ -85,7 +85,6 @@
     [resultPicture addTarget:cropFilter];
     [resultPicture processImage];
     UIImage* resultImage = [cropFilter imageFromCurrentlyProcessedOutput];
-
     
     return resultImage;
 }
