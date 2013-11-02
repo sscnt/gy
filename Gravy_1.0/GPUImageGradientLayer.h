@@ -7,16 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GPUImage.h"
+#import "GPUImageGradientLayerImageFilter.h"
 
 @interface GPUImageGradientLayer : NSObject
+{
+    GPUImageGradientLayerImageFilter* _filter;
+    __weak UIImage* _imageToProcess;
+    CGFloat _scale;
+    CGFloat _angle;
+}
 
-/*
- * red      0.0 - 255.0
- * green    0.0 - 255.0
- * blue     0.0 - 255.0
- * location 0   - 4096
- */
-- (void)addColorRed:(float)red Green:(float)green Blue:(float)blue Location:(int)location;
-- (UIImage*)process;
+- (id)initWithImageToProcess:(UIImage *)image;
+- (void)addColorRed:(float)red Green:(float)green Blue:(float)blue Opacity:(float)opacity Location:(int)location;
+- (void)setScale:(CGFloat)scale Angle:(CGFloat)angle;
+- (UIImage *)process;
 
 @end

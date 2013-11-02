@@ -144,6 +144,7 @@ typedef struct GPUMatrix3x3 GPUMatrix3x3;
 - (void)setSize:(CGSize)sizeValue forUniform:(GLint)uniform program:(GLProgram *)shaderProgram;
 - (void)setVec3:(GPUVector3)vectorValue forUniform:(GLint)uniform program:(GLProgram *)shaderProgram;
 - (void)setVec4:(GPUVector4)vectorValue forUniform:(GLint)uniform program:(GLProgram *)shaderProgram;
+- (void)setVec4Array:(GPUVector4 *)vectorValue forUniform:(GLint)uniform program:(GLProgram *)shaderProgram;
 - (void)setFloatArray:(GLfloat *)arrayValue length:(GLsizei)arrayLength forUniform:(GLint)uniform program:(GLProgram *)shaderProgram;
 - (void)setInteger:(GLint)intValue forUniform:(GLint)uniform program:(GLProgram *)shaderProgram;
 
