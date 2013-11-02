@@ -124,6 +124,8 @@
     resultImage = [mixer imageFromCurrentlyProcessedOutput];
     
     // Gradient Fill
+    GPUImageGradientLayer* layer = [[GPUImageGradientLayer alloc] init];
+    [layer addColorRed:231.996f Green:114.008f Blue:42.763f Opacity:100.0f Location:0 Midpoint:50];
     
 
     return resultImage;

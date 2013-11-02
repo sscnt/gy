@@ -12,6 +12,8 @@
 #import "GPUColorfulCandyGradientFill1ImageFilter.h"
 #import "GPUColorfulCandyGradientFill10ImageFilter.h"
 
+#import "GPUImageGradientLayer.h"
+
 
 @interface GPUColorfulCandyEffect : NSObject
 

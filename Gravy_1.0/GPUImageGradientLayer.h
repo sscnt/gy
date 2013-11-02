@@ -21,7 +21,7 @@
 }
 
 - (id)initWithImageToProcess:(UIImage *)image;
-- (void)addColorRed:(float)red Green:(float)green Blue:(float)blue Opacity:(float)opacity Location:(int)location;
+- (void)addColorRed:(float)red Green:(float)green Blue:(float)blue Opacity:(float)opacity Location:(int)location Midpoint:(int)midpoint;
 - (void)setScale:(CGFloat)scale Angle:(CGFloat)angle;
 - (void)setOffsetX:(CGFloat)x Y:(CGFloat)y;
 - (UIImage *)process;

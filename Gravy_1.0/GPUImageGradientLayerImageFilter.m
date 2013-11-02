@@ -15,8 +15,9 @@ NSString *const kGPUImageGradientLayerFragmentShaderString = SHADER_STRING
  precision highp float;
  varying vec2 textureCoordinate;
  uniform sampler2D inputImageTexture;
- uniform mediump float locations[20];
- uniform mediump vec4 colors[20];
+ uniform highp float locations[20];
+ uniform highp float midpoints[20];
+ uniform highp vec4 colors[20];
  
  float round(float a){
      float b = floor(a);
@@ -68,17 +69,20 @@ NSString *const kGPUImageGradientLayerFragmentShaderString = SHADER_STRING
         return nil;
     }
     locationsUniform = [filterProgram uniformIndex:@"locations"];
+    midpointUniform = [filterProgram uniformIndex:@"midpoints"];
     index = 0;
     return self;
 }
 
-- (void)addColorRed:(float)red Green:(float)green Blue:(float)blue Opacity:(float)opacity Location:(int)location
+- (void)addColorRed:(float)red Green:(float)green Blue:(float)blue Opacity:(float)opacity Location:(int)location Midpoint:(int)midpoint
 {
     GPUVector4 vec = {red / 255.0f, green / 255.0f, blue / 255.0f, opacity / 100.0f};
     colors[index] = vec;
     locations[index] = (float)location / 4096.0f;
+    midpoints[index] = (float)midpoint;
     index++;
     [self setFloatArray:locations length:20 forUniform:locationsUniform program:filterProgram];
+    [self setFloatArray:midpoints length:20 forUniform:midpointUniform program:filterProgram];
     [self setVec4Array:colors forUniform:colorsUniform program:filterProgram];
 }
 

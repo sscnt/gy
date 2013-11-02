@@ -20,7 +20,7 @@
     return self;
 }
 
-- (void)addColorRed:(float)red Green:(float)green Blue:(float)blue Opacity:(float)opacity Location:(int)location
+- (void)addColorRed:(float)red Green:(float)green Blue:(float)blue Opacity:(float)opacity Location:(int)location Midpoint:(int)midpoint
 {
     if(_filter){
         [_filter addColorRed:red Green:green Blue:blue Opacity:opacity Location:location];
@@ -71,7 +71,7 @@
     // fill gradient
     [picture processImage];
     
-    [pictureBase processImage];
+    // crop
     UIImage* filledImage = [transformFilter imageFromCurrentlyProcessedOutput];
     CGFloat offsetX = size * _offsetX / size;
     CGFloat offsetY = size * _offsetY / size;
@@ -79,8 +79,6 @@
     CGFloat sizeY = MAX(0.0f,MIN(1.0f,(filledImage.size.height - _imageToProcess.size.height) / 2.0f / filledImage.size.height + offsetY));
     CGFloat sizeW = MAX(0.0f,MIN(1.0f,_imageToProcess.size.width / filledImage.size.width));
     CGFloat sizeH = MAX(0.0f,MIN(1.0f,_imageToProcess.size.height / filledImage.size.height));
-    
-    
     GPUImageCropFilter* cropFilter = [[GPUImageCropFilter alloc] init];
     [cropFilter setCropRegion:CGRectMake(sizeX, sizeY, sizeW, sizeH)];
     GPUImagePicture* resultPicture = [[GPUImagePicture alloc] initWithImage:filledImage];

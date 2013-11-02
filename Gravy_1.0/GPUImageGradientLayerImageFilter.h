@@ -14,9 +14,11 @@ extern NSString *const kGPUImageGradientLayerFragmentShaderString;
 {
     GLuint locationsUniform;
     GLuint colorsUniform;
+    GLuint midpointUniform;
     
     int index;
     float locations[20];
+    float midpoints[20];
     GPUVector4 colors[20];
 }
 
@@ -27,6 +29,6 @@ extern NSString *const kGPUImageGradientLayerFragmentShaderString;
  * opacity  0.0 - 100.0
  * location 0   - 4096
  */
-- (void)addColorRed:(float)red Green:(float)green Blue:(float)blue Opacity:(float)opacity Location:(int)location;
+- (void)addColorRed:(float)red Green:(float)green Blue:(float)blue Opacity:(float)opacity Location:(int)location Midpoint:(int)midpoint;
 
 @end
