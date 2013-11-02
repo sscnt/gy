@@ -112,7 +112,12 @@
 {
     UIImage* layerImage;
     UIImage* resultImage = _imageToProcess;
+    GPUImageSolidColorGenerator* solid = [[GPUImageSolidColorGenerator alloc] init];
+    [solid setColorRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
+    [solid forceProcessingAtSize:CGSizeMake(resultImage.size.width, resultImage.size.height)];
+    UIImage* solidImage = [solid imageFromCurrentlyProcessedOutput];
     GPUImageOpacityFilter* opacity;
+    GPUImageHardLightBlendFilter* hardlight;
     GPUImagePicture* pictureOriginal;
     GPUImagePicture* pictureBlend;
     
@@ -124,15 +129,34 @@
     resultImage = [mixer imageFromCurrentlyProcessedOutput];
     
     // Gradient Fill
-    GPUImageGradientLayer* layer = [[GPUImageGradientLayer alloc] initWithImageToProcess:resultImage];
+    
+    GPUImageGradientLayer* layer = [[GPUImageGradientLayer alloc] initWithImageToProcess:solidImage];
     [layer setScale:150 Angle:-90];
     [layer setOffsetX:0.0f Y:15.0f];
     [layer addColorRed:231.996f Green:114.008f Blue:42.763f Opacity:100.0f Location:0 Midpoint:50];
     [layer addColorRed:255.0f Green:255.0f Blue:255.0f Opacity:0.0f Location:4096 Midpoint:50];
     layerImage = [layer process];
     
+    // Opacity
+    pictureBlend = [[GPUImagePicture alloc] initWithImage:layerImage];
+    opacity = [[GPUImageOpacityFilter alloc] init];
+    [opacity setOpacity:1.0f];
+    [pictureBlend addTarget:opacity];
+    [pictureBlend processImage];
+    layerImage = [opacity imageFromCurrentlyProcessedOutput];
+    
+    // Merge
+    pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
+    pictureBlend = [[GPUImagePicture alloc] initWithImage:layerImage];
+    hardlight = [[GPUImageHardLightBlendFilter alloc] init];
+    [pictureOriginal addTarget:hardlight];
+    [pictureBlend addTarget:hardlight atTextureLocation:1];
+    [pictureOriginal processImage];
+    [pictureBlend processImage];
+    resultImage = [hardlight imageFromCurrentlyProcessedOutput];
 
-    return layerImage;
+
+    return resultImage;
 }
 
 

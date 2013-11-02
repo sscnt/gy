@@ -38,14 +38,19 @@
 
 - (void)setOffsetX:(CGFloat)x Y:(CGFloat)y
 {
-    _offsetX = x / 100.0f;
-    _offsetY = y / 100.0f;
+    _offsetX = -x / 100.0f;
+    _offsetY = -y / 100.0f;
 }
 
 - (UIImage *)process
 {
-    
-    CGFloat size = sqrt(pow(_imageToProcess.size.width, 2.0) + pow(_imageToProcess.size.height, 2.0));
+    CGFloat diagonal = sqrt(pow(_imageToProcess.size.width, 2.0) + pow(_imageToProcess.size.height, 2.0));
+    CGFloat radius = diagonal / 2.0f;
+    CGFloat angleA = asinf(_imageToProcess.size.height / 2.0 / radius);
+    CGFloat angleB = _angle;
+    CGFloat width = sinf(angleA + angleB) * radius;
+
+    CGFloat size = width * 2.0f;
     size *= _scale;
     
     // make base

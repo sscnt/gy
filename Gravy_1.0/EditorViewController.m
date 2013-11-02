@@ -217,6 +217,7 @@
     [wrapper addSubview:effectImageView];
     [wrapper setX:960.0f];
     
+    
     UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
     
     // knob
