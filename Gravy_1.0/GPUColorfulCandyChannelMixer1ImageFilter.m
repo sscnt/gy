@@ -28,18 +28,18 @@ NSString *const kGPUColorfulCandyChannelMixer1ImageFilterFragmentShaderString = 
      highp float _g;
      highp float _b;
      
-     highp float redRed = 0.0; // 1.0 base
-     highp float redGreen = 2.0; // 0.0 base
-     highp float redBlue = 0.0; // 0.0 base
-     highp float redConstant = -0.5;
-     highp float greenRed = -0.05;
-     highp float greenGreen = -0.65;
-     highp float greenBlue = -0.32;
-     highp float greenConstant = 0.58;
-     highp float blueRed = 0.0;
-     highp float blueGreen = 0.0;
-     highp float blueBlue = -0.38;
-     highp float blueConstant = -0.24;
+     highp float redRed = -0.08; // 1.0 base
+     highp float redGreen = 0.26; // 0.0 base
+     highp float redBlue = -0.2; // 0.0 base
+     highp float redConstant = 0.0;
+     highp float greenRed = 0.0;
+     highp float greenGreen = 0.0;
+     highp float greenBlue = 0.0;
+     highp float greenConstant = 0.0;
+     highp float blueRed = -0.08;
+     highp float blueGreen = 0.04;
+     highp float blueBlue = 0.08;
+     highp float blueConstant = 0.0;
      
      _r = r * redRed + r + redConstant + g * redGreen + b * redBlue;
      _g = g * greenGreen + g + greenConstant + r * greenRed + b * greenBlue;

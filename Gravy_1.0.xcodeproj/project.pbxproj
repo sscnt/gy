@@ -90,9 +90,11 @@
 		58F9FD6A182330CB003D32F4 /* GPUHaze3Effect.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F9FD69182330CB003D32F4 /* GPUHaze3Effect.m */; };
 		58F9FD7318234F33003D32F4 /* GPUAutumn6Effect.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F9FD7218234F33003D32F4 /* GPUAutumn6Effect.m */; };
 		58F9FD7718235040003D32F4 /* GPUColorfulCandyEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F9FD7618235040003D32F4 /* GPUColorfulCandyEffect.m */; };
-		58F9FD7B182363F8003D32F4 /* GPUColorfulCandyGradientFill1ImageFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F9FD7A182363F8003D32F4 /* GPUColorfulCandyGradientFill1ImageFilter.m */; };
+		58F9FD7B182363F8003D32F4 /* GPUColorfulCandyGradientFill10ImageFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F9FD7A182363F8003D32F4 /* GPUColorfulCandyGradientFill10ImageFilter.m */; };
 		58FA2E291813F3EC00DFB4FB /* UIScrollView+Gravy.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FA2E281813F3EC00DFB4FB /* UIScrollView+Gravy.m */; };
 		58FAB9C818115C4F00B95F02 /* UISliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FAB9C718115C4F00B95F02 /* UISliderView.m */; };
+		58FABDE71824A33F00CAC8A7 /* GPUColorfulCandyGradientFill1ImageFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FABDE61824A33F00CAC8A7 /* GPUColorfulCandyGradientFill1ImageFilter.m */; };
+		58FABDEB1824A5A600CAC8A7 /* GPUImageGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FABDEA1824A5A600CAC8A7 /* GPUImageGradientLayer.m */; };
 		58FAE695181FFBEA00C4FE15 /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58FAE693181FFBEA00C4FE15 /* bg.jpg */; };
 		58FAE696181FFBEA00C4FE15 /* bg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58FAE694181FFBEA00C4FE15 /* bg@2x.jpg */; };
 		58FBB40118155FB4001CFDC8 /* slider.png in Resources */ = {isa = PBXBuildFile; fileRef = 58FBB3FF18155FB4001CFDC8 /* slider.png */; };
@@ -244,12 +246,16 @@
 		58F9FD7218234F33003D32F4 /* GPUAutumn6Effect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUAutumn6Effect.m; sourceTree = "<group>"; };
 		58F9FD7518235040003D32F4 /* GPUColorfulCandyEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUColorfulCandyEffect.h; sourceTree = "<group>"; };
 		58F9FD7618235040003D32F4 /* GPUColorfulCandyEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUColorfulCandyEffect.m; sourceTree = "<group>"; };
-		58F9FD79182363F8003D32F4 /* GPUColorfulCandyGradientFill1ImageFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUColorfulCandyGradientFill1ImageFilter.h; sourceTree = "<group>"; };
-		58F9FD7A182363F8003D32F4 /* GPUColorfulCandyGradientFill1ImageFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUColorfulCandyGradientFill1ImageFilter.m; sourceTree = "<group>"; };
+		58F9FD79182363F8003D32F4 /* GPUColorfulCandyGradientFill10ImageFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUColorfulCandyGradientFill10ImageFilter.h; sourceTree = "<group>"; };
+		58F9FD7A182363F8003D32F4 /* GPUColorfulCandyGradientFill10ImageFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUColorfulCandyGradientFill10ImageFilter.m; sourceTree = "<group>"; };
 		58FA2E271813F3EC00DFB4FB /* UIScrollView+Gravy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Gravy.h"; sourceTree = "<group>"; };
 		58FA2E281813F3EC00DFB4FB /* UIScrollView+Gravy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Gravy.m"; sourceTree = "<group>"; };
 		58FAB9C618115C4F00B95F02 /* UISliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISliderView.h; sourceTree = "<group>"; };
 		58FAB9C718115C4F00B95F02 /* UISliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UISliderView.m; sourceTree = "<group>"; };
+		58FABDE51824A33F00CAC8A7 /* GPUColorfulCandyGradientFill1ImageFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUColorfulCandyGradientFill1ImageFilter.h; sourceTree = "<group>"; };
+		58FABDE61824A33F00CAC8A7 /* GPUColorfulCandyGradientFill1ImageFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUColorfulCandyGradientFill1ImageFilter.m; sourceTree = "<group>"; };
+		58FABDE91824A5A600CAC8A7 /* GPUImageGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageGradientLayer.h; sourceTree = "<group>"; };
+		58FABDEA1824A5A600CAC8A7 /* GPUImageGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageGradientLayer.m; sourceTree = "<group>"; };
 		58FAE693181FFBEA00C4FE15 /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpg; sourceTree = "<group>"; };
 		58FAE694181FFBEA00C4FE15 /* bg@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg@2x.jpg"; sourceTree = "<group>"; };
 		58FBB3FF18155FB4001CFDC8 /* slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider.png; sourceTree = "<group>"; };
@@ -387,6 +393,7 @@
 				5802E7D6180C0F1400AA2227 /* Images.xcassets */,
 				5802E81A180C278B00AA2227 /* Views */,
 				58F3C431181C8E7A00F7129D /* GPUImageFilters */,
+				58FABDE81824A58A00CAC8A7 /* GPUImageLayer */,
 				58832B8E182282AA003E0DDB /* GPUImageEffects */,
 				5802E819180C24DF00AA2227 /* ViewControllers */,
 				5802E7C5180C0F1400AA2227 /* Supporting Files */,
@@ -610,12 +617,23 @@
 		58F9FD78182354A0003D32F4 /* Filters */ = {
 			isa = PBXGroup;
 			children = (
-				58F9FD79182363F8003D32F4 /* GPUColorfulCandyGradientFill1ImageFilter.h */,
-				58F9FD7A182363F8003D32F4 /* GPUColorfulCandyGradientFill1ImageFilter.m */,
+				58FABDE51824A33F00CAC8A7 /* GPUColorfulCandyGradientFill1ImageFilter.h */,
+				58FABDE61824A33F00CAC8A7 /* GPUColorfulCandyGradientFill1ImageFilter.m */,
+				58F9FD79182363F8003D32F4 /* GPUColorfulCandyGradientFill10ImageFilter.h */,
+				58F9FD7A182363F8003D32F4 /* GPUColorfulCandyGradientFill10ImageFilter.m */,
 				58CD0E1C1823CD3F000730BE /* GPUColorfulCandyChannelMixer1ImageFilter.h */,
 				58CD0E1D1823CD3F000730BE /* GPUColorfulCandyChannelMixer1ImageFilter.m */,
 			);
 			name = Filters;
+			sourceTree = "<group>";
+		};
+		58FABDE81824A58A00CAC8A7 /* GPUImageLayer */ = {
+			isa = PBXGroup;
+			children = (
+				58FABDE91824A5A600CAC8A7 /* GPUImageGradientLayer.h */,
+				58FABDEA1824A5A600CAC8A7 /* GPUImageGradientLayer.m */,
+			);
+			name = GPUImageLayer;
 			sourceTree = "<group>";
 		};
 		58FEFFD518101535008B4E8D /* Subclasses */ = {
@@ -809,7 +827,8 @@
 				580032B9180D28840021F73C /* UIDockButtonCamera.m in Sources */,
 				58F9FD7318234F33003D32F4 /* GPUAutumn6Effect.m in Sources */,
 				58F0271C181A8B6600938725 /* SVProgressHUD.m in Sources */,
-				58F9FD7B182363F8003D32F4 /* GPUColorfulCandyGradientFill1ImageFilter.m in Sources */,
+				58FABDEB1824A5A600CAC8A7 /* GPUImageGradientLayer.m in Sources */,
+				58F9FD7B182363F8003D32F4 /* GPUColorfulCandyGradientFill10ImageFilter.m in Sources */,
 				58F3C439181CA13C00F7129D /* GPULevelsImageFilter.m in Sources */,
 				580032C3180D34490021F73C /* UISettingsButton.m in Sources */,
 				58CD0E1E1823CD3F000730BE /* GPUColorfulCandyChannelMixer1ImageFilter.m in Sources */,
@@ -817,6 +836,7 @@
 				5802E7CB180C0F1400AA2227 /* main.m in Sources */,
 				580032B6180D28170021F73C /* UIDockButtonBase.m in Sources */,
 				58003299180D10CE0021F73C /* UIView+Gravy.m in Sources */,
+				58FABDE71824A33F00CAC8A7 /* GPUColorfulCandyGradientFill1ImageFilter.m in Sources */,
 				58FAB9C818115C4F00B95F02 /* UISliderView.m in Sources */,
 				58003296180D10B10021F73C /* UIDockView.m in Sources */,
 				58FA2E291813F3EC00DFB4FB /* UIScrollView+Gravy.m in Sources */,
