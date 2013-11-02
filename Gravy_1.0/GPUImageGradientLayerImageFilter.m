@@ -30,10 +30,10 @@ NSString *const kGPUImageGradientLayerFragmentShaderString = SHADER_STRING
  
  int index(float x){
      highp float loc = 0.0;
-     for(int i = 0;i < 20;i++){
+     for(int i = 1;i < 20;i++){
          loc = locations[i];
          if(x < loc){
-             return i;
+             return i - 1;
          }
      }
      return 0;
@@ -45,16 +45,40 @@ NSString *const kGPUImageGradientLayerFragmentShaderString = SHADER_STRING
      
      mediump float m60 = 0.01665;
      
-     highp float r = pixel.r;
-     highp float g = pixel.g;
-     highp float b = pixel.b;
      highp float x = textureCoordinate.x;
      int index = index(x);
-     highp vec4 color = colors[index];
+     highp float startLocation = locations[index];
+     highp float endLocation = locations[index + 1];
+     highp vec4 startColor = colors[index];
+     highp vec4 endColor = colors[index + 1];
+     
+     highp float r = startColor.r;
+     highp float g = startColor.g;
+     highp float b = startColor.b;
+     highp float a = startColor.a;
+     
+     highp float rdiff = endColor.r - startColor.r;
+     highp float gdiff = endColor.g - startColor.g;
+     highp float bdiff = endColor.b - startColor.b;
+     highp float adiff = endColor.a - startColor.a;
+
+     highp float relativeX;
+     relativeX = (x - startLocation) / (endLocation - startLocation);
+     
+     r += rdiff * relativeX;
+     g += gdiff * relativeX;
+     b += bdiff * relativeX;
+     a += adiff * relativeX;
+     
+     r = max(0.0, min(1.0, r));
+     g = max(0.0, min(1.0, g));
+     b = max(0.0, min(1.0, b));
+     a = max(0.0, min(1.0, a));
      
      pixel.r = r;
      pixel.g = g;
      pixel.b = b;
+     pixel.a = a;
      
      // Save the result
      gl_FragColor = pixel;
@@ -70,6 +94,7 @@ NSString *const kGPUImageGradientLayerFragmentShaderString = SHADER_STRING
     }
     locationsUniform = [filterProgram uniformIndex:@"locations"];
     midpointUniform = [filterProgram uniformIndex:@"midpoints"];
+    colorsUniform = [filterProgram uniformIndex:@"colors"];
     index = 0;
     return self;
 }
