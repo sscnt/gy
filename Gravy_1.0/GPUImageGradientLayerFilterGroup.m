@@ -66,10 +66,12 @@
     GPUImageSolidColorGenerator* solidGenerator = [[GPUImageSolidColorGenerator alloc] init];
     [solidGenerator forceProcessingAtSize:coverSize];
     [solidGenerator setColorRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
-    [filterGroup addFilter:solidGenerator];
+    //[filterGroup addFilter:solidGenerator];
 
     // fill gradient
     [filterGroup addFilter:_filter];
+    [filterGroup setInitialFilters:@[_filter]];
+    //[solidGenerator addTarget:_filter];
     
     // rotate
     GPUImageTransformFilter* transformFilter = [[GPUImageTransformFilter alloc] init];
@@ -77,6 +79,7 @@
     trans = CGAffineTransformMakeRotation(_angle);
     [transformFilter setAffineTransform:trans];
     [filterGroup addFilter:transformFilter];
+    [_filter addTarget:transformFilter];
     
     // crop
     CGFloat offsetX = coverWidth * _offsetX / coverWidth;
@@ -88,14 +91,8 @@
     GPUImageCropFilter* cropFilter = [[GPUImageCropFilter alloc] init];
     [cropFilter setCropRegion:CGRectMake(sizeX, sizeY, sizeW, sizeH)];
     [filterGroup addFilter:cropFilter];
-    
-    
-    // filter settings
-    [filterGroup setInitialFilters:@[solidGenerator]];
-    [filterGroup setTerminalFilter:cropFilter];
-    [solidGenerator addTarget:_filter];
-    [_filter addTarget:transformFilter];
     [transformFilter addTarget:cropFilter];
+    [filterGroup setTerminalFilter:cropFilter];
     
     return filterGroup;
 }
