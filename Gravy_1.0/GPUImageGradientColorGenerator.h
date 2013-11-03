@@ -23,14 +23,13 @@ extern NSString *const kGPUImageGradientColorGeneratorFragmentShaderString;
     float midpoints[20];
     GPUVector4 colors[20];
     
+    float _angle;
+    float _scale;
+    
     float imageWidth;
     float imageHeight;
     float baselineLength;
 }
-
-
-@property (nonatomic, assign) float angle;
-@property (nonatomic, assign) float scale;
 
 /*
  * red      0.0 - 255.0
@@ -42,14 +41,14 @@ extern NSString *const kGPUImageGradientColorGeneratorFragmentShaderString;
 - (void)addColorRed:(float)red Green:(float)green Blue:(float)blue Opacity:(float)opacity Location:(int)location Midpoint:(int)midpoint;
 
 /*
- * radian 0.0 - pi
+ * degree -360.0 - 360.0
  */
-- (void)setAngle:(float)angle;
+- (void)setAngleDegree:(float)angle;
 
 /*
- * 0.0 - 1.50
+ * percent 0.0 - 150.0
  */
-- (void)setScale:(float)scale;
+- (void)setScalePercent:(float)scale;
 
 - (void)setup;
 

@@ -122,28 +122,29 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
     [self setVec4Array:colors length:20 forUniform:colorsUniform program:filterProgram];
 }
 
-- (void)setAngle:(float)angle
+- (void)setAngleDegree:(float)angle
 {
+    angle = angle - floorf(angle / 360.0f) * 360.0f;
+    angle = angle / 180.0f * M_PI;
     _angle = angle;
     [self setFloat:_angle forUniform:angleUniform program:filterProgram];
 }
 
-- (void)setScale:(float)scale
+- (void)setScalePercent:(float)scale
 {
-    _scale = scale;
+    _scale = scale / 100.0f;
     [self setFloat:_scale forUniform:scaleUniform program:filterProgram];
 }
 
 - (void)setup
 {
     float angleThreshold = atanf(imageHeight / imageWidth);
-    float angleDegree = angleThreshold / M_PI * 180.0f;
-    dlog(@"%f degree", angleDegree);
-    float angleJudge = _angle - floorf(_angle / M_PI) * M_PI;
-    if(angleJudge > angleThreshold){
-        dlog(@"area A");
-    } else{
+    float angle = (_angle < 0.0f) ? -_angle : _angle;
+    float angleInput = angle - floorf(angle / M_PI) * M_PI;
+    if(angleInput > angleThreshold && angleInput < M_PI - angleThreshold){
         dlog(@"area B");
+    } else{
+        dlog(@"area A");
     }
 }
 
