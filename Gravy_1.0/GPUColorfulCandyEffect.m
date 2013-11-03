@@ -99,10 +99,10 @@
     
     // Fill Gradient
     gradientFilterGroup = [[GPUImageGradientLayerFilterGroup alloc] initWithImageToProcess:solidImage];
-    [gradientFilterGroup setScale:150.0f Angle:48.0f];
-    [gradientFilterGroup setOffsetX:13.0f Y:-25.0f];
+    [gradientFilterGroup setScale:150.0f Angle:60.0f];
+    [gradientFilterGroup setOffsetX:6.0f Y:-10.0f];
     [gradientFilterGroup addColorRed:89.479f Green:35.253f Blue:145.0f Opacity:100.0f Location:0 Midpoint:50];
-    [gradientFilterGroup addColorRed:254.0f Green:177.0f Blue:244.0f Opacity:100.0f Location:1229 Midpoint:50];
+    [gradientFilterGroup addColorRed:254.0f Green:177.0f Blue:244.0f Opacity:100.0f Location:1529 Midpoint:50];
     [gradientFilterGroup addColorRed:97.0f Green:108.0f Blue:22.0f Opacity:100.0f Location:3400 Midpoint:50];
     [gradientFilterGroup addColorRed:255.0f Green:255.0f Blue:255.0f Opacity:100.0f Location:4096 Midpoint:50];
     gradientFilter = [gradientFilterGroup filterGroup];
@@ -122,6 +122,7 @@
     [pictureOriginal addTarget:gradientFilter];
     [pictureOriginal processImage];
     pictureBlend = [[GPUImagePicture alloc] initWithImage:[hardlightFilter imageFromCurrentlyProcessedOutput]];
+    return [hardlightFilter imageFromCurrentlyProcessedOutput];
     
     // Flatten
     hardlightFilter = [[GPUImageHardLightBlendFilter alloc] init];
@@ -134,6 +135,8 @@
     [pictureBlend addTarget:opacityFilter];
     [pictureBlend processImage];
     resultImage = [hardlightFilter imageFromCurrentlyProcessedOutput];
+
+    return resultImage;
 
     
     // Fill Gradient
@@ -173,6 +176,7 @@
     resultImage = [diffFilter imageFromCurrentlyProcessedOutput];
     
     
+    
     // Channel Mixer
     mixerFilter = [[GPUImageChannelMixerFilter alloc] init];
     [mixerFilter setRedChannelRed:100 Green:-24 Blue:20 Constant:0];
@@ -183,6 +187,7 @@
     [pictureOriginal processImage];
     resultImage = [mixerFilter imageFromCurrentlyProcessedOutput];
     
+    
     // Fill
     solidGenerator = [[GPUImageSolidColorGenerator alloc] init];
     [solidGenerator setColorRed:209.0f/255.0f green:200.0f/255.0f blue:157.0f/255.0f alpha:1.0f];
@@ -190,6 +195,17 @@
     opacityFilter = [[GPUImageOpacityFilter alloc] init];
     opacityFilter.opacity = 0.50f;
     [solidGenerator addTarget:opacityFilter];
+    
+    
+    GPUImageNormalBlendFilter* blendNormal = [[GPUImageNormalBlendFilter alloc] init];
+    [opacityFilter addTarget:blendNormal atTextureLocation:1];
+    pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
+    [pictureOriginal addTarget:solidGenerator];
+    [pictureOriginal addTarget:blendNormal];
+    [pictureOriginal processImage];
+    return [blendNormal imageFromCurrentlyProcessedOutput];
+
+    
     darkenFilter = [[GPUImageDarkenBlendFilter alloc] init];
     [opacityFilter addTarget:darkenFilter atTextureLocation:1];
     pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
