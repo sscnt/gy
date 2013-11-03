@@ -29,15 +29,19 @@
     GPUImageFilterGroup* gradientFilter;
     GPUImageToneCurveFilter* curveFilter;
     GPUImageChannelMixerFilter* mixerFilter;
+
     
     // test
     GPUImageGradientColorGenerator* gradientGenerator = [[GPUImageGradientColorGenerator alloc] init];
     [gradientGenerator forceProcessingAtSize:CGSizeMake(resultImage.size.width, resultImage.size.height)];
-    [gradientGenerator forceProcessingAtSize:CGSizeMake(600, 800)];
+    [gradientGenerator forceProcessingAtSize:CGSizeMake(resultImage.size.width, resultImage.size.height)];
     [gradientGenerator setAngleDegree:45.0f];
     [gradientGenerator setScalePercent:100.0f];
     [gradientGenerator addColorRed:231.996f Green:114.008f Blue:42.763f Opacity:100.0f Location:0 Midpoint:50];
     [gradientGenerator addColorRed:255.0f Green:255.0f Blue:255.0f Opacity:0.0f Location:4096 Midpoint:50];
+    pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
+    [pictureOriginal addTarget:gradientGenerator];
+    [pictureOriginal processImage];
     return [gradientGenerator imageFromCurrentlyProcessedOutput];
     
     

@@ -18,7 +18,7 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
  uniform highp float locations[20];
  uniform highp float midpoints[20];
  uniform highp vec4 colors[20];
- uniform highp float angle;
+ uniform mediump float angle;
  uniform highp float scale;
  uniform highp float baselineLength;
  
@@ -50,47 +50,65 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
      
      highp float x = textureCoordinate.x;
      highp float y = textureCoordinate.y;
-     highp float slope = atan(angle);
+     
+     highp float slope = tan(angle);
      highp float vSlope = -1.0 / slope;
-     slope = baselineLength;
+     /*
+      y = slope * (x - 0.5) + 0.5
+      */
+     highp float d = abs(-vSlope * x + y + 0.5 * (vSlope - 1.0)) / sqrt(vSlope * vSlope + 1.0);
+     highp float _y = vSlope * (x - 0.5) + 0.5;
      
-     highp float d = abs(-slope * x + y + 0.5 * (slope - 1.0)) / sqrt(slope * slope + 1.0);
+     if(y > _y){
+         d = 0.5 - d;
+     } else{
+         d += 0.5;
+     }
      
-     int index = index(x);
+     
+     int index = index(d);
      highp float startLocation = locations[index];
      highp float endLocation = locations[index + 1];
      highp vec4 startColor = colors[index];
      highp vec4 endColor = colors[index + 1];
      
+     
      highp float r = startColor.r;
      highp float g = startColor.g;
      highp float b = startColor.b;
      highp float a = startColor.a;
-     
      highp float rdiff = endColor.r - startColor.r;
      highp float gdiff = endColor.g - startColor.g;
      highp float bdiff = endColor.b - startColor.b;
      highp float adiff = endColor.a - startColor.a;
      
-     highp float relativeX;
-     relativeX = (x - startLocation) / (endLocation - startLocation);
      
-     r += rdiff * relativeX;
-     g += gdiff * relativeX;
-     b += bdiff * relativeX;
-     a += adiff * relativeX;
-     
+     if(d > 1.0){
+         r = endColor.r;
+         g = endColor.g;
+         b = endColor.b;
+         a = endColor.a;
+     } else if(d < 0.0){
+         r = startColor.r;
+         g = startColor.g;
+         b = startColor.b;
+         a = startColor.a;
+     } else{
+         highp float relativeX;
+         relativeX = (d - startLocation) / (endLocation - startLocation);
+         
+         r += rdiff * relativeX;
+         g += gdiff * relativeX;
+         b += bdiff * relativeX;
+         a += adiff * relativeX;
+     }
+          
      r = max(0.0, min(1.0, r));
      g = max(0.0, min(1.0, g));
      b = max(0.0, min(1.0, b));
      a = max(0.0, min(1.0, a));
      
-     r = d;
-     g = d;
-     b = d;
-     a = 1.0;
-     
-     pixel.r = angle;
+     pixel.r = r;
      pixel.g = g;
      pixel.b = b;
      pixel.a = a;
@@ -133,7 +151,7 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
 {
     angle = angle - floorf(angle / 360.0f) * 360.0f;
     angle = angle / 180.0f * M_PI;
-    _angle = angle;
+    _angle = -angle;
     [self setFloat:_angle forUniform:angleUniform program:filterProgram];
 }
 
