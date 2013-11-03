@@ -21,16 +21,18 @@
     GPUImageHardLightBlendFilter* hardlightFilter;
     GPUImageHueBlendFilter* hueFilter;
     GPUImageDifferenceBlendFilter* diffFilter;
+    GPUImageDarkenBlendFilter* darkenFilter;
     GPUImagePicture* pictureOriginal;
     GPUImagePicture* pictureBlend;
     GPUImageFilterGroup* filterGroup;
     GPUImageGradientLayerFilterGroup* gradientFilterGroup;
     GPUImageFilterGroup* gradientFilter;
     GPUImageToneCurveFilter* curveFilter;
+    GPUImageChannelMixerFilter* mixerFilter;
     
     
     // Channel Mixer
-    GPUImageChannelMixerFilter* mixerFilter = [[GPUImageChannelMixerFilter alloc] init];
+    mixerFilter = [[GPUImageChannelMixerFilter alloc] init];
     [mixerFilter setRedChannelRed:92 Green:26 Blue:-20 Constant:0];
     [mixerFilter setGreenChannelRed:0 Green:100 Blue:0 Constant:0];
     [mixerFilter setBlueChannelRed:-8 Green:4 Blue:108 Constant:0];
@@ -171,6 +173,31 @@
     resultImage = [diffFilter imageFromCurrentlyProcessedOutput];
     
     
+    // Channel Mixer
+    mixerFilter = [[GPUImageChannelMixerFilter alloc] init];
+    [mixerFilter setRedChannelRed:100 Green:-24 Blue:20 Constant:0];
+    [mixerFilter setGreenChannelRed:-8 Green:98 Blue:12 Constant:0];
+    [mixerFilter setBlueChannelRed:-20 Green:10 Blue:124 Constant:0];
+    pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
+    [pictureOriginal addTarget:mixerFilter];
+    [pictureOriginal processImage];
+    resultImage = [mixerFilter imageFromCurrentlyProcessedOutput];
+    
+    // Fill
+    solidGenerator = [[GPUImageSolidColorGenerator alloc] init];
+    [solidGenerator setColorRed:209.0f/255.0f green:200.0f/255.0f blue:157.0f/255.0f alpha:1.0f];
+    [solidGenerator forceProcessingAtSize:CGSizeMake(resultImage.size.width, resultImage.size.height)];
+    opacityFilter = [[GPUImageOpacityFilter alloc] init];
+    opacityFilter.opacity = 0.10f;
+    [solidGenerator addTarget:opacityFilter];
+    darkenFilter = [[GPUImageDarkenBlendFilter alloc] init];
+    [opacityFilter addTarget:darkenFilter atTextureLocation:1];
+    pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
+    [pictureOriginal addTarget:darkenFilter];
+    [pictureOriginal addTarget:solidGenerator];
+    [pictureOriginal processImage];
+    resultImage = [darkenFilter imageFromCurrentlyProcessedOutput];
+   
     
     
     /*
