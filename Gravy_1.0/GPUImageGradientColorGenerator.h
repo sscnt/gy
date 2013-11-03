@@ -20,6 +20,7 @@ extern NSString *const kGPUImageGradientColorGeneratorFragmentShaderString;
     GLuint baselineLengthUniform;
     GLuint imageWidthUniform;
     GLuint imageHeightUniform;
+    GLuint stopsCountUniform;
     
     int index;
     float locations[20];

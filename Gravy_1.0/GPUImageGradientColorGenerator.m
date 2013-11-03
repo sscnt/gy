@@ -21,6 +21,7 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
  uniform mediump float angle;
  uniform highp float scale;
  uniform highp float baselineLength;
+ uniform int stopsCount;
  
  float round(float a){
      float b = floor(a);
@@ -52,25 +53,28 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
      highp float y = textureCoordinate.y;
      
      highp float slope = tan(angle);
-     highp float vSlope = -1.0 / slope;
-     /*
-      y = slope * (x - 0.5) + 0.5
-      */
-     highp float d = abs(-vSlope * x + y + 0.5 * (vSlope - 1.0)) / sqrt(vSlope * vSlope + 1.0);
-     highp float _y = vSlope * (x - 0.5) + 0.5;
-     
-     if(y > _y){
-         d = 0.5 - d;
+     highp float vSlope;
+     highp float d;
+     highp float _y;
+     if(slope != 0.0){
+         highp float vSlope = -1.0 / slope;
+         d = abs(-vSlope * x + y + 0.5 * (vSlope - 1.0)) / sqrt(vSlope * vSlope + 1.0);
+         _y = vSlope * (x - 0.5) + 0.5;
+         if(y > _y){
+             d = 0.5 - d;
+         } else{
+             d += 0.5;
+         }
      } else{
-         d += 0.5;
+         d = x;
      }
-     
      
      int index = index(d);
      highp float startLocation = locations[index];
      highp float endLocation = locations[index + 1];
      highp vec4 startColor = colors[index];
      highp vec4 endColor = colors[index + 1];
+     highp float midpoint = midpoints[index + 1];
      
      
      highp float r = startColor.r;
@@ -81,13 +85,17 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
      highp float gdiff = endColor.g - startColor.g;
      highp float bdiff = endColor.b - startColor.b;
      highp float adiff = endColor.a - startColor.a;
+     highp float rmid = rdiff / 2.0;
+     highp float gmid = gdiff / 2.0;
+     highp float bmid = bdiff / 2.0;
+     highp float amid = adiff / 2.0;
      
      
      if(d > 1.0){
-         r = endColor.r;
-         g = endColor.g;
-         b = endColor.b;
-         a = endColor.a;
+         r = colors[stopsCount - 1].r;
+         g = colors[stopsCount - 1].g;
+         b = colors[stopsCount - 1].b;
+         a = colors[stopsCount - 1].a;
      } else if(d < 0.0){
          r = startColor.r;
          g = startColor.g;
@@ -96,13 +104,22 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
      } else{
          highp float relativeX;
          relativeX = (d - startLocation) / (endLocation - startLocation);
+         if(relativeX > midpoint){
+             relativeX = (relativeX - midpoint) / (1.0 - midpoint);
+             r += rmid * (relativeX + 1.0);
+             g += gmid * (relativeX + 1.0);
+             b += bmid * (relativeX + 1.0);
+             a += amid * (relativeX + 1.0);
+         } else{
+             relativeX /= midpoint;
+             r += rmid * relativeX;
+             g += gmid * relativeX;
+             b += bmid * relativeX;
+             a += amid * relativeX;
+         }
          
-         r += rdiff * relativeX;
-         g += gdiff * relativeX;
-         b += bdiff * relativeX;
-         a += adiff * relativeX;
      }
-          
+     
      r = max(0.0, min(1.0, r));
      g = max(0.0, min(1.0, g));
      b = max(0.0, min(1.0, b));
@@ -131,6 +148,7 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
     angleUniform = [filterProgram uniformIndex:@"angle"];
     scaleUniform = [filterProgram uniformIndex:@"scale"];
     baselineLengthUniform = [filterProgram uniformIndex:@"baselineLength"];
+    stopsCountUniform = [filterProgram uniformIndex:@"stopsCount"];
     index = 0;
     return self;
 }
@@ -140,11 +158,12 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
     GPUVector4 vec = {red / 255.0f, green / 255.0f, blue / 255.0f, opacity / 100.0f};
     colors[index] = vec;
     locations[index] = (float)location / 4096.0f;
-    midpoints[index] = (float)midpoint;
+    midpoints[index] = (float)midpoint / 100.0f;
     index++;
     [self setFloatArray:locations length:20 forUniform:locationsUniform program:filterProgram];
     [self setFloatArray:midpoints length:20 forUniform:midpointUniform program:filterProgram];
     [self setVec4Array:colors length:20 forUniform:colorsUniform program:filterProgram];
+    [self setInteger:index forUniform:stopsCountUniform program:filterProgram];
 }
 
 - (void)setAngleDegree:(float)angle
