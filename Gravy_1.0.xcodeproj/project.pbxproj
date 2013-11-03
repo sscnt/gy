@@ -91,6 +91,7 @@
 		58F9FD7718235040003D32F4 /* GPUColorfulCandyEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F9FD7618235040003D32F4 /* GPUColorfulCandyEffect.m */; };
 		58FA2E291813F3EC00DFB4FB /* UIScrollView+Gravy.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FA2E281813F3EC00DFB4FB /* UIScrollView+Gravy.m */; };
 		58FA7A72182604D200848AFD /* GPUImageChannelMixerFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FA7A71182604D200848AFD /* GPUImageChannelMixerFilter.m */; };
+		58FA7A75182631F400848AFD /* GPUCCCurve01.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58FA7A7418262B5500848AFD /* GPUCCCurve01.acv */; };
 		58FAB9C818115C4F00B95F02 /* UISliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FAB9C718115C4F00B95F02 /* UISliderView.m */; };
 		58FABDEB1824A5A600CAC8A7 /* GPUImageGradientLayerImageFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FABDEA1824A5A600CAC8A7 /* GPUImageGradientLayerImageFilter.m */; };
 		58FABDEF1824C61400CAC8A7 /* GPUImageGradientLayerFilterGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FABDEE1824C61400CAC8A7 /* GPUImageGradientLayerFilterGroup.m */; };
@@ -247,6 +248,7 @@
 		58FA2E281813F3EC00DFB4FB /* UIScrollView+Gravy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Gravy.m"; sourceTree = "<group>"; };
 		58FA7A70182604D200848AFD /* GPUImageChannelMixerFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageChannelMixerFilter.h; sourceTree = "<group>"; };
 		58FA7A71182604D200848AFD /* GPUImageChannelMixerFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageChannelMixerFilter.m; sourceTree = "<group>"; };
+		58FA7A7418262B5500848AFD /* GPUCCCurve01.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = GPUCCCurve01.acv; sourceTree = "<group>"; };
 		58FAB9C618115C4F00B95F02 /* UISliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISliderView.h; sourceTree = "<group>"; };
 		58FAB9C718115C4F00B95F02 /* UISliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UISliderView.m; sourceTree = "<group>"; };
 		58FABDE91824A5A600CAC8A7 /* GPUImageGradientLayerImageFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageGradientLayerImageFilter.h; sourceTree = "<group>"; };
@@ -613,6 +615,7 @@
 		58F9FD7418235027003D32F4 /* ColorfulCandy */ = {
 			isa = PBXGroup;
 			children = (
+				58FA7A7318262B3F00848AFD /* Curves */,
 				58F9FD7518235040003D32F4 /* GPUColorfulCandyEffect.h */,
 				58F9FD7618235040003D32F4 /* GPUColorfulCandyEffect.m */,
 			);
@@ -626,6 +629,14 @@
 				58FA7A71182604D200848AFD /* GPUImageChannelMixerFilter.m */,
 			);
 			name = "Channnel Mixer";
+			sourceTree = "<group>";
+		};
+		58FA7A7318262B3F00848AFD /* Curves */ = {
+			isa = PBXGroup;
+			children = (
+				58FA7A7418262B5500848AFD /* GPUCCCurve01.acv */,
+			);
+			name = Curves;
 			sourceTree = "<group>";
 		};
 		58FABDE81824A58A00CAC8A7 /* GPUImageLayer */ = {
@@ -756,6 +767,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58FA7A75182631F400848AFD /* GPUCCCurve01.acv in Resources */,
 				5802E814180C22F900AA2227 /* Localizable.strings in Resources */,
 				5802E7F9180C0F8500AA2227 /* Default@2x.png in Resources */,
 				58EEE5F41820D740008C4B2A /* icon-29.png in Resources */,
