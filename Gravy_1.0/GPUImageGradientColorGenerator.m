@@ -20,6 +20,7 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
  uniform highp vec4 colors[20];
  uniform highp float angle;
  uniform highp float scale;
+ uniform highp float baselineLength;
  
  float round(float a){
      float b = floor(a);
@@ -49,6 +50,11 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
      
      highp float x = textureCoordinate.x;
      highp float y = textureCoordinate.y;
+     highp float slope = atan(angle);
+     highp float vSlope = -1.0 / slope;
+     slope = baselineLength;
+     
+     highp float d = abs(-slope * x + y + 0.5 * (slope - 1.0)) / sqrt(slope * slope + 1.0);
      
      int index = index(x);
      highp float startLocation = locations[index];
@@ -79,12 +85,12 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
      b = max(0.0, min(1.0, b));
      a = max(0.0, min(1.0, a));
      
-     r = 0.5;
-     g = 1.0;
-     b = 1.0;
+     r = d;
+     g = d;
+     b = d;
      a = 1.0;
      
-     pixel.r = r;
+     pixel.r = angle;
      pixel.g = g;
      pixel.b = b;
      pixel.a = a;
@@ -106,6 +112,7 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
     colorsUniform = [filterProgram uniformIndex:@"colors"];
     angleUniform = [filterProgram uniformIndex:@"angle"];
     scaleUniform = [filterProgram uniformIndex:@"scale"];
+    baselineLengthUniform = [filterProgram uniformIndex:@"baselineLength"];
     index = 0;
     return self;
 }
@@ -148,6 +155,7 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
         baselineLength = imageWidth / cosf(angleInput);
     }
     baselineLength = (baselineLength < 0.0f) ? -baselineLength : baselineLength;
+    [self setFloat:baselineLength forUniform:baselineLengthUniform program:filterProgram];
 }
 
 - (UIImage *)imageFromCurrentlyProcessedOutput
