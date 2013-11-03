@@ -30,6 +30,13 @@
     GPUImageToneCurveFilter* curveFilter;
     GPUImageChannelMixerFilter* mixerFilter;
     
+    // test
+    GPUImageGradientColorGenerator* gradientGenerator = [[GPUImageGradientColorGenerator alloc] init];
+    [gradientGenerator forceProcessingAtSize:CGSizeMake(resultImage.size.width, resultImage.size.height)];
+    [gradientGenerator forceProcessingAtSize:CGSizeMake(555, 555)];
+    return [gradientGenerator imageFromCurrentlyProcessedOutput];
+    
+    
     
     // Channel Mixer
     mixerFilter = [[GPUImageChannelMixerFilter alloc] init];

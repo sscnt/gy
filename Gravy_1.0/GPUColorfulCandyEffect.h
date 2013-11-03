@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "GPUImage.h"
 #import "GPUImageGradientLayerFilterGroup.h"
+#import "GPUImageGradientColorGenerator.h"
 #import "GPUImageChannelMixerFilter.h"
 
 @interface GPUColorfulCandyEffect : NSObject
