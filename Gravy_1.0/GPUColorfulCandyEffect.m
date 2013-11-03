@@ -188,7 +188,7 @@
     [solidGenerator setColorRed:209.0f/255.0f green:200.0f/255.0f blue:157.0f/255.0f alpha:1.0f];
     [solidGenerator forceProcessingAtSize:CGSizeMake(resultImage.size.width, resultImage.size.height)];
     opacityFilter = [[GPUImageOpacityFilter alloc] init];
-    opacityFilter.opacity = 0.10f;
+    opacityFilter.opacity = 0.50f;
     [solidGenerator addTarget:opacityFilter];
     darkenFilter = [[GPUImageDarkenBlendFilter alloc] init];
     [opacityFilter addTarget:darkenFilter atTextureLocation:1];

@@ -482,30 +482,28 @@
     dispatch_async(processingQueue, ^{
         UIImage* resultImage;
         GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:_originalImage];
-        GPUImageFilterGroup *filterGroup = [[GPUImageFilterGroup alloc] init];
+
         GPUWhitebalanceImageFilter* filterWb = [[GPUWhitebalanceImageFilter alloc] init];
         filterWb.redWeight = imageFilterWhiteBalance.redWeight;
         filterWb.blueWeight = imageFilterWhiteBalance.blueWeight;
-        [filterGroup addFilter:filterWb];
+
         GPULevelsImageFilter* filterLv = [[GPULevelsImageFilter alloc] init];
         filterLv.lvHighWeight = imageFilterLevels.lvHighWeight;
         filterLv.lvMidWeight = imageFilterLevels.lvMidWeight;
         filterLv.lvLowWeight = imageFilterLevels.lvLowWeight;
-        [filterGroup addFilter:filterLv];
+        [filterWb addTarget:filterLv];
         GPUSaturationImageFilter* filterSt = [[GPUSaturationImageFilter alloc] init];
         filterSt.stSaturationWeight = imageFilterSaturation.stSaturationWeight;
         filterSt.stVibranceWeight = imageFilterSaturation.stVibranceWeight;
-        [filterGroup addFilter:filterSt];
-        
-        [filterGroup setInitialFilters:@[filterWb]];
-        [filterGroup setTerminalFilter:filterSt];
-        
-        [filterWb addTarget:filterLv];
         [filterLv addTarget:filterSt];
-        
-        [picture addTarget:filterGroup];
+    
+        [picture addTarget:filterWb];
         [picture processImage];
         resultImage = [filterSt imageFromCurrentlyProcessedOutput];
+        
+        GPUColorfulCandyEffect* candy = [[GPUColorfulCandyEffect alloc] init];
+        [candy setImageToProcess:resultImage];
+        resultImage = [candy process];
         
         UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil);
         
