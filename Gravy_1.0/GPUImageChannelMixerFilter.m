@@ -16,18 +16,18 @@ NSString *const kGPUImageChannelMixerFilterFragmentShaderString = SHADER_STRING
  varying vec2 textureCoordinate;
  uniform sampler2D inputImageTexture;
  
- highp float redRed; // 1.0 base
- highp float redGreen; // 0.0 base
- highp float redBlue; // 0.0 base
- highp float redConstant;
- highp float greenRed;
- highp float greenGreen;
- highp float greenBlue;
- highp float greenConstant;
- highp float blueRed;
- highp float blueGreen;
- highp float blueBlue;
- highp float blueConstant;
+ uniform highp float redRed; // 1.0 base
+ uniform highp float redGreen; // 0.0 base
+ uniform highp float redBlue; // 0.0 base
+ uniform highp float redConstant;
+ uniform highp float greenRed;
+ uniform highp float greenGreen;
+ uniform highp float greenBlue;
+ uniform highp float greenConstant;
+ uniform highp float blueRed;
+ uniform highp float blueGreen;
+ uniform highp float blueBlue;
+ uniform highp float blueConstant;
 
  
  void main()
@@ -40,6 +40,8 @@ NSString *const kGPUImageChannelMixerFilterFragmentShaderString = SHADER_STRING
      highp float _r;
      highp float _g;
      highp float _b;
+     
+    
      
      _r = r * redRed + r + redConstant + g * redGreen + b * redBlue;
      _g = g * greenGreen + g + greenConstant + r * greenRed + b * greenBlue;
@@ -69,17 +71,17 @@ NSString *const kGPUImageChannelMixerFilterFragmentShaderString = SHADER_STRING
     }
     redRedUniform = [filterProgram uniformIndex:@"redRed"];
     redGreenUniform = [filterProgram uniformIndex:@"redGreen"];
-    redBlueUniform = [filterProgram uniformIndex:@"redblue"];
+    redBlueUniform = [filterProgram uniformIndex:@"redBlue"];
     redConstantUniform = [filterProgram uniformIndex:@"redConstant"];
     
     greenRedUniform = [filterProgram uniformIndex:@"greenRed"];
     greenGreenUniform = [filterProgram uniformIndex:@"greenGreen"];
-    greenBlueUniform = [filterProgram uniformIndex:@"greenblue"];
+    greenBlueUniform = [filterProgram uniformIndex:@"greenBlue"];
     greenConstantUniform = [filterProgram uniformIndex:@"greenConstant"];
     
     blueRedUniform = [filterProgram uniformIndex:@"blueRed"];
     blueGreenUniform = [filterProgram uniformIndex:@"blueGreen"];
-    blueBlueUniform = [filterProgram uniformIndex:@"blueblue"];
+    blueBlueUniform = [filterProgram uniformIndex:@"blueBlue"];
     blueConstantUniform = [filterProgram uniformIndex:@"blueConstant"];
     
     return self;

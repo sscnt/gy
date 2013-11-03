@@ -29,12 +29,10 @@
     [mixerFilter setRedChannelRed:92 Green:26 Blue:-20 Constant:0];
     [mixerFilter setGreenChannelRed:0 Green:100 Blue:0 Constant:0];
     [mixerFilter setBlueChannelRed:-8 Green:4 Blue:108 Constant:0];
-    
     pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
     [pictureOriginal addTarget:mixerFilter];
     [pictureOriginal processImage];
     resultImage = [mixerFilter imageFromCurrentlyProcessedOutput];
-    return resultImage;
     
     // Gradient Fill
     GPUImageGradientLayerFilterGroup* gradientFilterGroup = [[GPUImageGradientLayerFilterGroup alloc] initWithImageToProcess:solidImage];
