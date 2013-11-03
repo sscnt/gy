@@ -34,7 +34,7 @@
     GPUImageGradientColorGenerator* gradientGenerator = [[GPUImageGradientColorGenerator alloc] init];
     [gradientGenerator forceProcessingAtSize:CGSizeMake(resultImage.size.width, resultImage.size.height)];
     [gradientGenerator forceProcessingAtSize:CGSizeMake(600, 800)];
-    [gradientGenerator setAngleDegree:-415.0f];
+    [gradientGenerator setAngleDegree:20.0f];
     return [gradientGenerator imageFromCurrentlyProcessedOutput];
     
     

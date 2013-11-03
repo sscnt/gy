@@ -138,14 +138,16 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
 
 - (void)setup
 {
+    baselineLength = 0.0f;
     float angleThreshold = atanf(imageHeight / imageWidth);
     float angle = (_angle < 0.0f) ? -_angle : _angle;
     float angleInput = angle - floorf(angle / M_PI) * M_PI;
     if(angleInput > angleThreshold && angleInput < M_PI - angleThreshold){
-        dlog(@"area B");
+        baselineLength = imageHeight / cosf(M_PI_2 - angleInput);
     } else{
-        dlog(@"area A");
+        baselineLength = imageWidth / cosf(angleInput);
     }
+    baselineLength = (baselineLength < 0.0f) ? -baselineLength : baselineLength;
 }
 
 - (UIImage *)imageFromCurrentlyProcessedOutput
