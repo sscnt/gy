@@ -108,6 +108,7 @@
     [pictureOriginal addTarget:gradientFilter];
     [pictureOriginal processImage];
     return [gradientFilter imageFromCurrentlyProcessedOutput];
+    
 
     return resultImage;
 }
