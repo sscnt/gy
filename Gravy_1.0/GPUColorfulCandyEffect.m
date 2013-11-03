@@ -20,6 +20,7 @@
     GPUImageOpacityFilter* opacityFilter;
     GPUImageHardLightBlendFilter* hardlightFilter;
     GPUImageHueBlendFilter* hueFilter;
+    GPUImageDifferenceBlendFilter* diffFilter;
     GPUImagePicture* pictureOriginal;
     GPUImagePicture* pictureBlend;
     GPUImageFilterGroup* filterGroup;
@@ -141,6 +142,38 @@
     [gradientFilterGroup addColorRed:255.0f Green:255.0f Blue:255.0f Opacity:0.0f Location:4096 Midpoint:50];
     gradientFilter = [gradientFilterGroup filterGroup];
 
+    
+    // Flatten
+    opacityFilter = [[GPUImageOpacityFilter alloc] init];
+    opacityFilter.opacity = 0.34f;
+    [gradientFilter addTarget:opacityFilter];
+    hardlightFilter = [[GPUImageHardLightBlendFilter alloc] init];
+    [opacityFilter addTarget:hardlightFilter atTextureLocation:1];
+    pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
+    [pictureOriginal addTarget:hardlightFilter];
+    [pictureOriginal addTarget:gradientFilter];
+    [pictureOriginal processImage];
+    resultImage = [hardlightFilter imageFromCurrentlyProcessedOutput];
+    
+    // Fill
+    solidGenerator = [[GPUImageSolidColorGenerator alloc] init];
+    [solidGenerator setColorRed:17.0f/255.0f green:21.0f/255.0f blue:103.0f/255.0f alpha:1.0f];
+    [solidGenerator forceProcessingAtSize:CGSizeMake(resultImage.size.width, resultImage.size.height)];
+    opacityFilter = [[GPUImageOpacityFilter alloc] init];
+    opacityFilter.opacity = 0.10f;
+    [solidGenerator addTarget:opacityFilter];
+    diffFilter = [[GPUImageDifferenceBlendFilter alloc] init];
+    [opacityFilter addTarget:diffFilter atTextureLocation:1];
+    pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
+    [pictureOriginal addTarget:diffFilter];
+    [pictureOriginal addTarget:solidGenerator];
+    [pictureOriginal processImage];
+    resultImage = [diffFilter imageFromCurrentlyProcessedOutput];
+    
+    
+    
+    
+    /*
     GPUImageNormalBlendFilter* blendNormal = [[GPUImageNormalBlendFilter alloc] init];
     [gradientFilter addTarget:blendNormal atTextureLocation:1];
     pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
@@ -148,7 +181,7 @@
     [pictureOriginal addTarget:blendNormal];
     [pictureOriginal processImage];
     return [blendNormal imageFromCurrentlyProcessedOutput];
-    
+     */
     
     /*
     pictureOriginal = [[GPUImagePicture alloc] initWithImage:solidImage];
