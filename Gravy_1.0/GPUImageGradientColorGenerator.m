@@ -61,12 +61,14 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
      highp float y = textureCoordinate.y - offsetY;
 
      
-     highp float slope = tan(angle);
-     highp float vSlope;
+     highp float slope = tan(M_PI-angle);
      highp float d;
      highp float _y;
      if(slope != 0.0){
          highp float vSlope = -1.0 / slope;
+         /*
+          y - 0.5 = vSlope * (x - 0.5);
+          */
          d = abs(-vSlope * x + y + 0.5 * (vSlope - 1.0)) / sqrt(vSlope * vSlope + 1.0);
          _y = vSlope * (x - 0.5) + 0.5;
          if(y > _y){
@@ -76,6 +78,9 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
          }
      } else{
          d = x / scale;
+     }
+     if(angle >= M_PI){
+         d = 1.0 - d;
      }
      
      int index = index(d);
@@ -182,9 +187,9 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
 
 - (void)setAngleDegree:(float)angle
 {
-    angle = angle - floorf(angle / 360.0f) * 360.0f;
-    angle = angle / 180.0f * M_PI;
-    _angle = -angle;
+    _angle = angle - floorf(angle / 360.0f) * 360.0f;
+    _angle = _angle / 180.0f * M_PI;
+    //_angle = (angle < 0.0f) ? -_angle : _angle;
     [self setFloat:_angle forUniform:angleUniform program:filterProgram];
 }
 

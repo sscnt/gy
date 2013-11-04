@@ -394,7 +394,7 @@
         [saturationImageView setImage:saturationAppliedImage];
 
     } else if(targetView.tag == KnobIdEffect){
-        
+
     }
     
     
