@@ -27,9 +27,9 @@
     // Gradient Fill
     @autoreleasepool {
         GPUImageGradientColorGenerator* gradientGenerator = [[GPUImageGradientColorGenerator alloc] init];
-        [gradientGenerator setAngleDegree:42.7f];
+        [gradientGenerator setAngleDegree:242.7f];
         [gradientGenerator setScalePercent:150.0f];
-        [gradientGenerator setOffsetX:29.4f Y:-65.4f];
+        [gradientGenerator setOffsetX:25.4f Y:-60.4f];
         [gradientGenerator addColorRed:255.0f Green:255.0f Blue:255.0f Opacity:100.0f Location:0 Midpoint:50];
         [gradientGenerator addColorRed:45.004f Green:53.004f Blue:34.0f Opacity:0.0f Location:4096 Midpoint:50];
         
@@ -40,7 +40,7 @@
         
         // Overlay
         GPUImageOverlayBlendFilter* overlayFilter = [[GPUImageOverlayBlendFilter alloc] init];
-        [opacityFilter addTarget:overlayFilter];
+        [opacityFilter addTarget:overlayFilter atTextureLocation:1];
         
         // Merge
         GPUImagePicture* pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
