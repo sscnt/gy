@@ -21,6 +21,8 @@ extern NSString *const kGPUImageGradientColorGeneratorFragmentShaderString;
     GLuint imageWidthUniform;
     GLuint imageHeightUniform;
     GLuint stopsCountUniform;
+    GLuint offsetXUniform;
+    GLuint offsetYUniform;
     
     int index;
     float locations[20];
@@ -53,6 +55,11 @@ extern NSString *const kGPUImageGradientColorGeneratorFragmentShaderString;
  * percent 0.0 - 150.0
  */
 - (void)setScalePercent:(float)scale;
+
+/*
+ * percent 0.0 - 100.0
+ */
+- (void)setOffsetX:(float)x Y:(float)y;
 
 - (void)setup;
 

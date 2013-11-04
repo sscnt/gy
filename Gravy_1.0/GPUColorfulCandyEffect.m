@@ -34,12 +34,13 @@
     // test
     GPUImageGradientColorGenerator* gradientGenerator = [[GPUImageGradientColorGenerator alloc] init];
     [gradientGenerator forceProcessingAtSize:CGSizeMake(resultImage.size.width, resultImage.size.height)];
-    [gradientGenerator forceProcessingAtSize:CGSizeMake(resultImage.size.width, resultImage.size.height)];
-    [gradientGenerator setAngleDegree:90.0f];
-    [gradientGenerator setScalePercent:100.0f];
-    [gradientGenerator addColorRed:11.261f Green:1.444f Blue:184.0f Opacity:100.0f Location:0 Midpoint:50];
-    [gradientGenerator addColorRed:253.0f Green:250.054f Blue:2.977f Opacity:100.0f Location:2048 Midpoint:20];
-    [gradientGenerator addColorRed:11.035f Green:2.0f Blue:170.0f Opacity:100.0f Location:4096 Midpoint:40];
+    [gradientGenerator setAngleDegree:40.0f];
+    [gradientGenerator setScalePercent:150.0f];
+    [gradientGenerator setOffsetX:22.6f Y:-29.1f];
+    [gradientGenerator addColorRed:89.479f Green:35.253f Blue:145.0f Opacity:100.0f Location:0 Midpoint:50];
+    [gradientGenerator addColorRed:254.0f Green:177.0f Blue:244.0f Opacity:100.0f Location:1529 Midpoint:50];
+    [gradientGenerator addColorRed:97.0f Green:108.0f Blue:22.0f Opacity:100.0f Location:3400 Midpoint:50];
+    [gradientGenerator addColorRed:255.0f Green:255.0f Blue:255.0f Opacity:100.0f Location:4096 Midpoint:50];
     pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
     [pictureOriginal addTarget:gradientGenerator];
     [pictureOriginal processImage];

@@ -22,6 +22,8 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
  uniform highp float scale;
  uniform highp float baselineLength;
  uniform int stopsCount;
+ uniform highp float offsetX;
+ uniform highp float offsetY;
  
  float round(float a){
      float b = floor(a);
@@ -33,6 +35,12 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
  }
  
  int index(float x){
+     if(x < 0.0){
+         return 0;
+     }
+     if(x > 1.0){
+         return stopsCount - 1;
+     }
      highp float loc = 0.0;
      for(int i = 1;i < 20;i++){
          loc = locations[i];
@@ -49,8 +57,9 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
      
      mediump float m60 = 0.01665;
 
-     highp float x = textureCoordinate.x;
-     highp float y = textureCoordinate.y;
+     highp float x = textureCoordinate.x - offsetX;
+     highp float y = textureCoordinate.y - offsetY;
+
      
      highp float slope = tan(angle);
      highp float vSlope;
@@ -61,12 +70,12 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
          d = abs(-vSlope * x + y + 0.5 * (vSlope - 1.0)) / sqrt(vSlope * vSlope + 1.0);
          _y = vSlope * (x - 0.5) + 0.5;
          if(y > _y){
-             d = 0.5 - d;
+             d = 0.5 - d / scale;
          } else{
-             d += 0.5;
+             d = 0.5 + d / scale;
          }
      } else{
-         d = x;
+         d = x / scale;
      }
      
      int index = index(d);
@@ -152,6 +161,8 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
     scaleUniform = [filterProgram uniformIndex:@"scale"];
     baselineLengthUniform = [filterProgram uniformIndex:@"baselineLength"];
     stopsCountUniform = [filterProgram uniformIndex:@"stopsCount"];
+    offsetXUniform = [filterProgram uniformIndex:@"offsetX"];
+    offsetYUniform = [filterProgram uniformIndex:@"offsetY"];
     index = 0;
     return self;
 }
@@ -181,6 +192,12 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
 {
     _scale = scale / 100.0f;
     [self setFloat:_scale forUniform:scaleUniform program:filterProgram];
+}
+
+- (void)setOffsetX:(float)x Y:(float)y
+{
+    [self setFloat:x / 100.0f forUniform:offsetXUniform program:filterProgram];
+    [self setFloat:y / 100.0f forUniform:offsetYUniform program:filterProgram];
 }
 
 - (void)setup
