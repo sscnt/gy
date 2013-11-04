@@ -1,5 +1,5 @@
 //
-//  GPUHaze3Effect.h
+//  GPUColorfulCandyEffect.h
 //  Gravy_1.0
 //
 //  Created by SSC on 2013/11/01.
@@ -7,9 +7,7 @@
 //
 
 #import "GPUImageEffects.h"
-#import "GPUImage.h"
 
-
-@interface GPUHaze3Effect : GPUImageEffects
+@interface GPUEffectColorfulCandy : GPUImageEffects
 
 @end

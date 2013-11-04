@@ -280,17 +280,20 @@
         __block EditorViewController* _self = self;
         
         dispatch_async(processingQueue, ^{
-
+            
+            GPUEffectSoftPop* softpop = [[GPUEffectSoftPop alloc] init];
+            softpop.imageToProcess = effectAppliedImage;
+            effectAppliedImage = [softpop process];
+         
             /*
-            GPUColorfulCandyEffect* candy = [[GPUColorfulCandyEffect alloc] init];
+            GPUEffectColorfulCandy* candy = [[GPUEffectColorfulCandy alloc] init];
             candy.imageToProcess = effectAppliedImage;
             effectAppliedImage = [candy process];
-            */
-            
-            GPUHaze3Effect* haze = [[GPUHaze3Effect alloc] init];
+   
+            GPUEffectHaze3* haze = [[GPUEffectHaze3 alloc] init];
             haze.imageToProcess = effectAppliedImage;
             effectAppliedImage = [haze process];
-            
+            */
             
             //メインスレッド
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -502,7 +505,7 @@
         [picture processImage];
         resultImage = [filterSt imageFromCurrentlyProcessedOutput];
         
-        GPUColorfulCandyEffect* candy = [[GPUColorfulCandyEffect alloc] init];
+        GPUEffectColorfulCandy* candy = [[GPUEffectColorfulCandy alloc] init];
         [candy setImageToProcess:resultImage];
         resultImage = [candy process];
         

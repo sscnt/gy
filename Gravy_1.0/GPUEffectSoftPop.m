@@ -1,0 +1,57 @@
+//
+//  GPUEffectSoftPop.m
+//  Gravy_1.0
+//
+//  Created by SSC on 2013/11/04.
+//  Copyright (c) 2013年 SSC. All rights reserved.
+//
+
+#import "GPUEffectSoftPop.h"
+
+@implementation GPUEffectSoftPop
+
+- (UIImage*)process
+{
+    UIImage* resultImage = self.imageToProcess;
+    UIImage* solidImage;
+    
+    // Tonecurve
+    @autoreleasepool {
+        GPUImageToneCurveFilter* toneFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"GPUSoftPopCurve01"];
+        GPUImagePicture* pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
+        [pictureOriginal addTarget:toneFilter];
+        [pictureOriginal processImage];
+        resultImage = [toneFilter imageFromCurrentlyProcessedOutput];
+    }
+    
+    // Gradient Fill
+    @autoreleasepool {
+        GPUImageGradientColorGenerator* gradientGenerator = [[GPUImageGradientColorGenerator alloc] init];
+        [gradientGenerator setAngleDegree:42.7f];
+        [gradientGenerator setScalePercent:150.0f];
+        [gradientGenerator setOffsetX:29.4f Y:-65.4f];
+        [gradientGenerator addColorRed:255.0f Green:255.0f Blue:255.0f Opacity:100.0f Location:0 Midpoint:50];
+        [gradientGenerator addColorRed:45.004f Green:53.004f Blue:34.0f Opacity:0.0f Location:4096 Midpoint:50];
+        
+        // Opacity
+        GPUImageOpacityFilter* opacityFilter = [[GPUImageOpacityFilter alloc] init];
+        opacityFilter.opacity = 0.70f;
+        [gradientGenerator addTarget:opacityFilter];
+        
+        // Overlay
+        GPUImageOverlayBlendFilter* overlayFilter = [[GPUImageOverlayBlendFilter alloc] init];
+        [opacityFilter addTarget:overlayFilter];
+        
+        // Merge
+        GPUImagePicture* pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
+        [pictureOriginal addTarget:overlayFilter];
+        [pictureOriginal addTarget:gradientGenerator];
+        [pictureOriginal processImage];
+        resultImage = [overlayFilter imageFromCurrentlyProcessedOutput];
+        
+    }
+    
+    return resultImage;
+}
+
+@end

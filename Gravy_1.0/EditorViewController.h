@@ -20,13 +20,15 @@
 #import "UISliderView.h"
 #import "UIScrollView+Gravy.h"
 #import "SVProgressHUD.h"
+
 #import "GPUImage.h"
 #import "GPUWhitebalanceImageFilter.h"
 #import "GPULevelsImageFilter.h"
 #import "GPUSaturationImageFilter.h"
 
-#import "GPUHaze3Effect.h"
-#import "GPUColorfulCandyEffect.h"
+#import "GPUEffectHaze3.h"
+#import "GPUEffectColorfulCandy.h"
+#import "GPUEffectSoftPop.h"
 
 typedef NS_ENUM(NSInteger, EditorState){
     EditorStateWhiteBalance = 1,

@@ -7,6 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GPUImage.h"
+#import "GPUImageChannelMixerFilter.h"
+#import "GPUImageGradientColorGenerator.h"
 
 @interface GPUImageEffects : NSObject
 

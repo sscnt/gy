@@ -6,9 +6,9 @@
 //  Copyright (c) 2013年 SSC. All rights reserved.
 //
 
-#import "GPUHaze3Effect.h"
+#import "GPUEffectHaze3.h"
 
-@implementation GPUHaze3Effect
+@implementation GPUEffectHaze3
 
 - (UIImage*)process
 {
