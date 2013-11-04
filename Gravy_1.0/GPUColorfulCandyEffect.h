@@ -7,15 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GPUImageEffects.h"
 #import "GPUImage.h"
-#import "GPUImageGradientLayerFilterGroup.h"
 #import "GPUImageGradientColorGenerator.h"
 #import "GPUImageChannelMixerFilter.h"
 
-@interface GPUColorfulCandyEffect : NSObject
-
-@property (nonatomic, weak) UIImage* imageToProcess;
-
-- (UIImage*)process;
+@interface GPUColorfulCandyEffect : GPUImageEffects
 
 @end

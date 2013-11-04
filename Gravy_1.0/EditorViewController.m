@@ -281,15 +281,16 @@
         
         dispatch_async(processingQueue, ^{
 
+            /*
             GPUColorfulCandyEffect* candy = [[GPUColorfulCandyEffect alloc] init];
             candy.imageToProcess = effectAppliedImage;
             effectAppliedImage = [candy process];
+            */
             
-            /*
             GPUHaze3Effect* haze = [[GPUHaze3Effect alloc] init];
             haze.imageToProcess = effectAppliedImage;
             effectAppliedImage = [haze process];
-             */
+            
             
             //メインスレッド
             dispatch_async(dispatch_get_main_queue(), ^{

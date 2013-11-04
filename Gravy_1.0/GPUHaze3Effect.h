@@ -6,12 +6,10 @@
 //  Copyright (c) 2013年 SSC. All rights reserved.
 //
 
+#import "GPUImageEffects.h"
 #import "GPUImage.h"
 
-@interface GPUHaze3Effect : NSObject
 
-@property (nonatomic, weak) UIImage* imageToProcess;
-
-- (UIImage*)process;
+@interface GPUHaze3Effect : GPUImageEffects
 
 @end

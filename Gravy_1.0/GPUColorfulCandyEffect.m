@@ -12,7 +12,7 @@
 
 - (UIImage*)process
 {
-    UIImage* resultImage = _imageToProcess;
+    UIImage* resultImage = self.imageToProcess;
     GPUImageSolidColorGenerator* solidGenerator = [[GPUImageSolidColorGenerator alloc] init];
     [solidGenerator setColorRed:0.0f green:0.0f blue:0.0f alpha:0.0f];
     [solidGenerator forceProcessingAtSize:CGSizeMake(resultImage.size.width, resultImage.size.height)];
