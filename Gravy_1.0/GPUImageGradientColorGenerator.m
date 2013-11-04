@@ -48,7 +48,7 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
      highp vec4 pixel   = texture2D(inputImageTexture, textureCoordinate);
      
      mediump float m60 = 0.01665;
-     
+
      highp float x = textureCoordinate.x;
      highp float y = textureCoordinate.y;
      
@@ -106,18 +106,21 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
          relativeX = (d - startLocation) / (endLocation - startLocation);
          if(relativeX > midpoint){
              relativeX = (relativeX - midpoint) / (1.0 - midpoint);
+             highp float weight = -cos(M_PI_2 + relativeX * M_PI_2);
+             relativeX = relativeX + (weight - relativeX) * 0.8;
              r += rmid * (relativeX + 1.0);
              g += gmid * (relativeX + 1.0);
              b += bmid * (relativeX + 1.0);
              a += amid * (relativeX + 1.0);
          } else{
-             relativeX /= midpoint;
+             relativeX = relativeX / midpoint;
+             highp float weight = 1.0 - cos(relativeX * M_PI_2);
+             relativeX = relativeX + (weight - relativeX) * 0.8;
              r += rmid * relativeX;
              g += gmid * relativeX;
              b += bmid * relativeX;
              a += amid * relativeX;
          }
-         
      }
      
      r = max(0.0, min(1.0, r));
