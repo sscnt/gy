@@ -10,7 +10,7 @@
 
 @implementation GPUImageSelectiveColorFilter
 
-NSString *const kGPUImageChannelMixerFilterFragmentShaderString = SHADER_STRING
+NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRING
 (
  precision highp float;
  varying vec2 textureCoordinate;
@@ -74,13 +74,13 @@ NSString *const kGPUImageChannelMixerFilterFragmentShaderString = SHADER_STRING
      highp float ga;
      highp float ba;
      
-     r = 0.0;
-     g = 1.0;
-     b = 0.5;
+     ra = g;
+     ga = b;
+     ba = g;
      
-     r = max(0.0, min(1.0, _r));
-     g = max(0.0, min(1.0, _g));
-     b = max(0.0, min(1.0, _b));
+     r = max(0.0, min(1.0, ra));
+     g = max(0.0, min(1.0, ga));
+     b = max(0.0, min(1.0, ba));
      
      pixel.r = r;
      pixel.g = g;
@@ -96,7 +96,7 @@ NSString *const kGPUImageChannelMixerFilterFragmentShaderString = SHADER_STRING
 
 - (id)init;
 {
-    if (!(self = [super initWithFragmentShaderFromString:kGPUImageChannelMixerFilterFragmentShaderString]))
+    if (!(self = [super initWithFragmentShaderFromString:kGPUImageSelectiveColorFilterFragmentShaderString]))
     {
         return nil;
     }
