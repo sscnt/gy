@@ -10,6 +10,7 @@
 #import "GPUImage.h"
 #import "GPUImageChannelMixerFilter.h"
 #import "GPUImageGradientColorGenerator.h"
+#import "GPUImageSelectiveColorFilter.h"
 
 @interface GPUImageEffects : NSObject
 

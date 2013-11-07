@@ -64,6 +64,7 @@
 		58EEE6001820D740008C4B2A /* icon-152.png in Resources */ = {isa = PBXBuildFile; fileRef = 58EEE5F31820D740008C4B2A /* icon-152.png */; };
 		58F0271B181A8B6600938725 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 58F02718181A8B6600938725 /* SVProgressHUD.bundle */; };
 		58F0271C181A8B6600938725 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F0271A181A8B6600938725 /* SVProgressHUD.m */; };
+		58F14A51182BB484009DA863 /* GPUImageSelectiveColorFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F14A50182BB484009DA863 /* GPUImageSelectiveColorFilter.m */; };
 		58F3C427181C8A7100F7129D /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F3C426181C8A7100F7129D /* CoreMedia.framework */; };
 		58F3C429181C8A7900F7129D /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F3C428181C8A7900F7129D /* CoreVideo.framework */; };
 		58F3C42B181C8A8300F7129D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F3C42A181C8A8300F7129D /* OpenGLES.framework */; };
@@ -211,6 +212,8 @@
 		58F02718181A8B6600938725 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		58F02719181A8B6600938725 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		58F0271A181A8B6600938725 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		58F14A4F182BB484009DA863 /* GPUImageSelectiveColorFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageSelectiveColorFilter.h; sourceTree = "<group>"; };
+		58F14A50182BB484009DA863 /* GPUImageSelectiveColorFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageSelectiveColorFilter.m; sourceTree = "<group>"; };
 		58F3C41C181C89FB00F7129D /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = GPUImage/framework/GPUImage.xcodeproj; sourceTree = "<group>"; };
 		58F3C426181C8A7100F7129D /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		58F3C428181C8A7900F7129D /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -571,6 +574,15 @@
 			name = SVProgressHUD;
 			sourceTree = "<group>";
 		};
+		58F14A4B182BB460009DA863 /* Selective Color */ = {
+			isa = PBXGroup;
+			children = (
+				58F14A4F182BB484009DA863 /* GPUImageSelectiveColorFilter.h */,
+				58F14A50182BB484009DA863 /* GPUImageSelectiveColorFilter.m */,
+			);
+			name = "Selective Color";
+			sourceTree = "<group>";
+		};
 		58F3C41D181C89FB00F7129D /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -659,6 +671,7 @@
 		58FABDE81824A58A00CAC8A7 /* GPUImageLayer */ = {
 			isa = PBXGroup;
 			children = (
+				58F14A4B182BB460009DA863 /* Selective Color */,
 				58FA7A6B182604AF00848AFD /* Channnel Mixer */,
 				58FABDEC1824C20400CAC8A7 /* Gradient */,
 			);
@@ -883,6 +896,7 @@
 				58F471B5180E74B000C64E46 /* UIDockButtonBack.m in Sources */,
 				58F471B8180E74ED00C64E46 /* UIDockButtonNext.m in Sources */,
 				58F6FED11827CA61003F49C6 /* GPUImageEffects.m in Sources */,
+				58F14A51182BB484009DA863 /* GPUImageSelectiveColorFilter.m in Sources */,
 				58FEFFDD18101D2C008B4E8D /* UIThumbnailView.m in Sources */,
 				58F9FD6A182330CB003D32F4 /* GPUEffectHaze3.m in Sources */,
 				58F3C43F181CC55200F7129D /* GPUSaturationImageFilter.m in Sources */,
