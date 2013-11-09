@@ -505,9 +505,13 @@
         [picture processImage];
         resultImage = [filterSt imageFromCurrentlyProcessedOutput];
         
+        GPUEffectSoftPop* softpop = [[GPUEffectSoftPop alloc] init];
+        softpop.imageToProcess = resultImage;
+        resultImage = [softpop process];
+        
         GPUEffectColorfulCandy* candy = [[GPUEffectColorfulCandy alloc] init];
         [candy setImageToProcess:resultImage];
-        resultImage = [candy process];
+        //resultImage = [candy process];
         
         UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil);
         
