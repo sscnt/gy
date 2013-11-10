@@ -70,7 +70,7 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      srgb[0] = vec3(0.412391, 0.212639, 0.019331);
      srgb[1] = vec3(0.357584, 0.715169, 0.119195);
      srgb[2] = vec3(0.180481, 0.072192, 0.950532);
-     return srgb * color;
+     return adobe * color;
  }
  
  vec3 xyz2rgb(highp vec3 color){
@@ -82,7 +82,7 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      srgb[0] = vec3(3.240970 , -0.969244  , 0.055630 );
      srgb[1] = vec3(-1.537383 , 1.875968  , -0.203977  );
      srgb[2] = vec3(-0.498611, 0.041555, 1.056972);
-     return srgb * color;
+     return adobe * color;
  }
  
  float xyz2labFt(highp float t){
@@ -130,6 +130,119 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      return xyz2rgb(lab2xyz(color));
  }
  
+ float labDiff(highp vec3 dest, highp vec3 src){
+     highp float deltaL = dest.x - src.x;
+     highp float deltaA = dest.y - src.y;
+     highp float deltaB = dest.z - src.z;
+     highp float deltaE = sqrt(deltaL * deltaL + deltaA * deltaA + deltaB * deltaB);
+     highp float c1 = sqrt(dest.y * dest.y + dest.z * dest.z);
+     highp float c2 = sqrt(src.y * src.y + src.z * src.z);
+     highp float deltaCab = c1 - c2;
+     highp float deltaHab = sqrt(deltaA * deltaA + deltaB * deltaB - deltaCab * deltaCab);
+     return deltaHab;
+     
+     highp float kL = 1.0;
+     highp float kC = kL;
+     highp float kH = kL;
+     highp float k1 = 0.045;
+     highp float k2 = 0.015;
+     highp float sL = 1.0;
+     highp float sC = 1.0 + k1 * c1;
+     highp float sH = 1.0 + k2 * c1;
+     
+     highp float a = deltaL / (kL * sL);
+     highp float b = deltaCab / (kC * sC);
+     highp float c = deltaHab / (kH * sH);
+     
+     return sqrt(a * a + b * b + c * c);
+     
+ }
+ 
+ vec3 rgb2hsv(highp vec3 color){
+     highp float r = color.r;
+     highp float g = color.g;
+     highp float b = color.b;
+     
+     highp float max = max(r, max(g, b));
+     highp float min = min(r, min(g, b));
+     highp float h = 0.0;
+     if(max < min){
+         max = 0.0;
+         min = 0.0;
+     }
+     
+     if(max == min){
+         
+     } else if(max == r){
+         h = 60.0 * (g - b) / (max - min);
+     } else if(max == g){
+         h = 60.0 * (b - r) / (max - min) + 120.0;
+     } else if(max == b){
+         h = 60.0 * (r - g) / (max - min) + 240.0;
+     }
+     if(h < 0.0){
+         h += 360.0;
+     }
+     h = mod(h, 360.0);
+     
+     highp float s;
+     if(max == 0.0) {
+         s = 0.0;
+     } else {
+         s = (max - min) / max;
+     }
+     highp float v = max;
+     
+     return vec3(h, s, v);
+ }
+ 
+ vec3 hsv2rgb(highp vec3 color){
+     highp float h = color.r;
+     highp float s = color.g;
+     highp float v = color.b;
+     highp float r;
+     highp float g;
+     highp float b;
+     highp float m60 = 0.01665;
+     int hi = int(mod(float(floor(h * m60)), 6.0));
+     highp float f = (h * m60) - float(hi);
+     highp float p = v * (1.0 - s);
+     highp float q = v * (1.0 - s * f);
+     highp float t = v * (1.0 - s * (1.0 - f));
+     
+     if(hi == 0){
+         r = v;
+         g = t;
+         b = p;
+     } else if(hi == 1){
+         r = q;
+         g = v;
+         b = p;
+     } else if(hi == 2){
+         r = p;
+         g = v;
+         b = t;
+     } else if(hi == 3){
+         r = p;
+         g = q;
+         b = v;
+     } else if(hi == 4){
+         r = t;
+         g = p;
+         b = v;
+     } else if(hi == 5){
+         r = v;
+         g = p;
+         b = q;
+     } else {
+         r = v;
+         g = t;
+         b = p;
+     }
+     return vec3(r, g, b);
+
+ }
+ 
  void main()
  {
      // Sample the input pixel
@@ -156,28 +269,58 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
          y = (y - k) / (1.0 - k);
      }
      
+     // Convert to HSV
+     highp vec3 hsv = rgb2hsv(vec3(r, g, b));
+     
+     highp vec3 redHsv = rgb2hsv(vec3(1.0, 0.0, 0.0));
+     
+     highp float diff = abs(hsv.x - redHsv.x);
+     if(diff > 180.0){
+         diff = 360.0 - diff;
+     }
+     
+     highp float redsWeight = min(60.0, diff / 60.0);
+     redsWeight = 1.0 - redsWeight;
+     redsWeight *= hsv.y;
+     
+     
+     highp newG = (1.0 - g) * redsMagenta * redsWeight;
+     newG = abs(newG);
+     
+     ra = newG;
+     ga = newG;
+     ba = newG;
+
+     /*    
 
      // Convert to CIE-L*ab
      highp vec3 lab = rgb2lab(vec3(r, g, b));
-     highp float ll = lab.x;
-     highp float al = lab.y;
-     highp float bl = lab.z;
      
      highp vec3 redLab = rgb2lab(vec3(1.0, 0.0, 0.0));
-     highp float redsWeight = sqrt((ll - redLab.x) * (ll - redLab.x) + (al - redLab.y) * (al - redLab.y) + (bl - redLab.z) * (bl - redLab.z)) / 176.0;
+     highp float redsWeight = labDiff(lab, redLab) / 114.6;
      redsWeight = 1.0 - min(redsWeight, 1.0);
-     
-     
+     //redsWeight = sin(redsWeight * M_PI_2);
 
-     
      ra -= (1.0 - r) * redsCyan * redsWeight;
-     ga -= (1.0 - g) * redsMagenta * redsWeight;
+     
      ba -= (1.0 - b) * redsYellow * redsWeight;
      
-
+     ra = redsWeight;
+     ga = redsWeight;
+     ba = redsWeight;
+ 
      
-     /*
      
+     redsWeight = labDiff(lab, redLab) / 60.0;
+     if(redsWeight < 1.0){
+         ra = 1.0;
+         ga = 1.0;
+         ba = 1.0;
+     } else{
+         ra = 0.0;
+         ga = 0.0;
+         ba = 0.0;
+     }
  
      highp float redsWeight = r * (1.0 - g) * (1.0 - b);
      redsWeight = max(0.0, (r - abs(g - b))) * max(0.0, (r - abs(g - b))) * (1.0 - abs(g - b));
