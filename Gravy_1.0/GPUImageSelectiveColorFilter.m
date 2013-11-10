@@ -258,7 +258,7 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      highp float c = 1.0 - r;
      highp float m = 1.0 - g;
      highp float y = 1.0 - b;
-     highp float k = min(r, min(g, b));
+     highp float k = min(c, min(m, y));
      if(k == 1.0){
          c = 0.0;
          m = 0.0;
@@ -272,84 +272,134 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      // Convert to HSV
      highp vec3 hsv = rgb2hsv(vec3(r, g, b));
      
-     highp vec3 redHsv = rgb2hsv(vec3(1.0, 0.0, 0.0));
      
+     
+     // Adjustment
+     highp float ca = c;
+     highp float ma = m;
+     highp float ya = y;
+     highp float ka = k;
+     
+     // Reds
+     highp vec3 redHsv = rgb2hsv(vec3(1.0, 0.0, 0.0));
      highp float diff = abs(hsv.x - redHsv.x);
      if(diff > 180.0){
          diff = 360.0 - diff;
      }
-     
-     highp float redsWeight = min(60.0, diff / 60.0);
-     redsWeight = 1.0 - redsWeight;
-     redsWeight *= hsv.y;
-     
-     
-     highp newG = (1.0 - g) * redsMagenta * redsWeight;
-     newG = abs(newG);
-     
-     ra = newG;
-     ga = newG;
-     ba = newG;
+     highp float redsWeight = (1.0 - min(1.0, diff / 60.0)) * hsv.y;
+     if(redsCyan > 0.0)
+         ca += c * redsCyan * redsWeight;
+     else
+         ca -= c * abs(redsCyan) * redsWeight;
+     if(redsMagenta > 0.0)
+         ma += m * redsMagenta * redsWeight;
+     else
+         ma -= m * abs(redsMagenta) * redsWeight;
+     if(redsYellow > 0.0)
+         ya += y * redsYellow * redsWeight;
+     else
+         ya -= y * abs(redsYellow) * redsWeight;
 
-     /*    
-
-     // Convert to CIE-L*ab
-     highp vec3 lab = rgb2lab(vec3(r, g, b));
+     // Yellows
+     highp vec3 yellowHsv = rgb2hsv(vec3(1.0, 1.0, 0.0));
+     diff = abs(hsv.x - yellowHsv.x);
+     highp float yellowsWeight = (1.0 - min(1.0, diff / 60.0)) * hsv.y;
+     if(yellowsCyan > 0.0)
+         ca += c * yellowsCyan * yellowsWeight;
+     else
+         ca -= c * abs(yellowsCyan) * yellowsWeight;
+     if(yellowsMagenta > 0.0)
+         ma += m * yellowsMagenta * yellowsWeight;
+     else
+         ma -= m * abs(yellowsMagenta) * yellowsWeight;
+     if(yellowsYellow > 0.0)
+         ya += y * yellowsYellow * yellowsWeight;
+     else
+         ya -= y * abs(yellowsYellow) * yellowsWeight;
      
-     highp vec3 redLab = rgb2lab(vec3(1.0, 0.0, 0.0));
-     highp float redsWeight = labDiff(lab, redLab) / 114.6;
-     redsWeight = 1.0 - min(redsWeight, 1.0);
-     //redsWeight = sin(redsWeight * M_PI_2);
-
-     ra -= (1.0 - r) * redsCyan * redsWeight;
+     // Greens
+     highp vec3 greenHsv = rgb2hsv(vec3(0.0, 1.0, 0.0));
+     diff = abs(hsv.x - greenHsv.x);
+     highp float greensWeight = (1.0 - min(1.0, diff / 60.0)) * hsv.y;
+     if(greensCyan > 0.0)
+         ca += c * greensCyan * greensWeight;
+     else
+         ca -= c * abs(greensCyan) * greensWeight;
+     if(greensMagenta > 0.0)
+         ma += m * greensMagenta * greensWeight;
+     else
+         ma -= m * abs(greensMagenta) * greensWeight;
+     if(greensYellow > 0.0)
+         ya += y * greensYellow * greensWeight;
+     else
+         ya -= y * abs(greensYellow) * greensWeight;
      
-     ba -= (1.0 - b) * redsYellow * redsWeight;
+     // Cyan
+     highp vec3 cyanHsv = rgb2hsv(vec3(0.0, 1.0, 1.0));
+     diff = abs(hsv.x - cyanHsv.x);
+     highp float cyansWeight = (1.0 - min(1.0, diff / 60.0)) * hsv.y;
+     if(cyansCyan > 0.0)
+         ca += c * cyansCyan * cyansWeight;
+     else
+         ca -= c * abs(cyansCyan) * cyansWeight;
+     if(cyansMagenta > 0.0)
+         ma += m * cyansMagenta * cyansWeight;
+     else
+         ma -= m * abs(cyansMagenta) * cyansWeight;
+     if(cyansYellow > 0.0)
+         ya += y * cyansYellow * cyansWeight;
+     else
+         ya -= y * abs(cyansYellow) * cyansWeight;
      
-     ra = redsWeight;
-     ga = redsWeight;
-     ba = redsWeight;
- 
+     
+     c = (ca * (1.0 - ka) + ka);
+     m = (ma* (1.0 - ka) + ka);
+     y = (ya * (1.0 - ka) + ka);
      
      
-     redsWeight = labDiff(lab, redLab) / 60.0;
-     if(redsWeight < 1.0){
-         ra = 1.0;
-         ga = 1.0;
-         ba = 1.0;
+     c = max(0.0, min(1.0, c));
+     m = max(0.0, min(1.0, m));
+     y = max(0.0, min(1.0, y));
+     
+     // Reds
+     if(redsBlack > 0.0){
+         c -= c * abs(redsBlack) * redsWeight;
+         m += (1.0 - m) * redsBlack * redsWeight;
+         y += (1.0 - y) * redsBlack * redsWeight;
      } else{
-         ra = 0.0;
-         ga = 0.0;
-         ba = 0.0;
+         c -= c * abs(redsBlack) * redsWeight;
+         m -= m * abs(redsBlack) * redsWeight;
+         y -= y * abs(redsBlack) * redsWeight;
      }
- 
-     highp float redsWeight = r * (1.0 - g) * (1.0 - b);
-     redsWeight = max(0.0, (r - abs(g - b))) * max(0.0, (r - abs(g - b))) * (1.0 - abs(g - b));
-     redsWeight = max(0.0, (r - max(g, b)));
-     //redsWeight = max(0.0, (r - g)) * max(0.0, (r - b)) * r * (1.0 - abs(g - b));
-     //redsWeight = max(0.0, (r - g)) * max(0.0, (r - b));
-
-
      
-     c += (1.0 - c) * redsCyan * redsWeight;
-     m += (1.0 - m) * redsMagenta * redsWeight;
-     y += (1.0 - y) * redsYellow * redsWeight;
+     // Yellows
+     if(yellowsBlack > 0.0){
+         c -= c * yellowsBlack * yellowsWeight;
+         m -= m * yellowsBlack * yellowsWeight;
+         y += (1.0 - y) * yellowsBlack * yellowsWeight;
+     } else{
+         c -= c * abs(yellowsBlack) * yellowsWeight;
+         m -= m * abs(yellowsBlack) * yellowsWeight;
+         y -= y * abs(yellowsBlack) * yellowsWeight;
+     }
      
-     c = (c * (1.0 - k) + k);
-     m = (m * (1.0 - k) + k);
-     y = (y * (1.0 - k) + k);
+     // Greens
+     if(greensBlack > 0.0){
+         c += (1.0 - c) * abs(greensBlack) * greensWeight;
+         m -= m * greensBlack * greensWeight;
+         y += (1.0 - y) * greensBlack * greensWeight;
+     } else{
+         c -= c * abs(greensBlack) * greensWeight;
+         m -= m * abs(greensBlack) * greensWeight;
+         y -= y * abs(greensBlack) * greensWeight;
+     }
+     c = max(0.0, min(1.0, c));
+     m = max(0.0, min(1.0, m));
+     y = max(0.0, min(1.0, y));
      
      ra = (1.0 - c);
      ga = (1.0 - m);
      ba = (1.0 - y);
-          ra -= (1.0 - r) * redsBlack * redsWeight;
-     ga -= (1.0 - g) * redsBlack * redsWeight;
-     ba -= (1.0 - b) * redsBlack * redsWeight;
-
-     ra = distance;
-     ga = distance;
-     ba =
-     distance;
-    */
      
      
      // Check
@@ -375,7 +425,21 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
     {
         return nil;
     }
-
+    
+    [self setFloat:0.0f forUniform:[filterProgram uniformIndex:@"redsCyan"] program:filterProgram];
+    [self setFloat:0.0f forUniform:[filterProgram uniformIndex:@"redsMagenta"] program:filterProgram];
+    [self setFloat:0.0f forUniform:[filterProgram uniformIndex:@"redsYellow"] program:filterProgram];
+    [self setFloat:0.0f forUniform:[filterProgram uniformIndex:@"redsBlack"] program:filterProgram];
+    
+    [self setFloat:0.0f forUniform:[filterProgram uniformIndex:@"yellowsCyan"] program:filterProgram];
+    [self setFloat:0.0f forUniform:[filterProgram uniformIndex:@"yellowsMagenta"] program:filterProgram];
+    [self setFloat:0.0f forUniform:[filterProgram uniformIndex:@"yellowsYellow"] program:filterProgram];
+    [self setFloat:0.0f forUniform:[filterProgram uniformIndex:@"yellowsBlack"] program:filterProgram];
+    
+    [self setFloat:0.0f forUniform:[filterProgram uniformIndex:@"greensCyan"] program:filterProgram];
+    [self setFloat:0.0f forUniform:[filterProgram uniformIndex:@"greensMagenta"] program:filterProgram];
+    [self setFloat:0.0f forUniform:[filterProgram uniformIndex:@"greensYellow"] program:filterProgram];
+    [self setFloat:0.0f forUniform:[filterProgram uniformIndex:@"greensBlack"] program:filterProgram];
     return self;
 }
 
@@ -385,5 +449,27 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
     [self setFloat:(float)magenta / 100.0f forUniform:[filterProgram uniformIndex:@"redsMagenta"] program:filterProgram];
     [self setFloat:(float)yellow / 100.0f forUniform:[filterProgram uniformIndex:@"redsYellow"] program:filterProgram];
     [self setFloat:(float)black / 100.0f forUniform:[filterProgram uniformIndex:@"redsBlack"] program:filterProgram];
+}
+- (void)setYellowCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black
+{
+    [self setFloat:(float)cyan / 100.0f forUniform:[filterProgram uniformIndex:@"yellowsCyan"] program:filterProgram];
+    [self setFloat:(float)magenta / 100.0f forUniform:[filterProgram uniformIndex:@"yellowsMagenta"] program:filterProgram];
+    [self setFloat:(float)yellow / 100.0f forUniform:[filterProgram uniformIndex:@"yellowsYellow"] program:filterProgram];
+    [self setFloat:(float)black / 100.0f forUniform:[filterProgram uniformIndex:@"yellowsBlack"] program:filterProgram];
+}
+- (void)setGreenCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black
+{
+    [self setFloat:(float)cyan / 100.0f forUniform:[filterProgram uniformIndex:@"greensCyan"] program:filterProgram];
+    [self setFloat:(float)magenta / 100.0f forUniform:[filterProgram uniformIndex:@"greensMagenta"] program:filterProgram];
+    [self setFloat:(float)yellow / 100.0f forUniform:[filterProgram uniformIndex:@"greensYellow"] program:filterProgram];
+    [self setFloat:(float)black / 100.0f forUniform:[filterProgram uniformIndex:@"greensBlack"] program:filterProgram];
+}
+- (void)setCyanCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black
+{
+    [self setFloat:(float)cyan / 100.0f forUniform:[filterProgram uniformIndex:@"cyansCyan"] program:filterProgram];
+    [self setFloat:(float)magenta / 100.0f forUniform:[filterProgram uniformIndex:@"cyansMagenta"] program:filterProgram];
+    [self setFloat:(float)yellow / 100.0f forUniform:[filterProgram uniformIndex:@"cyansYellow"] program:filterProgram];
+    [self setFloat:(float)black / 100.0f forUniform:[filterProgram uniformIndex:@"cyansBlack"] program:filterProgram];
+    
 }
 @end
