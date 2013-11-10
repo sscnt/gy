@@ -13,13 +13,13 @@ extern NSString *const kGPUImageSelectiveColorFilterFragmentShaderString;
 @interface GPUImageSelectiveColorFilter : GPUImageFilter
 
 - (void)setRedsCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black;
-- (void)setYellowCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black;
-- (void)setGreenCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black;
-- (void)setCyanCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black;
-- (void)setBlueCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black;
-- (void)setMagentaCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black;
-- (void)setWhiteCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black;
-- (void)setNaturalCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black;
-- (void)setBlackCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black;
+- (void)setYellowsCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black;
+- (void)setGreensCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black;
+- (void)setCyansCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black;
+- (void)setBluesCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black;
+- (void)setMagentasCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black;
+- (void)setWhitesCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black;
+- (void)setNeutralsCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black;
+- (void)setBlacksCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black;
 
 @end

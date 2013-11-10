@@ -51,10 +51,10 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
  uniform highp float whitesYellow;
  uniform highp float whitesBlack;
  
- uniform highp float naturalsCyan;
- uniform highp float naturalsMagenta;
- uniform highp float naturalsYellow;
- uniform highp float naturalsBlack;
+ uniform highp float neutralsCyan;
+ uniform highp float neutralsMagenta;
+ uniform highp float neutralsYellow;
+ uniform highp float neutralsBlack;
  
  uniform highp float blacksCyan;
  uniform highp float blacksMagenta;
@@ -400,6 +400,37 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      else
          ya -= y * abs(whitesYellow) * whitesWeight;
      
+     // Neutrals
+     highp float neutralsWeight = 1.0 - max(0.0, min((hsv.y - 0.33333333333) * 3.0, 1.0));
+     if(neutralsCyan > 0.0)
+         ca += c * neutralsCyan * neutralsWeight;
+     else
+         ca -= c * abs(neutralsCyan) * neutralsWeight;
+     if(neutralsMagenta > 0.0)
+         ma += m * neutralsMagenta * neutralsWeight;
+     else
+         ma -= m * abs(neutralsMagenta) * neutralsWeight;
+     if(neutralsYellow > 0.0)
+         ya += y * neutralsYellow * neutralsWeight;
+     else
+         ya -= y * abs(neutralsYellow) * neutralsWeight;
+     
+     // Blacks
+     highp float blacksWeight = 1.0 - max(0.0, min((hsv.y - 0.66666666666) * 3.0, 1.0));
+     if(blacksCyan > 0.0)
+         ca += c * blacksCyan * blacksWeight;
+     else
+         ca -= c * abs(blacksCyan) * blacksWeight;
+     if(blacksMagenta > 0.0)
+         ma += m * blacksMagenta * blacksWeight;
+     else
+         ma -= m * abs(blacksMagenta) * blacksWeight;
+     if(blacksYellow > 0.0)
+         ya += y * blacksYellow * blacksWeight;
+     else
+         ya -= y * abs(blacksYellow) * blacksWeight;
+     
+     
      
      c = (ca * (1.0 - ka) + ka);
      m = (ma* (1.0 - ka) + ka);
@@ -478,15 +509,39 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      
      
      // Whites
-     if(magentasBlack > 0.0){
-         c += c * abs(magentasBlack) * magentasWeight;
-         m += m * magentasBlack * magentasWeight;
-         y += y * magentasBlack * magentasWeight;
+     if(whitesBlack > 0.0){
+         c += c * abs(whitesBlack) * whitesWeight;
+         m += m * whitesBlack * whitesWeight;
+         y += y * whitesBlack * whitesWeight;
      } else{
-         c -= c * abs(magentasBlack) * magentasWeight;
-         m -= m * abs(magentasBlack) * magentasWeight;
-         y -= y * abs(magentasBlack) * magentasWeight;
+         c -= c * abs(whitesBlack) * whitesWeight;
+         m -= m * abs(whitesBlack) * whitesWeight;
+         y -= y * abs(whitesBlack) * whitesWeight;
      }
+     
+     // Neutrals
+     if(neutralsBlack > 0.0){
+         c += c * abs(neutralsBlack) * neutralsWeight;
+         m += m * neutralsBlack * neutralsWeight;
+         y += y * neutralsBlack * neutralsWeight;
+     } else{
+         c -= c * abs(neutralsBlack) * neutralsWeight;
+         m -= m * abs(neutralsBlack) * neutralsWeight;
+         y -= y * abs(neutralsBlack) * neutralsWeight;
+     }
+     
+     
+     // Blacks
+     if(blacksBlack > 0.0){
+         c += c * abs(blacksBlack) * blacksWeight;
+         m += m * blacksBlack * blacksWeight;
+         y += y * blacksBlack * blacksWeight;
+     } else{
+         c -= c * abs(blacksBlack) * blacksWeight;
+         m -= m * abs(blacksBlack) * blacksWeight;
+         y -= y * abs(blacksBlack) * blacksWeight;
+     }
+     
      
      
      
@@ -557,46 +612,60 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
     [self setFloat:(float)yellow / 100.0f forUniform:[filterProgram uniformIndex:@"redsYellow"] program:filterProgram];
     [self setFloat:(float)black / 100.0f forUniform:[filterProgram uniformIndex:@"redsBlack"] program:filterProgram];
 }
-- (void)setYellowCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black
+- (void)setYellowsCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black
 {
     [self setFloat:(float)cyan / 100.0f forUniform:[filterProgram uniformIndex:@"yellowsCyan"] program:filterProgram];
     [self setFloat:(float)magenta / 100.0f forUniform:[filterProgram uniformIndex:@"yellowsMagenta"] program:filterProgram];
     [self setFloat:(float)yellow / 100.0f forUniform:[filterProgram uniformIndex:@"yellowsYellow"] program:filterProgram];
     [self setFloat:(float)black / 100.0f forUniform:[filterProgram uniformIndex:@"yellowsBlack"] program:filterProgram];
 }
-- (void)setGreenCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black
+- (void)setGreensCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black
 {
     [self setFloat:(float)cyan / 100.0f forUniform:[filterProgram uniformIndex:@"greensCyan"] program:filterProgram];
     [self setFloat:(float)magenta / 100.0f forUniform:[filterProgram uniformIndex:@"greensMagenta"] program:filterProgram];
     [self setFloat:(float)yellow / 100.0f forUniform:[filterProgram uniformIndex:@"greensYellow"] program:filterProgram];
     [self setFloat:(float)black / 100.0f forUniform:[filterProgram uniformIndex:@"greensBlack"] program:filterProgram];
 }
-- (void)setCyanCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black
+- (void)setCyansCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black
 {
     [self setFloat:(float)cyan / 100.0f forUniform:[filterProgram uniformIndex:@"cyansCyan"] program:filterProgram];
     [self setFloat:(float)magenta / 100.0f forUniform:[filterProgram uniformIndex:@"cyansMagenta"] program:filterProgram];
     [self setFloat:(float)yellow / 100.0f forUniform:[filterProgram uniformIndex:@"cyansYellow"] program:filterProgram];
     [self setFloat:(float)black / 100.0f forUniform:[filterProgram uniformIndex:@"cyansBlack"] program:filterProgram];
 }
-- (void)setBlueCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black
+- (void)setBluesCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black
 {
     [self setFloat:(float)cyan / 100.0f forUniform:[filterProgram uniformIndex:@"bluesCyan"] program:filterProgram];
     [self setFloat:(float)magenta / 100.0f forUniform:[filterProgram uniformIndex:@"bluesMagenta"] program:filterProgram];
     [self setFloat:(float)yellow / 100.0f forUniform:[filterProgram uniformIndex:@"bluesYellow"] program:filterProgram];
     [self setFloat:(float)black / 100.0f forUniform:[filterProgram uniformIndex:@"bluesBlack"] program:filterProgram];
 }
-- (void)setMagentaCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black
+- (void)setMagentasCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black
 {
     [self setFloat:(float)cyan / 100.0f forUniform:[filterProgram uniformIndex:@"magentasCyan"] program:filterProgram];
     [self setFloat:(float)magenta / 100.0f forUniform:[filterProgram uniformIndex:@"magentasMagenta"] program:filterProgram];
     [self setFloat:(float)yellow / 100.0f forUniform:[filterProgram uniformIndex:@"magentasYellow"] program:filterProgram];
     [self setFloat:(float)black / 100.0f forUniform:[filterProgram uniformIndex:@"magentasBlack"] program:filterProgram];
 }
-- (void)setWhiteCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black
+- (void)setWhitesCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black
 {
     [self setFloat:(float)cyan / 100.0f forUniform:[filterProgram uniformIndex:@"whitesCyan"] program:filterProgram];
     [self setFloat:(float)magenta / 100.0f forUniform:[filterProgram uniformIndex:@"whitesMagenta"] program:filterProgram];
     [self setFloat:(float)yellow / 100.0f forUniform:[filterProgram uniformIndex:@"whitesYellow"] program:filterProgram];
     [self setFloat:(float)black / 100.0f forUniform:[filterProgram uniformIndex:@"whitesBlack"] program:filterProgram];
+}
+- (void)setNeutralsCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black
+{
+    [self setFloat:(float)cyan / 100.0f forUniform:[filterProgram uniformIndex:@"neutralsCyan"] program:filterProgram];
+    [self setFloat:(float)magenta / 100.0f forUniform:[filterProgram uniformIndex:@"neutralsMagenta"] program:filterProgram];
+    [self setFloat:(float)yellow / 100.0f forUniform:[filterProgram uniformIndex:@"neutralsYellow"] program:filterProgram];
+    [self setFloat:(float)black / 100.0f forUniform:[filterProgram uniformIndex:@"neutralsBlack"] program:filterProgram];
+}
+- (void)setBlacksCyan:(int)cyan Magenta:(int)magenta Yellow:(int)yellow Black:(int)black
+{
+    [self setFloat:(float)cyan / 100.0f forUniform:[filterProgram uniformIndex:@"blacksCyan"] program:filterProgram];
+    [self setFloat:(float)magenta / 100.0f forUniform:[filterProgram uniformIndex:@"blacksMagenta"] program:filterProgram];
+    [self setFloat:(float)yellow / 100.0f forUniform:[filterProgram uniformIndex:@"blacksYellow"] program:filterProgram];
+    [self setFloat:(float)black / 100.0f forUniform:[filterProgram uniformIndex:@"blacksBlack"] program:filterProgram];
 }
 @end
