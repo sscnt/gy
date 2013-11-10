@@ -58,6 +58,9 @@
         [selectiveColor setYellowCyan:0 Magenta:0 Yellow:0 Black:0];
         [selectiveColor setGreenCyan:0 Magenta:0 Yellow:0 Black:0];
         [selectiveColor setCyanCyan:0 Magenta:0 Yellow:0 Black:0];
+        [selectiveColor setBlueCyan:0 Magenta:0 Yellow:0 Black:0];
+        [selectiveColor setMagentaCyan:0 Magenta:0 Yellow:0 Black:0];
+        [selectiveColor setWhiteCyan:0 Magenta:0 Yellow:0 Black:0];
         GPUImagePicture* pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
         [pictureOriginal addTarget:selectiveColor];
         [pictureOriginal processImage];
