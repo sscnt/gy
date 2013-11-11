@@ -400,6 +400,7 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      else
          ya -= y * abs(whitesYellow) * whitesWeight;
      
+     /*
      // Neutrals
      highp float neutralsWeight = 1.0 - max(0.0, min((hsv.y - 0.33333333333) * 3.0, 1.0));
      if(neutralsCyan > 0.0)
@@ -429,7 +430,7 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
          ya += y * blacksYellow * blacksWeight;
      else
          ya -= y * abs(blacksYellow) * blacksWeight;
-     
+     */
      
      
      c = (ca * (1.0 - ka) + ka);
@@ -519,6 +520,7 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
          y -= y * abs(whitesBlack) * whitesWeight;
      }
      
+     /*
      // Neutrals
      if(neutralsBlack > 0.0){
          c += c * abs(neutralsBlack) * neutralsWeight;
@@ -542,7 +544,7 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
          y -= y * abs(blacksBlack) * blacksWeight;
      }
      
-     
+     */
      
      
      c = max(0.0, min(1.0, c));
@@ -559,9 +561,9 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      g = max(0.0, min(1.0, ga));
      b = max(0.0, min(1.0, ba));
      
-     pixel.r = r;
-     pixel.g = g;
-     pixel.b = b;
+     //pixel.r = r;
+     //pixel.g = g;
+     //pixel.b = b;
      
      // Save the result
      gl_FragColor = pixel;

@@ -54,15 +54,10 @@
     // Selective Color
     @autoreleasepool {
         GPUImageSelectiveColorFilter* selectiveColor = [[GPUImageSelectiveColorFilter alloc] init];
-        [selectiveColor setRedsCyan:0 Magenta:0 Yellow:0 Black:0];
-        [selectiveColor setYellowsCyan:0 Magenta:0 Yellow:0 Black:0];
-        [selectiveColor setGreensCyan:0 Magenta:0 Yellow:0 Black:0];
-        [selectiveColor setCyansCyan:0 Magenta:0 Yellow:0 Black:0];
-        [selectiveColor setBluesCyan:0 Magenta:0 Yellow:0 Black:0];
-        [selectiveColor setMagentasCyan:0 Magenta:0 Yellow:0 Black:0];
-        [selectiveColor setWhitesCyan:-100 Magenta:100 Yellow:0 Black:100];
-        [selectiveColor setNeutralsCyan:0 Magenta:0 Yellow:0 Black:0];
-        [selectiveColor setBlacksCyan:0 Magenta:0 Yellow:0 Black:0];
+        [selectiveColor setYellowsCyan:2 Magenta:5 Yellow:-9 Black:0];
+        [selectiveColor setCyansCyan:0 Magenta:0 Yellow:-1 Black:0];
+        [selectiveColor setMagentasCyan:13 Magenta:-12 Yellow:12 Black:0];
+        [selectiveColor setWhitesCyan:0 Magenta:0 Yellow:-30 Black:0];
         GPUImagePicture* pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
         [pictureOriginal addTarget:selectiveColor];
         [pictureOriginal processImage];
