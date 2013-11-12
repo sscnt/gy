@@ -560,10 +560,10 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      r = max(0.0, min(1.0, ra));
      g = max(0.0, min(1.0, ga));
      b = max(0.0, min(1.0, ba));
-     
-     //pixel.r = r;
-     //pixel.g = g;
-     //pixel.b = b;
+
+     pixel.r = r;
+     pixel.g = g;
+     pixel.b = b;
      
      // Save the result
      gl_FragColor = pixel;

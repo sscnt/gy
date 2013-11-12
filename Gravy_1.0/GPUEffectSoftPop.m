@@ -54,7 +54,7 @@
     // Selective Color
     @autoreleasepool {
         GPUImageSelectiveColorFilter* selectiveColor = [[GPUImageSelectiveColorFilter alloc] init];
-        [selectiveColor setYellowsCyan:2 Magenta:5 Yellow:-9 Black:0];
+        [selectiveColor setYellowsCyan:0 Magenta:5 Yellow:-9 Black:0];
         [selectiveColor setCyansCyan:0 Magenta:0 Yellow:-1 Black:0];
         [selectiveColor setMagentasCyan:13 Magenta:-12 Yellow:12 Black:0];
         [selectiveColor setWhitesCyan:0 Magenta:0 Yellow:-30 Black:0];
@@ -62,6 +62,51 @@
         [pictureOriginal addTarget:selectiveColor];
         [pictureOriginal processImage];
         resultImage = [selectiveColor imageFromCurrentlyProcessedOutput];
+    }
+    
+    // Fill Layer
+    @autoreleasepool {
+        GPUImageSolidColorGenerator* solidColor = [[GPUImageSolidColorGenerator alloc] init];
+        [solidColor setColorRed:0.0f green:8.0f/255.0f blue:28.0f/255.0f alpha:1.0f];
+        GPUImageExclusionBlendFilter* exclusionFilter = [[GPUImageExclusionBlendFilter alloc] init];
+        GPUImagePicture* pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
+        [solidColor addTarget:exclusionFilter];
+        [pictureOriginal addTarget:exclusionFilter];
+        [pictureOriginal addTarget:solidColor];
+        [pictureOriginal processImage];
+        resultImage = [exclusionFilter imageFromCurrentlyProcessedOutput];
+    }
+    
+    // Fill Layer
+    @autoreleasepool {
+        GPUImageSolidColorGenerator* solidColor = [[GPUImageSolidColorGenerator alloc] init];
+        [solidColor setColorRed:207.0f/255.0f green:224.0f/255.0f blue:1.0f alpha:1.0f];
+        GPUImageSoftLightBlendFilter* softlightFilter = [[GPUImageSoftLightBlendFilter alloc] init];
+        GPUImageOpacityFilter* opacityFilter = [[GPUImageOpacityFilter alloc] init];
+        opacityFilter.opacity = 0.40f;
+        [solidColor addTarget:opacityFilter];
+        [opacityFilter addTarget:softlightFilter];
+        GPUImagePicture* pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
+        [pictureOriginal addTarget:softlightFilter];
+        [pictureOriginal addTarget:solidColor];
+        [pictureOriginal processImage];
+        resultImage = [softlightFilter imageFromCurrentlyProcessedOutput];
+    }
+    
+    // Fill Layer
+    @autoreleasepool {
+        GPUImageSolidColorGenerator* solidColor = [[GPUImageSolidColorGenerator alloc] init];
+        [solidColor setColorRed:236.0f/255.0f green:158.0f/255.0f blue:34.0f/255.0f alpha:1.0f];
+        GPUImageSoftLightBlendFilter* softlightFilter = [[GPUImageSoftLightBlendFilter alloc] init];
+        GPUImageOpacityFilter* opacityFilter = [[GPUImageOpacityFilter alloc] init];
+        opacityFilter.opacity = 0.50f;
+        [solidColor addTarget:opacityFilter];
+        [opacityFilter addTarget:softlightFilter];
+        GPUImagePicture* pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
+        [pictureOriginal addTarget:softlightFilter];
+        [pictureOriginal addTarget:solidColor];
+        [pictureOriginal processImage];
+        resultImage = [softlightFilter imageFromCurrentlyProcessedOutput];
     }
     
     return resultImage;
