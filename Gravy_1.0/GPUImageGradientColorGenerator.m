@@ -18,12 +18,13 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
  uniform highp float locations[20];
  uniform highp float midpoints[20];
  uniform highp vec4 colors[20];
- uniform mediump float angle;
+ uniform highp float angle;
  uniform highp float scale;
  uniform highp float baselineLength;
  uniform int stopsCount;
  uniform highp float offsetX;
  uniform highp float offsetY;
+ uniform int style;
  
  float round(float a){
      float b = floor(a);
@@ -51,38 +52,7 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
      return 0;
  }
  
- void main()
- {
-     highp vec4 pixel   = texture2D(inputImageTexture, textureCoordinate);
-     
-     mediump float m60 = 0.01665;
-
-     highp float x = textureCoordinate.x - offsetX;
-     highp float y = textureCoordinate.y - offsetY;
-
-     
-     highp float slope = tan(M_PI-angle);
-     highp float d;
-     highp float _y;
-     if(slope != 0.0){
-         highp float vSlope = -1.0 / slope;
-         /*
-          y - 0.5 = vSlope * (x - 0.5);
-          */
-         d = abs(-vSlope * x + y + 0.5 * (vSlope - 1.0)) / sqrt(vSlope * vSlope + 1.0);
-         _y = vSlope * (x - 0.5) + 0.5;
-         if(y > _y){
-             d = 0.5 - d / scale;
-         } else{
-             d = 0.5 + d / scale;
-         }
-     } else{
-         d = x / scale;
-     }
-     if(angle >= M_PI){
-         d = 1.0 - d;
-     }
-     
+ vec4 colorAtDistance(highp float d){
      int index = index(d);
      highp float startLocation = locations[index];
      highp float endLocation = locations[index + 1];
@@ -142,13 +112,58 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
      b = max(0.0, min(1.0, b));
      a = max(0.0, min(1.0, a));
      
-     pixel.r = r;
-     pixel.g = g;
-     pixel.b = b;
-     pixel.a = a;
+     return highp vec4(r, g, b, a);
+
+ }
+
+ vec4 radial(highp float x, highp float y){
+     highp float d = sqrt((x - 0.5) * (x - 0.5) + (y - 0.5) * (y - 0.5)) * 2.0;
+     d /= scale;
+     return colorAtDistance(d);
+ }
+ 
+ vec4 linear(highp float x, highp float y){
+     highp float m60 = 0.01665;
+     highp float slope = tan(M_PI-angle);
+     highp float d;
+     highp float _y;
+     if(slope != 0.0){
+         highp float vSlope = -1.0 / slope;
+         /*
+          y - 0.5 = vSlope * (x - 0.5);
+          */
+         d = abs(-vSlope * x + y + 0.5 * (vSlope - 1.0)) / sqrt(vSlope * vSlope + 1.0);
+         _y = vSlope * (x - 0.5) + 0.5;
+         if(y > _y){
+             d = 0.5 - d / scale;
+         } else{
+             d = 0.5 + d / scale;
+         }
+     } else{
+         d = x / scale;
+     }
+     if(angle >= M_PI){
+         d = 1.0 - d;
+     }
+     return colorAtDistance(d);
+ }
+  
+ void main()
+ {
+     highp vec4 pixel   = texture2D(inputImageTexture, textureCoordinate);
      
-     // Save the result
-     gl_FragColor = pixel;
+     highp float m60 = 0.01665;
+
+     highp float x = textureCoordinate.x - offsetX;
+     highp float y = textureCoordinate.y - offsetY;
+
+     if(style == 1){
+         gl_FragColor = linear(x, y);
+     } else if(style == 2){
+         gl_FragColor = radial(x, y);
+     } else{
+         gl_FragColor = pixel;
+     }
  }
  );
 
@@ -168,6 +183,8 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
     stopsCountUniform = [filterProgram uniformIndex:@"stopsCount"];
     offsetXUniform = [filterProgram uniformIndex:@"offsetX"];
     offsetYUniform = [filterProgram uniformIndex:@"offsetY"];
+    styleUniform = [filterProgram uniformIndex:@"style"];
+    self.style = GradientStyleLinear;
     index = 0;
     return self;
 }
@@ -203,6 +220,12 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
 {
     [self setFloat:x / 100.0f forUniform:offsetXUniform program:filterProgram];
     [self setFloat:y / 100.0f forUniform:offsetYUniform program:filterProgram];
+}
+
+- (void)setStyle:(GradientStyle)style
+{
+    _style = style;
+    [self setInteger:style forUniform:styleUniform program:filterProgram];
 }
 
 - (void)setup

@@ -8,6 +8,11 @@
 
 #import "GPUImageFilter.h"
 
+typedef NS_ENUM(NSInteger, GradientStyle){
+    GradientStyleLinear = 1,
+    GradientStyleRadial
+};
+
 extern NSString *const kGPUImageGradientColorGeneratorFragmentShaderString;
 
 @interface GPUImageGradientColorGenerator : GPUImageFilter
@@ -23,6 +28,7 @@ extern NSString *const kGPUImageGradientColorGeneratorFragmentShaderString;
     GLuint stopsCountUniform;
     GLuint offsetXUniform;
     GLuint offsetYUniform;
+    GLuint styleUniform;
     
     int index;
     float locations[20];
@@ -36,6 +42,8 @@ extern NSString *const kGPUImageGradientColorGeneratorFragmentShaderString;
     float imageHeight;
     float baselineLength;
 }
+
+@property (nonatomic, assign) GradientStyle style;
 
 /*
  * red      0.0 - 255.0
