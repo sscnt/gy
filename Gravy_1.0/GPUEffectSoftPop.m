@@ -104,15 +104,11 @@
     // Fill Layer
     @autoreleasepool {
         GPUImageSolidColorGenerator* solidColor = [[GPUImageSolidColorGenerator alloc] init];
-        [solidColor setColorRed:236.0f/255.0f green:158.0f/255.0f blue:34.0f/255.0f alpha:1.0f];
-        
-        GPUImageLevelsFilter* levelsFilter = [[GPUImageLevelsFilter alloc] init];
-        [levelsFilter setMin:10.0f/255.0f gamma:128.0f/255.0f max:244.0f/255.0f minOut:0.0f maxOut:246.0f/255.0f];
-        [solidColor addTarget:levelsFilter];
+        [solidColor setColorRed:237.0f/255.0f green:153.0f/255.0f blue:23.0f/255.0f alpha:1.0f];
         
         GPUImageOpacityFilter* opacityFilter = [[GPUImageOpacityFilter alloc] init];
         opacityFilter.opacity = 0.50f;
-        [levelsFilter addTarget:opacityFilter];
+        [solidColor addTarget:opacityFilter];
         
         GPUImageSoftLightBlendFilter* softlightFilter = [[GPUImageSoftLightBlendFilter alloc] init];
         [opacityFilter addTarget:softlightFilter atTextureLocation:1];
@@ -124,7 +120,6 @@
         resultImage = [softlightFilter imageFromCurrentlyProcessedOutput];
     }
     
-    return resultImage;
     // Gradient Fill
     @autoreleasepool {
         GPUImageGradientColorGenerator* gradientColor = [[GPUImageGradientColorGenerator alloc] init];
@@ -149,6 +144,7 @@
 
     }
     
+
     // Fill Layer
     @autoreleasepool {
         GPUImageSolidColorGenerator* solidColor = [[GPUImageSolidColorGenerator alloc] init];
@@ -168,6 +164,7 @@
         resultImage = [exclusionFilter imageFromCurrentlyProcessedOutput];
     }
     
+    
     // Gradient Fill
     @autoreleasepool {
         GPUImageGradientColorGenerator* gradientColor = [[GPUImageGradientColorGenerator alloc] init];
@@ -176,7 +173,7 @@
         [gradientColor setScalePercent:150.0f];
         [gradientColor setOffsetX:6.3 Y:-5.7f];
         [gradientColor addColorRed:213.0f Green:133.0f Blue:56.f Opacity:0.0f Location:0 Midpoint:50];
-        [gradientColor addColorRed:213.0f Green:133.0f Blue:56.f Opacity:100.0f Location:4096 Midpoint:50];
+        [gradientColor addColorRed:213.0f Green:133.0f Blue:56.f Opacity:100.0f Location:4096 Midpoint:65];
         
         GPUImageOpacityFilter* opacityFilter = [[GPUImageOpacityFilter alloc] init];
         opacityFilter.opacity = 0.40f;
@@ -191,7 +188,7 @@
         [pictureOriginal processImage];
         resultImage = [hardlightFilter imageFromCurrentlyProcessedOutput];
     }
-
+    
     
     // Gradient Fill
     @autoreleasepool {
@@ -201,7 +198,7 @@
         [gradientColor setScalePercent:150.0f];
         [gradientColor setOffsetX:18.7f Y:-10.4f];
         [gradientColor addColorRed:132.0f Green:132.0f Blue:236.0f Opacity:0.0f Location:0 Midpoint:50];
-        [gradientColor addColorRed:132.0f Green:132.0f Blue:236.0f Opacity:100.0f Location:4096 Midpoint:50];
+        [gradientColor addColorRed:132.0f Green:132.0f Blue:236.0f Opacity:100.0f Location:4096 Midpoint:65];
         
         GPUImageOpacityFilter* opacityFilter = [[GPUImageOpacityFilter alloc] init];
         opacityFilter.opacity = 0.40f;
@@ -225,7 +222,7 @@
         [gradientColor setScalePercent:150.0f];
         [gradientColor setOffsetX:-23.6f Y:19.3f];
         [gradientColor addColorRed:166.0f Green:140.0f Blue:188.0f Opacity:0.0f Location:0 Midpoint:50];
-        [gradientColor addColorRed:166.0f Green:140.0f Blue:188.0f Opacity:100.0f Location:4096 Midpoint:50];
+        [gradientColor addColorRed:166.0f Green:140.0f Blue:188.0f Opacity:100.0f Location:4096 Midpoint:65];
         
         GPUImageOpacityFilter* opacityFilter = [[GPUImageOpacityFilter alloc] init];
         opacityFilter.opacity = 0.26f;

@@ -17,31 +17,29 @@ NSString *const kGPUImageHardLightBlendFragmentShaderString = SHADER_STRING
      mediump vec4 overlay = texture2D(inputImageTexture2, textureCoordinate2);
 
      
-     highp float ra;
+     mediump float ra;
      if (overlay.r < 0.5) {
-         ra = (base.r * overlay.r * 2.0) * overlay.a + base.r * (1.0 - overlay.a);
+         ra = base.r * overlay.r * 2.0;
      } else {
-         ra = (1.0 - 2.0 * (1.0 - overlay.r) * (1.0 - base.r)) * overlay.a + base.r * (1.0 - overlay.a);
+         ra = 2.0 * (base.r + overlay.r - base.r * overlay.r) - 1.0;
      }
-     highp float ga;
+     mediump float ga;
      if (overlay.g < 0.5) {
-         ga = (base.g * overlay.g * 2.0) * overlay.a + base.g * (1.0 - overlay.a);
+         ga = base.g * overlay.g * 2.0;
      } else {
-         ga = (1.0 - 2.0 * (1.0 - overlay.g) * (1.0 - base.g)) * overlay.a + base.g * (1.0 - overlay.a);
-
+         ga = 2.0 * (base.g + overlay.g - base.g * overlay.g) - 1.0;
      }
-     highp float ba;
+     mediump float ba;
      if (overlay.b < 0.5) {
-         ba = (base.b * overlay.b * 2.0) * overlay.a + base.b * (1.0 - overlay.a);
+         ba = base.b * overlay.b * 2.0;
      } else {
-         ba = (1.0 - 2.0 * (1.0 - overlay.b) * (1.0 - base.b)) * overlay.a + base.b * (1.0 - overlay.a);
+         ba = 2.0 * (base.b + overlay.b - base.b * overlay.b) - 1.0;
      }
      
+     ra = ra * overlay.a + (1.0 - overlay.a) * base.r;
+     ga = ga * overlay.a + (1.0 - overlay.a) * base.g;
+     ba = ba * overlay.a + (1.0 - overlay.a) * base.b;
      
-     ra = max(0.0, min(1.0, ra));
-     ga = max(0.0, min(1.0, ga));
-     ba = max(0.0, min(1.0, ba));
-
      
 
      /*
