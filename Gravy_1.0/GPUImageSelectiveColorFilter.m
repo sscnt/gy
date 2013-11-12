@@ -405,7 +405,7 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      
      
      // Neutrals
-     highp float neutralsWeight = min(1.0, ((1.0 - max(0.0, min((hsv.y - 0.4) * 3.0, 1.0))) + sin(k * 3.14)));
+     highp float neutralsWeight = min(1.0, ((1.0 - max(0.0, min((hsv.y - 0.4) * 3.0, 1.0))) + sqrt(sin(k * 3.14))));
      if(neutralsCyan > 0.0)
          ca += c * neutralsCyan * neutralsWeight;
      else

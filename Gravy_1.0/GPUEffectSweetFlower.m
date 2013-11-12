@@ -113,24 +113,15 @@
     @autoreleasepool {
         GPUImageSolidColorGenerator* solidColor = [[GPUImageSolidColorGenerator alloc] init];
         [solidColor setColorRed:29.0f/255.0f green:137.0f/255.0f blue:212.0f/255.0 alpha:1.0f];
-        
-        GPUImageOpacityFilter* opacityFilter = [[GPUImageOpacityFilter alloc] init];
-        opacityFilter.opacity = 0.15f;
-        [solidColor addTarget:opacityFilter];
-        
-        GPUImageExclusionBlendFilter* exclusionFilter = [[GPUImageExclusionBlendFilter alloc] init];
-        [opacityFilter addTarget:exclusionFilter atTextureLocation:1];
-        
+
         GPUImagePicture* pictureOriginal = [[GPUImagePicture alloc] initWithImage:solidImage];
         [pictureOriginal addTarget:solidColor];
-        [pictureOriginal addTarget:exclusionFilter];
         [pictureOriginal processImage];
-        solidImage = [exclusionFilter imageFromCurrentlyProcessedOutput];
+        solidImage = [solidColor imageFromCurrentlyProcessedOutput];
     }
-    
+
     // Color Balance
     @autoreleasepool {
-        
         GPUImageColorBalanceFilter* colorBalance = [[GPUImageColorBalanceFilter alloc] init];
         GPUVector3 shadows;
         shadows.one = 0.0f;
@@ -178,6 +169,7 @@
         solidImage = [selectiveColor imageFromCurrentlyProcessedOutput];
     }
     
+    
     // Curve
     @autoreleasepool {
         GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"GPUSweetFlowerCurve02"];
@@ -192,19 +184,19 @@
     // Merge
     @autoreleasepool {
         GPUImageOpacityFilter* opacityFilter = [[GPUImageOpacityFilter alloc] init];
-        opacityFilter.opacity = 0.80f;
+        opacityFilter.opacity = 0.12f;
         
-        GPUImageNormalBlendFilter* normalFilter = [[GPUImageNormalBlendFilter alloc] init];
-        [opacityFilter addTarget:normalFilter atTextureLocation:1];
+        GPUImageExclusionBlendFilter* exclusionFilter = [[GPUImageExclusionBlendFilter alloc] init];
+        [opacityFilter addTarget:exclusionFilter atTextureLocation:1];
 
         GPUImagePicture* pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
-        [pictureOriginal addTarget:normalFilter];
+        [pictureOriginal addTarget:exclusionFilter];
         [pictureOriginal processImage];
         
         GPUImagePicture* pictureSolid = [[GPUImagePicture alloc] initWithImage:solidImage];
         [pictureSolid addTarget:opacityFilter];
         [pictureSolid processImage];
-        resultImage = [normalFilter imageFromCurrentlyProcessedOutput];
+        resultImage = [exclusionFilter imageFromCurrentlyProcessedOutput];
     }
     
     

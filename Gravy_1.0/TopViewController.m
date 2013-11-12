@@ -60,7 +60,7 @@
     label.textColor = [UIColor whiteColor];
     label.numberOfLines = 0;
     [label setY:[UIScreen screenSize].height - 150.0f];
-    [self.view addSubview:label];
+    //[self.view addSubview:label];
 
     if([UIScreen height] >= 568){
         defaultImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default-568h.png"]];
