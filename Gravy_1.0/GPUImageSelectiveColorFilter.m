@@ -253,6 +253,7 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      highp float ra = r;
      highp float ga = g;
      highp float ba = b;
+     highp float lum = 0.299 * r + 0.587 * g + 0.114 * b;
      
      // Convert to CMYK
      highp float c = 1.0 - r;
@@ -272,6 +273,8 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      // Convert to HSV
      highp vec3 hsv = rgb2hsv(vec3(r, g, b));
      
+     // Convert to LAB
+     highp vec3 lab = rgb2lab(vec3(r, g, b));
      
      
      // Adjustment
@@ -400,9 +403,9 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      else
          ya -= y * abs(whitesYellow) * whitesWeight;
      
-     /*
+     
      // Neutrals
-     highp float neutralsWeight = 1.0 - max(0.0, min((hsv.y - 0.33333333333) * 3.0, 1.0));
+     highp float neutralsWeight = min(1.0, ((1.0 - max(0.0, min((hsv.y - 0.4) * 3.0, 1.0))) + sin(k * 3.14)));
      if(neutralsCyan > 0.0)
          ca += c * neutralsCyan * neutralsWeight;
      else
@@ -416,6 +419,8 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      else
          ya -= y * abs(neutralsYellow) * neutralsWeight;
      
+
+     /*
      // Blacks
      highp float blacksWeight = 1.0 - max(0.0, min((hsv.y - 0.66666666666) * 3.0, 1.0));
      if(blacksCyan > 0.0)
@@ -520,7 +525,7 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
          y -= y * abs(whitesBlack) * whitesWeight;
      }
      
-     /*
+
      // Neutrals
      if(neutralsBlack > 0.0){
          c += c * abs(neutralsBlack) * neutralsWeight;
@@ -532,7 +537,7 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
          y -= y * abs(neutralsBlack) * neutralsWeight;
      }
      
-     
+       /*   
      // Blacks
      if(blacksBlack > 0.0){
          c += c * abs(blacksBlack) * blacksWeight;

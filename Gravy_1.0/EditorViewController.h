@@ -29,6 +29,7 @@
 #import "GPUEffectHaze3.h"
 #import "GPUEffectColorfulCandy.h"
 #import "GPUEffectSoftPop.h"
+#import "GPUEffectSweetFlower.h"
 
 typedef NS_ENUM(NSInteger, EditorState){
     EditorStateWhiteBalance = 1,

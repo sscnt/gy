@@ -281,11 +281,16 @@
         
         dispatch_async(processingQueue, ^{
             
+            
+            GPUEffectSweetFlower* sweetflower = [[GPUEffectSweetFlower alloc] init];
+            sweetflower.imageToProcess = effectAppliedImage;
+            effectAppliedImage = [sweetflower process];
+            
+            /*
             GPUEffectSoftPop* softpop = [[GPUEffectSoftPop alloc] init];
             softpop.imageToProcess = effectAppliedImage;
             effectAppliedImage = [softpop process];
          
-            /*
             GPUEffectColorfulCandy* candy = [[GPUEffectColorfulCandy alloc] init];
             candy.imageToProcess = effectAppliedImage;
             effectAppliedImage = [candy process];
@@ -505,13 +510,9 @@
         [picture processImage];
         resultImage = [filterSt imageFromCurrentlyProcessedOutput];
         
-        GPUEffectSoftPop* softpop = [[GPUEffectSoftPop alloc] init];
-        softpop.imageToProcess = resultImage;
-        resultImage = [softpop process];
-        
-        GPUEffectColorfulCandy* candy = [[GPUEffectColorfulCandy alloc] init];
-        [candy setImageToProcess:resultImage];
-        //resultImage = [candy process];
+        GPUEffectSweetFlower* sweetflower = [[GPUEffectSweetFlower alloc] init];
+        sweetflower.imageToProcess = resultImage;
+        resultImage = [sweetflower process];
         
         UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil);
         
