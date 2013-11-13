@@ -281,12 +281,17 @@
         
         dispatch_async(processingQueue, ^{
             
+            GPUAdjustmentsBrightness* brightness = [[GPUAdjustmentsBrightness alloc] init];
+            pictureEffect = [[GPUImagePicture alloc] initWithImage:effectAppliedImage];
+            [pictureEffect addTarget:brightness];
+            [pictureEffect processImage];
+            effectAppliedImage = [brightness imageFromCurrentlyProcessedOutput];
             
+            /*
             GPUEffectSweetFlower* sweetflower = [[GPUEffectSweetFlower alloc] init];
             sweetflower.imageToProcess = effectAppliedImage;
             effectAppliedImage = [sweetflower process];
             
-            /*
             GPUEffectSoftPop* softpop = [[GPUEffectSoftPop alloc] init];
             softpop.imageToProcess = effectAppliedImage;
             effectAppliedImage = [softpop process];

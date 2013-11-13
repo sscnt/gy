@@ -25,6 +25,7 @@
 #import "GPUWhitebalanceImageFilter.h"
 #import "GPULevelsImageFilter.h"
 #import "GPUSaturationImageFilter.h"
+#import "GPUAdjustmentsBrightness.h"
 
 #import "GPUEffectHaze3.h"
 #import "GPUEffectColorfulCandy.h"
@@ -66,6 +67,10 @@ typedef NS_ENUM(NSInteger, KnobId){
     UIThumbnailView* levelsImageView;
     UIThumbnailView* saturationImageView;
     UIThumbnailView* effectImageView;
+    UIImage* effectedRightTopImage;
+    UIImage* effectedRightBottomImage;
+    UIImage* effectedLeftTopImage;
+    UIImage* effectedLeftBottomImage;
     EditorState state;
     UIDockButtonBack* backBtn;
     UIDockButtonNext* nextBtn;

@@ -49,6 +49,7 @@
 		5809B4FF180EB902007670D1 /* UIWrapperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5809B4FE180EB902007670D1 /* UIWrapperView.m */; };
 		5809B503180EBAD2007670D1 /* UIEditorTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5809B502180EBAD2007670D1 /* UIEditorTitleLabel.m */; };
 		58E9C5F5181FD57800BBDA5A /* bg-568h@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58E9C5F2181FD57800BBDA5A /* bg-568h@2x.jpg */; };
+		58EC8A711833508B00D659CE /* GPUAdjustmentsBrightness.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EC8A701833508B00D659CE /* GPUAdjustmentsBrightness.m */; };
 		58EEE5F41820D740008C4B2A /* icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 58EEE5E71820D740008C4B2A /* icon-29.png */; };
 		58EEE5F51820D740008C4B2A /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 58EEE5E81820D740008C4B2A /* icon-40.png */; };
 		58EEE5F61820D740008C4B2A /* icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 58EEE5E91820D740008C4B2A /* icon-50.png */; };
@@ -200,6 +201,8 @@
 		5809B501180EBAD2007670D1 /* UIEditorTitleLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIEditorTitleLabel.h; sourceTree = "<group>"; };
 		5809B502180EBAD2007670D1 /* UIEditorTitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIEditorTitleLabel.m; sourceTree = "<group>"; };
 		58E9C5F2181FD57800BBDA5A /* bg-568h@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg-568h@2x.jpg"; sourceTree = "<group>"; };
+		58EC8A6F1833508B00D659CE /* GPUAdjustmentsBrightness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUAdjustmentsBrightness.h; sourceTree = "<group>"; };
+		58EC8A701833508B00D659CE /* GPUAdjustmentsBrightness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUAdjustmentsBrightness.m; sourceTree = "<group>"; };
 		58EEE5E71820D740008C4B2A /* icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-29.png"; sourceTree = "<group>"; };
 		58EEE5E81820D740008C4B2A /* icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40.png"; sourceTree = "<group>"; };
 		58EEE5E91820D740008C4B2A /* icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-50.png"; sourceTree = "<group>"; };
@@ -612,6 +615,8 @@
 				58F3C438181CA13C00F7129D /* GPULevelsImageFilter.m */,
 				58F3C43D181CC55200F7129D /* GPUSaturationImageFilter.h */,
 				58F3C43E181CC55200F7129D /* GPUSaturationImageFilter.m */,
+				58EC8A6F1833508B00D659CE /* GPUAdjustmentsBrightness.h */,
+				58EC8A701833508B00D659CE /* GPUAdjustmentsBrightness.m */,
 			);
 			name = GPUImageFilters;
 			sourceTree = "<group>";
@@ -934,6 +939,7 @@
 				58003299180D10CE0021F73C /* UIView+Gravy.m in Sources */,
 				58FAB9C818115C4F00B95F02 /* UISliderView.m in Sources */,
 				58003296180D10B10021F73C /* UIDockView.m in Sources */,
+				58EC8A711833508B00D659CE /* GPUAdjustmentsBrightness.m in Sources */,
 				58FA2E291813F3EC00DFB4FB /* UIScrollView+Gravy.m in Sources */,
 				580032BC180D2C1C0021F73C /* UIDockButtonPhotos.m in Sources */,
 				58F471B5180E74B000C64E46 /* UIDockButtonBack.m in Sources */,
