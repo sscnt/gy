@@ -122,18 +122,49 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
      mediump float b = pixel.b;
      mediump float lum = 0.299 * r + 0.587 * g + 0.114 * b;
      mediump vec3 hsv = rgb2hsv(vec3(r, g, b));
-     mediump float weight = 1.0 - max(0.0, min(1.0, hsv.z * 2.0));
+     mediump float increment;
+     
+     /*
+      * shadows 1.5 - 3.0
+      */
+     mediump float weight = 1.0 - max(0.0, min(1.0, hsv.z * 1.6));
 
+     increment = hsv.z * weight;
+     increment = sin((1.0 - hsv.z) * 3.14159265359) * 0.30 * weight;
+     //increment = sqrt(increment);
+     hsv.z += increment;
+     hsv.z = max(0.0, min(1.0, hsv.z));
      
-         hsv.z += hsv.z * weight;
-         hsv.z = max(0.0, min(1.0, hsv.z));
-     
-     
-     weight = max(0.0, min(1.0, (hsv.z - 0.7) * 3.0)) * 1.0;
+     /*
+      * highlights 0.0 - 0.5
+      */
+     weight = max(0.0, min(1.0, (hsv.z - 0.7) * 3.333)) * 0.1;
      //hsv.z -= hsv.z * weight;
      
-     pixel.rgb = hsv2rgb(hsv);
+     mediump vec3 rgb = hsv2rgb(hsv);
+     mediump float contrast = 1.0 + 0.5 * weight;
+     contrast *= contrast;
      
+     mediump float value;
+     value = rgb.r;
+     value -= 0.5;
+     value *= contrast;
+     value += 0.5;
+     rgb.r = min(1.0, max(0.0, value));
+     
+     value = rgb.b;
+     value -= 0.5;
+     value *= contrast;
+     value += 0.5;
+     rgb.b = min(1.0, max(0.0, value));
+     
+     value = rgb.g;
+     value -= 0.5;
+     value *= contrast;
+     value += 0.5;
+     rgb.g = min(1.0, max(0.0, value));
+     
+     pixel.rgb = rgb;
      
      // Save the result
      gl_FragColor = pixel;
@@ -149,7 +180,23 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
     {
         return nil;
     }
+    shadowsUniform = [filterProgram uniformIndex:@"shadows"];
+    self.shadows = 0.0f;
+    highlightsUniform = [filterProgram uniformIndex:@"highlights"];
+    self.highlights = 0.0f;
     return self;
+}
+
+- (void)setShadows:(CGFloat)shadows
+{
+    _shadows = shadows * 1.5f + 1.5f;
+    _shadows = MAX(3.0f, MIN(1.5f, _shadows));
+    [self setFloat:_shadows forUniform:shadowsUniform program:filterProgram];
+}
+
+- (void)setHighlights:(CGFloat)highlights
+{
+    _highlights = 50.0f * highlights;
 }
 
 @end
