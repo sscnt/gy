@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/CALayer.h>
+#import "EditorViewModel.h"
 #import "UIScreen+Gravy.h"
 #import "UIView+Gravy.h"
 #import "UIDockView.h"
@@ -22,9 +23,9 @@
 #import "SVProgressHUD.h"
 
 #import "GPUImage.h"
-#import "GPUWhitebalanceImageFilter.h"
+#import "GPUAdjustmentsWhiteBalance.h"
 #import "GPULevelsImageFilter.h"
-#import "GPUSaturationImageFilter.h"
+#import "GPUAdjustmentsSaturation.h"
 #import "GPUAdjustmentsBrightness.h"
 
 #import "GPUEffectHaze3.h"
@@ -50,9 +51,10 @@ typedef NS_ENUM(NSInteger, KnobId){
 
 @interface EditorViewController : UIViewController <UIScrollViewDelegate, UIThumbnailViewDelegate>
 {
-    GPUWhitebalanceImageFilter* imageFilterWhiteBalance;
+    EditorViewModel* editor;
+    GPUAdjustmentsWhiteBalance* imageFilterWhiteBalance;
     GPULevelsImageFilter* imageFilterLevels;
-    GPUSaturationImageFilter* imageFilterSaturation;
+    GPUAdjustmentsSaturation* imageFilterSaturation;
     
     GPUImagePicture* pictureWhiteBalance;
     GPUImagePicture* pictureLevels;

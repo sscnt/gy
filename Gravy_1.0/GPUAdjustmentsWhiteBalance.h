@@ -8,9 +8,9 @@
 
 #import "GPUImageFilter.h"
 
-extern NSString *const kGravyWhitebalanceFragmentShaderString;
+extern NSString *const kGPUAdjustmentsWhiteBalanceFragmentShaderString;
 
-@interface GPUWhitebalanceImageFilter : GPUImageFilter
+@interface GPUAdjustmentsWhiteBalance : GPUImageFilter
 {
     float redWeightUniform;
     float blueWeightUniform;

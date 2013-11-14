@@ -20,8 +20,10 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    editor = [[EditorViewModel alloc] init];
+    
     [self resizeOriginalImage];
-    imageFilterWhiteBalance = [[GPUWhitebalanceImageFilter alloc] init];
+    imageFilterWhiteBalance = [[GPUAdjustmentsWhiteBalance alloc] init];
     pictureWhiteBalance = [[GPUImagePicture alloc] initWithImage:originalImageResized];
     [pictureWhiteBalance addTarget:imageFilterWhiteBalance];
     
@@ -260,7 +262,7 @@
         saturationAppliedImage = [imageFilterLevels imageFromCurrentlyProcessedOutput];
         pictureSaturation = [[GPUImagePicture alloc] initWithImage:saturationAppliedImage];
         if(!imageFilterSaturation){
-            imageFilterSaturation = [[GPUSaturationImageFilter alloc] init];
+            imageFilterSaturation = [[GPUAdjustmentsSaturation alloc] init];
         }
         [pictureSaturation addTarget:imageFilterSaturation];
         [pictureSaturation processImage];
@@ -357,25 +359,19 @@
 {
     UIView *targetView = sender.view;
     CGPoint p = [sender translationInView:targetView];
-    CGFloat deltaX = targetView.center.x + p.x;
-    CGFloat deltaY = targetView.center.y + p.y;
+    CGFloat movePointX = targetView.center.x + p.x;
+    CGFloat movePointY = targetView.center.y + p.y;
     CGFloat rest = (screenHeight - 480) * 0.5;
-    deltaY = MAX(knobDefaultCenterY - screenWidth * 0.5 - rest, MIN(knobDefaultCenterY + screenWidth * 0.5 + rest,  deltaY));
-    deltaX = MAX(0, MIN(screenWidth, deltaX));
+    movePointY = MAX(knobDefaultCenterY - screenWidth * 0.5 - rest, MIN(knobDefaultCenterY + screenWidth * 0.5 + rest,  movePointY));
+    movePointX = MAX(0, MIN(screenWidth, movePointX));
+    
+    float deltaX = targetView.center.x - knobDefaultCenterX;
+    float deltaY = targetView.center.y - knobDefaultCenterY;
+
     
     if(targetView.tag == KnobIdWhiteBalance){
-        float redWeight = targetView.center.y - knobDefaultCenterY;
-        float blueWeight = targetView.center.x - knobDefaultCenterX;
-        redWeight *= 0.00098039215;
-        blueWeight *= 0.00098039215;
-        redWeight = MAX(-1.0f, MIN(1.0f, redWeight));
-        blueWeight = MAX(-1.0f, MIN(1.0f, blueWeight));
-        imageFilterWhiteBalance.redWeight = redWeight;
-        imageFilterWhiteBalance.blueWeight = blueWeight;
-        [pictureWhiteBalance processImage];
-        
-        whiteBalanceAppliedImage = [imageFilterWhiteBalance imageFromCurrentlyProcessedOutput];
-        [whitebalanceImageView setImage:whiteBalanceAppliedImage];
+        [editor applyWhiteBalanceAmountRed:deltaX Blue:deltaY];
+        [whitebalanceImageView setImage:editor.appliedImageWhiteBalancee];
     } else if(targetView.tag == KnobIdLevels){
         imageFilterLevels.sigmoid = 0;
         float  lvMidWeight = (targetView.center.x - knobDefaultCenterX) * 0.001307f + 0.500f;
@@ -412,7 +408,7 @@
     }
     
     
-    CGPoint movedPoint = CGPointMake(deltaX, deltaY);
+    CGPoint movedPoint = CGPointMake(movePointX, movePointY);
     targetView.center = movedPoint;
     [sender setTranslation:CGPointZero inView:targetView];
     
@@ -473,6 +469,7 @@
         CGFloat zoom = [UIScreen screenSize].width * scale / self.originalImage.size.width;
         CIImage* filteredImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(zoom, zoom)];
         originalImageResized = [self uiImageFromCIImage:filteredImage];
+        editor.originalImageResized = originalImageResized;
     }
 }
 
@@ -497,7 +494,7 @@
         UIImage* resultImage;
         GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:_originalImage];
 
-        GPUWhitebalanceImageFilter* filterWb = [[GPUWhitebalanceImageFilter alloc] init];
+        GPUAdjustmentsWhiteBalance* filterWb = [[GPUAdjustmentsWhiteBalance alloc] init];
         filterWb.redWeight = imageFilterWhiteBalance.redWeight;
         filterWb.blueWeight = imageFilterWhiteBalance.blueWeight;
 
@@ -506,7 +503,7 @@
         filterLv.lvMidWeight = imageFilterLevels.lvMidWeight;
         filterLv.lvLowWeight = imageFilterLevels.lvLowWeight;
         [filterWb addTarget:filterLv];
-        GPUSaturationImageFilter* filterSt = [[GPUSaturationImageFilter alloc] init];
+        GPUAdjustmentsSaturation* filterSt = [[GPUAdjustmentsSaturation alloc] init];
         filterSt.stSaturationWeight = imageFilterSaturation.stSaturationWeight;
         filterSt.stVibranceWeight = imageFilterSaturation.stVibranceWeight;
         [filterLv addTarget:filterSt];

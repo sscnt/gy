@@ -8,9 +8,9 @@
 
 #import "GPUImageFilter.h"
 
-extern NSString *const kGravySaturationFragmentShaderString;
+extern NSString *const kGPUAdjustmentsSaturationFragmentShaderString;
 
-@interface GPUSaturationImageFilter : GPUImageFilter
+@interface GPUAdjustmentsSaturation : GPUImageFilter
 {
     GLuint stSaturationWeightUniform;
     GLuint stVibranceWeightUniform;

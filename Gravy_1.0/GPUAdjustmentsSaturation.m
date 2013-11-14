@@ -6,11 +6,11 @@
 //  Copyright (c) 2013年 SSC. All rights reserved.
 //
 
-#import "GPUSaturationImageFilter.h"
+#import "GPUAdjustmentsSaturation.h"
 
-@implementation GPUSaturationImageFilter
+@implementation GPUAdjustmentsSaturation
 
-NSString *const kGravySaturationFragmentShaderString = SHADER_STRING
+NSString *const kGPUAdjustmentsSaturationFragmentShaderString = SHADER_STRING
 (
  precision highp float;
  varying vec2 textureCoordinate;
@@ -133,7 +133,7 @@ NSString *const kGravySaturationFragmentShaderString = SHADER_STRING
 
 - (id)init;
 {
-    if (!(self = [super initWithFragmentShaderFromString:kGravySaturationFragmentShaderString]))
+    if (!(self = [super initWithFragmentShaderFromString:kGPUAdjustmentsSaturationFragmentShaderString]))
     {
         return nil;
     }

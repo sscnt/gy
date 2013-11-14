@@ -6,11 +6,11 @@
 //  Copyright (c) 2013年 SSC. All rights reserved.
 //
 
-#import "GPUWhitebalanceImageFilter.h"
+#import "GPUAdjustmentsWhiteBalance.h"
 
-@implementation GPUWhitebalanceImageFilter
+@implementation GPUAdjustmentsWhiteBalance
 
-NSString *const kGravyWhitebalanceFragmentShaderString = SHADER_STRING
+NSString *const kGPUAdjustmentsWhiteBalanceFragmentShaderString = SHADER_STRING
 (
  precision highp float;
  varying vec2 textureCoordinate;
@@ -46,7 +46,7 @@ NSString *const kGravyWhitebalanceFragmentShaderString = SHADER_STRING
 
 - (id)init;
 {
-    if (!(self = [super initWithFragmentShaderFromString:kGravyWhitebalanceFragmentShaderString]))
+    if (!(self = [super initWithFragmentShaderFromString:kGPUAdjustmentsWhiteBalanceFragmentShaderString]))
     {
         return nil;
     }

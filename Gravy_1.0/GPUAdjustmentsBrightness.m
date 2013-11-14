@@ -127,7 +127,7 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
      /*
       * shadows 1.5 - 3.0
       */
-     mediump float weight = 1.0 - max(0.0, min(1.0, hsv.z * 1.6));
+     mediump float weight = 1.0 - max(0.0, min(1.0, hsv.z * 1.4));
 
      increment = hsv.z * weight;
      increment = sin((1.0 - hsv.z) * 3.14159265359) * 0.30 * weight;
