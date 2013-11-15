@@ -53,7 +53,9 @@
 - (void)applyBrightnessShadowAmount:(float)amount Radius:(float)radius
 {
     amount = amount * 1.5f + 1.5f;
+    radius = 0.5 + 0.25 * radius;
     adjustmentsBrightness.shadowsAmount = amount;
+    adjustmentsBrightness.shadowsRadius = radius;
     [self applyBrightnessShadowAmount];
 }
 

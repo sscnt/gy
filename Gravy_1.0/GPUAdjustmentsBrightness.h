@@ -13,6 +13,7 @@ extern NSString *const kGravyBrightnessFragmentShaderString;
 @interface GPUAdjustmentsBrightness : GPUImageFilter
 {
     GLuint shadowsAmountUniform;
+    GLuint shadowsRadiusUniform;
     GLuint highlightsAmountUniform;
 }
 
