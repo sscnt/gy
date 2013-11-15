@@ -15,8 +15,8 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
  precision highp float;
  varying vec2 textureCoordinate;
  uniform sampler2D inputImageTexture;
- uniform mediump float shadows;
- uniform mediump float highlights;
+ uniform mediump float shadowsAmount;
+ uniform mediump float highlightsAmount;
  
  
  vec3 rgb2hsv(highp vec3 color){
@@ -127,7 +127,7 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
      /*
       * shadows 1.5 - 3.0
       */
-     mediump float weight = 1.0 - max(0.0, min(1.0, hsv.z * 1.4));
+     mediump float weight = 1.0 - max(0.0, min(1.0, hsv.z * shadowsAmount));
 
      increment = hsv.z * weight;
      increment = sin((1.0 - hsv.z) * 3.14159265359) * 0.30 * weight;
@@ -168,6 +168,7 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
      
      // Save the result
      gl_FragColor = pixel;
+     
  }
  );
 
@@ -180,23 +181,23 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
     {
         return nil;
     }
-    shadowsUniform = [filterProgram uniformIndex:@"shadows"];
-    self.shadows = 0.0f;
-    highlightsUniform = [filterProgram uniformIndex:@"highlights"];
-    self.highlights = 0.0f;
+    shadowsAmountUniform = [filterProgram uniformIndex:@"shadowsAmount"];
+    self.shadowsAmount = 0.0f;
+    highlightsAmountUniform = [filterProgram uniformIndex:@"highlightsAmount"];
+    self.highlightsAmount = 0.0f;
     return self;
 }
 
-- (void)setShadows:(CGFloat)shadows
+- (void)setShadowsAmount:(CGFloat)shadows
 {
-    _shadows = shadows * 1.5f + 1.5f;
-    _shadows = MAX(3.0f, MIN(1.5f, _shadows));
-    [self setFloat:_shadows forUniform:shadowsUniform program:filterProgram];
+    _shadowsAmount = shadows * 1.5f + 1.5f;
+    _shadowsAmount = MIN(3.0f, MAX(1.5f, _shadowsAmount));
+    [self setFloat:_shadowsAmount forUniform:shadowsAmountUniform program:filterProgram];
 }
 
-- (void)setHighlights:(CGFloat)highlights
+- (void)setHighlightsAmount:(CGFloat)highlights
 {
-    _highlights = 50.0f * highlights;
+    _highlightsAmount = 50.0f * highlights;
 }
 
 @end

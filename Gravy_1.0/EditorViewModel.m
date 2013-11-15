@@ -28,31 +28,46 @@
 
 - (void)applyWhiteBalanceAmountRed:(float)red Blue:(float)blue
 {
-    red *= 0.00098039215;
-    blue *= 0.00098039215;
-    red = MAX(-1.0f, MIN(1.0f, red));
-    blue = MAX(-1.0f, MIN(1.0f, blue));
+    red *= -0.3;
+    blue *= -0.3f;
     adjustmentsWhiteBalance.redWeight = red;
     adjustmentsWhiteBalance.blueWeight = blue;
-    if(!pictureWhiteBalance){
-        pictureWhiteBalance = [[GPUImagePicture alloc] initWithImage:_originalImageResized];
-        [pictureWhiteBalance addTarget:adjustmentsWhiteBalance];
+    [self applyWhiteBalance];
+}
+
+- (void)applyWhiteBalance
+{
+    if(!_pictureWhiteBalance){
+        _pictureWhiteBalance = [[GPUImagePicture alloc] initWithImage:_originalImageResized];
+        [_pictureWhiteBalance addTarget:adjustmentsWhiteBalance];
     }
-    [pictureWhiteBalance processImage];
+    [_pictureWhiteBalance processImage];
     self.appliedImageWhiteBalancee = [adjustmentsWhiteBalance imageFromCurrentlyProcessedOutput];
 }
 
-- (void)applyBrightnessHighlightAmount:(float)amount Weight:(float)weight
+- (void)applyBrightnessHighlightAmount:(float)amount Radius:(float)radius
 {
     
 }
 
-- (void)applyBrightnessShadowAmount:(float)amount Weight:(float)weight
+- (void)applyBrightnessShadowAmount:(float)amount Radius:(float)radius
 {
-    
+    amount = amount * 1.5f + 1.5f;
+    adjustmentsBrightness.shadowsAmount = amount;
+    [self applyBrightnessShadowAmount];
 }
 
-- (void)applySaturationAmount:(float)amount Weight:(float)weight
+- (void)applyBrightnessShadowAmount
+{
+    if(!_pictureBrightness){
+        _pictureBrightness = [[GPUImagePicture alloc] initWithImage:self.appliedImageWhiteBalancee];
+        [_pictureBrightness addTarget:adjustmentsBrightness];
+    }
+    [_pictureBrightness processImage];
+    self.appliedImageBrightness = [adjustmentsBrightness imageFromCurrentlyProcessedOutput];
+}
+
+- (void)applySaturationAmount:(float)amount Radius:(float)radius
 {
     
 }

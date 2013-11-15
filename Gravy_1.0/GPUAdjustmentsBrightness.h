@@ -12,12 +12,14 @@ extern NSString *const kGravyBrightnessFragmentShaderString;
 
 @interface GPUAdjustmentsBrightness : GPUImageFilter
 {
-    GLuint shadowsUniform;
-    GLuint highlightsUniform;
+    GLuint shadowsAmountUniform;
+    GLuint highlightsAmountUniform;
 }
 
 // Percentage
-@property (nonatomic, assign) CGFloat shadows;
-@property (nonatomic, assign) CGFloat highlights;
+@property (nonatomic, assign) float shadowsAmount;
+@property (nonatomic, assign) float shadowsRadius;
+@property (nonatomic, assign) float highlightsAmount;
+@property (nonatomic, assign) float highlightsRadius;
 
 @end

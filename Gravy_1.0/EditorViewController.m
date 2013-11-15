@@ -242,16 +242,9 @@
     nextBtn.hidden = NO;
     if (state == EditorStateWhiteBalance) {
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-        [pictureWhiteBalance processImage];
-        levelsAppliedImage = [imageFilterWhiteBalance imageFromCurrentlyProcessedOutput];
-        pictureLevels = [[GPUImagePicture alloc] initWithImage:levelsAppliedImage];
-        if(!imageFilterLevels){
-            imageFilterLevels = [[GPULevelsImageFilter alloc] init];
-        }
-        [pictureLevels addTarget:imageFilterLevels];
-        [pictureLevels processImage];
-        levelsAppliedImage = [imageFilterLevels imageFromCurrentlyProcessedOutput];
-        [levelsImageView setImage:levelsAppliedImage];
+        [editor applyWhiteBalance];
+        [levelsImageView setImage:editor.appliedImageWhiteBalancee];
+        editor.pictureBrightness = nil;
         [SVProgressHUD dismiss];
         state = EditorStateLevels;
         pageControl.currentPage++;
@@ -365,30 +358,19 @@
     movePointY = MAX(knobDefaultCenterY - screenWidth * 0.5 - rest, MIN(knobDefaultCenterY + screenWidth * 0.5 + rest,  movePointY));
     movePointX = MAX(0, MIN(screenWidth, movePointX));
     
-    float deltaX = targetView.center.x - knobDefaultCenterX;
-    float deltaY = targetView.center.y - knobDefaultCenterY;
+    float screenWidth_2 = [UIScreen screenSize].width / 2.0f;
+    float deltaX = (targetView.center.x - knobDefaultCenterX) / screenWidth_2;
+    deltaX = MAX(-1.0f, MIN(1.0f, deltaX));
+    float deltaY = (targetView.center.y - knobDefaultCenterY) / screenWidth_2;
+    deltaY = MAX(-1.0f, MIN(1.0f, deltaY));
 
     
     if(targetView.tag == KnobIdWhiteBalance){
         [editor applyWhiteBalanceAmountRed:deltaX Blue:deltaY];
         [whitebalanceImageView setImage:editor.appliedImageWhiteBalancee];
     } else if(targetView.tag == KnobIdLevels){
-        imageFilterLevels.sigmoid = 0;
-        float  lvMidWeight = (targetView.center.x - knobDefaultCenterX) * 0.001307f + 0.500f;
-        lvMidWeight = MAX(0.0f, MIN(1.0f, lvMidWeight));
-        if(lvMidWeight > 0.5){
-            lvMidWeight = 1.0 - lvMidWeight;
-            imageFilterLevels.sigmoid = 1;
-        }
-        float  lvHighWeight = 1.0f - (targetView.center.y - knobDefaultCenterY) * 0.001961;
-        lvHighWeight = MAX(0.0f, MIN(1.0f, lvHighWeight));
-        imageFilterLevels.lvMidWeight = lvMidWeight;
-        imageFilterLevels.lvHighWeight = lvHighWeight;
-        [pictureLevels processImage];
-        
-        levelsAppliedImage = [imageFilterLevels imageFromCurrentlyProcessedOutput];
-        [levelsImageView setImage:levelsAppliedImage];
-        
+        [editor applyBrightnessShadowAmount:deltaX Radius:deltaY];
+        [levelsImageView setImage:editor.appliedImageBrightness];
     } else if(targetView.tag == KnobIdSaturation){
         float stWeight = targetView.center.x - knobDefaultCenterX;
         float vbWeight = targetView.center.y - knobDefaultCenterY;
@@ -425,19 +407,19 @@
 - (void)touchesEnded:(UIThumbnailView *)view
 {
     if(view.thumbnailId == ThumbnailViewIdWhiteBalance){
-        view.image = whiteBalanceAppliedImage;
+        view.image = editor.appliedImageWhiteBalancee;
         return;
     }
     if(view.thumbnailId == ThumbnailViewIdLevels){
-        view.image = levelsAppliedImage;
+        view.image = editor.appliedImageBrightness;
         return;
     }
     if(view.thumbnailId == ThumbnailViewIdSaturation){
-        view.image = saturationAppliedImage;
+        view.image = editor.appliedImageSaturation;
         return;
     }
     if(view.thumbnailId == ThumbnailViewIdEffect){
-        view.image = effectAppliedImage;
+        view.image = editor.appliedImageEffect;
         return;
     }
 }

@@ -31,11 +31,6 @@ typedef NS_ENUM(NSInteger, EditorViewState){
     GPUAdjustmentsWhiteBalance* adjustmentsWhiteBalance;
     GPUAdjustmentsBrightness* adjustmentsBrightness;
     GPUAdjustmentsSaturation* adjustmentsSaturation;
-    
-    GPUImagePicture* pictureWhiteBalance;
-    GPUImagePicture* pictureLevels;
-    GPUImagePicture* pictureSaturation;
-    GPUImagePicture* pictureEffect;
 }
 
 @property (nonatomic, assign) EditorViewState state;
@@ -51,10 +46,17 @@ typedef NS_ENUM(NSInteger, EditorViewState){
 @property(nonatomic, strong) UIImage* effectedLeftTopImage;
 @property(nonatomic, strong) UIImage* effectedLeftBottomImage;
 
+@property (nonatomic, strong) GPUImagePicture* pictureWhiteBalance;
+@property (nonatomic, strong) GPUImagePicture* pictureBrightness;
+@property (nonatomic, strong) GPUImagePicture* pictureSaturation;
+@property (nonatomic, strong) GPUImagePicture* pictureEffect;
+
 - (void)applyWhiteBalanceAmountRed:(float)red Blue:(float)blue;
-- (void)applyBrightnessShadowAmount:(float)amount Weight:(float)weight;
-- (void)applyBrightnessHighlightAmount:(float)amount Weight:(float)weight;
-- (void)applySaturationAmount:(float)amount Weight:(float)weight;
+- (void)applyWhiteBalance;
+- (void)applyBrightnessShadowAmount:(float)amount Radius:(float)radius;
+- (void)applyBrightnessShadowAmount;
+- (void)applyBrightnessHighlightAmount:(float)amount Radius:(float)radius;
+- (void)applySaturationAmount:(float)amount Radius:(float)radius;
 
 - (void)goToNext;
 - (void)backToPrev;
