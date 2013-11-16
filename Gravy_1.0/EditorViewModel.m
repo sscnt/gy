@@ -63,8 +63,8 @@
 
 - (void)applyWhiteBalanceAmountRed:(float)red Blue:(float)blue
 {
-    red *= -0.16f;
-    blue *= -0.16f;
+    red *= -0.1f;
+    blue *= -0.1f;
     adjustmentsWhiteBalance.redWeight = red;
     adjustmentsWhiteBalance.blueWeight = blue;
     [self applyWhiteBalance];
@@ -81,17 +81,16 @@
 }
 - (void)applySaturationAmount:(float)amount Radius:(float)radius
 {
+}
+
+- (void)applySaturation
+{
     if(!_pictureSaturation){
         _pictureSaturation = [[GPUImagePicture alloc] initWithImage:self.appliedImageWhiteBalancee];
         [_pictureSaturation addTarget:adjustmentsSaturation];
     }
     [_pictureSaturation processImage];
     self.appliedImageSaturation = [adjustmentsSaturation imageFromCurrentlyProcessedOutput];
-}
-
-- (void)applySaturation
-{
-    
 }
 
 - (void)goToNext

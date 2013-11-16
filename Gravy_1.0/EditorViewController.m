@@ -381,6 +381,7 @@
                 //メインスレッド
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [whitebalanceImageView setImage:editor.appliedImageWhiteBalancee];
+                    processingWhiteBalance = NO;
                 });
             });
         }

@@ -21,14 +21,14 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
  uniform mediump float contrastAmount;
  
  
- vec3 rgb2hsv(highp vec3 color){
-     highp float r = color.r;
-     highp float g = color.g;
-     highp float b = color.b;
+ vec3 rgb2hsv(mediump vec3 color){
+     mediump float r = color.r;
+     mediump float g = color.g;
+     mediump float b = color.b;
      
-     highp float max = max(r, max(g, b));
-     highp float min = min(r, min(g, b));
-     highp float h = 0.0;
+     mediump float max = max(r, max(g, b));
+     mediump float min = min(r, min(g, b));
+     mediump float h = 0.0;
      if(max < min){
          max = 0.0;
          min = 0.0;
@@ -48,30 +48,30 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
      }
      h = mod(h, 360.0);
      
-     highp float s;
+     mediump float s;
      if(max == 0.0) {
          s = 0.0;
      } else {
          s = (max - min) / max;
      }
-     highp float v = max;
+     mediump float v = max;
      
-     return vec3(h, s, v);
+     return mediump vec3(h, s, v);
  }
  
- vec3 hsv2rgb(highp vec3 color){
-     highp float h = color.r;
-     highp float s = color.g;
-     highp float v = color.b;
-     highp float r;
-     highp float g;
-     highp float b;
-     highp float m60 = 0.01665;
+ vec3 hsv2rgb(mediump vec3 color){
+     mediump float h = color.r;
+     mediump float s = color.g;
+     mediump float v = color.b;
+     mediump float r;
+     mediump float g;
+     mediump float b;
+     mediump float m60 = 0.01665;
      int hi = int(mod(float(floor(h * m60)), 6.0));
-     highp float f = (h * m60) - float(hi);
-     highp float p = v * (1.0 - s);
-     highp float q = v * (1.0 - s * f);
-     highp float t = v * (1.0 - s * (1.0 - f));
+     mediump float f = (h * m60) - float(hi);
+     mediump float p = v * (1.0 - s);
+     mediump float q = v * (1.0 - s * f);
+     mediump float t = v * (1.0 - s * (1.0 - f));
      
      if(hi == 0){
          r = v;
@@ -102,7 +102,7 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
          g = t;
          b = p;
      }
-     return vec3(r, g, b);
+     return mediump vec3(r, g, b);
      
  }
  
