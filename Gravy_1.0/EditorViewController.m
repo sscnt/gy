@@ -242,6 +242,7 @@
         dispatch_async(processingQueue, ^{
             
             [editor applyBrightnessShadowAmount];
+            editor.pictureWhiteBalance = nil;
             [editor applyWhiteBalance];
             
             //メインスレッド
@@ -255,6 +256,7 @@
         dispatch_async(processingQueue, ^{
             
             [editor applyWhiteBalance];
+            editor.pictureSaturation = nil;
             [editor applySaturation];
             
             //メインスレッド
@@ -265,24 +267,14 @@
         });
     } else if (state == EditorStateSaturation) {
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-        [pictureSaturation processImage];
-        effectAppliedImage = [imageFilterSaturation imageFromCurrentlyProcessedOutput];
-        pictureEffect = [[GPUImagePicture alloc] initWithImage:effectAppliedImage];
-        [effectImageView setImage:effectAppliedImage];
-
-        
         dispatch_async(processingQueue, ^{
             
-            GPUAdjustmentsBrightness* brightness = [[GPUAdjustmentsBrightness alloc] init];
-            pictureEffect = [[GPUImagePicture alloc] initWithImage:effectAppliedImage];
-            [pictureEffect addTarget:brightness];
-            [pictureEffect processImage];
-            effectAppliedImage = [brightness imageFromCurrentlyProcessedOutput];
+            [editor applySaturation];
             
-            /*
             GPUEffectSweetFlower* sweetflower = [[GPUEffectSweetFlower alloc] init];
-            sweetflower.imageToProcess = effectAppliedImage;
-            effectAppliedImage = [sweetflower process];
+            sweetflower.imageToProcess = editor.appliedImageSaturation;
+            editor.appliedImageEffect = [sweetflower process];
+            /*
             
             GPUEffectSoftPop* softpop = [[GPUEffectSoftPop alloc] init];
             softpop.imageToProcess = effectAppliedImage;
@@ -299,13 +291,8 @@
             
             //メインスレッド
             dispatch_async(dispatch_get_main_queue(), ^{
+                [_self goToNextPage];
                 [SVProgressHUD dismiss];
-                [effectImageView setImage:effectAppliedImage];
-                nextBtn.hidden = YES;
-                saveBtn.hidden = NO;
-                state = EditorStateEffect;
-                pageControl.currentPage++;
-                [_self changePageControl];
             });
         });
         
@@ -393,6 +380,7 @@
                 //メインスレッド
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [saturationImageView setImage:editor.appliedImageSaturation];
+                    processingSaturation = NO;
                 });
             });
             
@@ -414,14 +402,13 @@
 {
     if(state == EditorStateLevels){
         [whitebalanceImageView setImage:editor.appliedImageWhiteBalancee];
-        editor.pictureWhiteBalance = nil;
         state = EditorStateWhiteBalance;
     } else if(state == EditorStateWhiteBalance){
         [saturationImageView setImage:editor.appliedImageSaturation];
-        editor.pictureSaturation = nil;
         state = EditorStateSaturation;
     } else if(state == EditorStateSaturation){
-        
+        [effectImageView setImage:editor.appliedImageEffect];
+        state = EditorStateEffect;
     }
     pageControl.currentPage++;
     [self changePageControl];

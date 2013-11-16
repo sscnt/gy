@@ -51,6 +51,11 @@ typedef NS_ENUM(NSInteger, EditorViewState){
 @property (nonatomic, strong) GPUImagePicture* pictureSaturation;
 @property (nonatomic, strong) GPUImagePicture* pictureEffect;
 
+@property (nonatomic, assign) float effectCandySweetFlower;
+@property (nonatomic, assign) float effectCandySoftPop;
+@property (nonatomic, assign) float effectCandyColorfulCandy;
+@property (nonatomic, assign) float effectCandyHaze3;
+
 - (void)applyWhiteBalanceAmountRed:(float)red Blue:(float)blue;
 - (void)applyWhiteBalance;
 - (void)applyBrightnessShadowAmount:(float)amount Radius:(float)radius;
@@ -59,7 +64,6 @@ typedef NS_ENUM(NSInteger, EditorViewState){
 - (void)applySaturationAmount:(float)amount Radius:(float)radius;
 - (void)applySaturation;
 
-- (void)goToNext;
-- (void)backToPrev;
+- (void)applyEffectCandy;
 
 @end

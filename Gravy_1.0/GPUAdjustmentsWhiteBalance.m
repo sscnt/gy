@@ -124,7 +124,7 @@ NSString *const kGPUAdjustmentsWhiteBalanceFragmentShaderString = SHADER_STRING
      
      mediump vec3 hsv = rgb2hsv(vec3(r, g, b));
      hsv.z = max;
-     mediump vec3 rgb = hsv2rgb(hsv);
+     mediump vec3 rgb = vec3(r, g, b);
      
      // Save the result
      gl_FragColor = vec4(rgb, 1.0);

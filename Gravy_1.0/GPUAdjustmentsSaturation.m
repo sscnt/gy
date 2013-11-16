@@ -26,7 +26,7 @@ NSString *const kGPUAdjustmentsSaturationFragmentShaderString = SHADER_STRING
      }
      return ceil(a);
  }
- vec3 rgb2hsv(mediump vec3 color){
+ vec3 rgb2hsv(vec3 color){
      mediump float r = color.r;
      mediump float g = color.g;
      mediump float b = color.b;
@@ -61,10 +61,10 @@ NSString *const kGPUAdjustmentsSaturationFragmentShaderString = SHADER_STRING
      }
      mediump float v = max;
      
-     return mediump vec3(h, s, v);
+     return vec3(h, s, v);
  }
  
- vec3 hsv2rgb(mediump vec3 color){
+ vec3 hsv2rgb(vec3 color){
      mediump float h = color.r;
      mediump float s = color.g;
      mediump float v = color.b;
@@ -107,13 +107,18 @@ NSString *const kGPUAdjustmentsSaturationFragmentShaderString = SHADER_STRING
          g = t;
          b = p;
      }
-     return mediump vec3(r, g, b);
+     return vec3(r, g, b);
      
  }
  
  void main()
  {
      mediump vec4 pixel   = texture2D(inputImageTexture, textureCoordinate);
+     mediump vec3 hsv = rgb2hsv(pixel.rgb);
+     mediump float increase = sin(hsv.y * 3.141592654) * sin(hsv.z * 3.141592654) * 0.4 * saturation;
+     hsv.y += increase;
+     
+     pixel.rgb = hsv2rgb(hsv);
      
      // Save the result
      gl_FragColor = pixel;

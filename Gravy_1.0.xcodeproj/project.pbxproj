@@ -361,6 +361,17 @@
 			name = buttons;
 			sourceTree = "<group>";
 		};
+		580237A21837A782001FE2FE /* Candy */ = {
+			isa = PBXGroup;
+			children = (
+				58FC5CCE1831E7BD009EBCF0 /* SweetFlower */,
+				58F6FECE1827CA33003F49C6 /* SoftPop */,
+				58F9FD7418235027003D32F4 /* ColorfulCandy */,
+				58F9FD6E18233572003D32F4 /* Haze3 */,
+			);
+			name = Candy;
+			sourceTree = "<group>";
+		};
 		5802E7B2180C0F1400AA2227 = {
 			isa = PBXGroup;
 			children = (
@@ -565,11 +576,8 @@
 			children = (
 				58F6FECF1827CA61003F49C6 /* GPUImageEffects.h */,
 				58F6FED01827CA61003F49C6 /* GPUImageEffects.m */,
-				58FC5CCE1831E7BD009EBCF0 /* SweetFlower */,
-				58F6FECE1827CA33003F49C6 /* SoftPop */,
-				58F9FD7418235027003D32F4 /* ColorfulCandy */,
+				580237A21837A782001FE2FE /* Candy */,
 				58F9FD7018234E5F003D32F4 /* Autumn6 */,
-				58F9FD6E18233572003D32F4 /* Haze3 */,
 			);
 			name = GPUImageEffects;
 			sourceTree = "<group>";

@@ -64,9 +64,9 @@
 - (void)applyWhiteBalanceAmountRed:(float)red Blue:(float)blue
 {
     red *= -0.1f;
-    blue *= -0.1f;
-    adjustmentsWhiteBalance.redWeight = red;
-    adjustmentsWhiteBalance.blueWeight = blue;
+    blue *= 0.1f;
+    adjustmentsWhiteBalance.redWeight = blue;
+    adjustmentsWhiteBalance.blueWeight = red;
     [self applyWhiteBalance];
 }
 
@@ -81,6 +81,9 @@
 }
 - (void)applySaturationAmount:(float)amount Radius:(float)radius
 {
+    adjustmentsSaturation.saturation = radius;
+    adjustmentsSaturation.vibrance = (amount < 0.0) ? -amount : amount;
+    [self applySaturation];
 }
 
 - (void)applySaturation
@@ -93,14 +96,31 @@
     self.appliedImageSaturation = [adjustmentsSaturation imageFromCurrentlyProcessedOutput];
 }
 
-- (void)goToNext
+- (void)applyEffectCandy
 {
-    
-}
-
-- (void)backToPrev
-{
-    
+    @autoreleasepool {
+        GPUEffectColorfulCandy* effect = [[GPUEffectColorfulCandy alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedLeftBottomImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectHaze3* effect = [[GPUEffectHaze3 alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedLeftTopImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectSoftPop* effect = [[GPUEffectSoftPop alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedRightBottomImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectSweetFlower* effect = [[GPUEffectSweetFlower alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedRightTopImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:self.appliedImageSaturation];
+    }
 }
 
 @end
