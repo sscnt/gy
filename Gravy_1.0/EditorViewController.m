@@ -23,6 +23,7 @@
     editor = [[EditorViewModel alloc] init];
     
     [self resizeOriginalImage];
+    [editor applyBrightnessShadowAmount];
     
     processingQueue = dispatch_queue_create("jp.ssctech.gravy.processing", 0);
     state = EditorStateLevels;
@@ -246,6 +247,7 @@
             //メインスレッド
             dispatch_async(dispatch_get_main_queue(), ^{
                 [_self goToNextPage];
+                [SVProgressHUD dismiss];
             });
         });
     } else if (state == EditorStateWhiteBalance) {
@@ -258,6 +260,7 @@
             //メインスレッド
             dispatch_async(dispatch_get_main_queue(), ^{
                 [_self goToNextPage];
+                [SVProgressHUD dismiss];
             });
         });
     } else if (state == EditorStateSaturation) {
@@ -372,6 +375,7 @@
         }
     } else if(targetView.tag == KnobIdWhiteBalance){
         if(!processingWhiteBalance){
+            processingWhiteBalance = YES;
             dispatch_async(processingQueue, ^{
                 [editor applyWhiteBalanceAmountRed:deltaX Blue:deltaY];
                 //メインスレッド
@@ -381,18 +385,17 @@
             });
         }
     } else if(targetView.tag == KnobIdSaturation){
-        float stWeight = targetView.center.x - knobDefaultCenterX;
-        float vbWeight = targetView.center.y - knobDefaultCenterY;
-        
-        stWeight *= -0.00625;
-        vbWeight *= 0.00625;
-        
-        imageFilterSaturation.stSaturationWeight = stWeight;
-        imageFilterSaturation.stVibranceWeight = vbWeight;
-        [pictureSaturation processImage];
-        
-        saturationAppliedImage = [imageFilterSaturation imageFromCurrentlyProcessedOutput];
-        [saturationImageView setImage:saturationAppliedImage];
+        if(!processingSaturation){
+            processingSaturation = YES;
+            dispatch_async(processingQueue, ^{
+                [editor applySaturationAmount:deltaX Radius:deltaY];
+                //メインスレッド
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [saturationImageView setImage:editor.appliedImageSaturation];
+                });
+            });
+            
+        }
 
     } else if(targetView.tag == KnobIdEffect){
 
@@ -416,8 +419,9 @@
         [saturationImageView setImage:editor.appliedImageSaturation];
         editor.pictureSaturation = nil;
         state = EditorStateSaturation;
+    } else if(state == EditorStateSaturation){
+        
     }
-    [SVProgressHUD dismiss];
     pageControl.currentPage++;
     [self changePageControl];
 }
@@ -510,8 +514,8 @@
         filterLv.lvLowWeight = imageFilterLevels.lvLowWeight;
         [filterWb addTarget:filterLv];
         GPUAdjustmentsSaturation* filterSt = [[GPUAdjustmentsSaturation alloc] init];
-        filterSt.stSaturationWeight = imageFilterSaturation.stSaturationWeight;
-        filterSt.stVibranceWeight = imageFilterSaturation.stVibranceWeight;
+        filterSt.saturation = imageFilterSaturation.saturation;
+        filterSt.vibrance = imageFilterSaturation.vibrance;
         [filterLv addTarget:filterSt];
     
         [picture addTarget:filterWb];

@@ -36,9 +36,17 @@
 {
     float _amount = (amount < 0.0f) ? -amount : amount;
     adjustmentsBrightness.shadowsAmount = _amount;
-    adjustmentsBrightness.shadowsRadius = -radius;
-    if(amount > 0.0f){
-        adjustmentsBrightness.contrastAmount = _amount * 0.10f;
+    adjustmentsBrightness.shadowsRadius = (radius > 0.0f) ? -radius : radius;
+
+    if(radius < 0.0f){  // Top
+        adjustmentsBrightness.highlightsAmount = -radius * 0.20f;
+        if(amount < 0.0f){  // Top Left
+            adjustmentsBrightness.contrastAmount = _amount * 0.20f;
+        }
+    } else{ // Bottom
+        if(amount > 0.0f){  // Bottom Right
+            adjustmentsBrightness.contrastAmount = _amount * 0.10f;
+        }
     }
     [self applyBrightnessShadowAmount];
 }
@@ -73,7 +81,12 @@
 }
 - (void)applySaturationAmount:(float)amount Radius:(float)radius
 {
-    
+    if(!_pictureSaturation){
+        _pictureSaturation = [[GPUImagePicture alloc] initWithImage:self.appliedImageWhiteBalancee];
+        [_pictureSaturation addTarget:adjustmentsSaturation];
+    }
+    [_pictureSaturation processImage];
+    self.appliedImageSaturation = [adjustmentsSaturation imageFromCurrentlyProcessedOutput];
 }
 
 - (void)applySaturation

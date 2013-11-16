@@ -186,8 +186,8 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
      /*
       * highlights 0.0 - 0.5
       */
-     weight = max(0.0, min(1.0, (hsv.z - 0.7) * 3.333)) * 0.1;
-     //hsv.z -= hsv.z * weight;
+     weight = max(0.0, min(1.0, (hsv.z - 0.9) * 10.0)) * highlightsAmount;
+     hsv.z -= hsv.z * weight;
      
      // Contrast
      mediump vec3 rgb = hsv2rgb(hsv);
@@ -266,7 +266,8 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
 
 - (void)setHighlightsAmount:(CGFloat)highlights
 {
-    _highlightsAmount = 50.0f * highlights;
+    _highlightsAmount = MIN(1.0f, MAX(0.0f, highlights));
+    [self setFloat:_highlightsAmount forUniform:highlightsAmountUniform program:filterProgram];
 }
 
 @end

@@ -15,8 +15,8 @@ NSString *const kGPUAdjustmentsSaturationFragmentShaderString = SHADER_STRING
  precision highp float;
  varying vec2 textureCoordinate;
  uniform sampler2D inputImageTexture;
- uniform mediump float stVibranceWeight;
- uniform mediump float stSaturationWeight;
+ uniform mediump float vibrance;
+ uniform mediump float saturation;
  
  float round(float a){
      float b = floor(a);
@@ -71,11 +71,11 @@ NSString *const kGPUAdjustmentsSaturationFragmentShaderString = SHADER_STRING
      mediump float _s;
      int index = 0;
 
-     _s = (1.0 - cos(s * 3.1415927)) * stSaturationWeight;
-     _s *= (1.0 - cos(y * 3.1415927)) * stVibranceWeight;
+     _s = (1.0 - cos(s * 3.1415927)) * saturation;
+     _s *= (1.0 - cos(y * 3.1415927)) * vibrance;
      _s *= 0.4 * (0.5 - cos(h * 0.0174533)) + 0.8;
      s += _s;
-     //s += stSaturationWeight;
+     //s += saturation;
      
      s = max(0.0, min(1.0, s));
      
@@ -137,23 +137,23 @@ NSString *const kGPUAdjustmentsSaturationFragmentShaderString = SHADER_STRING
     {
         return nil;
     }
-    stSaturationWeightUniform = [filterProgram uniformIndex:@"stSaturationWeight"];
-    self.stSaturationWeight = 0.0;
-    stVibranceWeightUniform = [filterProgram uniformIndex:@"stVibranceWeight"];
-    self.stVibranceWeight = 0.0;
+    saturationUniform = [filterProgram uniformIndex:@"saturation"];
+    self.saturation = 0.0;
+    vibranceUniform = [filterProgram uniformIndex:@"vibrance"];
+    self.vibrance = 0.0;
     return self;
 }
 
-- (void)setStSaturationWeight:(float)stSaturationWeight
+- (void)setSaturation:(float)saturation
 {
-    _stSaturationWeight = MAX(-1.0f, MIN(1.0f, stSaturationWeight));
-    [self setFloat:_stSaturationWeight forUniform:stSaturationWeightUniform program:filterProgram];
+    _saturation = MAX(-1.0f, MIN(1.0f, saturation));
+    [self setFloat:_saturation forUniform:saturationUniform program:filterProgram];
 }
 
-- (void)setStVibranceWeight:(float)stVibranceWeight
+- (void)setVibrance:(float)vibrance
 {
-    _stVibranceWeight = MAX(-1.0, MIN(1.0, stVibranceWeight));
-    [self setFloat:_stVibranceWeight forUniform:stVibranceWeightUniform program:filterProgram];
+    _vibrance = MAX(-1.0, MIN(1.0, vibrance));
+    [self setFloat:_vibrance forUniform:vibranceUniform program:filterProgram];
 }
 
 @end

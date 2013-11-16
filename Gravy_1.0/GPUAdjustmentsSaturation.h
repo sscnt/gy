@@ -12,11 +12,11 @@ extern NSString *const kGPUAdjustmentsSaturationFragmentShaderString;
 
 @interface GPUAdjustmentsSaturation : GPUImageFilter
 {
-    GLuint stSaturationWeightUniform;
-    GLuint stVibranceWeightUniform;
+    GLuint saturationUniform;
+    GLuint vibranceUniform;
 }
 
-@property (nonatomic, readwrite) float stVibranceWeight;
-@property (nonatomic, readwrite) float stSaturationWeight;
+@property (nonatomic, readwrite) float vibrance;
+@property (nonatomic, readwrite) float saturation;
 
 @end
