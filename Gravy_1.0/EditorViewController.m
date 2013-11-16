@@ -23,12 +23,9 @@
     editor = [[EditorViewModel alloc] init];
     
     [self resizeOriginalImage];
-    imageFilterWhiteBalance = [[GPUAdjustmentsWhiteBalance alloc] init];
-    pictureWhiteBalance = [[GPUImagePicture alloc] initWithImage:originalImageResized];
-    [pictureWhiteBalance addTarget:imageFilterWhiteBalance];
     
     processingQueue = dispatch_queue_create("jp.ssctech.gravy.processing", 0);
-    state = EditorStateWhiteBalance;
+    state = EditorStateLevels;
     screenHeight = [UIScreen height];
     screenWidth = [UIScreen width];
     
@@ -87,18 +84,50 @@
     [saveBtn addTarget:self action:@selector(didClickNextButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:saveBtn];
     
-    whiteBalanceAppliedImage = originalImageResized;
-    levelsAppliedImage = originalImageResized;
-    saturationAppliedImage = originalImageResized;
-    effectAppliedImage = originalImageResized;
     
-    [self layoutWhiteBalanceEditor];
     [self layoutLevelsEditor];
+    [self layoutWhiteBalanceEditor];
     [self layoutSaturationEditor];
     [self layoutEffectEditor];
 }
 
 #pragma mark layout
+
+- (void)layoutLevelsEditor
+{
+    UIWrapperView* wrapper = [[UIWrapperView alloc] initWithFrame:self.view.bounds];
+    
+    // label
+    UIEditorTitleLabel* label = [[UIEditorTitleLabel alloc] initWithFrame:CGRectMake(0.0f, 30.0f, 320.0f, 20.0f)];
+    label.text = NSLocalizedString(@"Brightness", nil);
+    [wrapper addSubview:label];
+    
+    // place original image
+    CGFloat imageY = [UIScreen screenSize].height / 2.0f - editor.originalImageResized.size.height / 2.0f - 25.0f;
+    levelsImageView = [[UIThumbnailView alloc] initWithImage:editor.originalImageResized];
+    [levelsImageView setY:imageY];
+    levelsImageView.delegate = self;
+    levelsImageView.userInteractionEnabled = YES;
+    levelsImageView.thumbnailId = ThumbnailViewIdLevels;
+    [wrapper addSubview:levelsImageView];
+    
+    
+    UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
+    
+    // knob
+    levelsKnobView = [[UISliderView alloc] init];
+    levelsKnobView.tag = KnobIdLevels;
+    [levelsKnobView addGestureRecognizer:recognizer];
+    knobDefaultCenterX = [UIScreen screenSize].width / 2.0f;
+    knobDefaultCenterY = imageY + editor.originalImageResized.size.height / 2.0f;
+    CGPoint center = CGPointMake(knobDefaultCenterX, knobDefaultCenterY);
+    levelsKnobView.center = center;
+    [wrapper addSubview:levelsKnobView];
+    
+    
+    [scrollView addSubview:wrapper];
+    
+}
 
 - (void)layoutWhiteBalanceEditor
 {
@@ -110,13 +139,14 @@
     [wrapper addSubview:label];
     
     // place original image
-    CGFloat imageY = [UIScreen screenSize].height / 2.0f - originalImageResized.size.height / 2.0f - 25.0f;
-    whitebalanceImageView = [[UIThumbnailView alloc] initWithImage:whiteBalanceAppliedImage];
+    CGFloat imageY = [UIScreen screenSize].height / 2.0f - editor.originalImageResized.size.height / 2.0f - 25.0f;
+    whitebalanceImageView = [[UIThumbnailView alloc] initWithImage:editor.originalImageResized];
     [whitebalanceImageView setY:imageY];
     whitebalanceImageView.thumbnailId = ThumbnailViewIdWhiteBalance;
     whitebalanceImageView.delegate = self;
     whitebalanceImageView.userInteractionEnabled = YES;
     [wrapper addSubview:whitebalanceImageView];
+    [wrapper setX:320.0f];
     
     UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
     
@@ -124,8 +154,6 @@
     whiteBalanceKnobView = [[UISliderView alloc] init];
     whiteBalanceKnobView.tag = KnobIdWhiteBalance;
     [whiteBalanceKnobView addGestureRecognizer:recognizer];
-    knobDefaultCenterX = [UIScreen screenSize].width / 2.0f;
-    knobDefaultCenterY = imageY + whiteBalanceAppliedImage.size.height / 2.0f;
     CGPoint center = CGPointMake(knobDefaultCenterX, knobDefaultCenterY);
     whiteBalanceKnobView.center = center;
     [wrapper addSubview:whiteBalanceKnobView];
@@ -133,40 +161,6 @@
     [scrollView addSubview:wrapper];
 }
 
-- (void)layoutLevelsEditor
-{
-    UIWrapperView* wrapper = [[UIWrapperView alloc] initWithFrame:self.view.bounds];
-    
-    // label
-    UIEditorTitleLabel* label = [[UIEditorTitleLabel alloc] initWithFrame:CGRectMake(0.0f, 30.0f, 320.0f, 20.0f)];
-    label.text = NSLocalizedString(@"Levels", nil);
-    [wrapper addSubview:label];
-    
-    // place original image
-    CGFloat imageY = [UIScreen screenSize].height / 2.0f - originalImageResized.size.height / 2.0f - 25.0f;
-    levelsImageView = [[UIThumbnailView alloc] initWithImage:levelsAppliedImage];
-    [levelsImageView setY:imageY];
-    levelsImageView.delegate = self;
-    levelsImageView.userInteractionEnabled = YES;
-    levelsImageView.thumbnailId = ThumbnailViewIdLevels;
-    [wrapper addSubview:levelsImageView];
-    [wrapper setX:320.0f];
-    
-    
-    UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
-    
-    // knob
-    levelsKnobView = [[UISliderView alloc] init];
-    levelsKnobView.tag = KnobIdLevels;
-    [levelsKnobView addGestureRecognizer:recognizer];
-    CGPoint center = CGPointMake(knobDefaultCenterX, knobDefaultCenterY);
-    levelsKnobView.center = center;
-    [wrapper addSubview:levelsKnobView];
-    
-    
-    [scrollView addSubview:wrapper];
-    
-}
 
 - (void)layoutSaturationEditor
 {
@@ -178,8 +172,8 @@
     [wrapper addSubview:label];
     
     // place original image
-    CGFloat imageY = [UIScreen screenSize].height / 2.0f - originalImageResized.size.height / 2.0f - 25.0f;
-    saturationImageView = [[UIThumbnailView alloc] initWithImage:saturationAppliedImage];
+    CGFloat imageY = [UIScreen screenSize].height / 2.0f - editor.originalImageResized.size.height / 2.0f - 25.0f;
+    saturationImageView = [[UIThumbnailView alloc] initWithImage:editor.originalImageResized];
     [saturationImageView setY:imageY];
     saturationImageView.delegate = self;
     saturationImageView.userInteractionEnabled = YES;
@@ -210,8 +204,8 @@
     [wrapper addSubview:label];
     
     // place original image
-    CGFloat imageY = [UIScreen screenSize].height / 2.0f - originalImageResized.size.height / 2.0f - 25.0f;
-    effectImageView = [[UIThumbnailView alloc] initWithImage:effectAppliedImage];
+    CGFloat imageY = [UIScreen screenSize].height / 2.0f - editor.originalImageResized.size.height / 2.0f - 25.0f;
+    effectImageView = [[UIThumbnailView alloc] initWithImage:editor.originalImageResized];
     [effectImageView setY:imageY];
     effectImageView.delegate = self;
     effectImageView.userInteractionEnabled = YES;
@@ -240,31 +234,26 @@
 {
     saveBtn.hidden = YES;
     nextBtn.hidden = NO;
-    if (state == EditorStateWhiteBalance) {
+    __block EditorViewController* _self = self;
+    
+    if (state == EditorStateLevels) {
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-        [editor applyWhiteBalance];
-        [levelsImageView setImage:editor.appliedImageWhiteBalancee];
-        editor.pictureBrightness = nil;
-        [SVProgressHUD dismiss];
-        state = EditorStateLevels;
-        pageControl.currentPage++;
-        [self changePageControl];
-    } else if (state == EditorStateLevels) {
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-        [pictureLevels processImage];
-        saturationAppliedImage = [imageFilterLevels imageFromCurrentlyProcessedOutput];
-        pictureSaturation = [[GPUImagePicture alloc] initWithImage:saturationAppliedImage];
-        if(!imageFilterSaturation){
-            imageFilterSaturation = [[GPUAdjustmentsSaturation alloc] init];
-        }
-        [pictureSaturation addTarget:imageFilterSaturation];
-        [pictureSaturation processImage];
-        saturationAppliedImage = [imageFilterSaturation imageFromCurrentlyProcessedOutput];
-        [saturationImageView setImage:saturationAppliedImage];
-        [SVProgressHUD dismiss];
-        state = EditorStateSaturation;
-        pageControl.currentPage++;
-        [self changePageControl];
+        dispatch_async(processingQueue, ^{
+            
+            [editor applyBrightnessShadowAmount];
+            [editor applyWhiteBalance];
+            
+            //メインスレッド
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [whitebalanceImageView setImage:editor.appliedImageWhiteBalancee];
+                editor.pictureWhiteBalance = nil;
+                [SVProgressHUD dismiss];
+                state = EditorStateWhiteBalance;
+                pageControl.currentPage++;
+                [_self changePageControl];
+            });
+        });
+    } else if (state == EditorStateWhiteBalance) {
     } else if (state == EditorStateSaturation) {
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
         [pictureSaturation processImage];
@@ -272,7 +261,6 @@
         pictureEffect = [[GPUImagePicture alloc] initWithImage:effectAppliedImage];
         [effectImageView setImage:effectAppliedImage];
 
-        __block EditorViewController* _self = self;
         
         dispatch_async(processingQueue, ^{
             
@@ -328,15 +316,15 @@
 {
     saveBtn.hidden = YES;
     nextBtn.hidden = NO;
-    if (state == EditorStateWhiteBalance) {
+    if (state == EditorStateLevels) {
         [self.navigationController popViewControllerAnimated:YES];
         scrollView.delegate = nil;
         return;
     }
-    if (state == EditorStateLevels){
-        state = EditorStateWhiteBalance;
-    } else if (state == EditorStateSaturation){
+    if (state == EditorStateWhiteBalance){
         state = EditorStateLevels;
+    } else if (state == EditorStateSaturation){
+        state = EditorStateWhiteBalance;
     } else if (state == EditorStateEffect){
         state = EditorStateSaturation;
     } else if (state == EditorStateSharing){
@@ -363,14 +351,29 @@
     deltaX = MAX(-1.0f, MIN(1.0f, deltaX));
     float deltaY = (targetView.center.y - knobDefaultCenterY) / screenWidth_2;
     deltaY = MAX(-1.0f, MIN(1.0f, deltaY));
-
     
-    if(targetView.tag == KnobIdWhiteBalance){
-        [editor applyWhiteBalanceAmountRed:deltaX Blue:deltaY];
-        [whitebalanceImageView setImage:editor.appliedImageWhiteBalancee];
-    } else if(targetView.tag == KnobIdLevels){
-        [editor applyBrightnessShadowAmount:deltaX Radius:deltaY];
-        [levelsImageView setImage:editor.appliedImageBrightness];
+    if(targetView.tag == KnobIdLevels){
+        if(!processingBrightness){
+            processingBrightness = YES;
+            dispatch_async(processingQueue, ^{
+                [editor applyBrightnessShadowAmount:deltaX Radius:deltaY];
+                //メインスレッド
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [levelsImageView setImage:editor.appliedImageBrightness];
+                    processingBrightness = NO;
+                });
+            });
+        }
+    } else if(targetView.tag == KnobIdWhiteBalance){
+        if(!processingWhiteBalance){
+            dispatch_async(processingQueue, ^{
+                [editor applyWhiteBalanceAmountRed:deltaX Blue:deltaY];
+                //メインスレッド
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [whitebalanceImageView setImage:editor.appliedImageWhiteBalancee];
+                });
+            });
+        }
     } else if(targetView.tag == KnobIdSaturation){
         float stWeight = targetView.center.x - knobDefaultCenterX;
         float vbWeight = targetView.center.y - knobDefaultCenterY;
@@ -401,7 +404,7 @@
 
 - (void)touchesBegan:(UIThumbnailView *)view
 {
-    view.image = originalImageResized;
+    view.image = editor.originalImageResized;
 }
 
 - (void)touchesEnded:(UIThumbnailView *)view
@@ -450,8 +453,7 @@
         CGFloat scale = ([mainScreen respondsToSelector:@selector(scale)] ? mainScreen.scale : 1.0f);
         CGFloat zoom = [UIScreen screenSize].width * scale / self.originalImage.size.width;
         CIImage* filteredImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(zoom, zoom)];
-        originalImageResized = [self uiImageFromCIImage:filteredImage];
-        editor.originalImageResized = originalImageResized;
+        editor.originalImageResized = [self uiImageFromCIImage:filteredImage];
     }
 }
 

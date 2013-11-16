@@ -34,8 +34,8 @@
 #import "GPUEffectSweetFlower.h"
 
 typedef NS_ENUM(NSInteger, EditorState){
-    EditorStateWhiteBalance = 1,
-    EditorStateLevels,
+    EditorStateLevels = 1,
+    EditorStateWhiteBalance,
     EditorStateSaturation,
     EditorStateEffect,
     EditorStateSharing,
@@ -60,6 +60,10 @@ typedef NS_ENUM(NSInteger, KnobId){
     GPUImagePicture* pictureLevels;
     GPUImagePicture* pictureSaturation;
     GPUImagePicture* pictureEffect;
+    
+    BOOL processingBrightness;
+    BOOL processingWhiteBalance;
+    BOOL processingSaturation;
 
 
     UIImageView* bgImageView;

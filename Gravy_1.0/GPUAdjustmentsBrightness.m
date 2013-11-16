@@ -140,7 +140,7 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
      return ceil(a);
  }
  
- vec3 adjustLevels(vec3 rgb){
+ vec3 adjustLevels(mediump vec3 rgb){
      mediump vec3 yuv = rgb2yuv(rgb);
      mediump vec3 hsv = rgb2hsv(rgb);
      mediump float saturation = hsv.y;
@@ -243,14 +243,15 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
 
 - (void)setShadowsAmount:(CGFloat)shadows
 {
-    _shadowsAmount = shadows * 1.5f + 1.5f;
+    _shadowsAmount = (1.0f - shadows) * 1.5f + 1.5f;
     _shadowsAmount = MIN(3.0f, MAX(1.5f, _shadowsAmount));
     [self setFloat:_shadowsAmount forUniform:shadowsAmountUniform program:filterProgram];
 }
 
 - (void)setShadowsRadius:(float)shadowsRadius
 {
-    _shadowsRadius = (shadowsRadius < 0.0) ? -shadowsRadius : shadowsRadius;
+    _shadowsRadius = 0.5 + 0.25 * shadowsRadius;
+    _shadowsRadius = MIN(1.0f, MAX(0.0f, _shadowsRadius));
     [self setFloat:_shadowsRadius forUniform:shadowsRadiusUniform program:filterProgram];
 }
 

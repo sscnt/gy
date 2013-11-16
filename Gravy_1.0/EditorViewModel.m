@@ -26,10 +26,34 @@
     [self initialize];
 }
 
+
+- (void)applyBrightnessHighlightAmount:(float)amount Radius:(float)radius
+{
+     
+}
+
+- (void)applyBrightnessShadowAmount:(float)amount Radius:(float)radius
+{
+    amount = (amount < 0.0f) ? -amount : amount;
+    adjustmentsBrightness.shadowsAmount = amount;
+    adjustmentsBrightness.shadowsRadius = -radius;
+    [self applyBrightnessShadowAmount];
+}
+
+- (void)applyBrightnessShadowAmount
+{
+    if(!_pictureBrightness){
+        _pictureBrightness = [[GPUImagePicture alloc] initWithImage:self.originalImageResized];
+        [_pictureBrightness addTarget:adjustmentsBrightness];
+    }
+    [_pictureBrightness processImage];
+    self.appliedImageBrightness = [adjustmentsBrightness imageFromCurrentlyProcessedOutput];
+}
+
 - (void)applyWhiteBalanceAmountRed:(float)red Blue:(float)blue
 {
-    red *= -0.3;
-    blue *= -0.3f;
+    red *= -0.16f;
+    blue *= -0.16f;
     adjustmentsWhiteBalance.redWeight = red;
     adjustmentsWhiteBalance.blueWeight = blue;
     [self applyWhiteBalance];
@@ -38,37 +62,12 @@
 - (void)applyWhiteBalance
 {
     if(!_pictureWhiteBalance){
-        _pictureWhiteBalance = [[GPUImagePicture alloc] initWithImage:_originalImageResized];
+        _pictureWhiteBalance = [[GPUImagePicture alloc] initWithImage:self.appliedImageBrightness];
         [_pictureWhiteBalance addTarget:adjustmentsWhiteBalance];
     }
     [_pictureWhiteBalance processImage];
     self.appliedImageWhiteBalancee = [adjustmentsWhiteBalance imageFromCurrentlyProcessedOutput];
 }
-
-- (void)applyBrightnessHighlightAmount:(float)amount Radius:(float)radius
-{
-    
-}
-
-- (void)applyBrightnessShadowAmount:(float)amount Radius:(float)radius
-{
-    amount = amount * 1.5f + 1.5f;
-    radius = 0.5 + 0.25 * radius;
-    adjustmentsBrightness.shadowsAmount = amount;
-    adjustmentsBrightness.shadowsRadius = radius;
-    [self applyBrightnessShadowAmount];
-}
-
-- (void)applyBrightnessShadowAmount
-{
-    if(!_pictureBrightness){
-        _pictureBrightness = [[GPUImagePicture alloc] initWithImage:self.appliedImageWhiteBalancee];
-        [_pictureBrightness addTarget:adjustmentsBrightness];
-    }
-    [_pictureBrightness processImage];
-    self.appliedImageBrightness = [adjustmentsBrightness imageFromCurrentlyProcessedOutput];
-}
-
 - (void)applySaturationAmount:(float)amount Radius:(float)radius
 {
     
