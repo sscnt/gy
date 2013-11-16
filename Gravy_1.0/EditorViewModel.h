@@ -57,6 +57,7 @@ typedef NS_ENUM(NSInteger, EditorViewState){
 - (void)applyBrightnessShadowAmount;
 - (void)applyBrightnessHighlightAmount:(float)amount Radius:(float)radius;
 - (void)applySaturationAmount:(float)amount Radius:(float)radius;
+- (void)applySaturation;
 
 - (void)goToNext;
 - (void)backToPrev;

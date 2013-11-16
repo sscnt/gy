@@ -18,6 +18,7 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
  uniform mediump float shadowsAmount;
  uniform mediump float shadowsRadius;
  uniform mediump float highlightsAmount;
+ uniform mediump float contrastAmount;
  
  
  vec3 rgb2hsv(highp vec3 color){
@@ -190,7 +191,7 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
      
      // Contrast
      mediump vec3 rgb = hsv2rgb(hsv);
-     mediump float contrast = 1.0 + 0.5 * 0.0;
+     mediump float contrast = 1.0 + contrastAmount;
      contrast *= contrast;
      
      mediump float value;
@@ -238,6 +239,8 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
     self.shadowsRadius = 0.0f;
     highlightsAmountUniform = [filterProgram uniformIndex:@"highlightsAmount"];
     self.highlightsAmount = 0.0f;
+    contrastAmountUniform = [filterProgram uniformIndex:@"contrastAmount"];
+    self.contrastAmount = 0.0f;
     return self;
 }
 
@@ -253,6 +256,12 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
     _shadowsRadius = 0.5 + 0.25 * shadowsRadius;
     _shadowsRadius = MIN(1.0f, MAX(0.0f, _shadowsRadius));
     [self setFloat:_shadowsRadius forUniform:shadowsRadiusUniform program:filterProgram];
+}
+
+- (void)setContrastAmount:(float)contrastAmount
+{
+    _contrastAmount = MIN(1.0f, MAX(0.0f, contrastAmount));
+    [self setFloat:_contrastAmount forUniform:contrastAmountUniform program:filterProgram];
 }
 
 - (void)setHighlightsAmount:(CGFloat)highlights

@@ -34,9 +34,12 @@
 
 - (void)applyBrightnessShadowAmount:(float)amount Radius:(float)radius
 {
-    amount = (amount < 0.0f) ? -amount : amount;
-    adjustmentsBrightness.shadowsAmount = amount;
+    float _amount = (amount < 0.0f) ? -amount : amount;
+    adjustmentsBrightness.shadowsAmount = _amount;
     adjustmentsBrightness.shadowsRadius = -radius;
+    if(amount > 0.0f){
+        adjustmentsBrightness.contrastAmount = _amount * 0.10f;
+    }
     [self applyBrightnessShadowAmount];
 }
 
@@ -69,6 +72,11 @@
     self.appliedImageWhiteBalancee = [adjustmentsWhiteBalance imageFromCurrentlyProcessedOutput];
 }
 - (void)applySaturationAmount:(float)amount Radius:(float)radius
+{
+    
+}
+
+- (void)applySaturation
 {
     
 }

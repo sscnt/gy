@@ -105,6 +105,8 @@ typedef NS_ENUM(NSInteger, KnobId){
 - (void)didClickBackButton;
 - (void)didDragView:(UIPanGestureRecognizer *)sender;
 
+- (void)goToNextPage;
+
 - (void)layoutWhiteBalanceEditor;
 - (void)layoutLevelsEditor;
 - (void)layoutSaturationEditor;

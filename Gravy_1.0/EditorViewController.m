@@ -245,15 +245,21 @@
             
             //メインスレッド
             dispatch_async(dispatch_get_main_queue(), ^{
-                [whitebalanceImageView setImage:editor.appliedImageWhiteBalancee];
-                editor.pictureWhiteBalance = nil;
-                [SVProgressHUD dismiss];
-                state = EditorStateWhiteBalance;
-                pageControl.currentPage++;
-                [_self changePageControl];
+                [_self goToNextPage];
             });
         });
     } else if (state == EditorStateWhiteBalance) {
+        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+        dispatch_async(processingQueue, ^{
+            
+            [editor applyWhiteBalance];
+            [editor applySaturation];
+            
+            //メインスレッド
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [_self goToNextPage];
+            });
+        });
     } else if (state == EditorStateSaturation) {
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
         [pictureSaturation processImage];
@@ -398,6 +404,22 @@
     [sender setTranslation:CGPointZero inView:targetView];
     
     
+}
+
+- (void)goToNextPage
+{
+    if(state == EditorStateLevels){
+        [whitebalanceImageView setImage:editor.appliedImageWhiteBalancee];
+        editor.pictureWhiteBalance = nil;
+        state = EditorStateWhiteBalance;
+    } else if(state == EditorStateWhiteBalance){
+        [saturationImageView setImage:editor.appliedImageSaturation];
+        editor.pictureSaturation = nil;
+        state = EditorStateSaturation;
+    }
+    [SVProgressHUD dismiss];
+    pageControl.currentPage++;
+    [self changePageControl];
 }
 
 #pragma mark delegates
