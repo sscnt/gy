@@ -118,9 +118,67 @@
         effect.imageToProcess = self.appliedImageSaturation;
         self.effectedRightTopImage = [effect process];
     }
+    
+    UIImage* resultImage = self.appliedImageSaturation;
+    
+    // Colorful Candy
     @autoreleasepool {
-        GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:self.appliedImageSaturation];
+        GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+        GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedLeftBottomImage];
+        GPUImageNormalBlendFilter* blend = [[GPUImageNormalBlendFilter alloc] init];
+        GPUImageOpacityFilter* opacity = [[GPUImageOpacityFilter alloc] init];
+        opacity.opacity = self.effectCandyColorfulCandy;
+        [base addTarget:blend];
+        [opacity addTarget:blend];
+        [overlay addTarget:opacity];
+        [base processImage];
+        [overlay processImage];
+        resultImage = [blend imageFromCurrentlyProcessedOutput];
     }
+    // Haze 3
+    @autoreleasepool {
+        GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+        GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedLeftTopImage];
+        GPUImageNormalBlendFilter* blend = [[GPUImageNormalBlendFilter alloc] init];
+        GPUImageOpacityFilter* opacity = [[GPUImageOpacityFilter alloc] init];
+        opacity.opacity = self.effectCandyHaze3;
+        [base addTarget:blend];
+        [opacity addTarget:blend];
+        [overlay addTarget:opacity];
+        [base processImage];
+        [overlay processImage];
+        resultImage = [blend imageFromCurrentlyProcessedOutput];
+    }
+    // Soft Pop
+    @autoreleasepool {
+        GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+        GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedRightBottomImage];
+        GPUImageNormalBlendFilter* blend = [[GPUImageNormalBlendFilter alloc] init];
+        GPUImageOpacityFilter* opacity = [[GPUImageOpacityFilter alloc] init];
+        opacity.opacity = self.effectCandySoftPop;
+        [base addTarget:blend];
+        [opacity addTarget:blend];
+        [overlay addTarget:opacity];
+        [base processImage];
+        [overlay processImage];
+        resultImage = [blend imageFromCurrentlyProcessedOutput];
+    }
+    
+    // Sweet Flower
+    @autoreleasepool {
+        GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+        GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedRightTopImage];
+        GPUImageNormalBlendFilter* blend = [[GPUImageNormalBlendFilter alloc] init];
+        GPUImageOpacityFilter* opacity = [[GPUImageOpacityFilter alloc] init];
+        opacity.opacity = self.effectCandySweetFlower;
+        [base addTarget:blend];
+        [opacity addTarget:blend];
+        [overlay addTarget:opacity];
+        [base processImage];
+        [overlay processImage];
+        resultImage = [blend imageFromCurrentlyProcessedOutput];
+    }
+    self.appliedImageEffect = resultImage;
 }
 
 @end

@@ -268,27 +268,7 @@
     } else if (state == EditorStateSaturation) {
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
         dispatch_async(processingQueue, ^{
-            
             [editor applySaturation];
-            
-            GPUEffectSweetFlower* sweetflower = [[GPUEffectSweetFlower alloc] init];
-            sweetflower.imageToProcess = editor.appliedImageSaturation;
-            editor.appliedImageEffect = [sweetflower process];
-            /*
-            
-            GPUEffectSoftPop* softpop = [[GPUEffectSoftPop alloc] init];
-            softpop.imageToProcess = effectAppliedImage;
-            effectAppliedImage = [softpop process];
-         
-            GPUEffectColorfulCandy* candy = [[GPUEffectColorfulCandy alloc] init];
-            candy.imageToProcess = effectAppliedImage;
-            effectAppliedImage = [candy process];
-   
-            GPUEffectHaze3* haze = [[GPUEffectHaze3 alloc] init];
-            haze.imageToProcess = effectAppliedImage;
-            effectAppliedImage = [haze process];
-            */
-            
             //メインスレッド
             dispatch_async(dispatch_get_main_queue(), ^{
                 [_self goToNextPage];
@@ -387,7 +367,7 @@
         }
 
     } else if(targetView.tag == KnobIdEffect){
-
+        dlog(@"Hello");
     }
     
     
@@ -407,6 +387,9 @@
         [saturationImageView setImage:editor.appliedImageSaturation];
         state = EditorStateSaturation;
     } else if(state == EditorStateSaturation){
+        if(!editor.appliedImageEffect){
+            editor.appliedImageEffect = editor.appliedImageSaturation;
+        }
         [effectImageView setImage:editor.appliedImageEffect];
         state = EditorStateEffect;
     }
