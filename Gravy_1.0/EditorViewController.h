@@ -21,6 +21,7 @@
 #import "UISliderView.h"
 #import "UIScrollView+Gravy.h"
 #import "SVProgressHUD.h"
+#import "UIEffectSelectionView.h"
 
 #import "GPUImage.h"
 #import "GPUAdjustmentsWhiteBalance.h"
@@ -51,20 +52,14 @@ typedef NS_ENUM(NSInteger, KnobId){
 
 @interface EditorViewController : UIViewController <UIScrollViewDelegate, UIThumbnailViewDelegate>
 {
-    EditorViewModel* editor;
-    GPUAdjustmentsWhiteBalance* imageFilterWhiteBalance;
-    GPULevelsImageFilter* imageFilterLevels;
-    GPUAdjustmentsSaturation* imageFilterSaturation;
-    
-    GPUImagePicture* pictureWhiteBalance;
-    GPUImagePicture* pictureLevels;
-    GPUImagePicture* pictureSaturation;
-    GPUImagePicture* pictureEffect;
+    EditorViewModel* editor;    
     
     BOOL processingBrightness;
     BOOL processingWhiteBalance;
     BOOL processingSaturation;
 
+    UIImage* effectSelectionPreviewImgae;
+    UIEffectSelectionView* effectSelectionView;
 
     UIImageView* bgImageView;
     UIScrollView* scrollView;
@@ -73,20 +68,11 @@ typedef NS_ENUM(NSInteger, KnobId){
     UIThumbnailView* levelsImageView;
     UIThumbnailView* saturationImageView;
     UIThumbnailView* effectImageView;
-    UIImage* effectedRightTopImage;
-    UIImage* effectedRightBottomImage;
-    UIImage* effectedLeftTopImage;
-    UIImage* effectedLeftBottomImage;
     EditorState state;
     UIDockButtonBack* backBtn;
     UIDockButtonNext* nextBtn;
     UIDockButtonSave* saveBtn;
     __strong UIImage** iad;
-    UIImage* originalImageResized;
-    UIImage* whiteBalanceAppliedImage;
-    UIImage* levelsAppliedImage;
-    UIImage* saturationAppliedImage;
-    UIImage* effectAppliedImage;
     UISliderView* whiteBalanceKnobView;
     UISliderView* levelsKnobView;
     UISliderView* saturationKnobView;

@@ -107,6 +107,7 @@
     CGFloat imageY = [UIScreen screenSize].height / 2.0f - editor.originalImageResized.size.height / 2.0f - 25.0f;
     levelsImageView = [[UIThumbnailView alloc] initWithImage:editor.originalImageResized];
     [levelsImageView setY:imageY];
+    [levelsImageView setX:self.view.center.x - editor.originalImageResized.size.width / 2.0f];
     levelsImageView.delegate = self;
     levelsImageView.userInteractionEnabled = YES;
     levelsImageView.thumbnailId = ThumbnailViewIdLevels;
@@ -224,6 +225,11 @@
     CGPoint center = CGPointMake(knobDefaultCenterX, knobDefaultCenterY);
     effectKnobView.center = center;
     [wrapper addSubview:effectKnobView];
+    
+    // Selection Vier
+    effectSelectionView = [[UIEffectSelectionView alloc] init];
+    effectSelectionView.effectPreviewImage = effectSelectionPreviewImgae;
+    [wrapper addSubview:effectSelectionView];
     
     [scrollView addSubview:wrapper];
 }
@@ -445,12 +451,40 @@
 - (void)resizeOriginalImage
 {
     if(self.originalImage){
-        CIImage* ciImage = [[CIImage alloc] initWithImage:self.originalImage];
+        BOOL portrait = NO;
+        if(self.originalImage.size.height > self.originalImage.size.width){
+            portrait = YES;
+        }
         UIScreen *mainScreen = [UIScreen mainScreen];
         CGFloat scale = ([mainScreen respondsToSelector:@selector(scale)] ? mainScreen.scale : 1.0f);
-        CGFloat zoom = [UIScreen screenSize].width * scale / self.originalImage.size.width;
-        CIImage* filteredImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(zoom, zoom)];
-        editor.originalImageResized = [self uiImageFromCIImage:filteredImage];
+        
+        @autoreleasepool {
+            CIImage* ciImage = [[CIImage alloc] initWithImage:self.originalImage];
+            CGFloat zoom;
+            if(portrait){
+                zoom = [UIScreen screenSize].width * scale / self.originalImage.size.height;
+            } else{
+                zoom = [UIScreen screenSize].width * scale / self.originalImage.size.width;
+            }
+            CIImage* filteredImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(zoom, zoom)];
+            editor.originalImageResized = [self uiImageFromCIImage:filteredImage];
+        }
+        
+        @autoreleasepool {
+            CGFloat cropSize = MIN(editor.originalImageResized.size.width, editor.originalImageResized.size.height);
+            CGRect clippedRect = CGRectMake(0, 0, cropSize * scale, cropSize * scale);
+            CGImageRef imageRef = CGImageCreateWithImageInRect(editor.originalImageResized.CGImage, clippedRect);
+            UIImage* resizedImage = [UIImage imageWithCGImage:imageRef];
+
+            CIImage* ciImage = [[CIImage alloc] initWithImage:resizedImage];
+            CGFloat zoom = 80.0f * scale / resizedImage.size.width;
+            CIImage* filteredImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(zoom, zoom)];
+            resizedImage = [self uiImageFromCIImage:filteredImage];
+            CGImageRelease(imageRef);
+            effectSelectionPreviewImgae = resizedImage;
+            
+        }
+        
     }
 }
 
@@ -474,24 +508,6 @@
     dispatch_async(processingQueue, ^{
         UIImage* resultImage;
         GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:_originalImage];
-
-        GPUAdjustmentsWhiteBalance* filterWb = [[GPUAdjustmentsWhiteBalance alloc] init];
-        filterWb.redWeight = imageFilterWhiteBalance.redWeight;
-        filterWb.blueWeight = imageFilterWhiteBalance.blueWeight;
-
-        GPULevelsImageFilter* filterLv = [[GPULevelsImageFilter alloc] init];
-        filterLv.lvHighWeight = imageFilterLevels.lvHighWeight;
-        filterLv.lvMidWeight = imageFilterLevels.lvMidWeight;
-        filterLv.lvLowWeight = imageFilterLevels.lvLowWeight;
-        [filterWb addTarget:filterLv];
-        GPUAdjustmentsSaturation* filterSt = [[GPUAdjustmentsSaturation alloc] init];
-        filterSt.saturation = imageFilterSaturation.saturation;
-        filterSt.vibrance = imageFilterSaturation.vibrance;
-        [filterLv addTarget:filterSt];
-    
-        [picture addTarget:filterWb];
-        [picture processImage];
-        resultImage = [filterSt imageFromCurrentlyProcessedOutput];
         
         GPUEffectSweetFlower* sweetflower = [[GPUEffectSweetFlower alloc] init];
         sweetflower.imageToProcess = resultImage;
