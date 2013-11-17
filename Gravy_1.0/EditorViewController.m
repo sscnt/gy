@@ -167,6 +167,8 @@
     [wrapper addSubview:whiteBalanceKnobView];
     
     [scrollView addSubview:wrapper];
+
+
 }
 
 
@@ -518,12 +520,12 @@
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     __weak EditorViewController* _self = self;
     dispatch_async(processingQueue, ^{
-        UIImage* resultImage;
-        GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:_originalImage];
         
-        GPUEffectSweetFlower* sweetflower = [[GPUEffectSweetFlower alloc] init];
-        sweetflower.imageToProcess = resultImage;
-        resultImage = [sweetflower process];
+        UIImage* resultImage;
+        GPUEffectVintageFilm* effect = [[GPUEffectVintageFilm alloc] init];
+        effect.imageToProcess = self.originalImage;
+        resultImage = [effect process];
+        
         
         UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil);
         

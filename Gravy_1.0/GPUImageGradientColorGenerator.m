@@ -186,6 +186,10 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
     styleUniform = [filterProgram uniformIndex:@"style"];
     self.style = GradientStyleLinear;
     index = 0;
+    
+    [self setFloat:0.0f forUniform:offsetXUniform program:filterProgram];
+    [self setFloat:0.0f forUniform:offsetYUniform program:filterProgram];
+    
     return self;
 }
 
