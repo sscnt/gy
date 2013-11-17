@@ -50,7 +50,7 @@ typedef NS_ENUM(NSInteger, KnobId){
     KnobIdEffect
 };
 
-@interface EditorViewController : UIViewController <UIScrollViewDelegate, UIThumbnailViewDelegate>
+@interface EditorViewController : UIViewController <UIScrollViewDelegate, UIThumbnailViewDelegate, UIEffectSelectionViewDelegate>
 {
     EditorViewModel* editor;    
     

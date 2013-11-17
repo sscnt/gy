@@ -10,25 +10,71 @@
 
 @implementation UIEffectSelectionButton
 
-- (id)init
+- (id)initWithEffectId:(EffectId)effectId previewImageBase:(UIImage *)baseImage
 {
-    self = [super init];
+    CGRect frame = CGRectMake(0.0f, 0.0f, 80.0f, 100.0f);
+    self = [super initWithFrame:frame];
     if(self){
         self.selected = NO;
-        previewImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 80.0f, 80.0f)];
+        self.effectId = effectId;
+        previewImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 10.0f, 70.0f, 70.0f)];
+        CALayer* l = [previewImageView layer];
+        [l setMasksToBounds:YES];
+        [l setCornerRadius:4.0];
+        [l setBorderWidth:4.0];
+        [l setBorderColor:[[UIColor clearColor] CGColor]];
         [self addSubview:previewImageView];
         
-        titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 85.0f, 80.0f, 16.0f)];
-        titleLabel.font = [UIFont fontWithName:@"rounded-mplus-1p-light" size:15.0f];
+        titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 83.0f, 70.0f, 14.0f)];
+        titleLabel.font = [UIFont fontWithName:@"rounded-mplus-1p-regular" size:11.0f];
         titleLabel.alpha = 0.9f;
-        titleLabel.text = NSLocalizedString(@"Subtitle", nil);
+        titleLabel.text = [self titleFromEffectId:effectId];
         titleLabel.textAlignment = NSTextAlignmentCenter;
         titleLabel.backgroundColor = [UIColor clearColor];
         titleLabel.textColor = [UIColor whiteColor];
         titleLabel.numberOfLines = 0;
         [self addSubview:titleLabel];
+        
+        [self initPreviewImageView:baseImage];
+        [self addTarget:self action:@selector(didPress) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
+}
+
+- (void)initPreviewImageView:(UIImage *)baseImage
+{
+    if(self.effectId == EffectIdNone){
+        previewImageView.image = baseImage;
+        self.selected = YES;
+    } else if(self.effectId == EffectIdCandy){
+        GPUEffectColorfulCandy* effect = [[GPUEffectColorfulCandy alloc] init];
+        effect.imageToProcess = baseImage;
+        previewImageView.image = [effect process];
+    }
+}
+- (void)setSelected:(BOOL)selected
+{
+    _selected = selected;
+    CALayer* l = [previewImageView layer];
+    if(_selected){
+        [l setBorderColor:[[UIColor colorWithRed:41.0f/255.0f green:128.0f/255.0f blue:185.0f/255.0f alpha:1.0f] CGColor]];
+    } else{
+        [l setBorderColor:[[UIColor clearColor] CGColor]];
+    }
+
+}
+
+- (NSString*)titleFromEffectId:(EffectId)effectId
+{
+    if(effectId == EffectIdCandy){
+        return NSLocalizedString(@"Candy", nil);
+    }
+    return NSLocalizedString(@"None", nil);
+}
+
+- (void)didPress;
+{
+    [self.delegate buttonPressed:self];
 }
 
 /*

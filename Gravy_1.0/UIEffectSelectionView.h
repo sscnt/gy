@@ -7,15 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UIView+Gravy.h"
 #import "UIScreen+Gravy.h"
 #import "UIEffectSelectionButton.h"
 
 
-@protocol UIThumbnailViewDelegate <NSObject>
-- (void)effectSelected:(SelectedEffect)effect;
+@protocol UIEffectSelectionViewDelegate <NSObject>
+- (void)effectSelected:(EffectId)effectId;
 @end
 
-@interface UIEffectSelectionView : UIView
+@interface UIEffectSelectionView : UIView <UIEffectSelectionButtonDelegate>
 {
     UIScrollView* scrollView;
     
@@ -23,6 +24,7 @@
     UIEffectSelectionButton* buttonCandy;
 }
 
+@property (nonatomic, weak) id<UIEffectSelectionViewDelegate> delegate;
 @property (nonatomic, weak) UIImage* effectPreviewImage;
 
 @end

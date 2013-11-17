@@ -8,19 +8,33 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSInteger, SelectedEffect){
-    SelectedEffectCandy = 1
-};
+#import "GPUEffectColorfulCandy.h"
 
-@interface UIEffectSelectionButton : UIView
+
+typedef NS_ENUM(NSInteger, EffectId){
+    EffectIdNone = 1,
+    EffectIdCandy
+};
+@class UIEffectSelectionButton;
+@protocol UIEffectSelectionButtonDelegate <NSObject>
+- (void)buttonPressed:(UIEffectSelectionButton*)button;
+@end
+
+@interface UIEffectSelectionButton : UIButton
 {
     UIImageView* previewImageView;
     UILabel* titleLabel;
+    BOOL _selected;
 }
 
-@property (nonatomic, assign) SelectedEffect selectedEffect;
+@property (nonatomic, weak) id<UIEffectSelectionButtonDelegate> delegate;
+@property (nonatomic, assign) EffectId effectId;
 @property (nonatomic, assign) BOOL selected;
-@property (nonatomic, weak) UIImage* previewImage;
 @property (nonatomic, strong) NSString* title;
+
+- (id)initWithEffectId:(EffectId)effectId previewImageBase:(UIImage*)baseImage;
+- (void)initPreviewImageView:(UIImage*)baseImage;
+- (void)didPress;
+- (NSString*)titleFromEffectId:(EffectId)effectId;
 
 @end

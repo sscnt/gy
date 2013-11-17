@@ -121,7 +121,7 @@
     levelsKnobView.tag = KnobIdLevels;
     [levelsKnobView addGestureRecognizer:recognizer];
     knobDefaultCenterX = [UIScreen screenSize].width / 2.0f;
-    knobDefaultCenterY = imageY + editor.originalImageResized.size.height / 2.0f;
+    knobDefaultCenterY = [UIScreen screenSize].height / 2.0f;
     CGPoint center = CGPointMake(knobDefaultCenterX, knobDefaultCenterY);
     levelsKnobView.center = center;
     [wrapper addSubview:levelsKnobView];
@@ -227,8 +227,11 @@
     [wrapper addSubview:effectKnobView];
     
     // Selection Vier
+    CGFloat bottom = [UIScreen screenSize].height - 195.0f;
     effectSelectionView = [[UIEffectSelectionView alloc] init];
     effectSelectionView.effectPreviewImage = effectSelectionPreviewImgae;
+    [effectSelectionView setY:bottom];
+    effectSelectionView.delegate = self;
     [wrapper addSubview:effectSelectionView];
     
     [scrollView addSubview:wrapper];
@@ -445,6 +448,10 @@
     // 可視領域まで移動
     [scrollView scrollRectToVisible:frame animated:YES];
 }
+- (void)effectSelected:(EffectId)effectId
+{
+    dlog(@"%d", effectId);
+}
 
 #pragma mark Image Processing
 
@@ -477,7 +484,7 @@
             UIImage* resizedImage = [UIImage imageWithCGImage:imageRef];
 
             CIImage* ciImage = [[CIImage alloc] initWithImage:resizedImage];
-            CGFloat zoom = 80.0f * scale / resizedImage.size.width;
+            CGFloat zoom = 70.0f * scale / resizedImage.size.width;
             CIImage* filteredImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(zoom, zoom)];
             resizedImage = [self uiImageFromCIImage:filteredImage];
             CGImageRelease(imageRef);
