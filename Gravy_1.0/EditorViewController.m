@@ -129,6 +129,11 @@
     
     [scrollView addSubview:wrapper];
     
+    
+    GPUEffectVintageFilm* effect = [[GPUEffectVintageFilm alloc] init];
+    effect.imageToProcess = editor.originalImageResized;
+    levelsImageView.image = [effect process];
+    
 }
 
 - (void)layoutWhiteBalanceEditor
@@ -218,17 +223,6 @@
     [wrapper addSubview:effectImageView];
     [wrapper setX:960.0f];
     
-    
-    UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
-    
-    // knob
-    effectKnobView = [[UISliderView alloc] init];
-    effectKnobView.tag = KnobIdEffect;
-    [effectKnobView addGestureRecognizer:recognizer];
-    CGPoint center = CGPointMake(knobDefaultCenterX, knobDefaultCenterY);
-    effectKnobView.center = center;
-    [wrapper addSubview:effectKnobView];
-    
     // Selection Vier
     CGFloat bottom = [UIScreen screenSize].height - 195.0f;
     effectSelectionView = [[UIEffectSelectionView alloc] init];
@@ -236,8 +230,16 @@
     [effectSelectionView setY:bottom];
     effectSelectionView.delegate = self;
     [wrapper addSubview:effectSelectionView];
-    
-    [scrollView addSubview:wrapper];
+
+    UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
+    // knob
+    effectKnobView = [[UISliderView alloc] init];
+    effectKnobView.tag = KnobIdEffect;
+    [effectKnobView addGestureRecognizer:recognizer];
+    CGPoint center = CGPointMake(knobDefaultCenterX, knobDefaultCenterY);
+    effectKnobView.center = center;
+    [wrapper addSubview:effectKnobView];
+        [scrollView addSubview:wrapper];
 }
 
 
