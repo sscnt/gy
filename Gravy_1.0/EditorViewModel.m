@@ -82,7 +82,7 @@
 - (void)applySaturationAmount:(float)amount Radius:(float)radius
 {
     adjustmentsSaturation.saturation = radius;
-    adjustmentsSaturation.vibrance = (amount < 0.0) ? -amount : amount;
+    adjustmentsSaturation.vibrance = amount;
     [self applySaturation];
 }
 

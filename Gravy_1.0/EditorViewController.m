@@ -144,6 +144,7 @@
     CGFloat imageY = [UIScreen screenSize].height / 2.0f - editor.originalImageResized.size.height / 2.0f - 25.0f;
     whitebalanceImageView = [[UIThumbnailView alloc] initWithImage:editor.originalImageResized];
     [whitebalanceImageView setY:imageY];
+    [whitebalanceImageView setX:self.view.center.x - editor.originalImageResized.size.width / 2.0f];
     whitebalanceImageView.thumbnailId = ThumbnailViewIdWhiteBalance;
     whitebalanceImageView.delegate = self;
     whitebalanceImageView.userInteractionEnabled = YES;
@@ -177,6 +178,7 @@
     CGFloat imageY = [UIScreen screenSize].height / 2.0f - editor.originalImageResized.size.height / 2.0f - 25.0f;
     saturationImageView = [[UIThumbnailView alloc] initWithImage:editor.originalImageResized];
     [saturationImageView setY:imageY];
+    [saturationImageView setX:self.view.center.x - editor.originalImageResized.size.width / 2.0f];
     saturationImageView.delegate = self;
     saturationImageView.userInteractionEnabled = YES;
     saturationImageView.thumbnailId = ThumbnailViewIdSaturation;
@@ -209,6 +211,7 @@
     CGFloat imageY = [UIScreen screenSize].height / 2.0f - editor.originalImageResized.size.height / 2.0f - 25.0f;
     effectImageView = [[UIThumbnailView alloc] initWithImage:editor.originalImageResized];
     [effectImageView setY:imageY];
+    [effectImageView setX:self.view.center.x - editor.originalImageResized.size.width / 2.0f];
     effectImageView.delegate = self;
     effectImageView.userInteractionEnabled = YES;
     effectImageView.thumbnailId = ThumbnailViewIdEffect;

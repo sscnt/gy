@@ -118,6 +118,20 @@ NSString *const kGPUAdjustmentsSaturationFragmentShaderString = SHADER_STRING
      mediump float increase = sin(hsv.y * 3.141592654) * sin(hsv.z * 3.141592654) * 0.4 * saturation;
      hsv.y += increase;
      
+     mediump float x = textureCoordinate.x;
+     mediump float y = textureCoordinate.y;
+     mediump float d = sqrt((0.5 - x) * (0.5 - x) + (0.5 - y) * (0.5 - y));
+     if(vibrance > 0.0){
+         d -= 0.707107 * (1.0 - vibrance);
+         d /= 0.707107;
+         d = max(0.0, min(1.0, d));
+         increase = 1.0 * (1.0 - cos(d * 1.5707963));
+         hsv.z -= increase;
+         hsv.z = max(0.0, hsv.z);
+     } else{
+
+     }
+     
      pixel.rgb = hsv2rgb(hsv);
      
      // Save the result

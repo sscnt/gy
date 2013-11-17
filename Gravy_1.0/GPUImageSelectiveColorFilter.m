@@ -16,52 +16,52 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
  varying vec2 textureCoordinate;
  uniform sampler2D inputImageTexture;
  
- uniform highp float redsCyan;
- uniform highp float redsMagenta;
- uniform highp float redsYellow;
- uniform highp float redsBlack;
+ uniform mediump float redsCyan;
+ uniform mediump float redsMagenta;
+ uniform mediump float redsYellow;
+ uniform mediump float redsBlack;
  
- uniform highp float yellowsCyan;
- uniform highp float yellowsMagenta;
- uniform highp float yellowsYellow;
- uniform highp float yellowsBlack;
+ uniform mediump float yellowsCyan;
+ uniform mediump float yellowsMagenta;
+ uniform mediump float yellowsYellow;
+ uniform mediump float yellowsBlack;
  
- uniform highp float greensCyan;
- uniform highp float greensMagenta;
- uniform highp float greensYellow;
- uniform highp float greensBlack;
+ uniform mediump float greensCyan;
+ uniform mediump float greensMagenta;
+ uniform mediump float greensYellow;
+ uniform mediump float greensBlack;
  
- uniform highp float cyansCyan;
- uniform highp float cyansMagenta;
- uniform highp float cyansYellow;
- uniform highp float cyansBlack;
+ uniform mediump float cyansCyan;
+ uniform mediump float cyansMagenta;
+ uniform mediump float cyansYellow;
+ uniform mediump float cyansBlack;
  
- uniform highp float bluesCyan;
- uniform highp float bluesMagenta;
- uniform highp float bluesYellow;
- uniform highp float bluesBlack;
+ uniform mediump float bluesCyan;
+ uniform mediump float bluesMagenta;
+ uniform mediump float bluesYellow;
+ uniform mediump float bluesBlack;
  
- uniform highp float magentasCyan;
- uniform highp float magentasMagenta;
- uniform highp float magentasYellow;
- uniform highp float magentasBlack;
+ uniform mediump float magentasCyan;
+ uniform mediump float magentasMagenta;
+ uniform mediump float magentasYellow;
+ uniform mediump float magentasBlack;
  
- uniform highp float whitesCyan;
- uniform highp float whitesMagenta;
- uniform highp float whitesYellow;
- uniform highp float whitesBlack;
+ uniform mediump float whitesCyan;
+ uniform mediump float whitesMagenta;
+ uniform mediump float whitesYellow;
+ uniform mediump float whitesBlack;
  
- uniform highp float neutralsCyan;
- uniform highp float neutralsMagenta;
- uniform highp float neutralsYellow;
- uniform highp float neutralsBlack;
+ uniform mediump float neutralsCyan;
+ uniform mediump float neutralsMagenta;
+ uniform mediump float neutralsYellow;
+ uniform mediump float neutralsBlack;
  
- uniform highp float blacksCyan;
- uniform highp float blacksMagenta;
- uniform highp float blacksYellow;
- uniform highp float blacksBlack;
+ uniform mediump float blacksCyan;
+ uniform mediump float blacksMagenta;
+ uniform mediump float blacksYellow;
+ uniform mediump float blacksBlack;
  
- vec3 rgb2xyz(highp vec3 color){
+ vec3 rgb2xyz(mediump vec3 color){
      mat3 adobe;
      adobe[0] = vec3(0.576669, 0.297345, 0.027031);
      adobe[1] = vec3(0.185558, 0.627364, 0.070689);
@@ -73,7 +73,7 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      return adobe * color;
  }
  
- vec3 xyz2rgb(highp vec3 color){
+ vec3 xyz2rgb(mediump vec3 color){
      mat3 adobe;
      adobe[0] = vec3(2.041588, -0.969244, 0.013444);
      adobe[1] = vec3(-0.565007, 1.875968, -0.118362);
@@ -85,7 +85,7 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      return adobe * color;
  }
  
- float xyz2labFt(highp float t){
+ float xyz2labFt(mediump float t){
      if(t > 0.00885645167){
          return 116.0 * pow(t, 0.33333333333) - 16.0;
      } else{
@@ -93,20 +93,20 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      }
  }
  
- vec3 xyz2lab(highp vec3 color){
-     highp float l = xyz2labFt(color.y);
-     highp float a = 4.31034482759 * (xyz2labFt(color.x / 0.9642) - l);
-     highp float b = 1.72413793103 * (l - xyz2labFt(color.z / 0.8249));
+ vec3 xyz2lab(mediump vec3 color){
+     mediump float l = xyz2labFt(color.y);
+     mediump float a = 4.31034482759 * (xyz2labFt(color.x / 0.9642) - l);
+     mediump float b = 1.72413793103 * (l - xyz2labFt(color.z / 0.8249));
      return vec3(l, a, b);
  }
  
- vec3 lab2xyz(highp vec3 color){
-     highp float fy = (color.x + 16.0) / 116.0;
-     highp float fx = fy + (color.y / 500.0);
-     highp float fz = fy - (color.z / 200.0);
-     highp float x;
-     highp float y;
-     highp float z;
+ vec3 lab2xyz(mediump vec3 color){
+     mediump float fy = (color.x + 16.0) / 116.0;
+     mediump float fx = fy + (color.y / 500.0);
+     mediump float fz = fy - (color.z / 200.0);
+     mediump float x;
+     mediump float y;
+     mediump float z;
      if(fy > 0.20689655172)
          y = fy * fy * fy;
      else
@@ -122,50 +122,50 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      return vec3(x, y, z);
  }
  
- vec3 rgb2lab(highp vec3 color){
+ vec3 rgb2lab(mediump vec3 color){
      return xyz2lab(rgb2xyz(color));
  }
  
- vec3 lab2rgb(highp vec3 color){
+ vec3 lab2rgb(mediump vec3 color){
      return xyz2rgb(lab2xyz(color));
  }
  
- float labDiff(highp vec3 dest, highp vec3 src){
-     highp float deltaL = dest.x - src.x;
-     highp float deltaA = dest.y - src.y;
-     highp float deltaB = dest.z - src.z;
-     highp float deltaE = sqrt(deltaL * deltaL + deltaA * deltaA + deltaB * deltaB);
-     highp float c1 = sqrt(dest.y * dest.y + dest.z * dest.z);
-     highp float c2 = sqrt(src.y * src.y + src.z * src.z);
-     highp float deltaCab = c1 - c2;
-     highp float deltaHab = sqrt(deltaA * deltaA + deltaB * deltaB - deltaCab * deltaCab);
+ float labDiff(mediump vec3 dest, mediump vec3 src){
+     mediump float deltaL = dest.x - src.x;
+     mediump float deltaA = dest.y - src.y;
+     mediump float deltaB = dest.z - src.z;
+     mediump float deltaE = sqrt(deltaL * deltaL + deltaA * deltaA + deltaB * deltaB);
+     mediump float c1 = sqrt(dest.y * dest.y + dest.z * dest.z);
+     mediump float c2 = sqrt(src.y * src.y + src.z * src.z);
+     mediump float deltaCab = c1 - c2;
+     mediump float deltaHab = sqrt(deltaA * deltaA + deltaB * deltaB - deltaCab * deltaCab);
      return deltaHab;
      
-     highp float kL = 1.0;
-     highp float kC = kL;
-     highp float kH = kL;
-     highp float k1 = 0.045;
-     highp float k2 = 0.015;
-     highp float sL = 1.0;
-     highp float sC = 1.0 + k1 * c1;
-     highp float sH = 1.0 + k2 * c1;
+     mediump float kL = 1.0;
+     mediump float kC = kL;
+     mediump float kH = kL;
+     mediump float k1 = 0.045;
+     mediump float k2 = 0.015;
+     mediump float sL = 1.0;
+     mediump float sC = 1.0 + k1 * c1;
+     mediump float sH = 1.0 + k2 * c1;
      
-     highp float a = deltaL / (kL * sL);
-     highp float b = deltaCab / (kC * sC);
-     highp float c = deltaHab / (kH * sH);
+     mediump float a = deltaL / (kL * sL);
+     mediump float b = deltaCab / (kC * sC);
+     mediump float c = deltaHab / (kH * sH);
      
      return sqrt(a * a + b * b + c * c);
      
  }
  
- vec3 rgb2hsv(highp vec3 color){
-     highp float r = color.r;
-     highp float g = color.g;
-     highp float b = color.b;
+ vec3 rgb2hsv(mediump vec3 color){
+     mediump float r = color.r;
+     mediump float g = color.g;
+     mediump float b = color.b;
      
-     highp float max = max(r, max(g, b));
-     highp float min = min(r, min(g, b));
-     highp float h = 0.0;
+     mediump float max = max(r, max(g, b));
+     mediump float min = min(r, min(g, b));
+     mediump float h = 0.0;
      if(max < min){
          max = 0.0;
          min = 0.0;
@@ -185,30 +185,30 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      }
      h = mod(h, 360.0);
      
-     highp float s;
+     mediump float s;
      if(max == 0.0) {
          s = 0.0;
      } else {
          s = (max - min) / max;
      }
-     highp float v = max;
+     mediump float v = max;
      
      return vec3(h, s, v);
  }
  
- vec3 hsv2rgb(highp vec3 color){
-     highp float h = color.r;
-     highp float s = color.g;
-     highp float v = color.b;
-     highp float r;
-     highp float g;
-     highp float b;
-     highp float m60 = 0.01665;
+ vec3 hsv2rgb(mediump vec3 color){
+     mediump float h = color.r;
+     mediump float s = color.g;
+     mediump float v = color.b;
+     mediump float r;
+     mediump float g;
+     mediump float b;
+     mediump float m60 = 0.01665;
      int hi = int(mod(float(floor(h * m60)), 6.0));
-     highp float f = (h * m60) - float(hi);
-     highp float p = v * (1.0 - s);
-     highp float q = v * (1.0 - s * f);
-     highp float t = v * (1.0 - s * (1.0 - f));
+     mediump float f = (h * m60) - float(hi);
+     mediump float p = v * (1.0 - s);
+     mediump float q = v * (1.0 - s * f);
+     mediump float t = v * (1.0 - s * (1.0 - f));
      
      if(hi == 0){
          r = v;
@@ -246,20 +246,20 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
  void main()
  {
      // Sample the input pixel
-     highp vec4 pixel   = texture2D(inputImageTexture, textureCoordinate);
-     highp float r = pixel.r;
-     highp float g = pixel.g;
-     highp float b = pixel.b;
-     highp float ra = r;
-     highp float ga = g;
-     highp float ba = b;
-     highp float lum = 0.299 * r + 0.587 * g + 0.114 * b;
+     mediump vec4 pixel   = texture2D(inputImageTexture, textureCoordinate);
+     mediump float r = pixel.r;
+     mediump float g = pixel.g;
+     mediump float b = pixel.b;
+     mediump float ra = r;
+     mediump float ga = g;
+     mediump float ba = b;
+     mediump float lum = 0.299 * r + 0.587 * g + 0.114 * b;
      
      // Convert to CMYK
-     highp float c = 1.0 - r;
-     highp float m = 1.0 - g;
-     highp float y = 1.0 - b;
-     highp float k = min(c, min(m, y));
+     mediump float c = 1.0 - r;
+     mediump float m = 1.0 - g;
+     mediump float y = 1.0 - b;
+     mediump float k = min(c, min(m, y));
      if(k == 1.0){
          c = 0.0;
          m = 0.0;
@@ -271,25 +271,25 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      }
      
      // Convert to HSV
-     highp vec3 hsv = rgb2hsv(vec3(r, g, b));
+     mediump vec3 hsv = rgb2hsv(vec3(r, g, b));
      
      // Convert to LAB
-     highp vec3 lab = rgb2lab(vec3(r, g, b));
+     mediump vec3 lab = rgb2lab(vec3(r, g, b));
      
      
      // Adjustment
-     highp float ca = c;
-     highp float ma = m;
-     highp float ya = y;
-     highp float ka = k;
+     mediump float ca = c;
+     mediump float ma = m;
+     mediump float ya = y;
+     mediump float ka = k;
      
      // Reds
-     highp vec3 redHsv = rgb2hsv(vec3(1.0, 0.0, 0.0));
-     highp float diff = abs(hsv.x - redHsv.x);
+     mediump vec3 redHsv = rgb2hsv(vec3(1.0, 0.0, 0.0));
+     mediump float diff = abs(hsv.x - redHsv.x);
      if(diff > 180.0){
          diff = 360.0 - diff;
      }
-     highp float redsWeight = (1.0 - max(0.0, min(1.0, diff / 60.0))) * hsv.y;
+     mediump float redsWeight = (1.0 - max(0.0, min(1.0, diff / 60.0))) * hsv.y;
      if(redsCyan > 0.0)
          ca += c * redsCyan * redsWeight;
      else
@@ -304,9 +304,9 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
          ya -= y * abs(redsYellow) * redsWeight;
 
      // Yellows
-     highp vec3 yellowHsv = rgb2hsv(vec3(1.0, 1.0, 0.0));
+     mediump vec3 yellowHsv = rgb2hsv(vec3(1.0, 1.0, 0.0));
      diff = abs(hsv.x - yellowHsv.x);
-     highp float yellowsWeight = (1.0 - max(0.0, min(1.0, diff / 60.0))) * hsv.y;
+     mediump float yellowsWeight = (1.0 - max(0.0, min(1.0, diff / 60.0))) * hsv.y;
      if(yellowsCyan > 0.0)
          ca += c * yellowsCyan * yellowsWeight;
      else
@@ -321,9 +321,9 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
          ya -= y * abs(yellowsYellow) * yellowsWeight;
      
      // Greens
-     highp vec3 greenHsv = rgb2hsv(vec3(0.0, 1.0, 0.0));
+     mediump vec3 greenHsv = rgb2hsv(vec3(0.0, 1.0, 0.0));
      diff = abs(hsv.x - greenHsv.x);
-     highp float greensWeight = (1.0 - max(0.0, min(1.0, diff / 60.0))) * hsv.y;
+     mediump float greensWeight = (1.0 - max(0.0, min(1.0, diff / 60.0))) * hsv.y;
      if(greensCyan > 0.0)
          ca += c * greensCyan * greensWeight;
      else
@@ -338,9 +338,9 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
          ya -= y * abs(greensYellow) * greensWeight;
      
      // Cyan
-     highp vec3 cyanHsv = rgb2hsv(vec3(0.0, 1.0, 1.0));
+     mediump vec3 cyanHsv = rgb2hsv(vec3(0.0, 1.0, 1.0));
      diff = abs(hsv.x - cyanHsv.x);
-     highp float cyansWeight = (1.0 - max(0.0, min(1.0, diff / 60.0))) * hsv.y;
+     mediump float cyansWeight = (1.0 - max(0.0, min(1.0, diff / 60.0))) * hsv.y;
      if(cyansCyan > 0.0)
          ca += c * cyansCyan * cyansWeight;
      else
@@ -355,9 +355,9 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
          ya -= y * abs(cyansYellow) * cyansWeight;
      
      // Blue
-     highp vec3 blueHsv = rgb2hsv(vec3(0.0, 0.0, 1.0));
+     mediump vec3 blueHsv = rgb2hsv(vec3(0.0, 0.0, 1.0));
      diff = abs(hsv.x - blueHsv.x);
-     highp float bluesWeight = (1.0 - max(0.0, min(1.0, diff / 60.0))) * hsv.y;
+     mediump float bluesWeight = (1.0 - max(0.0, min(1.0, diff / 60.0))) * hsv.y;
      if(bluesCyan > 0.0)
          ca += c * bluesCyan * bluesWeight;
      else
@@ -372,9 +372,9 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
          ya -= y * abs(bluesYellow) * bluesWeight;
      
      // Magentas
-     highp vec3 magentaHsv = rgb2hsv(vec3(1.0, 0.0, 1.0));
+     mediump vec3 magentaHsv = rgb2hsv(vec3(1.0, 0.0, 1.0));
      diff = abs(hsv.x - magentaHsv.x);
-     highp float magentasWeight = (1.0 - max(0.0, min(1.0, diff / 60.0))) * hsv.y;
+     mediump float magentasWeight = (1.0 - max(0.0, min(1.0, diff / 60.0))) * hsv.y;
      if(magentasCyan > 0.0)
          ca += c * magentasCyan * magentasWeight;
      else
@@ -389,7 +389,7 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
          ya -= y * abs(magentasYellow) * magentasWeight;
      
      // Wthies
-     highp float whitesWeight = 1.0 - max(0.0, min(hsv.y * 3.0, 1.0));
+     mediump float whitesWeight = 1.0 - max(0.0, min(hsv.y * 3.0, 1.0));
      if(whitesCyan > 0.0)
          ca += c * whitesCyan * whitesWeight;
      else
@@ -405,7 +405,7 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      
      
      // Neutrals
-     highp float neutralsWeight = min(1.0, ((1.0 - max(0.0, min((hsv.y - 0.4) * 3.0, 1.0))) + sqrt(sin(k * 3.14))));
+     mediump float neutralsWeight = min(1.0, ((1.0 - max(0.0, min((hsv.y - 0.4) * 3.0, 1.0))) + sqrt(sin(k * 3.14))));
      if(neutralsCyan > 0.0)
          ca += c * neutralsCyan * neutralsWeight;
      else
@@ -422,7 +422,7 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
 
      /*
      // Blacks
-     highp float blacksWeight = 1.0 - max(0.0, min((hsv.y - 0.66666666666) * 3.0, 1.0));
+     mediump float blacksWeight = 1.0 - max(0.0, min((hsv.y - 0.66666666666) * 3.0, 1.0));
      if(blacksCyan > 0.0)
          ca += c * blacksCyan * blacksWeight;
      else

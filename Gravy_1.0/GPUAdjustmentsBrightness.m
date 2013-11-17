@@ -175,11 +175,14 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
      /*
       * shadows 1.5 - 3.0
       */
-     mediump float weight = 1.0 - max(0.0, min(1.0, hsv.z * shadowsAmount));
+     mediump float _amount = (1.0 - shadowsAmount) * 1.5 + 1.5;
+     _amount = min(3.0, max(1.5, _amount));
+     mediump float weight = 1.0 - max(0.0, min(1.0, hsv.z * _amount));
 
      increment = hsv.z * weight;
-     increment = sin((1.0 - hsv.z) * 3.14159265359) * 0.3 * weight;
+     increment = sin((1.0 - hsv.z) * 3.14159265359) * 0.4 * weight;
      //increment = sqrt(increment);
+     increment *= sqrt(shadowsAmount);
      hsv.z += increment;
      hsv.z = max(0.0, min(1.0, hsv.z));
      
@@ -246,8 +249,7 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
 
 - (void)setShadowsAmount:(CGFloat)shadows
 {
-    _shadowsAmount = (1.0f - shadows) * 1.5f + 1.5f;
-    _shadowsAmount = MIN(3.0f, MAX(1.5f, _shadowsAmount));
+    _shadowsAmount = (shadows < 0.0f) ? -shadows: shadows;
     [self setFloat:_shadowsAmount forUniform:shadowsAmountUniform program:filterProgram];
 }
 

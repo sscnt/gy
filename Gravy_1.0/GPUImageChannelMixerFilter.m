@@ -16,30 +16,30 @@ NSString *const kGPUImageChannelMixerFilterFragmentShaderString = SHADER_STRING
  varying vec2 textureCoordinate;
  uniform sampler2D inputImageTexture;
  
- uniform highp float redRed; // 1.0 base
- uniform highp float redGreen; // 0.0 base
- uniform highp float redBlue; // 0.0 base
- uniform highp float redConstant;
- uniform highp float greenRed;
- uniform highp float greenGreen;
- uniform highp float greenBlue;
- uniform highp float greenConstant;
- uniform highp float blueRed;
- uniform highp float blueGreen;
- uniform highp float blueBlue;
- uniform highp float blueConstant;
+ uniform mediump float redRed; // 1.0 base
+ uniform mediump float redGreen; // 0.0 base
+ uniform mediump float redBlue; // 0.0 base
+ uniform mediump float redConstant;
+ uniform mediump float greenRed;
+ uniform mediump float greenGreen;
+ uniform mediump float greenBlue;
+ uniform mediump float greenConstant;
+ uniform mediump float blueRed;
+ uniform mediump float blueGreen;
+ uniform mediump float blueBlue;
+ uniform mediump float blueConstant;
 
  
  void main()
  {
      // Sample the input pixel
-     highp vec4 pixel   = texture2D(inputImageTexture, textureCoordinate);
-     highp float r = pixel.r;
-     highp float g = pixel.g;
-     highp float b = pixel.b;
-     highp float _r;
-     highp float _g;
-     highp float _b;
+     mediump vec4 pixel   = texture2D(inputImageTexture, textureCoordinate);
+     mediump float r = pixel.r;
+     mediump float g = pixel.g;
+     mediump float b = pixel.b;
+     mediump float _r;
+     mediump float _g;
+     mediump float _b;
      
     
      
