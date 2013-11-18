@@ -100,13 +100,16 @@
     
     // Hue / Saturation
     @autoreleasepool {
-        GPUImageHueFilter* hueFilter = [[GPUImageHueFilter alloc] init];
-        hueFilter.hue = 200;
+        GPUImageHueSaturationFilter* hueSaturation = [[GPUImageHueSaturationFilter alloc] init];
+        hueSaturation.hue = 0.0f;
+        hueSaturation.saturation = 0.0f;
+        hueSaturation.lightness = 0.0f;
+        hueSaturation.colorize = YES;
         
         GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:self.imageToProcess];
-        [picture addTarget:hueFilter];
+        [picture addTarget:hueSaturation];
         [picture processImage];
-        resultImage = [hueFilter imageFromCurrentlyProcessedOutput];
+        resultImage = [hueSaturation imageFromCurrentlyProcessedOutput];
     }
     
     return resultImage;

@@ -14,11 +14,13 @@ extern NSString *const kGPUImageHueSaturationFilterFragmentShaderString;
 {
     GLuint hueUniform;
     GLuint saturationUniform;
-    GLuint LightnessUniform;
+    GLuint lightnessUniform;
+    GLuint colorizeUniform;
 }
 
-@property (nonatomic, assign) int hue;
-@property (nonatomic, assign) int saturation;
-@property (nonatomic, assign) int lightness;
+@property (nonatomic, assign) float hue;
+@property (nonatomic, assign) float saturation;
+@property (nonatomic, assign) float lightness;
+@property (nonatomic, assign) BOOL colorize;
 
 @end
