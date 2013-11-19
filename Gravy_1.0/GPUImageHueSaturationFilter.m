@@ -66,7 +66,7 @@ NSString *const kGPUImageHueSaturationFilterFragmentShaderString = SHADER_STRING
      mediump float r;
      mediump float g;
      mediump float b;
-     mediump float m60 = 0.01665;
+     mediump float m60 = 0.01666666666;
      int hi = int(mod(float(floor(h * m60)), 6.0));
      mediump float f = (h * m60) - float(hi);
      mediump float p = v * (1.0 - s);
@@ -106,6 +106,92 @@ NSString *const kGPUImageHueSaturationFilterFragmentShaderString = SHADER_STRING
      
  }
  
+ vec3 rgb2hsl(vec3 color){
+     mediump float min = min(color.r, min(color.g, color.b));
+     mediump float max = max(color.r, max(color.g, color.b));
+     mediump float delMax = max - min;
+     
+     mediump float H = 0.0;
+     mediump float S = 0.0;
+     mediump float L = (max + min) / 2.0;
+     if(delMax != 0.0){
+         if(L < 0.5)
+             S = delMax / (max + min);
+         else
+             S = delMax / (2.0 - max - min);
+         
+         mediump float delR = (((max - color.r) / 6.0) + (delMax / 2.0)) / delMax;
+         mediump float delG = (((max - color.g) / 6.0) + (delMax / 2.0)) / delMax;
+         mediump float delB = (((max - color.b) / 6.0) + (delMax / 2.0)) / delMax;
+         
+         if(color.r == max)
+             H = delB - delG;
+         else if(color.g == max)
+             H = (1.0 / 3.0) + delR - delB;
+         else if(color.b == max)
+             H = (2.0 / 3.0) + delG - delR;
+         
+         if(H < 0.0)
+             H += 1.0;
+         if(H > 1.0)
+             H -= 1.0;
+     }
+     
+     return vec3(H, S, L);
+ }
+ 
+ float hue2rgb(float v1, float v2, float vH){
+     if(vH < 0.0) vH += 1.0;
+     if(vH > 1.0) vH -= 1.0;
+     if((6.0 * vH) < 1.0) return (v1 + (v2 - v1) * 6.0 * vH);
+     if((2.0 * vH) < 1.0) return v2;
+     if((3.0 * vH) < 2.0) return (v1 + (v2 - v1) * ((2.0 / 3.0) - vH) * 6.0);
+     return v1;
+ }
+ 
+ vec3 hsl2rgb(vec3 hsl){
+     mediump float H = hsl.x;
+     mediump float S = hsl.y;
+     mediump float L = hsl.z;
+     
+     mediump float R = 0.0;
+     mediump float G = 0.0;
+     mediump float B = 0.0;
+     
+     if(S == 0.0){
+         R = L;
+         G = L;
+         B = L;
+     } else{
+         mediump float var2;
+         if(L < 0.5)
+             var2 = L * (1.0 + S);
+         else
+             var2 = (L + S) - (S * L);
+         mediump float var1 = 2.0 * L - var2;
+         
+         R = hue2rgb(var1, var2, H + (1.0 / 3.0));
+         G = hue2rgb(var1, var2, H);
+         B = hue2rgb(var1, var2, H - (1.0 / 3.0));
+     }
+     return vec3(R, G, B);
+ }
+ 
+ vec3 blend2(vec3 left, vec3 right, float pos){
+     return vec3(left.r * (1.0 - pos) + right.r * pos,
+                 left.g * (1.0 - pos) + right.g * pos,
+                 left.b * (1.0 - pos) + right.b * pos);
+ }
+ 
+ vec3 blend3(vec3 left, vec3 main, vec3 right, float pos){
+     if(pos < 0.0){
+         return blend2(left, main, pos + 1.0);
+     }
+     if(pos > 0.0){
+         return blend2(main, right, pos);
+     }
+     return main;
+ }
  
  float round(float a){
      float b = floor(a);
@@ -120,19 +206,38 @@ NSString *const kGPUImageHueSaturationFilterFragmentShaderString = SHADER_STRING
  {
      mediump vec4 pixel   = texture2D(inputImageTexture, textureCoordinate);
      mediump vec3 inputHsv = rgb2hsv(pixel.rgb);
-
+     
      if(colorize == 1){
-         mediump vec3 hsv;
-         hsv.x = inputHsv.x;
-         hsv.y = saturation;
-         if(inputHsv.y > inputHsv.z){
-             hsv.z = inputHsv.z;
-         } else{
-             hsv.z = inputHsv.y;
+         mediump vec3 hsl = rgb2hsl(pixel.rgb);
+         hsl.x = hue;
+         hsl.y = saturation;
+         hsl.z += lightness;
+         hsl.z = min(1.0, max(0.0, hsl.z));
+         mediump vec3 rgb = hsl2rgb(hsl);
+         pixel.rgb = rgb;
+     }
+
+     if(colorize == 55){
+         mediump vec3 hueRGB = hsv2rgb(vec3(hue, 1.0, 1.0));
+         mediump vec3 color = blend2(vec3(0.5, 0.5, 0.5), hueRGB, saturation);
+         mediump vec3 black = vec3(0.0, 0.0, 0.0);
+         mediump vec3 white = vec3(1.0, 1.0, 1.0);
+         mediump float value = inputHsv.y;
+         if(lightness <= -1.0){
+             gl_FragColor = vec4(black, 1.0);
+             return;
          }
-         hsv.z = (1.0 - hsv.z) * 0.5 + 0.5;
-         hsv.z = min(1.0, max(0.0, hsv.z));
-         pixel.rgb = hsv2rgb(hsv);
+         if(lightness >= 1.0){
+             gl_FragColor = vec4(white, 1.0);
+             return;
+         }
+         mediump vec3 blend;
+         if(lightness >= 0.0){
+             blend = blend3(black, color, white, 2.0 * (1.0 - lightness) * (value - 1.0) + 1.0);
+         } else{
+             blend = blend3(black, color, white, 2.0 * (1.0 + lightness) * (value) - 1.0);
+         }
+         pixel.rgb = blend;
      }
      
      gl_FragColor = pixel;
@@ -184,8 +289,8 @@ NSString *const kGPUImageHueSaturationFilterFragmentShaderString = SHADER_STRING
 
 - (void)setHue:(float)hue
 {
-    _hue = hue;
-    _hue = MAX(0.0f, MIN(360.0f, _hue));
+    _hue = hue / 360.0f;
+    _hue = MAX(0.0f, MIN(1.0f, _hue));
     [self setFloat:_hue forUniform:hueUniform program:filterProgram];
 }
 

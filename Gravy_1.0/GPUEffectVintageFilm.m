@@ -78,38 +78,69 @@
         opacityFilter.opacity = 0.50f;
         [gradientColor addTarget:opacityFilter];
         
-        GPUImageOverlayBlendFilter* blendFilter = [[GPUImageOverlayBlendFilter alloc] init];
-        [opacityFilter addTarget:blendFilter atTextureLocation:1];
+        GPUImageOverlayBlendFilter* overlayBlend = [[GPUImageOverlayBlendFilter alloc] init];
+        [opacityFilter addTarget:overlayBlend atTextureLocation:1];
         
         GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:resultImage];
-        [picture addTarget:blendFilter];
+        [picture addTarget:overlayBlend];
         [picture addTarget:gradientColor];
         [picture processImage];
-        solidImage = [blendFilter imageFromCurrentlyProcessedOutput];
+        resultImage = [overlayBlend imageFromCurrentlyProcessedOutput];
     }
     
     // Curve
     @autoreleasepool {
-        GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"GPUCCCurve01"];
+
+        GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"GPUVintageFilmCurve01"];
         
         GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:resultImage];
         [picture addTarget:curveFilter];
         [picture processImage];
-        solidImage = [curveFilter imageFromCurrentlyProcessedOutput];
+        resultImage = [curveFilter imageFromCurrentlyProcessedOutput];
     }
+    
     
     // Hue / Saturation
     @autoreleasepool {
         GPUImageHueSaturationFilter* hueSaturation = [[GPUImageHueSaturationFilter alloc] init];
-        hueSaturation.hue = 0.0f;
-        hueSaturation.saturation = 0.0f;
+        hueSaturation.hue = 35.0f;
+        hueSaturation.saturation = 25.0f;
         hueSaturation.lightness = 0.0f;
         hueSaturation.colorize = YES;
         
-        GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:self.imageToProcess];
+        GPUImageOpacityFilter* opacityFilter = [[GPUImageOpacityFilter alloc] init];
+        opacityFilter.opacity = 0.50f;
+        [hueSaturation addTarget:opacityFilter];
+        
+        GPUImageNormalBlendFilter* normalBlend = [[GPUImageNormalBlendFilter alloc] init];
+        [opacityFilter addTarget:normalBlend atTextureLocation:1];
+        
+        GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:resultImage];
         [picture addTarget:hueSaturation];
+        [picture addTarget:normalBlend];
         [picture processImage];
-        resultImage = [hueSaturation imageFromCurrentlyProcessedOutput];
+        resultImage = [normalBlend imageFromCurrentlyProcessedOutput];
+    }
+    
+    @autoreleasepool {
+        GPUImageSolidColorGenerator* solidColor = [[GPUImageSolidColorGenerator alloc] init];
+        [solidColor forceProcessingAtSize:CGSizeMake(resultImage.size.width, resultImage.size.height)];
+        [solidColor setColorRed:236.0f/255.0f green:0.0f blue:139.0f/255.0f alpha:1.0f];
+        
+        
+        GPUImageOpacityFilter* opacityFilter = [[GPUImageOpacityFilter alloc] init];
+        opacityFilter.opacity = 0.10f;
+        [solidColor addTarget:opacityFilter];
+        
+        GPUImageScreenBlendFilter* screenBlend = [[GPUImageScreenBlendFilter alloc] init];
+        [opacityFilter addTarget:screenBlend atTextureLocation:1];
+        
+        GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:resultImage];
+        [picture addTarget:solidColor];
+        [picture addTarget:screenBlend];
+        [picture processImage];
+        resultImage = [screenBlend imageFromCurrentlyProcessedOutput];
+        
     }
     
     return resultImage;
