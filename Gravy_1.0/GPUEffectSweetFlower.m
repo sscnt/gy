@@ -16,7 +16,7 @@
     UIImage* resultImage = self.imageToProcess;
     UIImage* solidImage;
     
-    // Selective Color
+    // Selective Color / Curve
     @autoreleasepool {
         GPUImageSelectiveColorFilter* selectiveColor = [[GPUImageSelectiveColorFilter alloc] init];
         [selectiveColor setRedsCyan:-22 Magenta:16 Yellow:33 Black:0];
@@ -25,21 +25,15 @@
         [selectiveColor setCyansCyan:-2 Magenta:-2 Yellow:29 Black:0];
         [selectiveColor setNeutralsCyan:-20 Magenta:4 Yellow:7 Black:0];
         
+        GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"GPUSweetFlowerCurve01"];
+        [selectiveColor addTarget:curveFilter];
+        
         GPUImagePicture* pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
         [pictureOriginal addTarget:selectiveColor];
         [pictureOriginal processImage];
-        solidImage = [selectiveColor imageFromCurrentlyProcessedOutput];
-    }
-    
-    // Curve
-    @autoreleasepool {
-        GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"GPUSweetFlowerCurve01"];
-        
-        GPUImagePicture* pictureOriginal = [[GPUImagePicture alloc] initWithImage:solidImage];
-        [pictureOriginal addTarget:curveFilter];
-        [pictureOriginal processImage];
         solidImage = [curveFilter imageFromCurrentlyProcessedOutput];
     }
+
     
     // Selective Color
     @autoreleasepool {
@@ -51,25 +45,6 @@
         [pictureOriginal addTarget:selectiveColor];
         [pictureOriginal processImage];
         solidImage = [selectiveColor imageFromCurrentlyProcessedOutput];
-    }
-    
-    
-    // Merge
-    @autoreleasepool {
-        GPUImageOpacityFilter* opacityFilter = [[GPUImageOpacityFilter alloc] init];
-        opacityFilter.opacity = 0.80f;
-        
-        GPUImageNormalBlendFilter* normalFilter = [[GPUImageNormalBlendFilter alloc] init];
-        [opacityFilter addTarget:normalFilter atTextureLocation:1];
-        
-        GPUImagePicture* pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
-        [pictureOriginal addTarget:normalFilter];
-        [pictureOriginal processImage];
-        
-        GPUImagePicture* pictureSolid = [[GPUImagePicture alloc] initWithImage:solidImage];
-        [pictureSolid addTarget:opacityFilter];
-        [pictureSolid processImage];
-        resultImage = [normalFilter imageFromCurrentlyProcessedOutput];
     }
     
     // Fill Layer
@@ -91,33 +66,24 @@
         solidImage = [exclusionFilter imageFromCurrentlyProcessedOutput];
     }
     
-    // Merge
-    @autoreleasepool {
-        GPUImageOpacityFilter* opacityFilter = [[GPUImageOpacityFilter alloc] init];
-        opacityFilter.opacity = 0.80f;
-        
-        GPUImageNormalBlendFilter* normalFilter = [[GPUImageNormalBlendFilter alloc] init];
-        [opacityFilter addTarget:normalFilter atTextureLocation:1];
-        
-        GPUImagePicture* pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
-        [pictureOriginal addTarget:normalFilter];
-        [pictureOriginal processImage];
-        
-        GPUImagePicture* pictureSolid = [[GPUImagePicture alloc] initWithImage:solidImage];
-        [pictureSolid addTarget:opacityFilter];
-        [pictureSolid processImage];
-        resultImage = [normalFilter imageFromCurrentlyProcessedOutput];
-    }
     
     // Fill Layer
     @autoreleasepool {
         GPUImageSolidColorGenerator* solidColor = [[GPUImageSolidColorGenerator alloc] init];
         [solidColor setColorRed:29.0f/255.0f green:137.0f/255.0f blue:212.0f/255.0 alpha:1.0f];
-
+        
+        GPUImageOpacityFilter* opacityFilter = [[GPUImageOpacityFilter alloc] init];
+        opacityFilter.opacity = 0.15f;
+        [solidColor addTarget:opacityFilter];
+        
+        GPUImageExclusionBlendFilter* exclusionFilter = [[GPUImageExclusionBlendFilter alloc] init];
+        [opacityFilter addTarget:exclusionFilter atTextureLocation:1];
+        
         GPUImagePicture* pictureOriginal = [[GPUImagePicture alloc] initWithImage:solidImage];
         [pictureOriginal addTarget:solidColor];
+        [pictureOriginal addTarget:exclusionFilter];
         [pictureOriginal processImage];
-        solidImage = [solidColor imageFromCurrentlyProcessedOutput];
+        solidImage = [exclusionFilter imageFromCurrentlyProcessedOutput];
     }
 
     // Color Balance
@@ -149,10 +115,8 @@
         
         GPUImagePicture* pictureBase = [[GPUImagePicture alloc] initWithImage:solidImage];
         [pictureBase addTarget:normalFilter];
+        [pictureBase addTarget:colorBalance];
         [pictureBase processImage];
-        GPUImagePicture* pictureOverlay = [[GPUImagePicture alloc] initWithImage:solidImage];
-        [pictureOverlay addTarget:colorBalance];
-        [pictureOverlay processImage];
         solidImage = [normalFilter imageFromCurrentlyProcessedOutput];
     }
     
@@ -184,19 +148,19 @@
     // Merge
     @autoreleasepool {
         GPUImageOpacityFilter* opacityFilter = [[GPUImageOpacityFilter alloc] init];
-        opacityFilter.opacity = 0.12f;
+        opacityFilter.opacity = 0.80f;
         
-        GPUImageExclusionBlendFilter* exclusionFilter = [[GPUImageExclusionBlendFilter alloc] init];
-        [opacityFilter addTarget:exclusionFilter atTextureLocation:1];
+        GPUImageNormalBlendFilter* normalFilter = [[GPUImageNormalBlendFilter alloc] init];
+        [opacityFilter addTarget:normalFilter atTextureLocation:1];
 
         GPUImagePicture* pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
-        [pictureOriginal addTarget:exclusionFilter];
+        [pictureOriginal addTarget:normalFilter];
         [pictureOriginal processImage];
         
         GPUImagePicture* pictureSolid = [[GPUImagePicture alloc] initWithImage:solidImage];
         [pictureSolid addTarget:opacityFilter];
         [pictureSolid processImage];
-        resultImage = [exclusionFilter imageFromCurrentlyProcessedOutput];
+        resultImage = [normalFilter imageFromCurrentlyProcessedOutput];
     }
     
     

@@ -104,7 +104,7 @@
     // Fill Layer
     @autoreleasepool {
         GPUImageSolidColorGenerator* solidColor = [[GPUImageSolidColorGenerator alloc] init];
-        [solidColor setColorRed:237.0f/255.0f green:153.0f/255.0f blue:23.0f/255.0f alpha:1.0f];
+        [solidColor setColorRed:236.0f/255.0f green:158.0f/255.0f blue:34.0f/255.0f alpha:1.0f];
         
         GPUImageOpacityFilter* opacityFilter = [[GPUImageOpacityFilter alloc] init];
         opacityFilter.opacity = 0.50f;
@@ -118,6 +118,21 @@
         [pictureOriginal addTarget:solidColor];
         [pictureOriginal processImage];
         resultImage = [softlightFilter imageFromCurrentlyProcessedOutput];
+    }
+    
+    // Levels
+    @autoreleasepool {
+        GPUImageLevelsFilter* levelsFilter = [[GPUImageLevelsFilter alloc] init];
+        [levelsFilter setMin:10.0f/255.0f gamma:0.97f max:244.0f/255.0f minOut:0.0f maxOut:246.0f/255.0f];
+        
+        GPUImageNormalBlendFilter* normalFilter = [[GPUImageNormalBlendFilter alloc] init];
+        [levelsFilter addTarget:normalFilter atTextureLocation:1];
+        
+        GPUImagePicture* pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
+        [pictureOriginal addTarget:levelsFilter];
+        [pictureOriginal addTarget:normalFilter];
+        [pictureOriginal processImage];
+        resultImage = [normalFilter imageFromCurrentlyProcessedOutput];
     }
     
     // Gradient Fill

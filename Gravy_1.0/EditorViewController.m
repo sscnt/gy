@@ -130,7 +130,10 @@
     [scrollView addSubview:wrapper];
     
     
-    GPUEffectVintageFilm* effect = [[GPUEffectVintageFilm alloc] init];
+    //GPUEffectVintageFilm* effect = [[GPUEffectVintageFilm alloc] init];
+    //GPUEffectColorfulCandy* effect = [[GPUEffectColorfulCandy alloc] init];
+    //GPUEffectSoftPop* effect = [[GPUEffectSoftPop alloc] init];
+    GPUEffectSweetFlower* effect = [[GPUEffectSweetFlower alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
     

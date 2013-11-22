@@ -85,7 +85,7 @@
         [picture addTarget:overlayBlend];
         [picture addTarget:gradientColor];
         [picture processImage];
-        resultImage = [overlayBlend imageFromCurrentlyProcessedOutput];
+        //resultImage = [overlayBlend imageFromCurrentlyProcessedOutput];
     }
     
     // Curve

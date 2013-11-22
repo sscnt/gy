@@ -97,9 +97,10 @@ NSString *const kGPUImageLevelsFragmentShaderString = SHADER_STRING
 #pragma mark Accessors
 
 - (void)setMin:(CGFloat)min gamma:(CGFloat)mid max:(CGFloat)max minOut:(CGFloat)minOut maxOut:(CGFloat)maxOut {
-    [self setRedMin:min gamma:mid max:max minOut:minOut maxOut:maxOut];
-    [self setGreenMin:min gamma:mid max:max minOut:minOut maxOut:maxOut];
-    [self setBlueMin:min gamma:mid max:max minOut:minOut maxOut:maxOut];
+    CGFloat gamma = (max - min) / 2.0f * (1.0f + (1.0f - mid)) + min;
+    [self setRedMin:min gamma:gamma max:max minOut:minOut maxOut:maxOut];
+    [self setGreenMin:min gamma:gamma max:max minOut:minOut maxOut:maxOut];
+    [self setBlueMin:min gamma:gamma max:max minOut:minOut maxOut:maxOut];
 }
 
 - (void)setMin:(CGFloat)min gamma:(CGFloat)mid max:(CGFloat)max {
