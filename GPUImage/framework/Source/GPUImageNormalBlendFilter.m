@@ -29,13 +29,12 @@ NSString *const kGPUImageNormalBlendFragmentShaderString = SHADER_STRING
      mediump vec4 base = texture2D(inputImageTexture, textureCoordinate);
      mediump vec4 overlay = texture2D(inputImageTexture2, textureCoordinate2);
 
-     mediump float a = base.a * overlay.a;
      mediump float r = base.r * base.a * (1.0 - overlay.a) + overlay.r * overlay.a;
      mediump float g = base.g * base.a * (1.0 - overlay.a) + overlay.g * overlay.a;
      mediump float b = base.b * base.a * (1.0 - overlay.a) + overlay.b * overlay.a;
      
      
-     gl_FragColor = vec4(r, g, b, a);
+     gl_FragColor = vec4(r, g, b, base.a);
  }
 );
 #else
