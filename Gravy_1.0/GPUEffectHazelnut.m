@@ -67,8 +67,6 @@
         [picture processImage];
         resultImage = [softlightBlend imageFromCurrentlyProcessedOutput];
     }
-     */
-    
     
     // Gradient
     @autoreleasepool {
@@ -81,18 +79,46 @@
         [gradientColor addColorRed:255.0f Green:229.0f Blue:183.0f Opacity:100.0f Location:0 Midpoint:50];
         [gradientColor addColorRed:128.0f Green:123.0f Blue:59.0f Opacity:0.0f Location:4096 Midpoint:50];
         
+        GPUImageSolidColorGenerator* solidColor = [[GPUImageSolidColorGenerator alloc] init];
+        [solidColor setColorRed:0.0f green:1.0f blue:0.0f alpha:0.50f];
+        
         GPUImageOverlayBlendFilter* overlayBlend = [[GPUImageOverlayBlendFilter alloc] init];
         [gradientColor addTarget:overlayBlend atTextureLocation:1];
         
         GPUImageNormalBlendFilter* normal = [[GPUImageNormalBlendFilter alloc] init];
         [gradientColor addTarget:normal atTextureLocation:1];
+        [solidColor addTarget:normal atTextureLocation:1];
         
         GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:resultImage];
         [picture addTarget:normal];
-        [picture addTarget:gradientColor];
+        [picture addTarget:solidColor];
         [picture processImage];
         resultImage = [normal imageFromCurrentlyProcessedOutput];
     }
+    
+     */
+    
+    // Fill Layer
+    @autoreleasepool {
+        GPUImageSolidColorGenerator* solidColor = [[GPUImageSolidColorGenerator alloc] init];
+        [solidColor setColorRed:255.0f/255.0f green:8.0f/255.0f blue:28.0f/255.0 alpha:1.0f];
+        
+        GPUImageOpacityFilter* opacityFilter = [[GPUImageOpacityFilter alloc] init];
+        opacityFilter.opacity = 1.0f;
+        [solidColor addTarget:opacityFilter];
+        
+        GPUImageNormalBlendFilter* normal = [[GPUImageNormalBlendFilter alloc] init];
+        [opacityFilter addTarget:normal atTextureLocation:1];
+        
+        GPUImagePicture* pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
+        [pictureOriginal addTarget:solidColor];
+        [pictureOriginal addTarget:normal];
+        [pictureOriginal processImage];
+        resultImage = [normal imageFromCurrentlyProcessedOutput];
+    }
+    
+    
+    
     return resultImage;
 }
 
