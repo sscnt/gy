@@ -4,3 +4,4 @@
 #import "GPUEffectSweetFlower.h"
 
 #import "GPUEffectVintageFilm.h"
+#import "GPUEffectHazelnut.h"

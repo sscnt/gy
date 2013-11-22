@@ -26,25 +26,27 @@ NSString *const kGPUImageNormalBlendFragmentShaderString = SHADER_STRING
  
  void main()
  {
-     lowp vec4 c2 = texture2D(inputImageTexture, textureCoordinate);
-	 lowp vec4 c1 = texture2D(inputImageTexture2, textureCoordinate2);
+     mediump vec4 c2 = texture2D(inputImageTexture, textureCoordinate);
+	 mediump vec4 c1 = texture2D(inputImageTexture2, textureCoordinate2);
      
-     lowp vec4 outputColor;
+     mediump vec4 outputColor;
      
 //     outputColor.r = c1.r + c2.r * c2.a * (1.0 - c1.a);
 //     outputColor.g = c1.g + c2.g * c2.a * (1.0 - c1.a);
 //     outputColor.b = c1.b + c2.b * c2.a * (1.0 - c1.a);
 //     outputColor.a = c1.a + c2.a * (1.0 - c1.a);
      
-     lowp float a = c1.a + c2.a * (1.0 - c1.a);
-     lowp float alphaDivisor = a + step(a, 0.0); // Protect against a divide-by-zero blacking out things in the output
+     mediump float a = c1.a + c2.a * (1.0 - c1.a);
+     mediump float alphaDivisor = a + step(a, 0.0); // Protect against a divide-by-zero blacking out things in the output
 
      outputColor.r = (c1.r * c1.a + c2.r * c2.a * (1.0 - c1.a))/alphaDivisor;
      outputColor.g = (c1.g * c1.a + c2.g * c2.a * (1.0 - c1.a))/alphaDivisor;
      outputColor.b = (c1.b * c1.a + c2.b * c2.a * (1.0 - c1.a))/alphaDivisor;
      outputColor.a = a;
+     
+     mediump float r = c2.r * c2.a * (1.0 - c1.a) + c1.r * c1.a;
 
-     gl_FragColor = outputColor;
+     //gl_FragColor = outputColor;
  }
 );
 #else

@@ -133,7 +133,8 @@
     //GPUEffectVintageFilm* effect = [[GPUEffectVintageFilm alloc] init];
     //GPUEffectColorfulCandy* effect = [[GPUEffectColorfulCandy alloc] init];
     //GPUEffectSoftPop* effect = [[GPUEffectSoftPop alloc] init];
-    GPUEffectSweetFlower* effect = [[GPUEffectSweetFlower alloc] init];
+    //GPUEffectSweetFlower* effect = [[GPUEffectSweetFlower alloc] init];
+    GPUEffectHazelnut* effect = [[GPUEffectHazelnut alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
     
