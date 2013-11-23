@@ -14,10 +14,19 @@
 #import "GPUImageColorBalanceFilter.h"
 #import "GPUImageHueSaturationFilter.h"
 
+
+typedef NS_ENUM(NSInteger, MergeBlendingMode){
+    MergeBlendingModeNormal = 1,
+    MergeBlendingModeSoftLight,
+    MergeBlendingModeExclusion,
+    MergeBlendingModeHue
+};
+
 @interface GPUImageEffects : NSObject
 
 @property (nonatomic, weak) UIImage* imageToProcess;
 
 - (UIImage*)process;
+- (UIImage*)mergeBaseImage:(UIImage*)baseImage overlayFilter:(GPUImageFilter*)overlayFilter opacity:(CGFloat)opacity blendingMode:(MergeBlendingMode)blendingMode;
 
 @end
