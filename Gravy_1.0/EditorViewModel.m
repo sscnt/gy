@@ -167,7 +167,7 @@
     UIImage* resultImage = self.appliedImageSaturation;
     
     // Colorful Candy
-    if(self.weightLeftTop > 0.0f){
+    if(self.weightLeftBottom > 0.0f){
         @autoreleasepool {
             GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
             GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedLeftBottomImage];
@@ -176,7 +176,7 @@
     }
     
     // Haze 3
-    if(self.weightLeftBottom > 0.0f){
+    if(self.weightLeftTop > 0.0f){
         @autoreleasepool {
             GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
             GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedLeftTopImage];

@@ -391,32 +391,59 @@
         
         if(!processingEffect){
             processingEffect = YES;
+            deltaX *= 1.30f;
+            deltaY *= 1.30f;
+            deltaX = MIN(0.9999f, MAX(-0.9999f, deltaX));
+            deltaY = MIN(0.9999f, MAX(-0.9999f, deltaY));
             dispatch_async(processingQueue, ^{
-                CGFloat dX = deltaX + 1.0f;
-                CGFloat dY = deltaY + 1.0f;
-                CGFloat d = sqrtf(dX * dX + dY * dY);
-                CGFloat ratio = MAX(0.0f, 1.0 - d);
-                editor.weightLeftTop = ratio;
+                editor.weightLeftBottom = 0.0f;
+                editor.weightLeftTop = 0.0f;
+                editor.weightRightBottom = 0.0f;
+                editor.weightRightTop = 0.0f;
                 
-                dX = deltaX + 1.0f;
-                dY = deltaY - 1.0f;
-                d = sqrtf(dX * dX + dY * dY);
-                ratio = MAX(0.0f, 1.0 - d);
-                editor.weightLeftBottom = ratio;
+                CGFloat k;
+                CGFloat cX, cY, d, dr, dX, dY, drX, drY, ratio;
+                /*
+                 y = -x
+                 y + 1.0 = k (x + 1.0)
+                 1 - k = (k + 1)x
+                 x = (1 - k) / (k + 1)
+                 y = -x
+                 */
+                k = (deltaY + 1.0f) / (deltaX + 1.0f);
+                cX = (1.0f - k) / (1.0f + k);
+                cY = -cX;
+                drX = cX - deltaX;
+                drY = cY - deltaY;
+                if(cX > deltaX && cY > deltaY){
+                    dX = cX + 1.0f;
+                    dY = cY + 1.0f;
+                    dr = sqrtf(drX * drX + drY * drY);
+                    d = sqrtf(dX * dX + dY * dY);
+                    ratio = MAX(0.0f, dr / d);
+                    editor.weightLeftBottom = ratio;
+                }
                 
-                
-                dX = deltaX - 1.0f;
-                dY = deltaY - 1.0f;
-                d = sqrtf(dX * dX + dY * dY);
-                ratio = MAX(0.0f, 1.0 - d);
-                editor.weightRightBottom = ratio;
-                
-                
-                dX = deltaX - 1.0f;
-                dY = deltaY + 1.0f;
-                d = sqrtf(dX * dX + dY * dY);
-                ratio = MAX(0.0f, 1.0 - d);
-                editor.weightRightTop = ratio;
+                /*
+                 y = -x
+                 y - 1.0 = k (x - 1.0)
+                 k - 1 = (k + 1)x
+                 x = (k - 1) / (k + 1)
+                 y = -x
+                 */
+                k = (deltaY - 1.0f) / (deltaX - 1.0f);
+                cX = (k - 1.0f) / (1.0f + k);
+                cY = -cX;
+                drX = cX - deltaX;
+                drY = cY - deltaY;
+                if(cX < deltaX && cY < deltaY){
+                    dX = cX - 1.0f;
+                    dY = cY - 1.0f;
+                    dr = sqrtf(drX * drX + drY * drY);
+                    d = sqrtf(dX * dX + dY * dY);
+                    ratio = MAX(0.0f, dr / d);
+                    editor.weightRightBottom = ratio;
+                }
                 
                 [editor adjustCurrentSelectedEffect];
                 
