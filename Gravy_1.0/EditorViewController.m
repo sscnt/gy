@@ -526,7 +526,7 @@
     dispatch_async(processingQueue, ^{
         
         UIImage* resultImage;
-        GPUEffectVintageFilm* effect = [[GPUEffectVintageFilm alloc] init];
+        GPUEffectHazelnut* effect = [[GPUEffectHazelnut alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
         
