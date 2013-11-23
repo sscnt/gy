@@ -108,10 +108,7 @@
     @autoreleasepool {
         GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"GPUVintage1Curve02"];
         
-        GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:resultImage];
-        [picture addTarget:curveFilter];
-        [picture processImage];
-        resultImage = [curveFilter imageFromCurrentlyProcessedOutput];
+        resultImage = [self mergeBaseImage:resultImage overlayFilter:curveFilter opacity:0.60f blendingMode:MergeBlendingModeNormal];
     }
     
     // Selective Color
@@ -124,7 +121,6 @@
         [pictureOriginal processImage];
         resultImage = [selectiveColor imageFromCurrentlyProcessedOutput];
     }
-    
     
     // Fill Layer
     @autoreleasepool {

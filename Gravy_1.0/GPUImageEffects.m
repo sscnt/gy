@@ -39,7 +39,7 @@
     
     if(blendingMode == MergeBlendingModeExclusion){
         GPUImageExclusionBlendFilter* blending = [[GPUImageExclusionBlendFilter alloc] init];
-        [opacityFilter addTarget:blending];
+        [opacityFilter addTarget:blending atTextureLocation:1];
         
         [picture addTarget:blending];
         [picture processImage];
@@ -48,7 +48,7 @@
     
     if(blendingMode == MergeBlendingModeHue){
         GPUImageHueBlendFilter* blending = [[GPUImageHueBlendFilter alloc] init];
-        [opacityFilter addTarget:blending];
+        [opacityFilter addTarget:blending atTextureLocation:1];
         
         [picture addTarget:blending];
         [picture processImage];
