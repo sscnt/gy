@@ -11,10 +11,13 @@ NSString *const kGPUImageMultiplyBlendFragmentShaderString = SHADER_STRING
  
  void main()
  {
-     lowp vec4 base = texture2D(inputImageTexture, textureCoordinate);
-     lowp vec4 overlayer = texture2D(inputImageTexture2, textureCoordinate2);
+     mediump vec4 base = texture2D(inputImageTexture, textureCoordinate);
+     mediump vec4 overlayer = texture2D(inputImageTexture2, textureCoordinate2);
           
-     gl_FragColor = overlayer * base + overlayer * (1.0 - base.a) + base * (1.0 - overlayer.a);
+     //gl_FragColor = overlayer * base + overlayer * (1.0 - base.a) + base * (1.0 - overlayer.a);
+     mediump vec3 rgb = base.rgb * overlayer.rgb * overlayer.a + (1.0 - overlayer.a) * base.rgb;
+     gl_FragColor = vec4(rgb, 1.0);
+     
  }
 );
 #else

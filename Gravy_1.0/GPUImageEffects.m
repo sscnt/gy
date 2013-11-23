@@ -19,42 +19,38 @@
     GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:baseImage];
     [picture addTarget:overlayFilter];
     
+    id blending;
+    
     if(blendingMode == MergeBlendingModeNormal){
-        GPUImageNormalBlendFilter* blending = [[GPUImageNormalBlendFilter alloc] init];
-        [opacityFilter addTarget:blending atTextureLocation:1];
-        
-        [picture addTarget:blending];
-        [picture processImage];
-        return [blending imageFromCurrentlyProcessedOutput];
+        blending = [[GPUImageNormalBlendFilter alloc] init];
+    }
+    
+    if(blendingMode == MergeBlendingModeMultiply){
+        blending = [[GPUImageMultiplyBlendFilter alloc] init];
     }
     
     if(blendingMode == MergeBlendingModeSoftLight){
-        GPUImageSoftLightBlendFilter* blending = [[GPUImageSoftLightBlendFilter alloc] init];
-        [opacityFilter addTarget:blending atTextureLocation:1];
-        
-        [picture addTarget:blending];
-        [picture processImage];
-        return [blending imageFromCurrentlyProcessedOutput];
+        blending = [[GPUImageSoftLightBlendFilter alloc] init];
+    }
+    
+    if(blendingMode == MergeBlendingModeOverlay){
+        blending = [[GPUImageOverlayBlendFilter alloc] init];
     }
     
     if(blendingMode == MergeBlendingModeExclusion){
-        GPUImageExclusionBlendFilter* blending = [[GPUImageExclusionBlendFilter alloc] init];
-        [opacityFilter addTarget:blending atTextureLocation:1];
-        
-        [picture addTarget:blending];
-        [picture processImage];
-        return [blending imageFromCurrentlyProcessedOutput];
+        blending = [[GPUImageExclusionBlendFilter alloc] init];
     }
     
     if(blendingMode == MergeBlendingModeHue){
-        GPUImageHueBlendFilter* blending = [[GPUImageHueBlendFilter alloc] init];
-        [opacityFilter addTarget:blending atTextureLocation:1];
-        
-        [picture addTarget:blending];
-        [picture processImage];
-        return [blending imageFromCurrentlyProcessedOutput];
+        blending = [[GPUImageHueBlendFilter alloc] init];
     }
-    return nil;
+    
+    [opacityFilter addTarget:blending atTextureLocation:1];
+    
+    [picture addTarget:blending];
+    [picture processImage];
+    return [blending imageFromCurrentlyProcessedOutput];
+
 }
 
 @end

@@ -6,3 +6,4 @@
 #import "GPUEffectVintageFilm.h"
 #import "GPUEffectHazelnut.h"
 #import "GPUEffectVintage1.h"
+#import "GPUEffectVintage2.h"
