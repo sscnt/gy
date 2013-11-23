@@ -9,12 +9,8 @@
 #import <UIKit/UIKit.h>
 
 #import "GPUEffectColorfulCandy.h"
+#import "GPUEffectVintageFilm.h"
 
-
-typedef NS_ENUM(NSInteger, EffectId){
-    EffectIdNone = 1,
-    EffectIdCandy
-};
 @class UIEffectSelectionButton;
 @protocol UIEffectSelectionButtonDelegate <NSObject>
 - (void)buttonPressed:(UIEffectSelectionButton*)button;

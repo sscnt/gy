@@ -96,6 +96,48 @@
     self.appliedImageSaturation = [adjustmentsSaturation imageFromCurrentlyProcessedOutput];
 }
 
+- (UIImage*)merge2pictureBase:(GPUImagePicture *)basePicture overlay:(GPUImagePicture *)overlayPicture opacity:(CGFloat)opacity
+{
+    GPUImageNormalBlendFilter* normalBlend = [[GPUImageNormalBlendFilter alloc] init];
+    [basePicture addTarget:normalBlend];
+    
+    GPUImageOpacityFilter* opacityFilter = [[GPUImageOpacityFilter alloc] init];
+    opacityFilter.opacity = opacity;
+    
+    [opacityFilter addTarget:normalBlend atTextureLocation:1];
+    [overlayPicture addTarget:opacityFilter];
+    [basePicture processImage];
+    [overlayPicture processImage];
+    return [normalBlend imageFromCurrentlyProcessedOutput];
+}
+
+- (void)applyCurrentSelectedEffect
+{
+    if(self.currentSelectedEffectId == EffectIdCandy){
+        [self applyEffectCandy];
+        return;
+    }
+    
+    if(self.currentSelectedEffectId == EffectIdVintage){
+        [self applyEffectVintage];
+        return;
+    }
+}
+
+- (void)adjustCurrentSelectedEffect
+{
+    if(self.currentSelectedEffectId == EffectIdCandy){
+        [self adjustEffectCandy];
+        return;
+    }
+    
+    if(self.currentSelectedEffectId == EffectIdVintage){
+        [self adjustEffectVintage];
+        return;
+    }
+    
+}
+
 - (void)applyEffectCandy
 {
     @autoreleasepool {
@@ -118,65 +160,112 @@
         effect.imageToProcess = self.appliedImageSaturation;
         self.effectedRightTopImage = [effect process];
     }
-    
+}
+
+- (void)adjustEffectCandy
+{
     UIImage* resultImage = self.appliedImageSaturation;
     
     // Colorful Candy
-    @autoreleasepool {
-        GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
-        GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedLeftBottomImage];
-        GPUImageNormalBlendFilter* blend = [[GPUImageNormalBlendFilter alloc] init];
-        GPUImageOpacityFilter* opacity = [[GPUImageOpacityFilter alloc] init];
-        opacity.opacity = self.effectCandyColorfulCandy;
-        [base addTarget:blend];
-        [opacity addTarget:blend];
-        [overlay addTarget:opacity];
-        [base processImage];
-        [overlay processImage];
-        resultImage = [blend imageFromCurrentlyProcessedOutput];
+    if(self.weightLeftTop > 0.0f){
+        @autoreleasepool {
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedLeftBottomImage];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftBottom];
+        }
     }
+    
     // Haze 3
-    @autoreleasepool {
-        GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
-        GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedLeftTopImage];
-        GPUImageNormalBlendFilter* blend = [[GPUImageNormalBlendFilter alloc] init];
-        GPUImageOpacityFilter* opacity = [[GPUImageOpacityFilter alloc] init];
-        opacity.opacity = self.effectCandyHaze3;
-        [base addTarget:blend];
-        [opacity addTarget:blend];
-        [overlay addTarget:opacity];
-        [base processImage];
-        [overlay processImage];
-        resultImage = [blend imageFromCurrentlyProcessedOutput];
+    if(self.weightLeftBottom > 0.0f){
+        @autoreleasepool {
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedLeftTopImage];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftTop];
+        }
     }
+    
     // Soft Pop
-    @autoreleasepool {
-        GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
-        GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedRightBottomImage];
-        GPUImageNormalBlendFilter* blend = [[GPUImageNormalBlendFilter alloc] init];
-        GPUImageOpacityFilter* opacity = [[GPUImageOpacityFilter alloc] init];
-        opacity.opacity = self.effectCandySoftPop;
-        [base addTarget:blend];
-        [opacity addTarget:blend];
-        [overlay addTarget:opacity];
-        [base processImage];
-        [overlay processImage];
-        resultImage = [blend imageFromCurrentlyProcessedOutput];
+    if(self.weightRightBottom > 0.0f){
+        @autoreleasepool {
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedRightBottomImage];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightBottom];
+        }
     }
     
     // Sweet Flower
+    if(self.weightRightTop > 0.0f){
+        @autoreleasepool {
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedRightTopImage];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightTop];
+        }
+    }
+    self.appliedImageEffect = resultImage;
+}
+
+- (void)applyEffectVintage
+{
     @autoreleasepool {
-        GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
-        GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedRightTopImage];
-        GPUImageNormalBlendFilter* blend = [[GPUImageNormalBlendFilter alloc] init];
-        GPUImageOpacityFilter* opacity = [[GPUImageOpacityFilter alloc] init];
-        opacity.opacity = self.effectCandySweetFlower;
-        [base addTarget:blend];
-        [opacity addTarget:blend];
-        [overlay addTarget:opacity];
-        [base processImage];
-        [overlay processImage];
-        resultImage = [blend imageFromCurrentlyProcessedOutput];
+        GPUEffectVintageFilm* effect = [[GPUEffectVintageFilm alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedLeftBottomImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectHazelnut* effect = [[GPUEffectHazelnut alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedLeftTopImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectVintage1* effect = [[GPUEffectVintage1 alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedRightBottomImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectVintage2* effect = [[GPUEffectVintage2 alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedRightTopImage = [effect process];
+    }
+}
+
+- (void)adjustEffectVintage
+{
+    UIImage* resultImage = self.appliedImageSaturation;
+    
+    // Vintage Film
+    if(self.weightLeftBottom > 0.0f){
+        @autoreleasepool {
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedLeftBottomImage];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftBottom];
+        }
+    }
+    
+    // Hazelnut
+    if(self.weightLeftTop > 0.0f){
+        @autoreleasepool {
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedLeftTopImage];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftTop];
+        }
+    }
+    
+    // Soft Pop
+    if(self.weightRightBottom > 0.0f){
+        @autoreleasepool {
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedRightBottomImage];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightBottom];
+        }
+    }
+    
+    // Sweet Flower
+    if(self.weightRightTop > 0.0f){
+        @autoreleasepool {
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedRightTopImage];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightTop];
+        }
     }
     self.appliedImageEffect = resultImage;
 }

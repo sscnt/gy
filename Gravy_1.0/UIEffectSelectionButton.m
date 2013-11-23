@@ -46,10 +46,21 @@
     if(self.effectId == EffectIdNone){
         previewImageView.image = baseImage;
         self.selected = YES;
-    } else if(self.effectId == EffectIdCandy){
+        return;
+    }
+    
+    if(self.effectId == EffectIdCandy){
         GPUEffectColorfulCandy* effect = [[GPUEffectColorfulCandy alloc] init];
         effect.imageToProcess = baseImage;
         previewImageView.image = [effect process];
+        return;
+    }
+    
+    if(self.effectId == EffectIdVintage){
+        GPUEffectVintageFilm* effect = [[GPUEffectVintageFilm alloc] init];
+        effect.imageToProcess = baseImage;
+        previewImageView.image = [effect process];
+        return;
     }
 }
 - (void)setSelected:(BOOL)selected
@@ -69,6 +80,10 @@
     if(effectId == EffectIdCandy){
         return NSLocalizedString(@"Candy", nil);
     }
+    if(effectId == EffectIdVintage){
+        return NSLocalizedString(@"Vintage", nil);
+    }
+    
     return NSLocalizedString(@"None", nil);
 }
 

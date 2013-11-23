@@ -12,10 +12,7 @@
 #import "GPUAdjustmentsSaturation.h"
 #import "GPUAdjustmentsBrightness.h"
 
-#import "GPUEffectHaze3.h"
-#import "GPUEffectColorfulCandy.h"
-#import "GPUEffectSoftPop.h"
-#import "GPUEffectSweetFlower.h"
+#import "GPUImageEffectsImport.h"
 
 typedef NS_ENUM(NSInteger, EditorViewState){
     EditorViewStateWhiteBalance = 1,
@@ -51,10 +48,12 @@ typedef NS_ENUM(NSInteger, EditorViewState){
 @property (nonatomic, strong) GPUImagePicture* pictureSaturation;
 @property (nonatomic, strong) GPUImagePicture* pictureEffect;
 
-@property (nonatomic, assign) float effectCandySweetFlower;
-@property (nonatomic, assign) float effectCandySoftPop;
-@property (nonatomic, assign) float effectCandyColorfulCandy;
-@property (nonatomic, assign) float effectCandyHaze3;
+@property (nonatomic, assign) float weightRightTop;
+@property (nonatomic, assign) float weightRightBottom;
+@property (nonatomic, assign) float weightLeftTop;
+@property (nonatomic, assign) float weightLeftBottom;
+
+@property (nonatomic, assign) EffectId currentSelectedEffectId;
 
 - (void)applyWhiteBalanceAmountRed:(float)red Blue:(float)blue;
 - (void)applyWhiteBalance;
@@ -64,6 +63,15 @@ typedef NS_ENUM(NSInteger, EditorViewState){
 - (void)applySaturationAmount:(float)amount Radius:(float)radius;
 - (void)applySaturation;
 
+- (UIImage*)merge2pictureBase:(GPUImagePicture*)basePicture overlay:(GPUImagePicture*)overlayPicture opacity:(CGFloat)opacity;
+
+- (void)applyCurrentSelectedEffect;
+- (void)adjustCurrentSelectedEffect;
+
 - (void)applyEffectCandy;
+- (void)adjustEffectCandy;
+
+- (void)applyEffectVintage;
+- (void)adjustEffectVintage;
 
 @end

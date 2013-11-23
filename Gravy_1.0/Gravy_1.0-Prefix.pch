@@ -20,3 +20,10 @@
 #else
 #define dlog(...)
 #endif
+
+
+typedef NS_ENUM(NSInteger, EffectId){
+    EffectIdNone = 1,
+    EffectIdCandy,
+    EffectIdVintage
+};

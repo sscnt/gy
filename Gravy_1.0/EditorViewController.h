@@ -54,6 +54,7 @@ typedef NS_ENUM(NSInteger, KnobId){
     BOOL processingBrightness;
     BOOL processingWhiteBalance;
     BOOL processingSaturation;
+    BOOL processingEffect;
 
     UIImage* effectSelectionPreviewImgae;
     UIEffectSelectionView* effectSelectionView;

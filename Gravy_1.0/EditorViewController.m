@@ -388,7 +388,46 @@
         }
 
     } else if(targetView.tag == KnobIdEffect){
-        dlog(@"Hello");
+        
+        if(!processingEffect){
+            processingEffect = YES;
+            dispatch_async(processingQueue, ^{
+                CGFloat dX = deltaX + 1.0f;
+                CGFloat dY = deltaY + 1.0f;
+                CGFloat d = sqrtf(dX * dX + dY * dY);
+                CGFloat ratio = MAX(0.0f, 1.0 - d);
+                editor.weightLeftTop = ratio;
+                
+                dX = deltaX + 1.0f;
+                dY = deltaY - 1.0f;
+                d = sqrtf(dX * dX + dY * dY);
+                ratio = MAX(0.0f, 1.0 - d);
+                editor.weightLeftBottom = ratio;
+                
+                
+                dX = deltaX - 1.0f;
+                dY = deltaY - 1.0f;
+                d = sqrtf(dX * dX + dY * dY);
+                ratio = MAX(0.0f, 1.0 - d);
+                editor.weightRightBottom = ratio;
+                
+                
+                dX = deltaX - 1.0f;
+                dY = deltaY + 1.0f;
+                d = sqrtf(dX * dX + dY * dY);
+                ratio = MAX(0.0f, 1.0 - d);
+                editor.weightRightTop = ratio;
+                
+                [editor adjustCurrentSelectedEffect];
+                
+                //メインスレッド
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [effectImageView setImage:editor.appliedImageEffect];
+                    processingEffect = NO;
+                });
+            });
+            
+        }
     }
     
     
@@ -462,7 +501,17 @@
 }
 - (void)effectSelected:(EffectId)effectId
 {
-    dlog(@"%d", effectId);
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    editor.currentSelectedEffectId = effectId;
+    dispatch_async(processingQueue, ^{
+        [editor applyCurrentSelectedEffect];
+
+        //メインスレッド
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [effectImageView setImage:editor.appliedImageEffect];
+            [SVProgressHUD dismiss];
+        });
+    });
 }
 
 #pragma mark Image Processing
