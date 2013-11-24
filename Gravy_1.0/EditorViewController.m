@@ -101,11 +101,6 @@
 {
     UIWrapperView* wrapper = [[UIWrapperView alloc] initWithFrame:self.view.bounds];
     
-    // label
-    UIEditorTitleLabel* label = [[UIEditorTitleLabel alloc] initWithFrame:CGRectMake(0.0f, 30.0f, 320.0f, 20.0f)];
-    label.text = NSLocalizedString(@"Brightness", nil);
-    [wrapper addSubview:label];
-    
     // place original image
     levelsImageView = [[UIThumbnailView alloc] initWithImage:editor.originalImageResized];
     [levelsImageView setCenter:CGPointMake(imageCenterX, imageCenterY)];
@@ -114,6 +109,11 @@
     levelsImageView.thumbnailId = ThumbnailViewIdLevels;
     [wrapper addSubview:levelsImageView];
     
+    
+    // label
+    UIEditorTitleLabel* label = [[UIEditorTitleLabel alloc] initWithFrame:CGRectMake(0.0f, 30.0f, 320.0f, 20.0f)];
+    label.text = NSLocalizedString(@"Brightness", nil);
+    [wrapper addSubview:label];
     
     UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
     
@@ -143,10 +143,6 @@
 {
     UIWrapperView* wrapper = [[UIWrapperView alloc] initWithFrame:self.view.bounds];
     
-    // label
-    UIEditorTitleLabel* label = [[UIEditorTitleLabel alloc] initWithFrame:CGRectMake(0.0f, 30.0f, 320.0f, 20.0f)];
-    label.text = NSLocalizedString(@"White Balance", nil);
-    [wrapper addSubview:label];
     
     // place original image
     whitebalanceImageView = [[UIThumbnailView alloc] initWithImage:editor.originalImageResized];
@@ -156,6 +152,11 @@
     whitebalanceImageView.userInteractionEnabled = YES;
     [wrapper addSubview:whitebalanceImageView];
     [wrapper setX:320.0f];
+    
+    // label
+    UIEditorTitleLabel* label = [[UIEditorTitleLabel alloc] initWithFrame:CGRectMake(0.0f, 30.0f, 320.0f, 20.0f)];
+    label.text = NSLocalizedString(@"White Balance", nil);
+    [wrapper addSubview:label];
     
     UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
     
@@ -176,11 +177,6 @@
 {
     UIWrapperView* wrapper = [[UIWrapperView alloc] initWithFrame:self.view.bounds];
     
-    // label
-    UIEditorTitleLabel* label = [[UIEditorTitleLabel alloc] initWithFrame:CGRectMake(0.0f, 30.0f, 320.0f, 20.0f)];
-    label.text = NSLocalizedString(@"Saturation", nil);
-    [wrapper addSubview:label];
-    
     // place original image
     saturationImageView = [[UIThumbnailView alloc] initWithImage:editor.originalImageResized];
     [saturationImageView setCenter:CGPointMake(imageCenterX, imageCenterY)];
@@ -190,6 +186,11 @@
     [wrapper addSubview:saturationImageView];
     [wrapper setX:640.0f];
     
+    // label
+    UIEditorTitleLabel* label = [[UIEditorTitleLabel alloc] initWithFrame:CGRectMake(0.0f, 30.0f, 320.0f, 20.0f)];
+    label.text = NSLocalizedString(@"Saturation", nil);
+    [wrapper addSubview:label];
+
     UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
     
     // knob
@@ -206,10 +207,6 @@
 {
     UIWrapperView* wrapper = [[UIWrapperView alloc] initWithFrame:self.view.bounds];
     
-    // label
-    UIEditorTitleLabel* label = [[UIEditorTitleLabel alloc] initWithFrame:CGRectMake(0.0f, 30.0f, 320.0f, 20.0f)];
-    label.text = NSLocalizedString(@"Effect", nil);
-    [wrapper addSubview:label];
     
     // place original image
     effectImageView = [[UIThumbnailView alloc] initWithImage:editor.originalImageResized];
@@ -228,6 +225,11 @@
     effectSelectionView.delegate = self;
     [wrapper addSubview:effectSelectionView];
 
+    // label
+    UIEditorTitleLabel* label = [[UIEditorTitleLabel alloc] initWithFrame:CGRectMake(0.0f, 30.0f, 320.0f, 20.0f)];
+    label.text = NSLocalizedString(@"Effect", nil);
+    [wrapper addSubview:label];
+    
     UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
     // knob
     effectKnobView = [[UISliderView alloc] init];
@@ -527,6 +529,8 @@
         }
         [effectImageView setImage:editor.appliedImageEffect];
         state = EditorStateEffect;
+        saveBtn.hidden = NO;
+        nextBtn.hidden = YES;
     }
     pageControl.currentPage++;
     [self changePageControl];
