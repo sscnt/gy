@@ -30,6 +30,9 @@
     screenHeight = [UIScreen height];
     screenWidth = [UIScreen width];
     
+    imageCenterX = [UIScreen screenSize].width / 2.0f;
+    imageCenterY = [UIScreen screenSize].height / 2.0f - 25.0f;
+    
     //// bg.png
     if(screenHeight >= 568){
         bgImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"editor_bg-568h.jpg"]];
@@ -104,10 +107,8 @@
     [wrapper addSubview:label];
     
     // place original image
-    CGFloat imageY = [UIScreen screenSize].height / 2.0f - editor.originalImageResized.size.height / 2.0f - 25.0f;
     levelsImageView = [[UIThumbnailView alloc] initWithImage:editor.originalImageResized];
-    [levelsImageView setY:imageY];
-    [levelsImageView setX:self.view.center.x - editor.originalImageResized.size.width / 2.0f];
+    [levelsImageView setCenter:CGPointMake(imageCenterX, imageCenterY)];
     levelsImageView.delegate = self;
     levelsImageView.userInteractionEnabled = YES;
     levelsImageView.thumbnailId = ThumbnailViewIdLevels;
@@ -120,10 +121,7 @@
     levelsKnobView = [[UISliderView alloc] init];
     levelsKnobView.tag = KnobIdLevels;
     [levelsKnobView addGestureRecognizer:recognizer];
-    knobDefaultCenterX = [UIScreen screenSize].width / 2.0f;
-    knobDefaultCenterY = [UIScreen screenSize].height / 2.0f;
-    CGPoint center = CGPointMake(knobDefaultCenterX, knobDefaultCenterY);
-    levelsKnobView.center = center;
+    [levelsKnobView setCenter:levelsImageView.center];
     [wrapper addSubview:levelsKnobView];
     
     
@@ -151,10 +149,8 @@
     [wrapper addSubview:label];
     
     // place original image
-    CGFloat imageY = [UIScreen screenSize].height / 2.0f - editor.originalImageResized.size.height / 2.0f - 25.0f;
     whitebalanceImageView = [[UIThumbnailView alloc] initWithImage:editor.originalImageResized];
-    [whitebalanceImageView setY:imageY];
-    [whitebalanceImageView setX:self.view.center.x - editor.originalImageResized.size.width / 2.0f];
+    [whitebalanceImageView setCenter:CGPointMake(imageCenterX, imageCenterY)];
     whitebalanceImageView.thumbnailId = ThumbnailViewIdWhiteBalance;
     whitebalanceImageView.delegate = self;
     whitebalanceImageView.userInteractionEnabled = YES;
@@ -167,8 +163,7 @@
     whiteBalanceKnobView = [[UISliderView alloc] init];
     whiteBalanceKnobView.tag = KnobIdWhiteBalance;
     [whiteBalanceKnobView addGestureRecognizer:recognizer];
-    CGPoint center = CGPointMake(knobDefaultCenterX, knobDefaultCenterY);
-    whiteBalanceKnobView.center = center;
+    whiteBalanceKnobView.center = whitebalanceImageView.center;
     [wrapper addSubview:whiteBalanceKnobView];
     
     [scrollView addSubview:wrapper];
@@ -187,10 +182,8 @@
     [wrapper addSubview:label];
     
     // place original image
-    CGFloat imageY = [UIScreen screenSize].height / 2.0f - editor.originalImageResized.size.height / 2.0f - 25.0f;
     saturationImageView = [[UIThumbnailView alloc] initWithImage:editor.originalImageResized];
-    [saturationImageView setY:imageY];
-    [saturationImageView setX:self.view.center.x - editor.originalImageResized.size.width / 2.0f];
+    [saturationImageView setCenter:CGPointMake(imageCenterX, imageCenterY)];
     saturationImageView.delegate = self;
     saturationImageView.userInteractionEnabled = YES;
     saturationImageView.thumbnailId = ThumbnailViewIdSaturation;
@@ -203,8 +196,7 @@
     saturationKnobView = [[UISliderView alloc] init];
     saturationKnobView.tag = KnobIdSaturation;
     [saturationKnobView addGestureRecognizer:recognizer];
-    CGPoint center = CGPointMake(knobDefaultCenterX, knobDefaultCenterY);
-    saturationKnobView.center = center;
+    saturationKnobView.center = saturationImageView.center;
     [wrapper addSubview:saturationKnobView];
     
     [scrollView addSubview:wrapper];
@@ -220,10 +212,8 @@
     [wrapper addSubview:label];
     
     // place original image
-    CGFloat imageY = [UIScreen screenSize].height / 2.0f - editor.originalImageResized.size.height / 2.0f - 25.0f;
     effectImageView = [[UIThumbnailView alloc] initWithImage:editor.originalImageResized];
-    [effectImageView setY:imageY];
-    [effectImageView setX:self.view.center.x - editor.originalImageResized.size.width / 2.0f];
+    [effectImageView setCenter:CGPointMake(imageCenterX, imageCenterY - 25.0f)];
     effectImageView.delegate = self;
     effectImageView.userInteractionEnabled = YES;
     effectImageView.thumbnailId = ThumbnailViewIdEffect;
@@ -243,12 +233,27 @@
     effectKnobView = [[UISliderView alloc] init];
     effectKnobView.tag = KnobIdEffect;
     [effectKnobView addGestureRecognizer:recognizer];
-    CGPoint center = CGPointMake(knobDefaultCenterX, knobDefaultCenterY);
-    effectKnobView.center = center;
+    effectKnobView.center = effectImageView.center;
     [wrapper addSubview:effectKnobView];
         [scrollView addSubview:wrapper];
 }
 
+- (CGPoint)currentImageCenter
+{
+    if(state == EditorStateLevels){
+        return levelsImageView.center;
+    }
+    if(state == EditorStateWhiteBalance){
+        return whitebalanceImageView.center;
+    }
+    if(state == EditorStateSaturation){
+        return saturationImageView.center;
+    }
+    if(state == EditorStateEffect){
+        return effectImageView.center;
+    }
+    return self.view.center;
+}
 
 #pragma mark events
 
@@ -340,13 +345,14 @@
     CGFloat movePointX = targetView.center.x + p.x;
     CGFloat movePointY = targetView.center.y + p.y;
     CGFloat rest = (screenHeight - 480) * 0.5;
-    movePointY = MAX(knobDefaultCenterY - screenWidth * 0.5 - rest, MIN(knobDefaultCenterY + screenWidth * 0.5 + rest,  movePointY));
+    CGPoint center = [self currentImageCenter];
+    movePointY = MAX(center.y - screenWidth * 0.5 - rest, MIN(center.y + screenWidth * 0.5 + rest,  movePointY));
     movePointX = MAX(0, MIN(screenWidth, movePointX));
     
     float screenWidth_2 = [UIScreen screenSize].width / 2.0f;
-    float deltaX = (targetView.center.x - knobDefaultCenterX) / screenWidth_2;
+    float deltaX = (targetView.center.x - center.x) / screenWidth_2;
     deltaX = MAX(-1.0f, MIN(1.0f, deltaX));
-    float deltaY = (targetView.center.y - knobDefaultCenterY) / screenWidth_2;
+    float deltaY = (targetView.center.y - center.y) / screenWidth_2;
     deltaY = MAX(-1.0f, MIN(1.0f, deltaY));
     
     if(targetView.tag == KnobIdLevels){
@@ -391,8 +397,8 @@
         
         if(!processingEffect){
             processingEffect = YES;
-            deltaX *= 1.30f;
-            deltaY *= 1.30f;
+            deltaX *= 1.50f;
+            deltaY *= 1.50f;
             deltaX = MIN(0.9999f, MAX(-0.9999f, deltaX));
             deltaY = MIN(0.9999f, MAX(-0.9999f, deltaY));
             dispatch_async(processingQueue, ^{
@@ -421,7 +427,7 @@
                     dr = sqrtf(drX * drX + drY * drY);
                     d = sqrtf(dX * dX + dY * dY);
                     ratio = MAX(0.0f, dr / d);
-                    editor.weightLeftBottom = ratio;
+                    editor.weightLeftTop = ratio;
                 }
                 
                 /*
@@ -445,6 +451,48 @@
                     editor.weightRightBottom = ratio;
                 }
                 
+                /*
+                 y = x
+                 y - 1.0 = k (x + 1.0)
+                 -k - 1 = (k - 1)x
+                 x = (-k - 1) / (k - 1)
+                 y = x
+                 */
+                k = (deltaY - 1.0f) / (deltaX + 1.0f);
+                cX = (-k - 1.0f) / (k - 1.0f);
+                cY = cX;
+                drX = cX - deltaX;
+                drY = cY - deltaY;
+                if(cX > deltaX && cY < deltaY){
+                    dX = cX + 1.0f;
+                    dY = cY - 1.0f;
+                    dr = sqrtf(drX * drX + drY * drY);
+                    d = sqrtf(dX * dX + dY * dY);
+                    ratio = MAX(0.0f, dr / d);
+                    editor.weightLeftBottom = ratio;
+                }
+                
+                /*
+                 y = x
+                 y + 1.0 = k (x - 1.0)
+                 k + 1 = (k - 1)x
+                 x = (k + 1) / (k - 1)
+                 y = x
+                 */
+                k = (deltaY + 1.0f) / (deltaX - 1.0f);
+                cX = (k + 1.0f) / (k - 1.0f);
+                cY = cX;
+                drX = cX - deltaX;
+                drY = cY - deltaY;
+                if(cX < deltaX && cY > deltaY){
+                    dX = cX + 1.0f;
+                    dY = cY - 1.0f;
+                    dr = sqrtf(drX * drX + drY * drY);
+                    d = sqrtf(dX * dX + dY * dY);
+                    ratio = MAX(0.0f, dr / d);
+                    editor.weightRightTop = ratio;
+                }
+
                 [editor adjustCurrentSelectedEffect];
                 
                 //メインスレッド

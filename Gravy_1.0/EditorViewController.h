@@ -77,6 +77,8 @@ typedef NS_ENUM(NSInteger, KnobId){
     UISliderView* effectKnobView;
     CGFloat knobDefaultCenterX;
     CGFloat knobDefaultCenterY;
+    CGFloat imageCenterX;
+    CGFloat imageCenterY;
     CGFloat screenWidth;
     CGFloat screenHeight;
     dispatch_queue_t processingQueue;
@@ -97,6 +99,7 @@ typedef NS_ENUM(NSInteger, KnobId){
 - (void)layoutEffectEditor;
 - (void)saveImage;
 
+- (CGPoint)currentImageCenter;
 - (void)resizeOriginalImage;
 
 @end
