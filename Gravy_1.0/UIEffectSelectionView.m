@@ -17,7 +17,7 @@
     if(self){
         scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen screenSize].width, frame.size.height)];
         scrollView.contentSize = CGSizeMake(frame.size.width + 160.0f, frame.size.height);
-        scrollView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.7f];
+        scrollView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
         scrollView.showsHorizontalScrollIndicator = NO;
         scrollView.showsVerticalScrollIndicator = NO;
         [self addSubview:scrollView];

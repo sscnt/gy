@@ -122,6 +122,7 @@
         [self applyEffectVintage];
         return;
     }
+    self.appliedImageEffect = self.appliedImageSaturation;
 }
 
 - (void)adjustCurrentSelectedEffect

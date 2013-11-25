@@ -119,9 +119,9 @@
         [colorBalance setMidtones:midtones];
         GPUVector3 highlights;
         highlights.one = 2.0f/255.0f;
-        midtones.two = -2.0f/255.0f;
-        midtones.three = -10.0f/255.0f;
-        [colorBalance setHighlights:midtones];
+        highlights.two = -2.0f/255.0f;
+        highlights.three = -10.0f/255.0f;
+        [colorBalance setHighlights:highlights];
         colorBalance.preserveLuminosity = YES;
         
         GPUImagePicture* pictureBase = [[GPUImagePicture alloc] initWithImage:resultImage];

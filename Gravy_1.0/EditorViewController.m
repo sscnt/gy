@@ -655,7 +655,7 @@
     dispatch_async(processingQueue, ^{
         
         UIImage* resultImage;
-        GPUEffectVintage2* effect = [[GPUEffectVintage2 alloc] init];
+        GPUEffectSweetFlower* effect = [[GPUEffectSweetFlower alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
         
