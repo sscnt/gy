@@ -13,6 +13,7 @@
 #import "GPUImageSelectiveColorFilter.h"
 #import "GPUImageColorBalanceFilter.h"
 #import "GPUImageHueSaturationFilter.h"
+#import "GPUImageGradientMapFilter.h"
 
 
 typedef NS_ENUM(NSInteger, MergeBlendingMode){

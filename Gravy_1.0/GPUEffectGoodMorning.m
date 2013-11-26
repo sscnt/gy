@@ -82,6 +82,15 @@
         resultImage = [self mergeBaseImage:resultImage overlayFilter:curveFilter opacity:1.0f blendingMode:MergeBlendingModeNormal];
     }
     
+    // Gradient Map
+    @autoreleasepool {
+        GPUImageGradientMapFilter* gradientMap = [[GPUImageGradientMapFilter alloc] init];
+        [gradientMap addColorRed:255.0f Green:0.0f Blue:0.0f Opacity:1.0f Location:0 Midpoint:50];
+        [gradientMap addColorRed:0.0f Green:255.0f Blue:255.0f Opacity:1.0f Location:0 Midpoint:50];
+        
+        resultImage = [self mergeBaseImage:resultImage overlayFilter:gradientMap opacity:1.0f blendingMode:MergeBlendingModeNormal];
+    }
+    
     return resultImage;
 }
     
