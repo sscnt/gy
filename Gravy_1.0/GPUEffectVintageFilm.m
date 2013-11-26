@@ -91,7 +91,7 @@
     // Curve
     @autoreleasepool {
 
-        GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"GPUVintageFilmCurve01"];
+        GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"VintageFilm"];
         
         GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:resultImage];
         [picture addTarget:curveFilter];

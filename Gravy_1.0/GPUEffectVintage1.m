@@ -82,7 +82,7 @@
     
     // Curve
     @autoreleasepool {
-        GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"GPUVintage1Curve01"];
+        GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"Vintage11"];
         
         GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:resultImage];
         [picture addTarget:curveFilter];
@@ -106,7 +106,7 @@
     
     // Curve
     @autoreleasepool {
-        GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"GPUVintage1Curve02"];
+        GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"Vintage12"];
         
         resultImage = [self mergeBaseImage:resultImage overlayFilter:curveFilter opacity:0.60f blendingMode:MergeBlendingModeNormal];
     }

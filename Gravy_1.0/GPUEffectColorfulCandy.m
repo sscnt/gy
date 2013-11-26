@@ -128,7 +128,7 @@
     
     // Tone Curve
     @autoreleasepool {
-        GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"GPUCCCurve01"];
+        GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"Candy"];
         
         GPUImageOpacityFilter* opacityFilter = [[GPUImageOpacityFilter alloc] init];
         opacityFilter.opacity = 0.10f;

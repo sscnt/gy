@@ -17,7 +17,7 @@
     
     // Tonecurve
     @autoreleasepool {
-        GPUImageToneCurveFilter* toneFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"GPUSoftPopCurve01"];
+        GPUImageToneCurveFilter* toneFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"Softpop"];
         GPUImagePicture* pictureOriginal = [[GPUImagePicture alloc] initWithImage:resultImage];
         [pictureOriginal addTarget:toneFilter];
         [pictureOriginal processImage];

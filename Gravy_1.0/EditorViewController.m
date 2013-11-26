@@ -133,7 +133,7 @@
     //GPUEffectSoftPop* effect = [[GPUEffectSoftPop alloc] init];
     //GPUEffectSweetFlower* effect = [[GPUEffectSweetFlower alloc] init];
     //GPUEffectHazelnut* effect = [[GPUEffectHazelnut alloc] init];
-    GPUEffectVintage2* effect = [[GPUEffectVintage2 alloc] init];
+    GPUEffectGoodMorning* effect = [[GPUEffectGoodMorning alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
     
@@ -655,7 +655,7 @@
     dispatch_async(processingQueue, ^{
         
         UIImage* resultImage;
-        GPUEffectSweetFlower* effect = [[GPUEffectSweetFlower alloc] init];
+        GPUEffectGoodMorning* effect = [[GPUEffectGoodMorning alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
         
