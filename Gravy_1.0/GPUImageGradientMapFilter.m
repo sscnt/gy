@@ -105,12 +105,7 @@ NSString *const kGPUImageGradientMapFilterFragmentShaderString = SHADER_STRING
      b = max(0.0, min(1.0, b));
      a = max(0.0, min(1.0, a));
      
-     gl_FragColor = vec4(r, g, b, 1.0);
-     
-     
-     
-     
-     
+     gl_FragColor = vec4(r, g, b, 1.0);   
      
  }
  );
