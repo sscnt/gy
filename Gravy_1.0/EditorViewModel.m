@@ -37,9 +37,10 @@
     float _amount = (amount < 0.0f) ? -amount : amount;
     adjustmentsBrightness.shadowsAmount = _amount;
     adjustmentsBrightness.shadowsRadius = (radius > 0.0f) ? -radius : radius;
+    adjustmentsBrightness.decreaseSaturationEnabled = (radius < 0.0f);
 
     if(radius < 0.0f){  // Top
-        adjustmentsBrightness.highlightsAmount = -radius * 0.20f;
+        //adjustmentsBrightness.highlightsAmount = -radius * 0.20f;
         if(amount < 0.0f){  // Top Left
             adjustmentsBrightness.contrastAmount = _amount * 0.20f;
         }

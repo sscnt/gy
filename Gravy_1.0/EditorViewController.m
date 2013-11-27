@@ -342,20 +342,26 @@
 
 - (void)didDragView:(UIPanGestureRecognizer *)sender
 {
+    float imageHeight_2 = editor.originalImageResized.size.height / 2.0f;
+    float imageWidth_2 = editor.originalImageResized.size.width / 2.0f;
+    float screenWidth_2 = [UIScreen screenSize].width / 2.0f;
+    float ratioX = screenWidth_2 / imageWidth_2;
+    float ratioY = screenHeight / editor.originalImageResized.size.height;
+    
     UIView *targetView = sender.view;
     CGPoint p = [sender translationInView:targetView];
     CGFloat movePointX = targetView.center.x + p.x;
     CGFloat movePointY = targetView.center.y + p.y;
     CGFloat rest = (screenHeight - 480) * 0.5;
     CGPoint center = [self currentImageCenter];
-    movePointY = MAX(center.y - screenWidth * 0.5 - rest, MIN(center.y + screenWidth * 0.5 + rest,  movePointY));
-    movePointX = MAX(0, MIN(screenWidth, movePointX));
     
-    float screenWidth_2 = [UIScreen screenSize].width / 2.0f;
+    movePointY = MAX(center.y - imageHeight_2 - rest, MIN(center.y + imageHeight_2 + rest,  movePointY));
+    movePointX = MAX(center.x - imageWidth_2, MIN(center.x + imageWidth_2, movePointX));
+    
     float deltaX = (targetView.center.x - center.x) / screenWidth_2;
-    deltaX = MAX(-1.0f, MIN(1.0f, deltaX));
+    deltaX = MAX(-1.0f, MIN(1.0f, deltaX * ratioX));
     float deltaY = (targetView.center.y - center.y) / screenWidth_2;
-    deltaY = MAX(-1.0f, MIN(1.0f, deltaY));
+    deltaY = MAX(-1.0f, MIN(1.0f, deltaY * ratioY));
     
     if(targetView.tag == KnobIdLevels){
         if(!processingBrightness){

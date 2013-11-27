@@ -16,6 +16,7 @@ extern NSString *const kGravyBrightnessFragmentShaderString;
     GLuint shadowsRadiusUniform;
     GLuint highlightsAmountUniform;
     GLuint contrastAmountUniform;
+    GLuint decreaseSaturationEnabledUniform;
 }
 
 // Percentage
@@ -24,5 +25,6 @@ extern NSString *const kGravyBrightnessFragmentShaderString;
 @property (nonatomic, assign) float highlightsAmount;
 @property (nonatomic, assign) float highlightsRadius;
 @property (nonatomic, assign) float contrastAmount;
+@property (nonatomic, assign) BOOL decreaseSaturationEnabled;
 
 @end

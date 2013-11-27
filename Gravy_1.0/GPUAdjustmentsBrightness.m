@@ -19,6 +19,7 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
  uniform mediump float shadowsRadius;
  uniform mediump float highlightsAmount;
  uniform mediump float contrastAmount;
+ uniform int decreaseSaturationEnabled;
  
  
  vec3 rgb2hsv(mediump vec3 color){
@@ -157,6 +158,9 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
      yuv.x = max(0.0 , min(1.0, _y));
      
      hsv = rgb2hsv(yuv2rgb(yuv));
+     if(decreaseSaturationEnabled == 1){
+         saturation *= (shadowsRadius - 0.25) * 4.0 * 0.3 + 0.7;
+     }
      hsv.y = saturation;
      return hsv2rgb(hsv);
  }
@@ -244,6 +248,8 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
     self.highlightsAmount = 0.0f;
     contrastAmountUniform = [filterProgram uniformIndex:@"contrastAmount"];
     self.contrastAmount = 0.0f;
+    decreaseSaturationEnabledUniform = [filterProgram uniformIndex:@"decreaseSaturationEnabled"];
+    self.decreaseSaturationEnabled = NO;
     return self;
 }
 
@@ -270,6 +276,11 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
 {
     _highlightsAmount = MIN(1.0f, MAX(0.0f, highlights));
     [self setFloat:_highlightsAmount forUniform:highlightsAmountUniform program:filterProgram];
+}
+
+- (void)setDecreaseSaturationEnabled:(BOOL)decreaseSaturationEnabled
+{
+    [self setInteger:decreaseSaturationEnabled forUniform:decreaseSaturationEnabledUniform program:filterProgram];
 }
 
 @end

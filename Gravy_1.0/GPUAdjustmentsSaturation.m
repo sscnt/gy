@@ -128,11 +128,35 @@ NSString *const kGPUAdjustmentsSaturationFragmentShaderString = SHADER_STRING
          increase = 1.0 * (1.0 - cos(d * 1.5707963));
          hsv.z -= increase;
          hsv.z = max(0.0, hsv.z);
+         pixel.rgb = hsv2rgb(hsv);
      } else{
-
+         // Contrast
+         mediump vec3 rgb = hsv2rgb(hsv);
+         mediump float contrast = 1.0 - vibrance * 0.2;
+         contrast *= contrast;
+         
+         mediump float value;
+         value = rgb.r;
+         value -= 0.5;
+         value *= contrast;
+         value += 0.5;
+         rgb.r = min(1.0, max(0.0, value));
+         
+         value = rgb.b;
+         value -= 0.5;
+         value *= contrast;
+         value += 0.5;
+         rgb.b = min(1.0, max(0.0, value));
+         
+         value = rgb.g;
+         value -= 0.5;
+         value *= contrast;
+         value += 0.5;
+         rgb.g = min(1.0, max(0.0, value));
+         pixel.rgb = rgb;
+         
      }
      
-     pixel.rgb = hsv2rgb(hsv);
      
      // Save the result
      gl_FragColor = pixel;
