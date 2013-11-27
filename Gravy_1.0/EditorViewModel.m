@@ -123,6 +123,11 @@
         [self applyEffectVintage];
         return;
     }
+    
+    if(self.currentSelectedEffectId == EffectIdSunset){
+        [self applyEffectSunset];
+        return;
+    }
     self.appliedImageEffect = self.appliedImageSaturation;
 }
 
@@ -135,6 +140,11 @@
     
     if(self.currentSelectedEffectId == EffectIdVintage){
         [self adjustEffectVintage];
+        return;
+    }
+    
+    if(self.currentSelectedEffectId == EffectIdSunset){
+        [self adjustEffectSunset];
         return;
     }
     
@@ -271,5 +281,72 @@
     }
     self.appliedImageEffect = resultImage;
 }
+
+- (void)applyEffectSunset
+{
+    @autoreleasepool {
+        GPUEffectGoodMorning* effect = [[GPUEffectGoodMorning alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedLeftBottomImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectHazelnut* effect = [[GPUEffectHazelnut alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedLeftTopImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectVintage1* effect = [[GPUEffectVintage1 alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedRightBottomImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectVintage2* effect = [[GPUEffectVintage2 alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedRightTopImage = [effect process];
+    }
+}
+
+- (void)adjustEffectSunset
+{
+    UIImage* resultImage = self.appliedImageSaturation;
+    
+    // Good Morning
+    if(self.weightLeftBottom > 0.0f){
+        @autoreleasepool {
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedLeftBottomImage];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftBottom];
+        }
+    }
+    
+    // Hazelnut
+    if(self.weightLeftTop > 0.0f){
+        @autoreleasepool {
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedLeftTopImage];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftTop];
+        }
+    }
+    
+    // Soft Pop
+    if(self.weightRightBottom > 0.0f){
+        @autoreleasepool {
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedRightBottomImage];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightBottom];
+        }
+    }
+    
+    // Sweet Flower
+    if(self.weightRightTop > 0.0f){
+        @autoreleasepool {
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedRightTopImage];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightTop];
+        }
+    }
+    self.appliedImageEffect = resultImage;
+}
+
 
 @end

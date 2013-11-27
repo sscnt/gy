@@ -62,6 +62,13 @@
         previewImageView.image = [effect process];
         return;
     }
+    
+    if(self.effectId == EffectIdSunset){
+        GPUEffectGoodMorning* effect = [[GPUEffectGoodMorning alloc] init];
+        effect.imageToProcess = baseImage;
+        previewImageView.image = [effect process];
+        return;
+    }
 }
 - (void)setSelected:(BOOL)selected
 {
@@ -82,6 +89,9 @@
     }
     if(effectId == EffectIdVintage){
         return NSLocalizedString(@"Vintage", nil);
+    }
+    if(effectId == EffectIdSunset){
+        return NSLocalizedString(@"Sunset", nil);
     }
     
     return NSLocalizedString(@"None", nil);

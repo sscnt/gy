@@ -23,6 +23,7 @@
     UIEffectSelectionButton* buttonNone;
     UIEffectSelectionButton* buttonCandy;
     UIEffectSelectionButton* buttonVintage;
+    UIEffectSelectionButton* buttonSunset;
 }
 
 @property (nonatomic, weak) id<UIEffectSelectionViewDelegate> delegate;

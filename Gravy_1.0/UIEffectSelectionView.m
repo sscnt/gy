@@ -48,6 +48,13 @@
     [buttonVintage setX:left];
     buttonVintage.delegate = self;
     [scrollView addSubview:buttonVintage];
+    
+    // Sunset
+    left += 80.0f;
+    buttonSunset = [[UIEffectSelectionButton alloc] initWithEffectId:EffectIdSunset previewImageBase:effectPreviewImage];
+    [buttonSunset setX:left];
+    buttonSunset.delegate = self;
+    [scrollView addSubview:buttonSunset];
 }
 
 - (void)buttonPressed:(UIEffectSelectionButton *)button
@@ -55,6 +62,7 @@
     buttonNone.selected = NO;
     buttonCandy.selected = NO;
     buttonVintage.selected = NO;
+    buttonSunset.selected = NO;
     button.selected = YES;
     [self.delegate effectSelected:button.effectId];
 }

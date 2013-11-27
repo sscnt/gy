@@ -405,8 +405,6 @@
         
         if(!processingEffect){
             processingEffect = YES;
-            deltaX *= 1.50f;
-            deltaY *= 1.50f;
             deltaX = MIN(0.9999f, MAX(-0.9999f, deltaX));
             deltaY = MIN(0.9999f, MAX(-0.9999f, deltaY));
             dispatch_async(processingQueue, ^{

@@ -74,4 +74,7 @@ typedef NS_ENUM(NSInteger, EditorViewState){
 - (void)applyEffectVintage;
 - (void)adjustEffectVintage;
 
+- (void)applyEffectSunset;
+- (void)adjustEffectSunset;
+
 @end
