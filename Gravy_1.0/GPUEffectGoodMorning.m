@@ -85,12 +85,26 @@
     // Gradient Map
     @autoreleasepool {
         GPUImageGradientMapFilter* gradientMap = [[GPUImageGradientMapFilter alloc] init];
-        [gradientMap addColorRed:255.0f Green:0.0f Blue:0.0f Opacity:1.0f Location:0 Midpoint:50];
-        [gradientMap addColorRed:0.0f Green:255.0f Blue:255.0f Opacity:1.0f Location:4096 Midpoint:50];
+        [gradientMap addColorRed:58.0f Green:62.0f Blue:124.0f Opacity:1.0f Location:0 Midpoint:50];
+        [gradientMap addColorRed:251.0f Green:215.0f Blue:107.0f Opacity:1.0f Location:4096 Midpoint:60];
         
-        resultImage = [self mergeBaseImage:resultImage overlayFilter:gradientMap opacity:1.0f blendingMode:MergeBlendingModeNormal];
+        resultImage = [self mergeBaseImage:resultImage overlayFilter:gradientMap opacity:0.48 blendingMode:MergeBlendingModeSoftLight];
     }
     
+    
+    // Fill Layer
+    @autoreleasepool {
+        GPUImageGradientColorGenerator* gradientColor = [[GPUImageGradientColorGenerator alloc] init];
+        [gradientColor forceProcessingAtSize:CGSizeMake(resultImage.size.width, resultImage.size.height)];
+        [gradientColor setStyle:GradientStyleRadial];
+        [gradientColor setAngleDegree:90];
+        [gradientColor setScalePercent:150];
+        [gradientColor setOffsetX:0.0f Y:0.0f];
+        [gradientColor addColorRed:207.0f Green:147.0f Blue:155.0f Opacity:1.0f Location:0 Midpoint:50];
+        [gradientColor addColorRed:8.0f Green:8.0f Blue:8.0f Opacity:0.0f Location:4096 Midpoint:50];
+        
+        resultImage = [self mergeBaseImage:resultImage overlayFilter:gradientColor opacity:1.0f blendingMode:MergeBlendingModeSoftLight];
+    }
     return resultImage;
 }
     

@@ -45,6 +45,7 @@ NSString *const kGPUImageGradientMapFilterFragmentShaderString = SHADER_STRING
      mediump float min = min(pixel.r, min(pixel.g, pixel.b));
      
      mediump float d = (max + min) / 2.0;
+     d = 0.299 * pixel.r + 0.587 * pixel.g + 0.114 * pixel.b;
      
      int index = index(d);
      mediump float startLocation = locations[index];
