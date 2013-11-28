@@ -129,6 +129,7 @@
 		58FC5CD418320B9B009EBCF0 /* Sweet2.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58FC5CD318320B9B009EBCF0 /* Sweet2.acv */; };
 		58FC5CD818321056009EBCF0 /* GPUImageColorBalanceFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FC5CD718321056009EBCF0 /* GPUImageColorBalanceFilter.m */; };
 		58FC5CDA18321C46009EBCF0 /* Sweet1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58FC5CD918321C46009EBCF0 /* Sweet1.acv */; };
+		58FD6BFB18476B2D00F0B31E /* GPUEffectWeekend.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FD6BFA18476B2D00F0B31E /* GPUEffectWeekend.m */; };
 		58FEFFD818101550008B4E8D /* UIFadeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FEFFD718101550008B4E8D /* UIFadeNavigationController.m */; };
 		58FEFFDA18101C08008B4E8D /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58FEFFD918101C08008B4E8D /* CoreImage.framework */; };
 		58FEFFDD18101D2C008B4E8D /* UIThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FEFFDC18101D2C008B4E8D /* UIThumbnailView.m */; };
@@ -332,6 +333,8 @@
 		58FC5CD618321056009EBCF0 /* GPUImageColorBalanceFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageColorBalanceFilter.h; sourceTree = "<group>"; };
 		58FC5CD718321056009EBCF0 /* GPUImageColorBalanceFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageColorBalanceFilter.m; sourceTree = "<group>"; };
 		58FC5CD918321C46009EBCF0 /* Sweet1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sweet1.acv; sourceTree = "<group>"; };
+		58FD6BF918476B2D00F0B31E /* GPUEffectWeekend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectWeekend.h; sourceTree = "<group>"; };
+		58FD6BFA18476B2D00F0B31E /* GPUEffectWeekend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectWeekend.m; sourceTree = "<group>"; };
 		58FEFFD618101550008B4E8D /* UIFadeNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIFadeNavigationController.h; sourceTree = "<group>"; };
 		58FEFFD718101550008B4E8D /* UIFadeNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIFadeNavigationController.m; sourceTree = "<group>"; };
 		58FEFFD918101C08008B4E8D /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
@@ -750,6 +753,7 @@
 		58F5F80B18447FB800C20573 /* Sunset */ = {
 			isa = PBXGroup;
 			children = (
+				58FD6BF518476B0A00F0B31E /* Weekend */,
 				58F5F80C18447FC300C20573 /* GoodMorning */,
 			);
 			name = Sunset;
@@ -851,6 +855,7 @@
 		58FABDE81824A58A00CAC8A7 /* GPUImageLayer */ = {
 			isa = PBXGroup;
 			children = (
+				58FD6BFC18477D8C00F0B31E /* Photo FIlter */,
 				58F2DF791844B0C2000CD56F /* Gradient Map */,
 				58F31AAB1838FFAC00122C65 /* Hue / Saturation */,
 				58FC5CD518320FE1009EBCF0 /* Color Balance */,
@@ -935,6 +940,22 @@
 				58FC5CD718321056009EBCF0 /* GPUImageColorBalanceFilter.m */,
 			);
 			name = "Color Balance";
+			sourceTree = "<group>";
+		};
+		58FD6BF518476B0A00F0B31E /* Weekend */ = {
+			isa = PBXGroup;
+			children = (
+				58FD6BF918476B2D00F0B31E /* GPUEffectWeekend.h */,
+				58FD6BFA18476B2D00F0B31E /* GPUEffectWeekend.m */,
+			);
+			name = Weekend;
+			sourceTree = "<group>";
+		};
+		58FD6BFC18477D8C00F0B31E /* Photo FIlter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Photo FIlter";
 			sourceTree = "<group>";
 		};
 		58FEFFD518101535008B4E8D /* Subclasses */ = {
@@ -1146,6 +1167,7 @@
 				58FC5CD11831E89C009EBCF0 /* GPUEffectSweetFlower.m in Sources */,
 				5802E7CF180C0F1400AA2227 /* AppDelegate.m in Sources */,
 				58F5F80F1844800100C20573 /* GPUEffectGoodMorning.m in Sources */,
+				58FD6BFB18476B2D00F0B31E /* GPUEffectWeekend.m in Sources */,
 				58F2A272183F883700C96E59 /* GPUEffectHazelnut.m in Sources */,
 				58F79123180D696700968648 /* EditorViewController.m in Sources */,
 				58F31AAE1838FFCB00122C65 /* GPUImageHueSaturationFilter.m in Sources */,

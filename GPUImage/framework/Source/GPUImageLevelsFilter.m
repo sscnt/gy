@@ -98,6 +98,7 @@ NSString *const kGPUImageLevelsFragmentShaderString = SHADER_STRING
 
 - (void)setMin:(CGFloat)min gamma:(CGFloat)mid max:(CGFloat)max minOut:(CGFloat)minOut maxOut:(CGFloat)maxOut {
     CGFloat gamma = (max - min) / 2.0f * (1.0f + (1.0f - mid)) + min;
+    gamma = mid;
     [self setRedMin:min gamma:gamma max:max minOut:minOut maxOut:maxOut];
     [self setGreenMin:min gamma:gamma max:max minOut:minOut maxOut:maxOut];
     [self setBlueMin:min gamma:gamma max:max minOut:minOut maxOut:maxOut];
@@ -108,8 +109,10 @@ NSString *const kGPUImageLevelsFragmentShaderString = SHADER_STRING
 }
 
 - (void)setRedMin:(CGFloat)min gamma:(CGFloat)mid max:(CGFloat)max minOut:(CGFloat)minOut maxOut:(CGFloat)maxOut {
+    CGFloat gamma = (max - min) / 2.0f * (1.0f + (1.0f - mid)) + min;
+    gamma = mid;
     minVector.one = min;
-    midVector.one = mid;
+    midVector.one = gamma;
     maxVector.one = max;
     minOutputVector.one = minOut;
     maxOutputVector.one = maxOut;
@@ -122,8 +125,10 @@ NSString *const kGPUImageLevelsFragmentShaderString = SHADER_STRING
 }
 
 - (void)setGreenMin:(CGFloat)min gamma:(CGFloat)mid max:(CGFloat)max minOut:(CGFloat)minOut maxOut:(CGFloat)maxOut {
+    CGFloat gamma = (max - min) / 2.0f * (1.0f + (1.0f - mid)) + min;
+    gamma = mid;
     minVector.two = min;
-    midVector.two = mid;
+    midVector.two = gamma;
     maxVector.two = max;
     minOutputVector.two = minOut;
     maxOutputVector.two = maxOut;
@@ -136,8 +141,10 @@ NSString *const kGPUImageLevelsFragmentShaderString = SHADER_STRING
 }
 
 - (void)setBlueMin:(CGFloat)min gamma:(CGFloat)mid max:(CGFloat)max minOut:(CGFloat)minOut maxOut:(CGFloat)maxOut {
+    CGFloat gamma = (max - min) / 2.0f * (1.0f + (1.0f - mid)) + min;
+    gamma = mid;
     minVector.three = min;
-    midVector.three = mid;
+    midVector.three = gamma;
     maxVector.three = max;
     minOutputVector.three = minOut;
     maxOutputVector.three = maxOut;

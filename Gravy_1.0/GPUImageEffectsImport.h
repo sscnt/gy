@@ -9,3 +9,4 @@
 #import "GPUEffectVintage2.h"
 
 #import "GPUEffectGoodMorning.h"
+#import "GPUEffectWeekend.h"
