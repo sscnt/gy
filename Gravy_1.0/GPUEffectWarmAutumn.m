@@ -101,7 +101,7 @@
         [colorBalance setShadows:shadows];
         GPUVector3 midtones;
         midtones.one = 0.0f/255.0f;
-        midtones.two = -1.0f/255.0f;
+        midtones.two = -10.0f/255.0f;
         midtones.three = 3.0f/255.0f;
         [colorBalance setMidtones:midtones];
         GPUVector3 highlights;
@@ -113,6 +113,8 @@
         
         resultImage = [self mergeBaseImage:resultImage overlayFilter:colorBalance opacity:1.0f blendingMode:MergeBlendingModeNormal];
     }
+    
+    return resultImage;
     
     
     // Selective Color
