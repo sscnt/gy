@@ -47,6 +47,7 @@
         resultImage = [self mergeBaseImage:resultImage overlayFilter:selectiveColor opacity:1.0f blendingMode:MergeBlendingModeNormal];
     }
     
+    
     // Channel Mixer
     @autoreleasepool {
         GPUImageChannelMixerFilter* mixerFilter = [[GPUImageChannelMixerFilter alloc] init];
@@ -56,7 +57,6 @@
         
         resultImage = [self mergeBaseImage:resultImage overlayFilter:mixerFilter opacity:1.0f blendingMode:MergeBlendingModeNormal];
     }
-    
     // Channel Mixer
     @autoreleasepool {
         GPUImageChannelMixerFilter* mixerFilter = [[GPUImageChannelMixerFilter alloc] init];
@@ -75,6 +75,7 @@
         resultImage = [self mergeBaseImage:resultImage overlayFilter:curveFilter opacity:0.70f blendingMode:MergeBlendingModeNormal];
     }
     
+
     // Fill Layer
     @autoreleasepool {
         GPUImageSolidColorGenerator* solidColor = [[GPUImageSolidColorGenerator alloc] init];
@@ -86,7 +87,7 @@
     // Fill Layer
     @autoreleasepool {
         GPUImageSolidColorGenerator* solidColor = [[GPUImageSolidColorGenerator alloc] init];
-        [solidColor setColorRed:243.0f/255.0f green:211.0f/255.0f blue:57.0f/255.0 alpha:1.0f];
+        [solidColor setColorRed:243.0f/255.0f green:211.0f/255.0f blue:57.0f/255.0f alpha:1.0f];
         
         resultImage = [self mergeBaseImage:resultImage overlayFilter:solidColor opacity:0.10f blendingMode:MergeBlendingModeColor];
     }
@@ -101,11 +102,11 @@
         [colorBalance setShadows:shadows];
         GPUVector3 midtones;
         midtones.one = 0.0f/255.0f;
-        midtones.two = -10.0f/255.0f;
+        midtones.two = -30.0f/255.0f;
         midtones.three = 3.0f/255.0f;
         [colorBalance setMidtones:midtones];
         GPUVector3 highlights;
-        highlights.one = 11.0f/255.0f;
+        highlights.one = 16.0f/255.0f;
         highlights.two = 0.0f;
         highlights.three = 10.0f/155.0f;
         [colorBalance setHighlights:highlights];
@@ -114,18 +115,15 @@
         resultImage = [self mergeBaseImage:resultImage overlayFilter:colorBalance opacity:1.0f blendingMode:MergeBlendingModeNormal];
     }
     
-    return resultImage;
-    
     
     // Selective Color
     @autoreleasepool {
         GPUImageSelectiveColorFilter* selectiveColor = [[GPUImageSelectiveColorFilter alloc] init];
-        [selectiveColor setRedsCyan:14 Magenta:15 Yellow:0 Black:0];
+        [selectiveColor setRedsCyan:14 Magenta:0 Yellow:15 Black:0];
         [selectiveColor setYellowsCyan:-3 Magenta:4 Yellow:-11 Black:0];
         
         resultImage = [self mergeBaseImage:resultImage overlayFilter:selectiveColor opacity:1.0f blendingMode:MergeBlendingModeNormal];
     }
-    
     
     // Selective Color
     @autoreleasepool {
@@ -136,6 +134,7 @@
         resultImage = [self mergeBaseImage:resultImage overlayFilter:selectiveColor opacity:1.0f blendingMode:MergeBlendingModeNormal];
     }
     
+
     // Color Balance
     @autoreleasepool {
         GPUImageColorBalanceFilter* colorBalance = [[GPUImageColorBalanceFilter alloc] init];
@@ -165,7 +164,6 @@
         
         resultImage = [self mergeBaseImage:resultImage overlayFilter:curveFilter opacity:1.0f blendingMode:MergeBlendingModeNormal];
     }
-    
 
     return resultImage;
 }
