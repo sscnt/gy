@@ -44,6 +44,9 @@
     if(blendingMode == MergeBlendingModeHue){
         blending = [[GPUImageHueBlendFilter alloc] init];
     }
+    if(blendingMode == MergeBlendingModeColorBurn){
+        blending = [[GPUImageColorBurnBlendFilter alloc] init];
+    }
     
     [opacityFilter addTarget:blending atTextureLocation:1];
     

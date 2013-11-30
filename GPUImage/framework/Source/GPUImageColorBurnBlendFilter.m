@@ -14,7 +14,8 @@ NSString *const kGPUImageColorBurnBlendFragmentShaderString = SHADER_STRING
     mediump vec4 textureColor = texture2D(inputImageTexture, textureCoordinate);
     mediump vec4 textureColor2 = texture2D(inputImageTexture2, textureCoordinate2);
     mediump vec4 whiteColor = vec4(1.0);
-    gl_FragColor = whiteColor - (whiteColor - textureColor) / textureColor2;
+    mediump vec4 rgba = whiteColor - (whiteColor - textureColor) / textureColor2;
+     gl_FragColor = vec4(rgba.rgb * textureColor2.a + textureColor.rgb * (1.0 - textureColor2.a), 1.0);
  }
 );
 #else

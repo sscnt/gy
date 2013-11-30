@@ -14,6 +14,7 @@
 #import "GPUImageColorBalanceFilter.h"
 #import "GPUImageHueSaturationFilter.h"
 #import "GPUImageGradientMapFilter.h"
+#import "GPUImagePhotoFilter.h"
 
 
 typedef NS_ENUM(NSInteger, MergeBlendingMode){
@@ -22,6 +23,7 @@ typedef NS_ENUM(NSInteger, MergeBlendingMode){
     MergeBlendingModeSoftLight,
     MergeBlendingModeOverlay,
     MergeBlendingModeExclusion,
+    MergeBlendingModeColorBurn,
     MergeBlendingModeHue
 };
 

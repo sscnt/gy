@@ -133,21 +133,46 @@
 
 - (void)adjustCurrentSelectedEffect
 {
-    if(self.currentSelectedEffectId == EffectIdCandy){
-        [self adjustEffectCandy];
-        return;
+    
+    UIImage* resultImage = self.appliedImageSaturation;
+    
+    // Good Morning
+    if(self.weightLeftBottom > 0.0f){
+        @autoreleasepool {
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedLeftBottomImage];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftBottom];
+        }
     }
     
-    if(self.currentSelectedEffectId == EffectIdVintage){
-        [self adjustEffectVintage];
-        return;
+    // Weekend
+    if(self.weightLeftTop > 0.0f){
+        @autoreleasepool {
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedLeftTopImage];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftTop];
+        }
     }
     
-    if(self.currentSelectedEffectId == EffectIdSunset){
-        [self adjustEffectSunset];
-        return;
+    // Soft Pop
+    if(self.weightRightBottom > 0.0f){
+        @autoreleasepool {
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedRightBottomImage];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightBottom];
+        }
     }
     
+    // Sweet Flower
+    if(self.weightRightTop > 0.0f){
+        @autoreleasepool {
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedRightTopImage];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightTop];
+        }
+    }
+    self.appliedImageEffect = resultImage;
+
 }
 
 - (void)applyEffectCandy
@@ -290,7 +315,7 @@
         self.effectedLeftBottomImage = [effect process];
     }
     @autoreleasepool {
-        GPUEffectHazelnut* effect = [[GPUEffectHazelnut alloc] init];
+        GPUEffectWeekend* effect = [[GPUEffectWeekend alloc] init];
         effect.imageToProcess = self.appliedImageSaturation;
         self.effectedLeftTopImage = [effect process];
     }
@@ -319,7 +344,7 @@
         }
     }
     
-    // Hazelnut
+    // Weekend
     if(self.weightLeftTop > 0.0f){
         @autoreleasepool {
             GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
