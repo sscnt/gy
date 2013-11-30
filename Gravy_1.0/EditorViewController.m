@@ -127,13 +127,7 @@
     
     [scrollView addSubview:wrapper];
     
-    
-    //GPUEffectVintageFilm* effect = [[GPUEffectVintageFilm alloc] init];
-    //GPUEffectColorfulCandy* effect = [[GPUEffectColorfulCandy alloc] init];
-    //GPUEffectSoftPop* effect = [[GPUEffectSoftPop alloc] init];
-    //GPUEffectSweetFlower* effect = [[GPUEffectSweetFlower alloc] init];
-    //GPUEffectHazelnut* effect = [[GPUEffectHazelnut alloc] init];
-    GPUEffectWarmAutumn* effect = [[GPUEffectWarmAutumn alloc] init];
+    GPUEffectJoyful* effect = [[GPUEffectJoyful alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
     
@@ -659,7 +653,7 @@
     dispatch_async(processingQueue, ^{
         
         UIImage* resultImage;
-        GPUEffectWarmAutumn* effect = [[GPUEffectWarmAutumn alloc] init];
+        GPUEffectJoyful* effect = [[GPUEffectJoyful alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
         

@@ -24,7 +24,9 @@
     if(blendingMode == MergeBlendingModeNormal){
         blending = [[GPUImageNormalBlendFilter alloc] init];
     }
-    
+    if(blendingMode == MergeBlendingModeDarken){
+        blending = [[GPUImageDarkenBlendFilter alloc] init];
+    }
     if(blendingMode == MergeBlendingModeMultiply){
         blending = [[GPUImageMultiplyBlendFilter alloc] init];
     }

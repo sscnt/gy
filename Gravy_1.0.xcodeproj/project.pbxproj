@@ -91,6 +91,9 @@
 		58F471BE180E7AFF00C64E46 /* icon_next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471BC180E7AFF00C64E46 /* icon_next@2x.png */; };
 		58F471C1180E7B0500C64E46 /* icon_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471BF180E7B0500C64E46 /* icon_back.png */; };
 		58F471C2180E7B0500C64E46 /* icon_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471C0180E7B0500C64E46 /* icon_back@2x.png */; };
+		58F5A89E184A1EB800E4FBEF /* GPUEffectJoyful.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F5A89D184A1EB800E4FBEF /* GPUEffectJoyful.m */; };
+		58F5A8A1184A1F3600E4FBEF /* Joyful1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F5A8A0184A1F3600E4FBEF /* Joyful1.acv */; };
+		58F5A8A3184A236700E4FBEF /* Joyful2.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F5A8A2184A236700E4FBEF /* Joyful2.acv */; };
 		58F5F80F1844800100C20573 /* GPUEffectGoodMorning.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F5F80E1844800100C20573 /* GPUEffectGoodMorning.m */; };
 		58F5F814184480CC00C20573 /* Morning1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F5F811184480CC00C20573 /* Morning1.acv */; };
 		58F5F815184480CC00C20573 /* Morning2.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F5F812184480CC00C20573 /* Morning2.acv */; };
@@ -283,6 +286,10 @@
 		58F471BC180E7AFF00C64E46 /* icon_next@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_next@2x.png"; sourceTree = "<group>"; };
 		58F471BF180E7B0500C64E46 /* icon_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_back.png; sourceTree = "<group>"; };
 		58F471C0180E7B0500C64E46 /* icon_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_back@2x.png"; sourceTree = "<group>"; };
+		58F5A89C184A1EB800E4FBEF /* GPUEffectJoyful.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectJoyful.h; sourceTree = "<group>"; };
+		58F5A89D184A1EB800E4FBEF /* GPUEffectJoyful.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectJoyful.m; sourceTree = "<group>"; };
+		58F5A8A0184A1F3600E4FBEF /* Joyful1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Joyful1.acv; sourceTree = "<group>"; };
+		58F5A8A2184A236700E4FBEF /* Joyful2.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Joyful2.acv; sourceTree = "<group>"; };
 		58F5F80D1844800000C20573 /* GPUEffectGoodMorning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectGoodMorning.h; sourceTree = "<group>"; };
 		58F5F80E1844800100C20573 /* GPUEffectGoodMorning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectGoodMorning.m; sourceTree = "<group>"; };
 		58F5F811184480CC00C20573 /* Morning1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Morning1.acv; sourceTree = "<group>"; };
@@ -764,9 +771,29 @@
 			name = GPUImageFilters;
 			sourceTree = "<group>";
 		};
+		58F5A898184A1EA000E4FBEF /* Joyful */ = {
+			isa = PBXGroup;
+			children = (
+				58F5A89F184A1F2100E4FBEF /* Curves */,
+				58F5A89C184A1EB800E4FBEF /* GPUEffectJoyful.h */,
+				58F5A89D184A1EB800E4FBEF /* GPUEffectJoyful.m */,
+			);
+			name = Joyful;
+			sourceTree = "<group>";
+		};
+		58F5A89F184A1F2100E4FBEF /* Curves */ = {
+			isa = PBXGroup;
+			children = (
+				58F5A8A0184A1F3600E4FBEF /* Joyful1.acv */,
+				58F5A8A2184A236700E4FBEF /* Joyful2.acv */,
+			);
+			name = Curves;
+			sourceTree = "<group>";
+		};
 		58F5F80B18447FB800C20573 /* Sunset */ = {
 			isa = PBXGroup;
 			children = (
+				58F5A898184A1EA000E4FBEF /* Joyful */,
 				58FBAB6B1849DA2A00F74156 /* WarmAutumn */,
 				58FD6BF518476B0A00F0B31E /* Weekend */,
 				58F5F80C18447FC300C20573 /* GoodMorning */,
@@ -1120,6 +1147,7 @@
 				5802E7F9180C0F8500AA2227 /* Default@2x.png in Resources */,
 				58EEE5F41820D740008C4B2A /* icon-29.png in Resources */,
 				58F471A5180E5D7800C64E46 /* bottomEditorBg.png in Resources */,
+				58F5A8A1184A1F3600E4FBEF /* Joyful1.acv in Resources */,
 				58F7911F180D65E500968648 /* editor_bg.jpg in Resources */,
 				58F2A278183F88E200C96E59 /* Hazelnut2.acv in Resources */,
 				58F79120180D65E500968648 /* editor_bg@2x.jpg in Resources */,
@@ -1143,6 +1171,7 @@
 				58FAE695181FFBEA00C4FE15 /* bg.jpg in Resources */,
 				580032A5180D16FD0021F73C /* rounded-mplus-1p-bold.ttf in Resources */,
 				58E9C5F5181FD57800BBDA5A /* bg-568h@2x.jpg in Resources */,
+				58F5A8A3184A236700E4FBEF /* Joyful2.acv in Resources */,
 				58F31AAA1838FCD300122C65 /* VintageFilm.acv in Resources */,
 				58F92BB21840D33100A4EDBE /* Vintage21.acv in Resources */,
 				58EEE5FC1820D740008C4B2A /* icon-100.png in Resources */,
@@ -1206,6 +1235,7 @@
 				58FEFFD818101550008B4E8D /* UIFadeNavigationController.m in Sources */,
 				58F9FD7718235040003D32F4 /* GPUEffectColorfulCandy.m in Sources */,
 				58FEFFE018101EB5008B4E8D /* UIDevice+Gravy.m in Sources */,
+				58F5A89E184A1EB800E4FBEF /* GPUEffectJoyful.m in Sources */,
 				58F6FED41827CD8F003F49C6 /* GPUEffectSoftPop.m in Sources */,
 				5822B22D1848C1F6009577D2 /* GPUImagePhotoFilter.m in Sources */,
 				58F31AA61838E05000122C65 /* GPUEffectVintageFilm.m in Sources */,
