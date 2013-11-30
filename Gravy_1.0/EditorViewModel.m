@@ -199,48 +199,6 @@
     }
 }
 
-- (void)adjustEffectCandy
-{
-    UIImage* resultImage = self.appliedImageSaturation;
-    
-    // Colorful Candy
-    if(self.weightLeftBottom > 0.0f){
-        @autoreleasepool {
-            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
-            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedLeftBottomImage];
-            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftBottom];
-        }
-    }
-    
-    // Haze 3
-    if(self.weightLeftTop > 0.0f){
-        @autoreleasepool {
-            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
-            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedLeftTopImage];
-            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftTop];
-        }
-    }
-    
-    // Soft Pop
-    if(self.weightRightBottom > 0.0f){
-        @autoreleasepool {
-            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
-            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedRightBottomImage];
-            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightBottom];
-        }
-    }
-    
-    // Sweet Flower
-    if(self.weightRightTop > 0.0f){
-        @autoreleasepool {
-            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
-            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedRightTopImage];
-            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightTop];
-        }
-    }
-    self.appliedImageEffect = resultImage;
-}
-
 - (void)applyEffectVintage
 {
     @autoreleasepool {
@@ -265,48 +223,6 @@
     }
 }
 
-- (void)adjustEffectVintage
-{
-    UIImage* resultImage = self.appliedImageSaturation;
-    
-    // Vintage Film
-    if(self.weightLeftBottom > 0.0f){
-        @autoreleasepool {
-            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
-            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedLeftBottomImage];
-            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftBottom];
-        }
-    }
-    
-    // Hazelnut
-    if(self.weightLeftTop > 0.0f){
-        @autoreleasepool {
-            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
-            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedLeftTopImage];
-            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftTop];
-        }
-    }
-    
-    // Soft Pop
-    if(self.weightRightBottom > 0.0f){
-        @autoreleasepool {
-            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
-            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedRightBottomImage];
-            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightBottom];
-        }
-    }
-    
-    // Sweet Flower
-    if(self.weightRightTop > 0.0f){
-        @autoreleasepool {
-            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
-            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedRightTopImage];
-            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightTop];
-        }
-    }
-    self.appliedImageEffect = resultImage;
-}
-
 - (void)applyEffectSunset
 {
     @autoreleasepool {
@@ -320,7 +236,7 @@
         self.effectedLeftTopImage = [effect process];
     }
     @autoreleasepool {
-        GPUEffectVintage1* effect = [[GPUEffectVintage1 alloc] init];
+        GPUEffectWarmAutumn* effect = [[GPUEffectWarmAutumn alloc] init];
         effect.imageToProcess = self.appliedImageSaturation;
         self.effectedRightBottomImage = [effect process];
     }
@@ -329,48 +245,6 @@
         effect.imageToProcess = self.appliedImageSaturation;
         self.effectedRightTopImage = [effect process];
     }
-}
-
-- (void)adjustEffectSunset
-{
-    UIImage* resultImage = self.appliedImageSaturation;
-    
-    // Good Morning
-    if(self.weightLeftBottom > 0.0f){
-        @autoreleasepool {
-            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
-            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedLeftBottomImage];
-            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftBottom];
-        }
-    }
-    
-    // Weekend
-    if(self.weightLeftTop > 0.0f){
-        @autoreleasepool {
-            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
-            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedLeftTopImage];
-            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftTop];
-        }
-    }
-    
-    // Soft Pop
-    if(self.weightRightBottom > 0.0f){
-        @autoreleasepool {
-            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
-            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedRightBottomImage];
-            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightBottom];
-        }
-    }
-    
-    // Sweet Flower
-    if(self.weightRightTop > 0.0f){
-        @autoreleasepool {
-            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
-            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:self.effectedRightTopImage];
-            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightTop];
-        }
-    }
-    self.appliedImageEffect = resultImage;
 }
 
 
