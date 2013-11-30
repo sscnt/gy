@@ -121,6 +121,10 @@
 		58FBA53E1840ADDB00AF186F /* Vintage12.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58FBA53D1840ADDB00AF186F /* Vintage12.acv */; };
 		58FBA5401840AF1400AF186F /* Vintage11.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58FBA53F1840AF1400AF186F /* Vintage11.acv */; };
 		58FBAB6A1849D32B00F74156 /* Weekend.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58FBAB691849D32B00F74156 /* Weekend.acv */; };
+		58FBAB6E1849DA4F00F74156 /* GPUEffectWarmAutumn.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAB6D1849DA4F00F74156 /* GPUEffectWarmAutumn.m */; };
+		58FBAB711849DAAE00F74156 /* WarmAutumn1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58FBAB701849DAAE00F74156 /* WarmAutumn1.acv */; };
+		58FBAB731849E2ED00F74156 /* WarmAutumn2.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58FBAB721849E2ED00F74156 /* WarmAutumn2.acv */; };
+		58FBAB751849EB9800F74156 /* WarmAutumn3.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58FBAB741849EB9800F74156 /* WarmAutumn3.acv */; };
 		58FBB40118155FB4001CFDC8 /* slider.png in Resources */ = {isa = PBXBuildFile; fileRef = 58FBB3FF18155FB4001CFDC8 /* slider.png */; };
 		58FBB40218155FB4001CFDC8 /* slider@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58FBB40018155FB4001CFDC8 /* slider@2x.png */; };
 		58FBB40518155FE4001CFDC8 /* UIDockButtonSave.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FBB40418155FE4001CFDC8 /* UIDockButtonSave.m */; };
@@ -324,6 +328,11 @@
 		58FBA53D1840ADDB00AF186F /* Vintage12.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Vintage12.acv; sourceTree = "<group>"; };
 		58FBA53F1840AF1400AF186F /* Vintage11.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Vintage11.acv; sourceTree = "<group>"; };
 		58FBAB691849D32B00F74156 /* Weekend.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Weekend.acv; sourceTree = "<group>"; };
+		58FBAB6C1849DA4F00F74156 /* GPUEffectWarmAutumn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectWarmAutumn.h; sourceTree = "<group>"; };
+		58FBAB6D1849DA4F00F74156 /* GPUEffectWarmAutumn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectWarmAutumn.m; sourceTree = "<group>"; };
+		58FBAB701849DAAE00F74156 /* WarmAutumn1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = WarmAutumn1.acv; sourceTree = "<group>"; };
+		58FBAB721849E2ED00F74156 /* WarmAutumn2.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = WarmAutumn2.acv; sourceTree = "<group>"; };
+		58FBAB741849EB9800F74156 /* WarmAutumn3.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = WarmAutumn3.acv; sourceTree = "<group>"; };
 		58FBB3FF18155FB4001CFDC8 /* slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider.png; sourceTree = "<group>"; };
 		58FBB40018155FB4001CFDC8 /* slider@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider@2x.png"; sourceTree = "<group>"; };
 		58FBB40318155FE4001CFDC8 /* UIDockButtonSave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDockButtonSave.h; sourceTree = "<group>"; };
@@ -758,6 +767,7 @@
 		58F5F80B18447FB800C20573 /* Sunset */ = {
 			isa = PBXGroup;
 			children = (
+				58FBAB6B1849DA2A00F74156 /* WarmAutumn */,
 				58FD6BF518476B0A00F0B31E /* Weekend */,
 				58F5F80C18447FC300C20573 /* GoodMorning */,
 			);
@@ -914,6 +924,26 @@
 			isa = PBXGroup;
 			children = (
 				58FBAB691849D32B00F74156 /* Weekend.acv */,
+			);
+			name = Curves;
+			sourceTree = "<group>";
+		};
+		58FBAB6B1849DA2A00F74156 /* WarmAutumn */ = {
+			isa = PBXGroup;
+			children = (
+				58FBAB6F1849DA9A00F74156 /* Curves */,
+				58FBAB6C1849DA4F00F74156 /* GPUEffectWarmAutumn.h */,
+				58FBAB6D1849DA4F00F74156 /* GPUEffectWarmAutumn.m */,
+			);
+			name = WarmAutumn;
+			sourceTree = "<group>";
+		};
+		58FBAB6F1849DA9A00F74156 /* Curves */ = {
+			isa = PBXGroup;
+			children = (
+				58FBAB701849DAAE00F74156 /* WarmAutumn1.acv */,
+				58FBAB721849E2ED00F74156 /* WarmAutumn2.acv */,
+				58FBAB741849EB9800F74156 /* WarmAutumn3.acv */,
 			);
 			name = Curves;
 			sourceTree = "<group>";
@@ -1129,13 +1159,16 @@
 				58FBB40218155FB4001CFDC8 /* slider@2x.png in Resources */,
 				58EEE5FF1820D740008C4B2A /* icon-144.png in Resources */,
 				58EEE6001820D740008C4B2A /* icon-152.png in Resources */,
+				58FBAB751849EB9800F74156 /* WarmAutumn3.acv in Resources */,
 				5802E7C9180C0F1400AA2227 /* InfoPlist.strings in Resources */,
 				580032B2180D275F0021F73C /* icon_photos@2x.png in Resources */,
 				580032A9180D16FD0021F73C /* rounded-mplus-1p-regular.ttf in Resources */,
+				58FBAB711849DAAE00F74156 /* WarmAutumn1.acv in Resources */,
 				58F471C2180E7B0500C64E46 /* icon_back@2x.png in Resources */,
 				5802E7D2180C0F1400AA2227 /* Main.storyboard in Resources */,
 				58F2A277183F88E200C96E59 /* Hazelnut1.acv in Resources */,
 				58EEE5FB1820D740008C4B2A /* icon-80.png in Resources */,
+				58FBAB731849E2ED00F74156 /* WarmAutumn2.acv in Resources */,
 				58FBA5401840AF1400AF186F /* Vintage11.acv in Resources */,
 				5802E7F8180C0F8500AA2227 /* Default.png in Resources */,
 				580032AF180D275F0021F73C /* icon_camera.png in Resources */,
@@ -1197,6 +1230,7 @@
 				58F92BAE1840C7F500A4EDBE /* GPUEffectVintage2.m in Sources */,
 				580032C3180D34490021F73C /* UISettingsButton.m in Sources */,
 				58FBB40518155FE4001CFDC8 /* UIDockButtonSave.m in Sources */,
+				58FBAB6E1849DA4F00F74156 /* GPUEffectWarmAutumn.m in Sources */,
 				5802E7CB180C0F1400AA2227 /* main.m in Sources */,
 				580032B6180D28170021F73C /* UIDockButtonBase.m in Sources */,
 				58003299180D10CE0021F73C /* UIView+Gravy.m in Sources */,

@@ -133,7 +133,7 @@
     //GPUEffectSoftPop* effect = [[GPUEffectSoftPop alloc] init];
     //GPUEffectSweetFlower* effect = [[GPUEffectSweetFlower alloc] init];
     //GPUEffectHazelnut* effect = [[GPUEffectHazelnut alloc] init];
-    GPUEffectWeekend* effect = [[GPUEffectWeekend alloc] init];
+    GPUEffectWarmAutumn* effect = [[GPUEffectWarmAutumn alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
     
@@ -659,7 +659,7 @@
     dispatch_async(processingQueue, ^{
         
         UIImage* resultImage;
-        GPUEffectWeekend* effect = [[GPUEffectWeekend alloc] init];
+        GPUEffectWarmAutumn* effect = [[GPUEffectWarmAutumn alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
         

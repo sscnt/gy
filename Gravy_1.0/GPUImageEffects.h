@@ -21,9 +21,11 @@ typedef NS_ENUM(NSInteger, MergeBlendingMode){
     MergeBlendingModeNormal = 1,
     MergeBlendingModeMultiply,
     MergeBlendingModeSoftLight,
+    MergeBlendingModeHardLight,
     MergeBlendingModeOverlay,
     MergeBlendingModeExclusion,
     MergeBlendingModeColorBurn,
+    MergeBlendingModeColor,
     MergeBlendingModeHue
 };
 
