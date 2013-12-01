@@ -111,6 +111,53 @@ NSString *const kGPUAdjustmentsSaturationFragmentShaderString = SHADER_STRING
      
  }
  
+ vec3 hsv2rgb2(vec3 color){
+     mediump float h = color.r;
+     mediump float s = color.g;
+     mediump float v = color.b;
+     mediump float r;
+     mediump float g;
+     mediump float b;
+     mediump float m60 = 0.01665;
+     int hi = int(mod(float(floor(h * m60)), 6.0));
+     mediump float f = (h * m60) - float(hi);
+     mediump float p = v * (1.0 - s);
+     mediump float q = v * (1.0 - s * f);
+     mediump float t = v * (1.0 - s * (1.0 - f));
+     
+     if(hi == 0){
+         r = v;
+         g = t;
+         b = p;
+     } else if(hi == 1){
+         r = q;
+         g = v;
+         b = p;
+     } else if(hi == 2){
+         r = p;
+         g = v;
+         b = t;
+     } else if(hi == 3){
+         r = p;
+         g = q;
+         b = v;
+     } else if(hi == 4){
+         r = t;
+         g = p;
+         b = v;
+     } else if(hi == 5){
+         r = v;
+         g = p;
+         b = q;
+     } else {
+         r = v;
+         g = t;
+         b = p;
+     }
+     return vec3(r, g, b);
+     
+ }
+ 
  void main()
  {
      mediump vec4 pixel   = texture2D(inputImageTexture, textureCoordinate);
@@ -121,7 +168,7 @@ NSString *const kGPUAdjustmentsSaturationFragmentShaderString = SHADER_STRING
      mediump float x = textureCoordinate.x;
      mediump float y = textureCoordinate.y;
      mediump float d = sqrt((0.5 - x) * (0.5 - x) + (0.5 - y) * (0.5 - y));
-     if(vibrance > 0.0){
+     if(vibrance >= 0.0){
          d -= 0.707107 * (1.0 - vibrance);
          d /= 0.707107;
          d = max(0.0, min(1.0, d));
@@ -131,7 +178,7 @@ NSString *const kGPUAdjustmentsSaturationFragmentShaderString = SHADER_STRING
          pixel.rgb = hsv2rgb(hsv);
      } else{
          // Contrast
-         mediump vec3 rgb = hsv2rgb(hsv);
+         mediump vec3 rgb = hsv2rgb2(hsv);
          mediump float contrast = 1.0 - vibrance * 0.2;
          contrast *= contrast;
          
@@ -154,6 +201,7 @@ NSString *const kGPUAdjustmentsSaturationFragmentShaderString = SHADER_STRING
          value += 0.5;
          rgb.g = min(1.0, max(0.0, value));
          pixel.rgb = rgb;
+
          
      }
      

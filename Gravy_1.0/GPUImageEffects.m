@@ -37,10 +37,15 @@
     if(blendingMode == MergeBlendingModeHardLight){
         blending = [[GPUImageHardLightBlendFilter alloc] init];
     }
+    if(blendingMode == MergeBlendingModeVividLight){
+        blending = [[GPUImageVividLightBlendFilter alloc] init];
+    }
     if(blendingMode == MergeBlendingModeOverlay){
         blending = [[GPUImageOverlayBlendFilter alloc] init];
     }
-    
+    if(blendingMode == MergeBlendingModeColorDodge){
+        blending = [[GPUImageColorDodgeBlendFilter alloc] init];
+    }
     if(blendingMode == MergeBlendingModeExclusion){
         blending = [[GPUImageExclusionBlendFilter alloc] init];
     }
@@ -52,6 +57,12 @@
     }
     if(blendingMode == MergeBlendingModeColorBurn){
         blending = [[GPUImageColorBurnBlendFilter alloc] init];
+    }
+    if(blendingMode == MergeBlendingModeSaturation){
+        blending = [[GPUImageSaturationBlendFilter alloc] init];
+    }
+    if(blendingMode == MergeBlendingModeDifference){
+        blending = [[GPUImageDifferenceBlendFilter alloc] init];
     }
     
     [opacityFilter addTarget:blending atTextureLocation:1];

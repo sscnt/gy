@@ -10,7 +10,8 @@
 
 typedef NS_ENUM(NSInteger, GradientStyle){
     GradientStyleLinear = 1,
-    GradientStyleRadial
+    GradientStyleRadial,
+    GradientStyleReflected
 };
 
 extern NSString *const kGPUImageGradientColorGeneratorFragmentShaderString;

@@ -127,7 +127,7 @@
     
     [scrollView addSubview:wrapper];
     
-    GPUEffectJoyful* effect = [[GPUEffectJoyful alloc] init];
+    GPUEffectFaerieBloom* effect = [[GPUEffectFaerieBloom alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
     
@@ -342,11 +342,12 @@
     float ratioX = screenWidth_2 / imageWidth_2;
     float ratioY = screenHeight / editor.originalImageResized.size.height;
     
-    UIView *targetView = sender.view;
+    UIView* targetView = sender.view;
     CGPoint p = [sender translationInView:targetView];
     CGFloat movePointX = targetView.center.x + p.x;
     CGFloat movePointY = targetView.center.y + p.y;
     CGFloat rest = (screenHeight - 480) * 0.5;
+    rest = 0.0f;
     CGPoint center = [self currentImageCenter];
     
     movePointY = MAX(center.y - imageHeight_2 - rest, MIN(center.y + imageHeight_2 + rest,  movePointY));
@@ -653,7 +654,7 @@
     dispatch_async(processingQueue, ^{
         
         UIImage* resultImage;
-        GPUEffectJoyful* effect = [[GPUEffectJoyful alloc] init];
+        GPUEffectFaerieBloom* effect = [[GPUEffectFaerieBloom alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
         

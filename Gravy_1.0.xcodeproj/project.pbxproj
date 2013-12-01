@@ -49,6 +49,14 @@
 		5809B4FF180EB902007670D1 /* UIWrapperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5809B4FE180EB902007670D1 /* UIWrapperView.m */; };
 		5809B503180EBAD2007670D1 /* UIEditorTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5809B502180EBAD2007670D1 /* UIEditorTitleLabel.m */; };
 		5822B22D1848C1F6009577D2 /* GPUImagePhotoFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5822B22C1848C1F6009577D2 /* GPUImagePhotoFilter.m */; };
+		589164F1184ACB7E007FCD5D /* GPUEffectOldTone.m in Sources */ = {isa = PBXBuildFile; fileRef = 589164F0184ACB7E007FCD5D /* GPUEffectOldTone.m */; };
+		589164F6184AE611007FCD5D /* GPUEffectFaerieBloom.m in Sources */ = {isa = PBXBuildFile; fileRef = 589164F5184AE611007FCD5D /* GPUEffectFaerieBloom.m */; };
+		589164F8184AE695007FCD5D /* FaerieBloom1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 589164F7184AE695007FCD5D /* FaerieBloom1.acv */; };
+		589164FA184AE705007FCD5D /* FaerieBloom2.acv in Resources */ = {isa = PBXBuildFile; fileRef = 589164F9184AE705007FCD5D /* FaerieBloom2.acv */; };
+		589164FC184AE7EF007FCD5D /* FaerieBloom3.acv in Resources */ = {isa = PBXBuildFile; fileRef = 589164FB184AE7EF007FCD5D /* FaerieBloom3.acv */; };
+		589164FF184AF744007FCD5D /* GPUImageVividLightBlendFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 589164FE184AF744007FCD5D /* GPUImageVividLightBlendFilter.m */; };
+		58916501184AFE51007FCD5D /* FaerieBloom4.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58916500184AFE51007FCD5D /* FaerieBloom4.acv */; };
+		58916503184B026A007FCD5D /* FaerieBloom5.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58916502184B026A007FCD5D /* FaerieBloom5.acv */; };
 		58E9C5F5181FD57800BBDA5A /* bg-568h@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58E9C5F2181FD57800BBDA5A /* bg-568h@2x.jpg */; };
 		58EC8A711833508B00D659CE /* GPUAdjustmentsBrightness.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EC8A701833508B00D659CE /* GPUAdjustmentsBrightness.m */; };
 		58EEE5F41820D740008C4B2A /* icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 58EEE5E71820D740008C4B2A /* icon-29.png */; };
@@ -231,6 +239,17 @@
 		5809B502180EBAD2007670D1 /* UIEditorTitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIEditorTitleLabel.m; sourceTree = "<group>"; };
 		5822B22B1848C1F6009577D2 /* GPUImagePhotoFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImagePhotoFilter.h; sourceTree = "<group>"; };
 		5822B22C1848C1F6009577D2 /* GPUImagePhotoFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImagePhotoFilter.m; sourceTree = "<group>"; };
+		589164EF184ACB7E007FCD5D /* GPUEffectOldTone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectOldTone.h; sourceTree = "<group>"; };
+		589164F0184ACB7E007FCD5D /* GPUEffectOldTone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectOldTone.m; sourceTree = "<group>"; };
+		589164F4184AE611007FCD5D /* GPUEffectFaerieBloom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectFaerieBloom.h; sourceTree = "<group>"; };
+		589164F5184AE611007FCD5D /* GPUEffectFaerieBloom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectFaerieBloom.m; sourceTree = "<group>"; };
+		589164F7184AE695007FCD5D /* FaerieBloom1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = FaerieBloom1.acv; sourceTree = "<group>"; };
+		589164F9184AE705007FCD5D /* FaerieBloom2.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = FaerieBloom2.acv; sourceTree = "<group>"; };
+		589164FB184AE7EF007FCD5D /* FaerieBloom3.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = FaerieBloom3.acv; sourceTree = "<group>"; };
+		589164FD184AF744007FCD5D /* GPUImageVividLightBlendFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageVividLightBlendFilter.h; sourceTree = "<group>"; };
+		589164FE184AF744007FCD5D /* GPUImageVividLightBlendFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageVividLightBlendFilter.m; sourceTree = "<group>"; };
+		58916500184AFE51007FCD5D /* FaerieBloom4.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = FaerieBloom4.acv; sourceTree = "<group>"; };
+		58916502184B026A007FCD5D /* FaerieBloom5.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = FaerieBloom5.acv; sourceTree = "<group>"; };
 		58E9C5F2181FD57800BBDA5A /* bg-568h@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg-568h@2x.jpg"; sourceTree = "<group>"; };
 		58EC8A6F1833508B00D659CE /* GPUAdjustmentsBrightness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUAdjustmentsBrightness.h; sourceTree = "<group>"; };
 		58EC8A701833508B00D659CE /* GPUAdjustmentsBrightness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUAdjustmentsBrightness.m; sourceTree = "<group>"; };
@@ -433,6 +452,7 @@
 		580237A21837A782001FE2FE /* Candy */ = {
 			isa = PBXGroup;
 			children = (
+				589164F2184AE5D5007FCD5D /* FaerieBloom */,
 				58FC5CCE1831E7BD009EBCF0 /* SweetFlower */,
 				58F6FECE1827CA33003F49C6 /* SoftPop */,
 				58F9FD7418235027003D32F4 /* ColorfulCandy */,
@@ -654,6 +674,37 @@
 			name = GPUImageEffects;
 			sourceTree = "<group>";
 		};
+		589164EB184ACB27007FCD5D /* OldTone */ = {
+			isa = PBXGroup;
+			children = (
+				589164EF184ACB7E007FCD5D /* GPUEffectOldTone.h */,
+				589164F0184ACB7E007FCD5D /* GPUEffectOldTone.m */,
+			);
+			name = OldTone;
+			sourceTree = "<group>";
+		};
+		589164F2184AE5D5007FCD5D /* FaerieBloom */ = {
+			isa = PBXGroup;
+			children = (
+				589164F3184AE5FF007FCD5D /* Curves */,
+				589164F4184AE611007FCD5D /* GPUEffectFaerieBloom.h */,
+				589164F5184AE611007FCD5D /* GPUEffectFaerieBloom.m */,
+			);
+			name = FaerieBloom;
+			sourceTree = "<group>";
+		};
+		589164F3184AE5FF007FCD5D /* Curves */ = {
+			isa = PBXGroup;
+			children = (
+				589164F7184AE695007FCD5D /* FaerieBloom1.acv */,
+				589164F9184AE705007FCD5D /* FaerieBloom2.acv */,
+				589164FB184AE7EF007FCD5D /* FaerieBloom3.acv */,
+				58916500184AFE51007FCD5D /* FaerieBloom4.acv */,
+				58916502184B026A007FCD5D /* FaerieBloom5.acv */,
+			);
+			name = Curves;
+			sourceTree = "<group>";
+		};
 		58F02716181A8B1D00938725 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -712,6 +763,7 @@
 		58F31A9F1838E01B00122C65 /* Vintage */ = {
 			isa = PBXGroup;
 			children = (
+				589164EB184ACB27007FCD5D /* OldTone */,
 				58F92BA71840C7D800A4EDBE /* Vintage2 */,
 				58FBA5351840963000AF186F /* Vintage1 */,
 				58F2A26C183F87FB00C96E59 /* Hazelnut */,
@@ -767,6 +819,8 @@
 				58F3C43E181CC55200F7129D /* GPUAdjustmentsSaturation.m */,
 				58EC8A6F1833508B00D659CE /* GPUAdjustmentsBrightness.h */,
 				58EC8A701833508B00D659CE /* GPUAdjustmentsBrightness.m */,
+				589164FD184AF744007FCD5D /* GPUImageVividLightBlendFilter.h */,
+				589164FE184AF744007FCD5D /* GPUImageVividLightBlendFilter.m */,
 			);
 			name = GPUImageFilters;
 			sourceTree = "<group>";
@@ -1140,11 +1194,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				589164FC184AE7EF007FCD5D /* FaerieBloom3.acv in Resources */,
 				58FBAB6A1849D32B00F74156 /* Weekend.acv in Resources */,
 				58F5F815184480CC00C20573 /* Morning2.acv in Resources */,
 				58FA7A75182631F400848AFD /* Candy.acv in Resources */,
 				5802E814180C22F900AA2227 /* Localizable.strings in Resources */,
 				5802E7F9180C0F8500AA2227 /* Default@2x.png in Resources */,
+				589164FA184AE705007FCD5D /* FaerieBloom2.acv in Resources */,
 				58EEE5F41820D740008C4B2A /* icon-29.png in Resources */,
 				58F471A5180E5D7800C64E46 /* bottomEditorBg.png in Resources */,
 				58F5A8A1184A1F3600E4FBEF /* Joyful1.acv in Resources */,
@@ -1194,10 +1250,13 @@
 				580032A9180D16FD0021F73C /* rounded-mplus-1p-regular.ttf in Resources */,
 				58FBAB711849DAAE00F74156 /* WarmAutumn1.acv in Resources */,
 				58F471C2180E7B0500C64E46 /* icon_back@2x.png in Resources */,
+				589164F8184AE695007FCD5D /* FaerieBloom1.acv in Resources */,
 				5802E7D2180C0F1400AA2227 /* Main.storyboard in Resources */,
 				58F2A277183F88E200C96E59 /* Hazelnut1.acv in Resources */,
 				58EEE5FB1820D740008C4B2A /* icon-80.png in Resources */,
+				58916501184AFE51007FCD5D /* FaerieBloom4.acv in Resources */,
 				58FBAB731849E2ED00F74156 /* WarmAutumn2.acv in Resources */,
+				58916503184B026A007FCD5D /* FaerieBloom5.acv in Resources */,
 				58FBA5401840AF1400AF186F /* Vintage11.acv in Resources */,
 				5802E7F8180C0F8500AA2227 /* Default.png in Resources */,
 				580032AF180D275F0021F73C /* icon_camera.png in Resources */,
@@ -1236,6 +1295,7 @@
 				58F9FD7718235040003D32F4 /* GPUEffectColorfulCandy.m in Sources */,
 				58FEFFE018101EB5008B4E8D /* UIDevice+Gravy.m in Sources */,
 				58F5A89E184A1EB800E4FBEF /* GPUEffectJoyful.m in Sources */,
+				589164F6184AE611007FCD5D /* GPUEffectFaerieBloom.m in Sources */,
 				58F6FED41827CD8F003F49C6 /* GPUEffectSoftPop.m in Sources */,
 				5822B22D1848C1F6009577D2 /* GPUImagePhotoFilter.m in Sources */,
 				58F31AA61838E05000122C65 /* GPUEffectVintageFilm.m in Sources */,
@@ -1273,8 +1333,10 @@
 				58F471B5180E74B000C64E46 /* UIDockButtonBack.m in Sources */,
 				58F471B8180E74ED00C64E46 /* UIDockButtonNext.m in Sources */,
 				58F6FED11827CA61003F49C6 /* GPUImageEffects.m in Sources */,
+				589164FF184AF744007FCD5D /* GPUImageVividLightBlendFilter.m in Sources */,
 				58F14A51182BB484009DA863 /* GPUImageSelectiveColorFilter.m in Sources */,
 				58FEFFDD18101D2C008B4E8D /* UIThumbnailView.m in Sources */,
+				589164F1184ACB7E007FCD5D /* GPUEffectOldTone.m in Sources */,
 				58F9FD6A182330CB003D32F4 /* GPUEffectHaze3.m in Sources */,
 				58FC5CD818321056009EBCF0 /* GPUImageColorBalanceFilter.m in Sources */,
 				58F3C43F181CC55200F7129D /* GPUAdjustmentsSaturation.m in Sources */,

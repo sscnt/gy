@@ -9,6 +9,7 @@
 #import "GPUEffectVintage2.h"
 
 @implementation GPUEffectVintage2
+
 - (UIImage*)process
 {
     UIImage* resultImage = self.imageToProcess;
@@ -63,7 +64,8 @@
         
         resultImage = [self mergeBaseImage:resultImage overlayFilter:curveFilter opacity:1.0f blendingMode:MergeBlendingModeNormal];
     }
-        // Fill Layer
+    
+    // Fill Layer
     @autoreleasepool {
         GPUImageSolidColorGenerator* solidColor = [[GPUImageSolidColorGenerator alloc] init];
         [solidColor setColorRed:113.0f/255.0f green:202.0f/255.0f blue:96.0f/255.0 alpha:1.0f];

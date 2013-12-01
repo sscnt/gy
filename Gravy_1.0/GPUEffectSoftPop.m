@@ -13,8 +13,7 @@
 - (UIImage*)process
 {
     UIImage* resultImage = self.imageToProcess;
-    UIImage* solidImage;
-    
+
     // Tonecurve
     @autoreleasepool {
         GPUImageToneCurveFilter* toneFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"Softpop"];

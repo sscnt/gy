@@ -145,6 +145,14 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
      if(angle >= M_PI){
          d = 1.0 - d;
      }
+     if(style == 3){
+         if (d > 1.0){
+             d = 1.0 - (d - 1.0);
+         }
+         if(d < 0.0){
+             d = -1.0 * d;
+         }
+     }
      return colorAtDistance(d);
  }
   
@@ -161,6 +169,8 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
          gl_FragColor = linear(x, y);
      } else if(style == 2){
          gl_FragColor = radial(x, y);
+     } else if(style == 3){
+         gl_FragColor = linear(x, y);
      } else{
          gl_FragColor = pixel;
      }

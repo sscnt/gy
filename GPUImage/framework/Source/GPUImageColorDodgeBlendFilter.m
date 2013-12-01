@@ -27,7 +27,8 @@ NSString *const kGPUImageColorDodgeBlendFragmentShaderString = SHADER_STRING
      
      vec3 colorChoice = step((overlay.rgb * base.a + base.rgb * overlay.a), baseOverlayAlphaProduct);
      
-     gl_FragColor = vec4(mix(firstBlendColor, secondBlendColor, colorChoice), 1.0);
+     vec4 result = vec4(mix(firstBlendColor, secondBlendColor, colorChoice), 1.0);
+     gl_FragColor = vec4(result.rgb * overlay.a + base.rgb * (1.0 - overlay.a), 1.0);
  }
 );
 #else

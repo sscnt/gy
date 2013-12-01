@@ -136,7 +136,6 @@
     
     UIImage* resultImage = self.appliedImageSaturation;
     
-    // Good Morning
     if(self.weightLeftBottom > 0.0f){
         @autoreleasepool {
             GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
@@ -145,7 +144,6 @@
         }
     }
     
-    // Weekend
     if(self.weightLeftTop > 0.0f){
         @autoreleasepool {
             GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
@@ -154,7 +152,6 @@
         }
     }
     
-    // Soft Pop
     if(self.weightRightBottom > 0.0f){
         @autoreleasepool {
             GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
@@ -162,8 +159,7 @@
             resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightBottom];
         }
     }
-    
-    // Sweet Flower
+
     if(self.weightRightTop > 0.0f){
         @autoreleasepool {
             GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
@@ -193,7 +189,7 @@
         self.effectedRightBottomImage = [effect process];
     }
     @autoreleasepool {
-        GPUEffectSweetFlower* effect = [[GPUEffectSweetFlower alloc] init];
+        GPUEffectFaerieBloom* effect = [[GPUEffectFaerieBloom alloc] init];
         effect.imageToProcess = self.appliedImageSaturation;
         self.effectedRightTopImage = [effect process];
     }
@@ -212,7 +208,7 @@
         self.effectedLeftTopImage = [effect process];
     }
     @autoreleasepool {
-        GPUEffectVintage1* effect = [[GPUEffectVintage1 alloc] init];
+        GPUEffectOldTone* effect = [[GPUEffectOldTone alloc] init];
         effect.imageToProcess = self.appliedImageSaturation;
         self.effectedRightBottomImage = [effect process];
     }
@@ -241,7 +237,7 @@
         self.effectedRightBottomImage = [effect process];
     }
     @autoreleasepool {
-        GPUEffectVintage2* effect = [[GPUEffectVintage2 alloc] init];
+        GPUEffectJoyful* effect = [[GPUEffectJoyful alloc] init];
         effect.imageToProcess = self.appliedImageSaturation;
         self.effectedRightTopImage = [effect process];
     }

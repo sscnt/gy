@@ -96,7 +96,8 @@ NSString *const kGPUImageSaturationBlendFragmentShaderString = SHADER_STRING
 	 highp vec4 baseColor = texture2D(inputImageTexture, textureCoordinate);
 	 highp vec4 overlayColor = texture2D(inputImageTexture2, textureCoordinate2);
      
-     gl_FragColor = vec4(baseColor.rgb * (1.0 - overlayColor.a) + setlum(setsat(baseColor.rgb, sat(overlayColor.rgb)), lum(baseColor.rgb)) * overlayColor.a, baseColor.a);
+     highp vec4 result = vec4(baseColor.rgb * (1.0 - overlayColor.a) + setlum(setsat(baseColor.rgb, sat(overlayColor.rgb)), lum(baseColor.rgb)) * overlayColor.a, baseColor.a);
+     gl_FragColor = vec4(result.rgb * overlayColor.a + baseColor.rgb * (1.0 - overlayColor.a), baseColor.a);
  }
 );
 #else
