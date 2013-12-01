@@ -23,7 +23,6 @@
 - (void)setOriginalImageResized:(UIImage *)originalImageResized
 {
     _originalImageResized = originalImageResized;
-    [self initialize];
 }
 
 

@@ -664,6 +664,7 @@
             }
             CIImage* filteredImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(zoom, zoom)];
             editor.originalImageResized = [self uiImageFromCIImage:filteredImage];
+            [editor initialize];
         }
         
         @autoreleasepool {
@@ -704,12 +705,25 @@
     dispatch_async(processingQueue, ^{
         
         UIImage* resultImage;
+        UIImage* resizedImage = editor.originalImageResized;
+        
+        editor.originalImageResized = self.originalImage;
+        [editor applyBrightnessShadowAmount];
+        [editor applyWhiteBalance];
+        [editor applySaturation];
+        [editor applyCurrentSelectedEffect];
+        [editor adjustCurrentSelectedEffect];
+        resultImage = editor.appliedImageEffect;
+        
+        /*
         GPUEffectFaerieBloom* effect = [[GPUEffectFaerieBloom alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
-        
+        */
         
         UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil);
+        
+        editor.originalImageResized = resizedImage;
         
         //メインスレッド
         dispatch_async(dispatch_get_main_queue(), ^{

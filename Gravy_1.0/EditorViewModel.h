@@ -55,6 +55,7 @@ typedef NS_ENUM(NSInteger, EditorViewState){
 
 @property (nonatomic, assign) EffectId currentSelectedEffectId;
 
+- (void)initialize;
 - (void)applyWhiteBalanceAmountRed:(float)red Blue:(float)blue;
 - (void)applyWhiteBalance;
 - (void)applyBrightnessShadowAmount:(float)amount Radius:(float)radius;

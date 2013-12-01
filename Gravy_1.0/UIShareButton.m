@@ -125,7 +125,12 @@
     CGGradientRef highlightedGradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)(highlightedGradientColors), NULL);
     
     // Draw rounded rectangle bezier path
-    UIBezierPath* roundedRectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(0, 0, rect.size.width, rect.size.height) cornerRadius: 4];
+    UIBezierPath* roundedRectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(0.0f, 1.0f, rect.size.width, rect.size.height - 1.0f) cornerRadius: 4];
+    [_borderColor setFill];
+    [roundedRectanglePath fill];
+    
+    // Draw rounded rectangle bezier path
+    roundedRectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(0.0f, 0.0f, rect.size.width, rect.size.height - 1.0f) cornerRadius: 4];
     
     // Use the bezier as a clipping path
     [roundedRectanglePath addClip];
@@ -134,7 +139,7 @@
     CGGradientRef background = self.highlighted? highlightedGradient : gradient;
     
     // Draw gradient within the path
-    CGContextDrawLinearGradient(context, background, CGPointMake(rect.size.width / 2, 0), CGPointMake(rect.size.width / 2, rect.size.height), 0);
+    CGContextDrawLinearGradient(context, background, CGPointMake(rect.size.width / 2, 0), CGPointMake(rect.size.width / 2, rect.size.height - 1.0f), 0);
     
     // Draw border
     [_borderColor setStroke];
@@ -142,7 +147,7 @@
     [roundedRectanglePath stroke];
     
     // Draw Inner Glow
-    UIBezierPath *innerGlowRect = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(1.5, 1.5, rect.size.width - 3, rect.size.height - 3) cornerRadius: 2.5];
+    UIBezierPath *innerGlowRect = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(1.5, 1.5, rect.size.width - 3.0f, rect.size.height - 4.0f) cornerRadius: 2.5];
     [_innerGlow setStroke];
     innerGlowRect.lineWidth = 1;
     [innerGlowRect stroke];
