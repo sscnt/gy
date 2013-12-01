@@ -22,6 +22,7 @@
 #import "UIScrollView+Gravy.h"
 #import "SVProgressHUD.h"
 #import "UIEffectSelectionView.h"
+#import "UIShareButton.h"
 
 #import "GPUImage.h"
 #import "GPUAdjustmentsWhiteBalance.h"
@@ -97,6 +98,7 @@ typedef NS_ENUM(NSInteger, KnobId){
 - (void)layoutLevelsEditor;
 - (void)layoutSaturationEditor;
 - (void)layoutEffectEditor;
+- (void)layoutShareScreen;
 - (void)saveImage;
 
 - (CGPoint)currentImageCenter;

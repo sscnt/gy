@@ -93,6 +93,7 @@
     [self layoutWhiteBalanceEditor];
     [self layoutSaturationEditor];
     [self layoutEffectEditor];
+    [self layoutShareScreen];
 }
 
 #pragma mark layout
@@ -123,13 +124,14 @@
     [levelsKnobView addGestureRecognizer:recognizer];
     [levelsKnobView setCenter:levelsImageView.center];
     [wrapper addSubview:levelsKnobView];
-    
-    
+        
     [scrollView addSubview:wrapper];
     
+    /*
     GPUEffectFaerieBloom* effect = [[GPUEffectFaerieBloom alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
+     */
     
 }
 
@@ -145,7 +147,7 @@
     whitebalanceImageView.delegate = self;
     whitebalanceImageView.userInteractionEnabled = YES;
     [wrapper addSubview:whitebalanceImageView];
-    [wrapper setX:320.0f];
+    [wrapper setX:[UIScreen screenSize].width];
     
     // label
     UIEditorTitleLabel* label = [[UIEditorTitleLabel alloc] initWithFrame:CGRectMake(0.0f, 30.0f, 320.0f, 20.0f)];
@@ -178,7 +180,7 @@
     saturationImageView.userInteractionEnabled = YES;
     saturationImageView.thumbnailId = ThumbnailViewIdSaturation;
     [wrapper addSubview:saturationImageView];
-    [wrapper setX:640.0f];
+    [wrapper setX:[UIScreen screenSize].width * 2.0f];
     
     // label
     UIEditorTitleLabel* label = [[UIEditorTitleLabel alloc] initWithFrame:CGRectMake(0.0f, 30.0f, 320.0f, 20.0f)];
@@ -209,7 +211,7 @@
     effectImageView.userInteractionEnabled = YES;
     effectImageView.thumbnailId = ThumbnailViewIdEffect;
     [wrapper addSubview:effectImageView];
-    [wrapper setX:960.0f];
+    [wrapper setX:[UIScreen screenSize].width * 3.0f];
     
     // Selection Vier
     CGFloat bottom = [UIScreen screenSize].height - 195.0f;
@@ -232,6 +234,44 @@
     effectKnobView.center = effectImageView.center;
     effectKnobView.hidden = YES;
     [wrapper addSubview:effectKnobView];
+    [scrollView addSubview:wrapper];
+}
+
+- (void)layoutShareScreen
+{
+    
+    UIWrapperView* wrapper = [[UIWrapperView alloc] initWithFrame:self.view.bounds];
+    
+    [wrapper setX:[UIScreen screenSize].width * 4.0f];
+    
+    // label
+    UIEditorTitleLabel* label = [[UIEditorTitleLabel alloc] initWithFrame:CGRectMake(0.0f, 30.0f, 320.0f, 20.0f)];
+    label.text = NSLocalizedString(@"Open", nil);
+    [wrapper addSubview:label];
+    
+    // Buttons
+    CGFloat bottom = 100.0f;
+    UIShareButton* twitter = [UIShareButton twitter:CGRectMake(20.0f, bottom, 280.0f, 44.0f)];
+    [twitter setTitle:@"Twitter" forState:UIControlStateNormal];
+    [wrapper addSubview:twitter];
+    bottom += 64.0f;
+    
+    UIShareButton* facebook = [UIShareButton facebook:CGRectMake(20.0f, bottom, 280.0f, 44.0f)];
+    [facebook setTitle:@"Facebook" forState:UIControlStateNormal];
+    [wrapper addSubview:facebook];
+    bottom += 64.0f;
+    
+    UIShareButton* insta = [UIShareButton instagram:CGRectMake(20.0f, bottom, 280.0f, 44.0f)];
+    [insta setTitle:@"Instagram" forState:UIControlStateNormal];
+    [wrapper addSubview:insta];
+    bottom += 64.0f;
+    
+    UIShareButton* line = [UIShareButton line:CGRectMake(20.0f, bottom, 280.0f, 44.0f)];
+    [line setTitle:@"LINE" forState:UIControlStateNormal];
+    [wrapper addSubview:line];
+    bottom += 64.0f;
+
+    
     [scrollView addSubview:wrapper];
 }
 
@@ -327,7 +367,7 @@
     } else if (state == EditorStateEffect){
         state = EditorStateSaturation;
     } else if (state == EditorStateSharing){
-        state = EditorStateSaturation;
+        state = EditorStateEffect;
         nextBtn.hidden = YES;
         saveBtn.hidden = NO; 
     }

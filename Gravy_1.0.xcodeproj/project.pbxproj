@@ -57,6 +57,7 @@
 		589164FF184AF744007FCD5D /* GPUImageVividLightBlendFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 589164FE184AF744007FCD5D /* GPUImageVividLightBlendFilter.m */; };
 		58916501184AFE51007FCD5D /* FaerieBloom4.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58916500184AFE51007FCD5D /* FaerieBloom4.acv */; };
 		58916503184B026A007FCD5D /* FaerieBloom5.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58916502184B026A007FCD5D /* FaerieBloom5.acv */; };
+		5891650A184B178B007FCD5D /* UIShareButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 58916509184B178B007FCD5D /* UIShareButton.m */; };
 		58E9C5F5181FD57800BBDA5A /* bg-568h@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58E9C5F2181FD57800BBDA5A /* bg-568h@2x.jpg */; };
 		58EC8A711833508B00D659CE /* GPUAdjustmentsBrightness.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EC8A701833508B00D659CE /* GPUAdjustmentsBrightness.m */; };
 		58EEE5F41820D740008C4B2A /* icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 58EEE5E71820D740008C4B2A /* icon-29.png */; };
@@ -250,6 +251,10 @@
 		589164FE184AF744007FCD5D /* GPUImageVividLightBlendFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageVividLightBlendFilter.m; sourceTree = "<group>"; };
 		58916500184AFE51007FCD5D /* FaerieBloom4.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = FaerieBloom4.acv; sourceTree = "<group>"; };
 		58916502184B026A007FCD5D /* FaerieBloom5.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = FaerieBloom5.acv; sourceTree = "<group>"; };
+		58916504184B140E007FCD5D /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		58916506184B1423007FCD5D /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		58916508184B178B007FCD5D /* UIShareButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIShareButton.h; sourceTree = "<group>"; };
+		58916509184B178B007FCD5D /* UIShareButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIShareButton.m; sourceTree = "<group>"; };
 		58E9C5F2181FD57800BBDA5A /* bg-568h@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg-568h@2x.jpg"; sourceTree = "<group>"; };
 		58EC8A6F1833508B00D659CE /* GPUAdjustmentsBrightness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUAdjustmentsBrightness.h; sourceTree = "<group>"; };
 		58EC8A701833508B00D659CE /* GPUAdjustmentsBrightness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUAdjustmentsBrightness.m; sourceTree = "<group>"; };
@@ -445,6 +450,8 @@
 				58FBB40418155FE4001CFDC8 /* UIDockButtonSave.m */,
 				580032C1180D34490021F73C /* UISettingsButton.h */,
 				580032C2180D34490021F73C /* UISettingsButton.m */,
+				58916508184B178B007FCD5D /* UIShareButton.h */,
+				58916509184B178B007FCD5D /* UIShareButton.m */,
 			);
 			name = buttons;
 			sourceTree = "<group>";
@@ -483,6 +490,8 @@
 		5802E7BD180C0F1400AA2227 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				58916506184B1423007FCD5D /* Twitter.framework */,
+				58916504184B140E007FCD5D /* Social.framework */,
 				58F3C42E181C8A9C00F7129D /* QuartzCore.framework */,
 				58F3C42C181C8A9200F7129D /* AVFoundation.framework */,
 				58F3C42A181C8A8300F7129D /* OpenGLES.framework */,
@@ -1295,6 +1304,7 @@
 				58F9FD7718235040003D32F4 /* GPUEffectColorfulCandy.m in Sources */,
 				58FEFFE018101EB5008B4E8D /* UIDevice+Gravy.m in Sources */,
 				58F5A89E184A1EB800E4FBEF /* GPUEffectJoyful.m in Sources */,
+				5891650A184B178B007FCD5D /* UIShareButton.m in Sources */,
 				589164F6184AE611007FCD5D /* GPUEffectFaerieBloom.m in Sources */,
 				58F6FED41827CD8F003F49C6 /* GPUEffectSoftPop.m in Sources */,
 				5822B22D1848C1F6009577D2 /* GPUImagePhotoFilter.m in Sources */,
