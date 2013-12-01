@@ -230,8 +230,9 @@
     effectKnobView.tag = KnobIdEffect;
     [effectKnobView addGestureRecognizer:recognizer];
     effectKnobView.center = effectImageView.center;
+    effectKnobView.hidden = YES;
     [wrapper addSubview:effectKnobView];
-        [scrollView addSubview:wrapper];
+    [scrollView addSubview:wrapper];
 }
 
 - (CGPoint)currentImageCenter
@@ -579,6 +580,13 @@
 }
 - (void)effectSelected:(EffectId)effectId
 {
+    if(effectId == EffectIdNone){
+        editor.currentSelectedEffectId = effectId;
+        [editor applyCurrentSelectedEffect];
+        effectKnobView.hidden = YES;
+        [effectImageView setImage:editor.appliedImageEffect];
+        return;
+    }
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     editor.currentSelectedEffectId = effectId;
     dispatch_async(processingQueue, ^{
@@ -587,6 +595,8 @@
         //メインスレッド
         dispatch_async(dispatch_get_main_queue(), ^{
             [effectImageView setImage:editor.appliedImageEffect];
+            effectKnobView.hidden = NO;
+            effectKnobView.center = effectImageView.center;
             [SVProgressHUD dismiss];
         });
     });

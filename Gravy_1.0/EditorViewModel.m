@@ -114,6 +114,8 @@
 
 - (void)applyCurrentSelectedEffect
 {
+    self.appliedImageEffect = self.appliedImageSaturation;
+    
     if(self.currentSelectedEffectId == EffectIdCandy){
         [self applyEffectCandy];
         return;
@@ -128,11 +130,14 @@
         [self applyEffectSunset];
         return;
     }
-    self.appliedImageEffect = self.appliedImageSaturation;
 }
 
 - (void)adjustCurrentSelectedEffect
 {
+    if(self.currentSelectedEffectId == EffectIdNone){
+        self.appliedImageEffect = self.appliedImageSaturation;
+        return;
+    }
     
     UIImage* resultImage = self.appliedImageSaturation;
     
