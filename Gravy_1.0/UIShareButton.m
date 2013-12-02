@@ -24,7 +24,7 @@
     _borderColor = [UIColor colorWithRed:21.0f/255.0f green:84.0f/255.0f blue:134.0f/255.0f alpha:1.00f];
     _topColor = [UIColor colorWithRed:85.0f/255.0f green:172.0f/255.0f blue:239.0f/255.0f alpha:1.00f];
     _bottomColor = [UIColor colorWithRed:60.0f/255.0f green:136.0f/255.0f blue:196.0f/255.0f alpha:1.00f];
-    _innerGlow = [UIColor colorWithWhite:1.0 alpha:0.2];
+    _innerGlow = [UIColor colorWithWhite:1.0 alpha:0.15];
     _textColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
     _highlightedColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
     _textShadowColor = [UIColor colorWithWhite:0.1f alpha:0.40f];
@@ -44,7 +44,7 @@
     _borderColor = [UIColor colorWithRed:47.0f/255.0f green:70.0f/255.0f blue:146.0f/255.0f alpha:1.00f];
     _topColor = [UIColor colorWithRed:98.0f/255.0f green:134.0f/255.0f blue:210.0f/255.0f alpha:1.00f];
     _bottomColor = [UIColor colorWithRed:45.0f/255.0f green:74.0f/255.0f blue:134.0f/255.0f alpha:1.00f];
-    _innerGlow = [UIColor colorWithWhite:1.0 alpha:0.2];
+    _innerGlow = [UIColor colorWithWhite:1.0 alpha:0.15];
     _textColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
     _highlightedColor = [UIColor colorWithWhite:0.90f alpha:1.0f];
     _textShadowColor = [UIColor colorWithWhite:0.1f alpha:0.40f];
@@ -65,7 +65,7 @@
     _borderColor = [UIColor colorWithRed:82.0f/255.0f green:44.0f/255.0f blue:29.0f/255.0f alpha:1.00f];
     _topColor = [UIColor colorWithRed:188.0f/255.0f green:154.0f/255.0f blue:126.0f/255.0f alpha:1.00f];
     _bottomColor = [UIColor colorWithRed:136.0f/255.0f green:81.0f/255.0f blue:61.0f/255.0f alpha:1.00f];
-    _innerGlow = [UIColor colorWithWhite:1.0 alpha:0.2];
+    _innerGlow = [UIColor colorWithWhite:1.0 alpha:0.15];
     _textColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
     _highlightedColor = [UIColor colorWithWhite:0.90f alpha:1.0f];
     _textShadowColor = [UIColor colorWithWhite:0.1f alpha:0.40f];
@@ -125,12 +125,12 @@
     CGGradientRef highlightedGradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)(highlightedGradientColors), NULL);
     
     // Draw rounded rectangle bezier path
-    UIBezierPath* roundedRectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(0.0f, 1.0f, rect.size.width, rect.size.height - 1.0f) cornerRadius: 4];
+    UIBezierPath* roundedRectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(0.0f, 2.0f, rect.size.width, rect.size.height - 2.0f) cornerRadius: 3];
     [_borderColor setFill];
     [roundedRectanglePath fill];
     
     // Draw rounded rectangle bezier path
-    roundedRectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(0.0f, 0.0f, rect.size.width, rect.size.height - 1.0f) cornerRadius: 4];
+    roundedRectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(0.0f, 0.0f, rect.size.width, rect.size.height - 2.0f) cornerRadius: 4];
     
     // Use the bezier as a clipping path
     [roundedRectanglePath addClip];
@@ -139,7 +139,7 @@
     CGGradientRef background = self.highlighted? highlightedGradient : gradient;
     
     // Draw gradient within the path
-    CGContextDrawLinearGradient(context, background, CGPointMake(rect.size.width / 2, 0), CGPointMake(rect.size.width / 2, rect.size.height - 1.0f), 0);
+    CGContextDrawLinearGradient(context, background, CGPointMake(rect.size.width / 2, 0), CGPointMake(rect.size.width / 2, rect.size.height - 2.0f), 0);
     
     // Draw border
     [_borderColor setStroke];

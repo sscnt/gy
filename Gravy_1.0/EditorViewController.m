@@ -253,25 +253,32 @@
     // Buttons
     CGFloat bottom = 100.0f;
     UIShareButton* twitter = [UIShareButton twitter:CGRectMake(20.0f, bottom, 280.0f, 44.0f)];
+    twitter.type = ButtonTypeTwitter;
+    [twitter addTarget:self action:@selector(didClickShareButton:) forControlEvents:UIControlEventTouchUpInside];
     [twitter setTitle:@"Twitter" forState:UIControlStateNormal];
     [wrapper addSubview:twitter];
     bottom += 64.0f;
     
     UIShareButton* facebook = [UIShareButton facebook:CGRectMake(20.0f, bottom, 280.0f, 44.0f)];
+    facebook.type = ButtonTypeFacebook;
+    [facebook addTarget:self action:@selector(didClickShareButton:) forControlEvents:UIControlEventTouchUpInside];
     [facebook setTitle:@"Facebook" forState:UIControlStateNormal];
     [wrapper addSubview:facebook];
     bottom += 64.0f;
     
     UIShareButton* insta = [UIShareButton instagram:CGRectMake(20.0f, bottom, 280.0f, 44.0f)];
+    insta.type = ButtonTypeInstagram;
+    [insta addTarget:self action:@selector(didClickShareButton:) forControlEvents:UIControlEventTouchUpInside];
     [insta setTitle:@"Instagram" forState:UIControlStateNormal];
     [wrapper addSubview:insta];
     bottom += 64.0f;
     
     UIShareButton* line = [UIShareButton line:CGRectMake(20.0f, bottom, 280.0f, 44.0f)];
+    line.type = ButtonTypeLine;
+    [line addTarget:self action:@selector(didClickShareButton:) forControlEvents:UIControlEventTouchUpInside];
     [line setTitle:@"LINE" forState:UIControlStateNormal];
     [wrapper addSubview:line];
     bottom += 64.0f;
-
     
     [scrollView addSubview:wrapper];
 }
@@ -376,6 +383,55 @@
     }
     pageControl.currentPage--;
     [self changePageControl];
+}
+
+- (void)didClickShareButton:(UIShareButton *)button
+{
+    NSString *url;
+    if(button.type == ButtonTypeTwitter){
+        url = @"twitter://post?message=";
+        BOOL canOpen = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:url]];
+        if(canOpen){
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+        } else {
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Twitter not installed.", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:nil];
+            [alert show];
+        }
+        return;
+    }
+    if(button.type == ButtonTypeFacebook){
+        url = @"fb://feed";
+        BOOL canOpen = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:url]];
+        if(canOpen){
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+        } else {
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Facebook not installed.", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:nil];
+            [alert show];
+        }
+        return;
+    }
+    if(button.type == ButtonTypeInstagram){
+        url = @"instagram://app";
+        BOOL canOpen = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:url]];
+        if(canOpen){
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+        } else {
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Instagram not installed.", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:nil];
+            [alert show];
+        }
+        return;
+    }
+    if(button.type == ButtonTypeLine){
+        url = @"line://msg/text/";
+        BOOL canOpen = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:url]];
+        if(canOpen){
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+        } else {
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"LINE not installed.", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:nil];
+            [alert show];
+        }
+        return;
+    }
 }
 
 - (void)didDragView:(UIPanGestureRecognizer *)sender

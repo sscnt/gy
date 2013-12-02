@@ -91,6 +91,7 @@ typedef NS_ENUM(NSInteger, KnobId){
 - (void)didClickNextButton;
 - (void)didClickBackButton;
 - (void)didDragView:(UIPanGestureRecognizer *)sender;
+- (void)didClickShareButton:(UIShareButton*)button;
 
 - (void)goToNextPage;
 
