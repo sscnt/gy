@@ -111,7 +111,8 @@
     if(picker.sourceType == UIImagePickerControllerSourceTypeCamera){
         UIImageWriteToSavedPhotosAlbum(originalImage, nil, nil, nil);
     }
-    [picker.delegate performSelector:@selector(prepareForEditor) withObject:nil];
+    //[picker.delegate performSelector:@selector(prepareForEditor) withObject:nil];
+    [self prepareForEditor];
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -127,6 +128,7 @@
     controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self.navigationController pushViewController:controller animated:NO];
 }
+
 
 - (void)didReceiveMemoryWarning
 {
