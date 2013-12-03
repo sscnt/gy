@@ -28,6 +28,24 @@
 
 - (void)setEffectPreviewImage:(UIImage *)effectPreviewImage
 {
+    if(buttonNone){
+        buttonNone.delegate = nil;
+        [buttonNone removeFromSuperview];
+    }
+    if(buttonCandy){
+        buttonCandy.delegate = nil;
+        [buttonCandy removeFromSuperview];
+    }
+    if(buttonSunset){
+        
+        buttonSunset.delegate = nil;
+        [buttonSunset removeFromSuperview];
+    }
+    if(buttonVintage){
+        buttonVintage.delegate = nil;
+        [buttonVintage removeFromSuperview];
+    }
+
     CGFloat left = [UIScreen screenRect].size.width / 2.0f - 35.0f;
     // None
     buttonNone = [[UIEffectSelectionButton alloc] initWithEffectId:EffectIdNone previewImageBase:effectPreviewImage];

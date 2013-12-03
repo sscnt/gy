@@ -20,6 +20,7 @@
     @autoreleasepool {
         GPUImageSaturationFilter* saturationFilter = [[GPUImageSaturationFilter alloc] init];
         saturationFilter.saturation = 1.25f;
+        
         GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:resultImage];
         [picture addTarget:saturationFilter];
         [picture processImage];
@@ -60,7 +61,7 @@
         [picture addTarget:blendFilter];
         [picture addTarget:gradientColor];
         [picture processImage];
-        resultImage = [blendFilter imageFromCurrentlyProcessedOutput];
+        //resultImage = [blendFilter imageFromCurrentlyProcessedOutput];
         
     }
     

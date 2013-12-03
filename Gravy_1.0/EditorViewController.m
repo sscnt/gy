@@ -217,7 +217,7 @@
     // Selection Vier
     CGFloat bottom = [UIScreen screenSize].height - 195.0f;
     effectSelectionView = [[UIEffectSelectionView alloc] init];
-    effectSelectionView.effectPreviewImage = effectSelectionPreviewImgae;
+    //effectSelectionView.effectPreviewImage = effectSelectionPreviewImgae;
     [effectSelectionView setY:bottom];
     effectSelectionView.delegate = self;
     [wrapper addSubview:effectSelectionView];
@@ -626,6 +626,8 @@
         if(!editor.appliedImageEffect){
             editor.appliedImageEffect = editor.appliedImageSaturation;
         }
+        [self createPreviewImage];
+        effectSelectionView.effectPreviewImage = effectSelectionPreviewImgae;
         [effectImageView setImage:editor.appliedImageEffect];
         state = EditorStateEffect;
         saveBtn.hidden = NO;
@@ -713,7 +715,6 @@
         UIScreen *mainScreen = [UIScreen mainScreen];
         CGFloat scale = ([mainScreen respondsToSelector:@selector(scale)] ? mainScreen.scale : 1.0f);
         
-        @autoreleasepool {
             CIImage* ciImage = [[CIImage alloc] initWithImage:self.originalImage];
             CGFloat zoom;
             if(portrait){
@@ -724,24 +725,27 @@
             CIImage* filteredImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(zoom, zoom)];
             editor.originalImageResized = [self uiImageFromCIImage:filteredImage];
             [editor initialize];
-        }
-        
-        @autoreleasepool {
-            CGFloat cropSize = MIN(editor.originalImageResized.size.width, editor.originalImageResized.size.height);
-            CGRect clippedRect = CGRectMake(0, 0, cropSize * scale, cropSize * scale);
-            CGImageRef imageRef = CGImageCreateWithImageInRect(editor.originalImageResized.CGImage, clippedRect);
-            UIImage* resizedImage = [UIImage imageWithCGImage:imageRef];
 
-            CIImage* ciImage = [[CIImage alloc] initWithImage:resizedImage];
-            CGFloat zoom = 70.0f * scale / resizedImage.size.width;
-            CIImage* filteredImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(zoom, zoom)];
-            resizedImage = [self uiImageFromCIImage:filteredImage];
-            CGImageRelease(imageRef);
-            effectSelectionPreviewImgae = resizedImage;
-            
-        }
         
     }
+}
+
+- (void)createPreviewImage
+{
+    
+    UIScreen *mainScreen = [UIScreen mainScreen];
+    CGFloat scale = ([mainScreen respondsToSelector:@selector(scale)] ? mainScreen.scale : 1.0f);
+    CGFloat cropSize = MIN(editor.appliedImageSaturation.size.width, editor.appliedImageSaturation.size.height);
+    CGRect clippedRect = CGRectMake(0, 0, cropSize * scale, cropSize * scale);
+    CGImageRef imageRef = CGImageCreateWithImageInRect(editor.appliedImageSaturation.CGImage, clippedRect);
+    UIImage* resizedImage = [UIImage imageWithCGImage:imageRef];
+    
+    CIImage* ciImage = [[CIImage alloc] initWithImage:resizedImage];
+    CGFloat zoom = 70.0f * scale / resizedImage.size.width;
+    CIImage* filteredImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(zoom, zoom)];
+    resizedImage = [self uiImageFromCIImage:filteredImage];
+    CGImageRelease(imageRef);
+    effectSelectionPreviewImgae = resizedImage;
 }
 
 

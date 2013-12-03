@@ -104,5 +104,6 @@ typedef NS_ENUM(NSInteger, KnobId){
 
 - (CGPoint)currentImageCenter;
 - (void)resizeOriginalImage;
+- (void)createPreviewImage;
 
 @end
