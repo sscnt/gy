@@ -16,3 +16,4 @@
 #import "GPUEffectJoyful.h"
 
 #import "GPUEffectCreamyNoon.h"
+#import "GPUEffectGentleMemories.h"

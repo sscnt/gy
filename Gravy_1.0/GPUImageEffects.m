@@ -94,7 +94,9 @@
     if(blendingMode == MergeBlendingModeMultiply){
         blending = [[GPUImageMultiplyBlendFilter alloc] init];
     }
-    
+    if(blendingMode == MergeBlendingModeScreen){
+        blending = [[GPUImageScreenBlendFilter alloc] init];
+    }
     if(blendingMode == MergeBlendingModeSoftLight){
         blending = [[GPUImageSoftLightBlendFilter alloc] init];
     }

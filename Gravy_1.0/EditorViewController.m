@@ -129,7 +129,7 @@
     [scrollView addSubview:wrapper];
     
     
-    GPUEffectCreamyNoon* effect = [[GPUEffectCreamyNoon alloc] init];
+    GPUEffectGentleMemories* effect = [[GPUEffectGentleMemories alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
     
@@ -890,7 +890,7 @@
         */
         
     
-        GPUEffectCreamyNoon* effect = [[GPUEffectCreamyNoon alloc] init];
+        GPUEffectGentleMemories* effect = [[GPUEffectGentleMemories alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
         

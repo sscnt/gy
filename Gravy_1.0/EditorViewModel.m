@@ -115,6 +115,11 @@
 {
     self.appliedImageEffect = self.appliedImageSaturation;
     
+    if(self.currentSelectedEffectId == EffectIdCreamy){
+        [self applyEffectCreamy];
+        return;
+    }
+    
     if(self.currentSelectedEffectId == EffectIdCandy){
         [self applyEffectCandy];
         return;
@@ -179,6 +184,30 @@
 {
     @autoreleasepool {
         GPUEffectColorfulCandy* effect = [[GPUEffectColorfulCandy alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedLeftBottomImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectHaze3* effect = [[GPUEffectHaze3 alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedLeftTopImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectSoftPop* effect = [[GPUEffectSoftPop alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedRightBottomImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectFaerieBloom* effect = [[GPUEffectFaerieBloom alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedRightTopImage = [effect process];
+    }
+}
+
+- (void)applyEffectCreamy
+{
+    @autoreleasepool {
+        GPUEffectCreamyNoon* effect = [[GPUEffectCreamyNoon alloc] init];
         effect.imageToProcess = self.appliedImageSaturation;
         self.effectedLeftBottomImage = [effect process];
     }

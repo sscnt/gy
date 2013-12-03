@@ -50,7 +50,7 @@
     }
     
     if(self.effectId == EffectIdCreamy){
-        GPUEffectColorfulCandy* effect = [[GPUEffectColorfulCandy alloc] init];
+        GPUEffectCreamyNoon* effect = [[GPUEffectCreamyNoon alloc] init];
         effect.imageToProcess = baseImage;
         previewImageView.image = [effect process];
         return;
