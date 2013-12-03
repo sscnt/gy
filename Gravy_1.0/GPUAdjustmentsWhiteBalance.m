@@ -119,10 +119,11 @@ NSString *const kGPUAdjustmentsWhiteBalanceFragmentShaderString = SHADER_STRING
          max = 0.0;
      }
      
-     r += redWeight;
-     b += blueWeight;
-     
      mediump vec3 hsv = rgb2hsv(vec3(r, g, b));
+     mediump float weight = sqrt(hsv.y);
+     r += redWeight * weight;
+     b += blueWeight * weight;
+     
      hsv.z = max;
      mediump vec3 rgb = vec3(r, g, b);
      
