@@ -129,7 +129,7 @@
     [scrollView addSubview:wrapper];
     
     
-    GPUEffectGentleMemories* effect = [[GPUEffectGentleMemories alloc] init];
+    GPUEffectVanilla* effect = [[GPUEffectVanilla alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
     
@@ -890,7 +890,7 @@
         */
         
     
-        GPUEffectGentleMemories* effect = [[GPUEffectGentleMemories alloc] init];
+        GPUEffectVanilla* effect = [[GPUEffectVanilla alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
         

@@ -254,6 +254,9 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      mediump float ga = g;
      mediump float ba = b;
      mediump float lum = 0.299 * r + 0.587 * g + 0.114 * b;
+     mediump float max = max(r, max(g, b));
+     mediump float min = min(r, min(g, b));
+     mediump float luminosity = (max + min) / 2.0;
      
      // Convert to CMYK
      mediump float c = 1.0 - r;

@@ -112,6 +112,9 @@
     if(blendingMode == MergeBlendingModeColorDodge){
         blending = [[GPUImageColorDodgeBlendFilter alloc] init];
     }
+    if(blendingMode == MergeBlendingModeLinearDodge){
+        blending = [[GPUImageLinearDodgeBlendFilter alloc] init];
+    }
     if(blendingMode == MergeBlendingModeExclusion){
         blending = [[GPUImageExclusionBlendFilter alloc] init];
     }

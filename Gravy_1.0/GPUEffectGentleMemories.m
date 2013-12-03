@@ -148,21 +148,71 @@
         resultImage = [self mergeBaseImage:resultImage overlayFilter:colorBalance opacity:0.70f blendingMode:MergeBlendingModeNormal];
     }
     
-    // Fill Layer
+    
+    // Brightness
     @autoreleasepool {
-        GPUImageGradientColorGenerator* gradientColor = [[GPUImageGradientColorGenerator alloc] init];
-        [gradientColor forceProcessingAtSize:CGSizeMake(resultImage.size.width, resultImage.size.height)];
-        [gradientColor setStyle:GradientStyleLinear];
-        [gradientColor setAngleDegree:77.0f];
-        [gradientColor setScalePercent:140];
-        [gradientColor setOffsetX:0.0f Y:0.0f];
-        [gradientColor addColorRed:255.0f Green:0.0f Blue:127.0f Opacity:100.0f Location:0 Midpoint:50];
-        [gradientColor addColorRed:255.0f Green:0.0f Blue:127.0f Opacity:0.0f Location:968 Midpoint:50];
-        [gradientColor addColorRed:255.0f Green:0.0f Blue:127.0f Opacity:0.0f Location:4096 Midpoint:50];
+        GPUImageBrightnessFilter* brightnessFilter = [[GPUImageBrightnessFilter alloc] init];
+        brightnessFilter.brightness = -0.03;
         
-        resultImage = [self mergeBaseImage:resultImage overlayFilter:gradientColor opacity:0.20f blendingMode:MergeBlendingModeScreen];
+        resultImage = [self mergeBaseImage:resultImage overlayFilter:brightnessFilter opacity:1.0f blendingMode:MergeBlendingModeNormal];
+    }
+    
+    // Curve
+    @autoreleasepool {
+        GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"GentleMemories2"];
+        
+        resultImage = [self mergeBaseImage:resultImage overlayFilter:curveFilter opacity:1.0f blendingMode:MergeBlendingModeNormal];
+    }
+    
+    // Color Balance
+    @autoreleasepool {
+        GPUImageColorBalanceFilter* colorBalance = [[GPUImageColorBalanceFilter alloc] init];
+        GPUVector3 shadows;
+        shadows.one = 10.0f/255.0f;
+        shadows.two = 0.0f;
+        shadows.three = 0.0f;
+        [colorBalance setShadows:shadows];
+        GPUVector3 midtones;
+        midtones.one = 25.0f/255.0f;
+        midtones.two = 0.0f/255.0f;
+        midtones.three = -15.0f/255.0f;
+        [colorBalance setMidtones:midtones];
+        GPUVector3 highlights;
+        highlights.one = 1.0f/255.0f;
+        highlights.two = 0.0f/255.0f;
+        highlights.three = 1.0f/255.0f;
+        [colorBalance setHighlights:highlights];
+        colorBalance.preserveLuminosity = YES;
+        
+        resultImage = [self mergeBaseImage:resultImage overlayFilter:colorBalance opacity:1.0f blendingMode:MergeBlendingModeNormal];
+    }
+    
+    // Hue / Saturation
+    @autoreleasepool {
+        GPUImageHueSaturationFilter* hueSaturation = [[GPUImageHueSaturationFilter alloc] init];
+        hueSaturation.hue = 0.0f;
+        hueSaturation.saturation = 1.0f;
+        hueSaturation.lightness = 0.0f;
+        hueSaturation.colorize = NO;
+        
+        resultImage = [self mergeBaseImage:resultImage overlayFilter:hueSaturation opacity:1.0f blendingMode:MergeBlendingModeNormal];
         
     }
+    
+    // Curve
+    @autoreleasepool {
+        GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"GentleMemories3"];
+        
+        resultImage = [self mergeBaseImage:resultImage overlayFilter:curveFilter opacity:1.0f blendingMode:MergeBlendingModeNormal];
+    }
+    
+    // Curve
+    @autoreleasepool {
+        GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"GentleMemories4"];
+        
+        resultImage = [self mergeBaseImage:resultImage overlayFilter:curveFilter opacity:1.0f blendingMode:MergeBlendingModeNormal];
+    }
+    
 
     
     return resultImage;

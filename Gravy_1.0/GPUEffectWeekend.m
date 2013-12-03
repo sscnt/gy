@@ -80,7 +80,7 @@
         [colorBalance setShadows:shadows];
         GPUVector3 midtones;
         midtones.one = 0.0f/255.0f;
-        midtones.two = 0.0f/255.0f;
+        midtones.two = 30.0f/255.0f;
         midtones.three = 0.0f/255.0f;
         [colorBalance setMidtones:midtones];
         GPUVector3 highlights;

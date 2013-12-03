@@ -17,3 +17,4 @@
 
 #import "GPUEffectCreamyNoon.h"
 #import "GPUEffectGentleMemories.h"
+#import "GPUEffectVanilla.h"
