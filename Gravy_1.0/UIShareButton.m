@@ -125,7 +125,7 @@
     CGGradientRef highlightedGradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)(highlightedGradientColors), NULL);
     
     // Draw rounded rectangle bezier path
-    UIBezierPath* roundedRectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(0.0f, 2.0f, rect.size.width, rect.size.height - 2.0f) cornerRadius: 3];
+    UIBezierPath* roundedRectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(0.0f, 2.0f, rect.size.width, rect.size.height - 2.0f) cornerRadius: 4];
     [_borderColor setFill];
     [roundedRectanglePath fill];
     

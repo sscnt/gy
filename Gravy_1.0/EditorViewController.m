@@ -128,11 +128,11 @@
         
     [scrollView addSubview:wrapper];
     
-    /*
-    GPUEffectFaerieBloom* effect = [[GPUEffectFaerieBloom alloc] init];
+    
+    GPUEffectCreamyNoon* effect = [[GPUEffectCreamyNoon alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
-     */
+    
     
 }
 
@@ -340,6 +340,7 @@
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
         dispatch_async(processingQueue, ^{
             [editor applySaturation];
+            [_self createPreviewImage];
             [editor applyCurrentSelectedEffect];
             [editor adjustCurrentSelectedEffect];
             //メインスレッド
@@ -626,7 +627,6 @@
         if(!editor.appliedImageEffect){
             editor.appliedImageEffect = editor.appliedImageSaturation;
         }
-        [self createPreviewImage];
         effectSelectionView.effectPreviewImage = effectSelectionPreviewImgae;
         [effectImageView setImage:editor.appliedImageEffect];
         state = EditorStateEffect;
@@ -732,11 +732,35 @@
 
 - (void)createPreviewImage
 {
+    UIImage *sourceA = editor.appliedImageSaturation;
+    CIImage *sourceImage = [[CIImage alloc] initWithCGImage:sourceA.CGImage];
     
+    // 新しい画像サイズ
+    CGSize newSize = CGSizeMake(70.0f, 70.0f);
+    
+    // ソーズ画像のサイズと、新しいサイズの比率計算
+    CGRect imageRect = [sourceImage extent];
+    CGFloat min = MIN(editor.appliedImageSaturation.size.width, editor.appliedImageSaturation.size.height);
+    CGPoint scale = CGPointMake(newSize.width / min,
+                                newSize.width / min);
+    
+    // AffineTransformでサイズを変更し、切り抜く
+    CIImage *filteredImage = [sourceImage imageByApplyingTransform:CGAffineTransformMakeScale(scale.x,scale.y)];
+    filteredImage = [filteredImage imageByCroppingToRect:CGRectMake(0, 0, newSize.width,newSize.height)];
+    
+    // UIImageに変換する
+    CIContext *ciContext = [CIContext contextWithOptions:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO]
+                                                                                     forKey:kCIContextUseSoftwareRenderer]];
+    
+    CGImageRef imageRef = [ciContext createCGImage:filteredImage fromRect:[filteredImage extent]];
+    UIImage *resizedImage  = [UIImage imageWithCGImage:imageRef scale:1.0f orientation:UIImageOrientationUp];
+    CGImageRelease(imageRef);
+    effectSelectionPreviewImgae = resizedImage;
+    /*
     UIScreen *mainScreen = [UIScreen mainScreen];
     CGFloat scale = ([mainScreen respondsToSelector:@selector(scale)] ? mainScreen.scale : 1.0f);
-    CGFloat cropSize = MIN(editor.appliedImageSaturation.size.width, editor.appliedImageSaturation.size.height);
-    CGRect clippedRect = CGRectMake(0, 0, cropSize * scale, cropSize * scale);
+    CGFloat cropSize = MIN(editor.appliedImageSaturation.size.width, editor.appliedImageSaturation.size.height) * scale;
+    CGRect clippedRect = CGRectMake(0, 0, cropSize, cropSize);
     CGImageRef imageRef = CGImageCreateWithImageInRect(editor.appliedImageSaturation.CGImage, clippedRect);
     UIImage* resizedImage = [UIImage imageWithCGImage:imageRef];
     
@@ -746,6 +770,7 @@
     resizedImage = [self uiImageFromCIImage:filteredImage];
     CGImageRelease(imageRef);
     effectSelectionPreviewImgae = resizedImage;
+     */
 }
 
 
@@ -853,6 +878,8 @@
         UIImage* resultImage;
         UIImage* resizedImage = editor.originalImageResized;
         
+        /*
+        
         editor.originalImageResized = self.originalImage;
         [editor applyBrightnessShadowAmount];
         [editor applyWhiteBalance];
@@ -860,12 +887,13 @@
         [editor applyCurrentSelectedEffect];
         [editor adjustCurrentSelectedEffect];
         resultImage = editor.appliedImageEffect;
+        */
         
-        /*
-        GPUEffectFaerieBloom* effect = [[GPUEffectFaerieBloom alloc] init];
+    
+        GPUEffectCreamyNoon* effect = [[GPUEffectCreamyNoon alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
-        */
+        
         
         UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil);
         

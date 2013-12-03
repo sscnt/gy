@@ -21,6 +21,7 @@
     UIScrollView* scrollView;
     
     UIEffectSelectionButton* buttonNone;
+    UIEffectSelectionButton* buttonCreamy;
     UIEffectSelectionButton* buttonCandy;
     UIEffectSelectionButton* buttonVintage;
     UIEffectSelectionButton* buttonSunset;

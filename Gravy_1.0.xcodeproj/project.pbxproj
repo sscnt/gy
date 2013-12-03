@@ -92,6 +92,11 @@
 		58F3C434181C8EB700F7129D /* GPUAdjustmentsWhiteBalance.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F3C433181C8EB700F7129D /* GPUAdjustmentsWhiteBalance.m */; };
 		58F3C439181CA13C00F7129D /* GPULevelsImageFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F3C438181CA13C00F7129D /* GPULevelsImageFilter.m */; };
 		58F3C43F181CC55200F7129D /* GPUAdjustmentsSaturation.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F3C43E181CC55200F7129D /* GPUAdjustmentsSaturation.m */; };
+		58F3CFFC184DB0490042C96C /* GPUEffectCreamyNoon.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F3CFFB184DB0490042C96C /* GPUEffectCreamyNoon.m */; };
+		58F3CFFF184DB0BF0042C96C /* CreamyNoon1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F3CFFE184DB0BF0042C96C /* CreamyNoon1.acv */; };
+		58F3D001184DB2AF0042C96C /* CreamyNoon2.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F3D000184DB2AF0042C96C /* CreamyNoon2.acv */; };
+		58F3D003184DB4320042C96C /* CreamyNoon3.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F3D002184DB4320042C96C /* CreamyNoon3.acv */; };
+		58F3D005184DBAC40042C96C /* CreamyNoon4.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F3D004184DBAC40042C96C /* CreamyNoon4.acv */; };
 		58F471A5180E5D7800C64E46 /* bottomEditorBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471A3180E5D7800C64E46 /* bottomEditorBg.png */; };
 		58F471A6180E5D7800C64E46 /* bottomEditorBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471A4180E5D7800C64E46 /* bottomEditorBg@2x.png */; };
 		58F471B5180E74B000C64E46 /* UIDockButtonBack.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F471B4180E74B000C64E46 /* UIDockButtonBack.m */; };
@@ -300,6 +305,12 @@
 		58F3C438181CA13C00F7129D /* GPULevelsImageFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPULevelsImageFilter.m; sourceTree = "<group>"; };
 		58F3C43D181CC55200F7129D /* GPUAdjustmentsSaturation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUAdjustmentsSaturation.h; sourceTree = "<group>"; };
 		58F3C43E181CC55200F7129D /* GPUAdjustmentsSaturation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUAdjustmentsSaturation.m; sourceTree = "<group>"; };
+		58F3CFFA184DB0490042C96C /* GPUEffectCreamyNoon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectCreamyNoon.h; sourceTree = "<group>"; };
+		58F3CFFB184DB0490042C96C /* GPUEffectCreamyNoon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectCreamyNoon.m; sourceTree = "<group>"; };
+		58F3CFFE184DB0BF0042C96C /* CreamyNoon1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; name = CreamyNoon1.acv; path = "../../../../../Volumes/VMware Shared Folders/Shared/Gravy/Curves/CreamyNoon1.acv"; sourceTree = "<group>"; };
+		58F3D000184DB2AF0042C96C /* CreamyNoon2.acv */ = {isa = PBXFileReference; lastKnownFileType = file; name = CreamyNoon2.acv; path = "../../../../../Volumes/VMware Shared Folders/Shared/Gravy/Curves/CreamyNoon2.acv"; sourceTree = "<group>"; };
+		58F3D002184DB4320042C96C /* CreamyNoon3.acv */ = {isa = PBXFileReference; lastKnownFileType = file; name = CreamyNoon3.acv; path = "../../../../../Volumes/VMware Shared Folders/Shared/Gravy/Curves/CreamyNoon3.acv"; sourceTree = "<group>"; };
+		58F3D004184DBAC40042C96C /* CreamyNoon4.acv */ = {isa = PBXFileReference; lastKnownFileType = file; name = CreamyNoon4.acv; path = "../../../../../Volumes/VMware Shared Folders/Shared/Gravy/Curves/CreamyNoon4.acv"; sourceTree = "<group>"; };
 		58F471A3180E5D7800C64E46 /* bottomEditorBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottomEditorBg.png; sourceTree = "<group>"; };
 		58F471A4180E5D7800C64E46 /* bottomEditorBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottomEditorBg@2x.png"; sourceTree = "<group>"; };
 		58F471B3180E74B000C64E46 /* UIDockButtonBack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDockButtonBack.h; sourceTree = "<group>"; };
@@ -676,6 +687,7 @@
 				58F31AA71838E1DA00122C65 /* GPUImageEffectsImport.h */,
 				58F6FECF1827CA61003F49C6 /* GPUImageEffects.h */,
 				58F6FED01827CA61003F49C6 /* GPUImageEffects.m */,
+				58F3CFF5184DB0260042C96C /* Creamy */,
 				58F5F80B18447FB800C20573 /* Sunset */,
 				58F31A9F1838E01B00122C65 /* Vintage */,
 				580237A21837A782001FE2FE /* Candy */,
@@ -832,6 +844,35 @@
 				589164FE184AF744007FCD5D /* GPUImageVividLightBlendFilter.m */,
 			);
 			name = GPUImageFilters;
+			sourceTree = "<group>";
+		};
+		58F3CFF5184DB0260042C96C /* Creamy */ = {
+			isa = PBXGroup;
+			children = (
+				58F3CFF9184DB02E0042C96C /* CreamyNoon */,
+			);
+			name = Creamy;
+			sourceTree = "<group>";
+		};
+		58F3CFF9184DB02E0042C96C /* CreamyNoon */ = {
+			isa = PBXGroup;
+			children = (
+				58F3CFFD184DB0B00042C96C /* Curves */,
+				58F3CFFA184DB0490042C96C /* GPUEffectCreamyNoon.h */,
+				58F3CFFB184DB0490042C96C /* GPUEffectCreamyNoon.m */,
+			);
+			name = CreamyNoon;
+			sourceTree = "<group>";
+		};
+		58F3CFFD184DB0B00042C96C /* Curves */ = {
+			isa = PBXGroup;
+			children = (
+				58F3CFFE184DB0BF0042C96C /* CreamyNoon1.acv */,
+				58F3D000184DB2AF0042C96C /* CreamyNoon2.acv */,
+				58F3D002184DB4320042C96C /* CreamyNoon3.acv */,
+				58F3D004184DBAC40042C96C /* CreamyNoon4.acv */,
+			);
+			name = Curves;
 			sourceTree = "<group>";
 		};
 		58F5A898184A1EA000E4FBEF /* Joyful */ = {
@@ -1213,6 +1254,7 @@
 				58EEE5F41820D740008C4B2A /* icon-29.png in Resources */,
 				58F471A5180E5D7800C64E46 /* bottomEditorBg.png in Resources */,
 				58F5A8A1184A1F3600E4FBEF /* Joyful1.acv in Resources */,
+				58F3D001184DB2AF0042C96C /* CreamyNoon2.acv in Resources */,
 				58F7911F180D65E500968648 /* editor_bg.jpg in Resources */,
 				58F2A278183F88E200C96E59 /* Hazelnut2.acv in Resources */,
 				58F79120180D65E500968648 /* editor_bg@2x.jpg in Resources */,
@@ -1223,6 +1265,8 @@
 				58FAE696181FFBEA00C4FE15 /* bg@2x.jpg in Resources */,
 				5802E7D7180C0F1400AA2227 /* Images.xcassets in Resources */,
 				58EEE5FD1820D740008C4B2A /* icon-114.png in Resources */,
+				58F3CFFF184DB0BF0042C96C /* CreamyNoon1.acv in Resources */,
+				58F3D005184DBAC40042C96C /* CreamyNoon4.acv in Resources */,
 				580032A8180D16FD0021F73C /* rounded-mplus-1p-medium.ttf in Resources */,
 				58F7911E180D65E500968648 /* editor_bg-568h@2x.jpg in Resources */,
 				58F471A6180E5D7800C64E46 /* bottomEditorBg@2x.png in Resources */,
@@ -1241,6 +1285,7 @@
 				58F92BB21840D33100A4EDBE /* Vintage21.acv in Resources */,
 				58EEE5FC1820D740008C4B2A /* icon-100.png in Resources */,
 				58EEE5F61820D740008C4B2A /* icon-50.png in Resources */,
+				58F3D003184DB4320042C96C /* CreamyNoon3.acv in Resources */,
 				58FBA53E1840ADDB00AF186F /* Vintage12.acv in Resources */,
 				58F471C1180E7B0500C64E46 /* icon_back.png in Resources */,
 				58EEE5F91820D740008C4B2A /* icon-72.png in Resources */,
@@ -1302,6 +1347,7 @@
 				58FBA53B184096B800AF186F /* GPUEffectVintage1.m in Sources */,
 				58FEFFD818101550008B4E8D /* UIFadeNavigationController.m in Sources */,
 				58F9FD7718235040003D32F4 /* GPUEffectColorfulCandy.m in Sources */,
+				58F3CFFC184DB0490042C96C /* GPUEffectCreamyNoon.m in Sources */,
 				58FEFFE018101EB5008B4E8D /* UIDevice+Gravy.m in Sources */,
 				58F5A89E184A1EB800E4FBEF /* GPUEffectJoyful.m in Sources */,
 				5891650A184B178B007FCD5D /* UIShareButton.m in Sources */,

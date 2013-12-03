@@ -40,6 +40,7 @@ typedef NS_ENUM(NSInteger, MergeBlendingMode){
 @property (nonatomic, weak) UIImage* imageToProcess;
 
 - (UIImage*)process;
+- (UIImage*)mergeBaseImage:(UIImage*)baseImage overlayImage:(UIImage*)overlayImage opacity:(CGFloat)opacity blendingMode:(MergeBlendingMode)blendingMode;
 - (UIImage*)mergeBaseImage:(UIImage*)baseImage overlayFilter:(GPUImageFilter*)overlayFilter opacity:(CGFloat)opacity blendingMode:(MergeBlendingMode)blendingMode;
 
 @end

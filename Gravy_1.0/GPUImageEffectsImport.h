@@ -14,3 +14,5 @@
 #import "GPUEffectWeekend.h"
 #import "GPUEffectWarmAutumn.h"
 #import "GPUEffectJoyful.h"
+
+#import "GPUEffectCreamyNoon.h"
