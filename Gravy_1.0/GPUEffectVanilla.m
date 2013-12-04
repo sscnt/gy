@@ -15,6 +15,7 @@
     UIImage* resultImage = self.imageToProcess;
     
     
+
     // Curve
     @autoreleasepool {
         GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"Vanilla1"];
@@ -97,8 +98,6 @@
         resultImage = [self mergeBaseImage:resultImage overlayFilter:selectiveColor opacity:1.0f blendingMode:MergeBlendingModeNormal];
     }
     
-    return resultImage;
-    
     // Selective Color
     @autoreleasepool {
         GPUImageSelectiveColorFilter* selectiveColor = [[GPUImageSelectiveColorFilter alloc] init];
@@ -107,6 +106,7 @@
         
         resultImage = [self mergeBaseImage:resultImage overlayFilter:selectiveColor opacity:1.0f blendingMode:MergeBlendingModeNormal];
     }
+    
     
     // Selective Color
     @autoreleasepool {

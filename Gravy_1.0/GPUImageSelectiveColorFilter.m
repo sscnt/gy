@@ -294,9 +294,9 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      }
      mediump float redsWeight = (1.0 - max(0.0, min(1.0, diff / 60.0))) * hsv.y;
      if(redsCyan > 0.0)
-         ca += c * redsCyan * redsWeight;
+         ca += (1.0 - c) * redsCyan * redsWeight * (1.0 - hsv.z);
      else
-         ca -= c * abs(redsCyan) * redsWeight;
+         ca -= (1.0 - c) * abs(redsCyan) * redsWeight * (1.0 - hsv.z);
      if(redsMagenta > 0.0)
          ma += m * redsMagenta * redsWeight;
      else
@@ -311,13 +311,13 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      diff = abs(hsv.x - yellowHsv.x);
      mediump float yellowsWeight = (1.0 - max(0.0, min(1.0, diff / 60.0))) * hsv.y;
      if(yellowsCyan > 0.0)
-         ca += c * yellowsCyan * yellowsWeight;
+         ca += (1.0 - c) * yellowsCyan * yellowsWeight * (1.0 - hsv.z);
      else
-         ca -= c * abs(yellowsCyan) * yellowsWeight;
+         ca -= (1.0 - c) * abs(yellowsCyan) * yellowsWeight * (1.0 - hsv.z);
      if(yellowsMagenta > 0.0)
-         ma += m * yellowsMagenta * yellowsWeight;
+         ma += (1.0 - m) * yellowsMagenta * yellowsWeight * (1.0 - hsv.z);
      else
-         ma -= m * abs(yellowsMagenta) * yellowsWeight;
+         ma -= (1.0 - m) * abs(yellowsMagenta) * yellowsWeight * (1.0 - hsv.z);
      if(yellowsYellow > 0.0)
          ya += y * yellowsYellow * yellowsWeight;
      else
@@ -330,15 +330,15 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      if(greensCyan > 0.0)
          ca += c * greensCyan * greensWeight;
      else
-         ca -= c * abs(greensCyan) * greensWeight;
+         ca -= c * abs(greensCyan) * sqrt(greensWeight) * 0.8;
      if(greensMagenta > 0.0)
-         ma += m * greensMagenta * greensWeight;
+         ma += (1.0 - m) * greensMagenta * greensWeight * (1.0 - hsv.z);
      else
-         ma -= m * abs(greensMagenta) * greensWeight;
+         ma -= (1.0 - m) * abs(greensMagenta) * sqrt(greensWeight) * (1.0 - hsv.z) * 0.6;
      if(greensYellow > 0.0)
          ya += y * greensYellow * greensWeight;
      else
-         ya -= y * abs(greensYellow) * greensWeight;
+         ya -= y * abs(greensYellow) * sqrt(greensWeight);
      
      // Cyan
      mediump vec3 cyanHsv = rgb2hsv(vec3(0.0, 1.0, 1.0));
@@ -349,13 +349,13 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      else
          ca -= c * abs(cyansCyan) * cyansWeight;
      if(cyansMagenta > 0.0)
-         ma += m * cyansMagenta * cyansWeight;
+         ma += (1.0 - m) * cyansMagenta * cyansWeight * (1.0 - hsv.z);
      else
-         ma -= m * abs(cyansMagenta) * cyansWeight;
+         ma -= (1.0 - m) * abs(cyansMagenta) * cyansWeight * (1.0 - hsv.z);
      if(cyansYellow > 0.0)
-         ya += y * cyansYellow * cyansWeight;
+         ya += (1.0 - y) * cyansYellow * cyansWeight * (1.0 - hsv.z);
      else
-         ya -= y * abs(cyansYellow) * cyansWeight;
+         ya -= (1.0 - y) * abs(cyansYellow) * cyansWeight * (1.0 - hsv.z);
      
      // Blue
      mediump vec3 blueHsv = rgb2hsv(vec3(0.0, 0.0, 1.0));
@@ -370,29 +370,30 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      else
          ma -= m * abs(bluesMagenta) * bluesWeight;
      if(bluesYellow > 0.0)
-         ya += y * bluesYellow * bluesWeight;
+         ya += (1.0 - y) * bluesYellow * bluesWeight * (1.0 - hsv.z);
      else
-         ya -= y * abs(bluesYellow) * bluesWeight;
+         ya -= (1.0 - y) * abs(bluesYellow) * bluesWeight * (1.0 - hsv.z);
      
      // Magentas
      mediump vec3 magentaHsv = rgb2hsv(vec3(1.0, 0.0, 1.0));
      diff = abs(hsv.x - magentaHsv.x);
      mediump float magentasWeight = (1.0 - max(0.0, min(1.0, diff / 60.0))) * hsv.y;
      if(magentasCyan > 0.0)
-         ca += c * magentasCyan * magentasWeight;
+         ca += (1.0 - c) * magentasCyan * magentasWeight * (1.0 - hsv.z);
      else
-         ca -= c * abs(magentasCyan) * magentasWeight;
+         ca -= (1.0 - c) * abs(magentasCyan) * magentasWeight * (1.0 - hsv.z);
      if(magentasMagenta > 0.0)
          ma += m * magentasMagenta * magentasWeight;
      else
          ma -= m * abs(magentasMagenta) * magentasWeight;
      if(magentasYellow > 0.0)
-         ya += y * magentasYellow * magentasWeight;
+         ya += (1.0 - y) * magentasYellow * magentasWeight * (1.0 - hsv.z);
      else
-         ya -= y * abs(magentasYellow) * magentasWeight;
+         ya -= (1.0 - y) * abs(magentasYellow) * magentasWeight * (1.0 - hsv.z);
      
      // Wthies
      mediump float whitesWeight = 1.0 - max(0.0, min(hsv.y * 3.0, 1.0));
+     whitesWeight = max(0.0, (1.0 - sqrt(hsv.y * 2.0))) * hsv.z;
      if(whitesCyan > 0.0)
          ca += c * whitesCyan * whitesWeight;
      else
@@ -406,9 +407,26 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      else
          ya -= y * abs(whitesYellow) * whitesWeight;
      
+     // Blacks
+     mediump float blacksWeight = 1.0 - max(0.0, min((hsv.y - 0.66666666666) * 3.0, 1.0));
+     blacksWeight = max(0.0, (1.0 - sqrt(hsv.z * 2.0)));
+     if(blacksCyan > 0.0)
+         ca += c * blacksCyan * blacksWeight;
+     else
+         ca -= c * abs(blacksCyan) * blacksWeight;
+     if(blacksMagenta > 0.0)
+         ma += m * blacksMagenta * blacksWeight;
+     else
+         ma -= m * abs(blacksMagenta) * blacksWeight;
+     if(blacksYellow > 0.0)
+         ya += y * blacksYellow * blacksWeight;
+     else
+         ya -= y * abs(blacksYellow) * blacksWeight;
+     
      
      // Neutrals
      mediump float neutralsWeight = min(1.0, ((1.0 - max(0.0, min((hsv.y - 0.4) * 3.0, 1.0))) + sqrt(sin(k * 3.14))));
+     neutralsWeight = max(0.0, (1.0 - sqrt(hsv.y))) * (1.0 - whitesWeight) * (1.0 - blacksWeight) + max(0.0, (1.0 - sqrt(hsv.z))) * (1.0 - whitesWeight) * (1.0 - blacksWeight) * (1.0 - blacksWeight);
      if(neutralsCyan > 0.0)
          ca += c * neutralsCyan * neutralsWeight;
      else
@@ -423,22 +441,6 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
          ya -= y * abs(neutralsYellow) * neutralsWeight;
      
 
-     /*
-     // Blacks
-     mediump float blacksWeight = 1.0 - max(0.0, min((hsv.y - 0.66666666666) * 3.0, 1.0));
-     if(blacksCyan > 0.0)
-         ca += c * blacksCyan * blacksWeight;
-     else
-         ca -= c * abs(blacksCyan) * blacksWeight;
-     if(blacksMagenta > 0.0)
-         ma += m * blacksMagenta * blacksWeight;
-     else
-         ma -= m * abs(blacksMagenta) * blacksWeight;
-     if(blacksYellow > 0.0)
-         ya += y * blacksYellow * blacksWeight;
-     else
-         ya -= y * abs(blacksYellow) * blacksWeight;
-     */
      
      
      c = (ca * (1.0 - ka) + ka);
@@ -450,9 +452,11 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      m = max(0.0, min(1.0, m));
      y = max(0.0, min(1.0, y));
      
+     
      // Reds
+     redsWeight *= hsv.z;
      if(redsBlack > 0.0){
-         c -= c * abs(redsBlack) * redsWeight;
+         c -= (1.0 - c) * abs(redsBlack) * redsWeight;
          m += m * redsBlack * redsWeight;
          y += y * redsBlack * redsWeight;
      } else{
@@ -462,61 +466,67 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
      }
      
      // Yellows
+     yellowsWeight *= hsv.z;
      if(yellowsBlack > 0.0){
-         c -= c * yellowsBlack * yellowsWeight;
-         m -= m * yellowsBlack * yellowsWeight;
+         c += c * yellowsBlack * yellowsWeight;
+         m += m * yellowsBlack * yellowsWeight;
          y += y * yellowsBlack * yellowsWeight;
      } else{
-         c -= c * abs(yellowsBlack) * yellowsWeight;
-         m -= m * abs(yellowsBlack) * yellowsWeight;
-         y -= y * abs(yellowsBlack) * yellowsWeight;
+         c -= c * abs(yellowsBlack) * yellowsWeight * 0.9;
+         m -= m * abs(yellowsBlack) * yellowsWeight * 0.9;
+         y -= y * abs(yellowsBlack) * yellowsWeight * 0.9;
      }
      
      // Greens
+     greensWeight *= hsv.z;
      if(greensBlack > 0.0){
          c += c * abs(greensBlack) * greensWeight;
-         m -= m * greensBlack * greensWeight;
+         m += m * greensBlack * greensWeight;
          y += y * greensBlack * greensWeight;
      } else{
-         c -= c * abs(greensBlack) * greensWeight;
-         m -= m * abs(greensBlack) * greensWeight;
-         y -= y * abs(greensBlack) * greensWeight;
+         c -= c * abs(greensBlack) * greensWeight * 0.8;
+         m -= m * abs(greensBlack) * greensWeight * 0.8;
+         y -= y * abs(greensBlack) * greensWeight * 0.8;
      }
      
      // Cyans
+     cyansWeight *= hsv.z;
      if(cyansBlack > 0.0){
          c += c * abs(cyansBlack) * cyansWeight;
-         m -= m * cyansBlack * cyansWeight;
-         y -= y * cyansBlack * cyansWeight;
+         m += m * cyansBlack * cyansWeight;
+         y += y * cyansBlack * cyansWeight;
      } else{
-         c -= c * abs(cyansBlack) * cyansWeight;
-         m -= m * abs(cyansBlack) * cyansWeight;
-         y -= y * abs(cyansBlack) * cyansWeight;
+         c -= c * abs(cyansBlack) * cyansWeight * 0.8;
+         m -= m * abs(cyansBlack) * cyansWeight * 0.8;
+         y -= y * abs(cyansBlack) * cyansWeight * 0.8;
      }
      
      // Blues
+     bluesWeight *= hsv.z;
      if(bluesBlack > 0.0){
          c += c * abs(bluesBlack) * bluesWeight;
          m += m * bluesBlack * bluesWeight;
-         y -= y * bluesBlack * bluesWeight;
+         y += y * bluesBlack * bluesWeight;
      } else{
          c -= c * abs(bluesBlack) * bluesWeight;
          m -= m * abs(bluesBlack) * bluesWeight;
          y -= y * abs(bluesBlack) * bluesWeight;
      }
      
-     // Magentas
+          // Magentas
+     magentasWeight *= hsv.z;
      if(magentasBlack > 0.0){
-         c -= c * abs(magentasBlack) * magentasWeight;
+         c += c * abs(magentasBlack) * magentasWeight;
          m += m * magentasBlack * magentasWeight;
-         y -= y * magentasBlack * magentasWeight;
+         y += y * magentasBlack * magentasWeight;
      } else{
-         c -= c * abs(magentasBlack) * magentasWeight;
-         m -= m * abs(magentasBlack) * magentasWeight;
-         y -= y * abs(magentasBlack) * magentasWeight;
+         c -= c * abs(magentasBlack) * magentasWeight * 0.8;
+         m -= m * abs(magentasBlack) * magentasWeight * 0.8;
+         y -= y * abs(magentasBlack) * magentasWeight * 0.8;
      }
      
      
+
      // Whites
      if(whitesBlack > 0.0){
          c += c * abs(whitesBlack) * whitesWeight;
@@ -540,7 +550,7 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
          y -= y * abs(neutralsBlack) * neutralsWeight;
      }
      
-       /*   
+     
      // Blacks
      if(blacksBlack > 0.0){
          c += c * abs(blacksBlack) * blacksWeight;
@@ -550,9 +560,9 @@ NSString *const kGPUImageSelectiveColorFilterFragmentShaderString = SHADER_STRIN
          c -= c * abs(blacksBlack) * blacksWeight;
          m -= m * abs(blacksBlack) * blacksWeight;
          y -= y * abs(blacksBlack) * blacksWeight;
+
      }
      
-     */
      
      
      c = max(0.0, min(1.0, c));

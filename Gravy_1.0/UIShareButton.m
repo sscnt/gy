@@ -41,7 +41,7 @@
 
 - (void)setFacebookColor
 {
-    _borderColor = [UIColor colorWithRed:47.0f/255.0f green:70.0f/255.0f blue:146.0f/255.0f alpha:1.00f];
+    _borderColor = [UIColor colorWithRed:24.0f/255.0f green:46.0f/255.0f blue:91.0f/255.0f alpha:1.00f];
     _topColor = [UIColor colorWithRed:98.0f/255.0f green:134.0f/255.0f blue:210.0f/255.0f alpha:1.00f];
     _bottomColor = [UIColor colorWithRed:45.0f/255.0f green:74.0f/255.0f blue:134.0f/255.0f alpha:1.00f];
     _innerGlow = [UIColor colorWithWhite:1.0 alpha:0.15];
