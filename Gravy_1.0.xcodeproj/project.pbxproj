@@ -122,6 +122,9 @@
 		58F5F814184480CC00C20573 /* Morning1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F5F811184480CC00C20573 /* Morning1.acv */; };
 		58F5F815184480CC00C20573 /* Morning2.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F5F812184480CC00C20573 /* Morning2.acv */; };
 		58F5F816184480CC00C20573 /* Morning3.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F5F813184480CC00C20573 /* Morning3.acv */; };
+		58F6CB7A18509B4F006BC6F2 /* GPUEffectSpringLight.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F6CB7918509B4F006BC6F2 /* GPUEffectSpringLight.m */; };
+		58F6CB7C18509BC0006BC6F2 /* SpringLight1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F6CB7B18509BC0006BC6F2 /* SpringLight1.acv */; };
+		58F6CB7F1850A214006BC6F2 /* SpringLight2.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F6CB7E1850A214006BC6F2 /* SpringLight2.acv */; };
 		58F6FED11827CA61003F49C6 /* GPUImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F6FED01827CA61003F49C6 /* GPUImageEffects.m */; };
 		58F6FED41827CD8F003F49C6 /* GPUEffectSoftPop.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F6FED31827CD8F003F49C6 /* GPUEffectSoftPop.m */; };
 		58F6FED71827D40E003F49C6 /* Softpop.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F6FED61827D40E003F49C6 /* Softpop.acv */; };
@@ -353,6 +356,10 @@
 		58F5F811184480CC00C20573 /* Morning1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Morning1.acv; sourceTree = "<group>"; };
 		58F5F812184480CC00C20573 /* Morning2.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Morning2.acv; sourceTree = "<group>"; };
 		58F5F813184480CC00C20573 /* Morning3.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Morning3.acv; sourceTree = "<group>"; };
+		58F6CB7818509B4F006BC6F2 /* GPUEffectSpringLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectSpringLight.h; sourceTree = "<group>"; };
+		58F6CB7918509B4F006BC6F2 /* GPUEffectSpringLight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectSpringLight.m; sourceTree = "<group>"; };
+		58F6CB7B18509BC0006BC6F2 /* SpringLight1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; name = SpringLight1.acv; path = "/Volumes/VMware Shared Folders/Shared/Gravy/Curves/SpringLight1.acv"; sourceTree = "<absolute>"; };
+		58F6CB7E1850A214006BC6F2 /* SpringLight2.acv */ = {isa = PBXFileReference; lastKnownFileType = file; name = SpringLight2.acv; path = "../../../../../Volumes/VMware Shared Folders/Shared/Gravy/Curves/SpringLight2.acv"; sourceTree = "<group>"; };
 		58F6FECF1827CA61003F49C6 /* GPUImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageEffects.h; sourceTree = "<group>"; };
 		58F6FED01827CA61003F49C6 /* GPUImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageEffects.m; sourceTree = "<group>"; };
 		58F6FED21827CD8F003F49C6 /* GPUEffectSoftPop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectSoftPop.h; sourceTree = "<group>"; };
@@ -894,6 +901,7 @@
 		58F3CFF5184DB0260042C96C /* Creamy */ = {
 			isa = PBXGroup;
 			children = (
+				58F6CB7418509B30006BC6F2 /* SpringLight */,
 				58F3C6D6184E0A6A00F51A3D /* Vanilla */,
 				58F3D006184DCEB00042C96C /* GentleMemories */,
 				58F3CFF9184DB02E0042C96C /* CreamyNoon */,
@@ -989,6 +997,25 @@
 				58F5F811184480CC00C20573 /* Morning1.acv */,
 				58F5F812184480CC00C20573 /* Morning2.acv */,
 				58F5F813184480CC00C20573 /* Morning3.acv */,
+			);
+			name = Curves;
+			sourceTree = "<group>";
+		};
+		58F6CB7418509B30006BC6F2 /* SpringLight */ = {
+			isa = PBXGroup;
+			children = (
+				58F6CB7D18509BC2006BC6F2 /* Curves */,
+				58F6CB7818509B4F006BC6F2 /* GPUEffectSpringLight.h */,
+				58F6CB7918509B4F006BC6F2 /* GPUEffectSpringLight.m */,
+			);
+			name = SpringLight;
+			sourceTree = "<group>";
+		};
+		58F6CB7D18509BC2006BC6F2 /* Curves */ = {
+			isa = PBXGroup;
+			children = (
+				58F6CB7B18509BC0006BC6F2 /* SpringLight1.acv */,
+				58F6CB7E1850A214006BC6F2 /* SpringLight2.acv */,
 			);
 			name = Curves;
 			sourceTree = "<group>";
@@ -1372,6 +1399,7 @@
 				58FBB40218155FB4001CFDC8 /* slider@2x.png in Resources */,
 				58EEE5FF1820D740008C4B2A /* icon-144.png in Resources */,
 				58EEE6001820D740008C4B2A /* icon-152.png in Resources */,
+				58F6CB7C18509BC0006BC6F2 /* SpringLight1.acv in Resources */,
 				58FBAB751849EB9800F74156 /* WarmAutumn3.acv in Resources */,
 				5802E7C9180C0F1400AA2227 /* InfoPlist.strings in Resources */,
 				580032B2180D275F0021F73C /* icon_photos@2x.png in Resources */,
@@ -1395,6 +1423,7 @@
 				58F0271B181A8B6600938725 /* SVProgressHUD.bundle in Resources */,
 				580032C0180D34310021F73C /* icon_settings@2x.png in Resources */,
 				580032A7180D16FD0021F73C /* rounded-mplus-1p-light.ttf in Resources */,
+				58F6CB7F1850A214006BC6F2 /* SpringLight2.acv in Resources */,
 				58FC5CD418320B9B009EBCF0 /* Sweet2.acv in Resources */,
 				58FBB40918156410001CFDC8 /* icon_download@2x.png in Resources */,
 				58F6FED71827D40E003F49C6 /* Softpop.acv in Resources */,
@@ -1459,6 +1488,7 @@
 				58003299180D10CE0021F73C /* UIView+Gravy.m in Sources */,
 				58FB09BC183849AF00671120 /* UIEffectSelectionView.m in Sources */,
 				58FAB9C818115C4F00B95F02 /* UISliderView.m in Sources */,
+				58F6CB7A18509B4F006BC6F2 /* GPUEffectSpringLight.m in Sources */,
 				58003296180D10B10021F73C /* UIDockView.m in Sources */,
 				58EC8A711833508B00D659CE /* GPUAdjustmentsBrightness.m in Sources */,
 				58FA2E291813F3EC00DFB4FB /* UIScrollView+Gravy.m in Sources */,

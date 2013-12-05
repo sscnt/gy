@@ -129,7 +129,7 @@
     [scrollView addSubview:wrapper];
     
     
-    GPUEffectVanilla* effect = [[GPUEffectVanilla alloc] init];
+    GPUEffectSpringLight* effect = [[GPUEffectSpringLight alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
     
@@ -734,18 +734,19 @@
 {
     UIImage *sourceA = editor.appliedImageSaturation;
     CIImage *sourceImage = [[CIImage alloc] initWithCGImage:sourceA.CGImage];
+    UIScreen *mainScreen = [UIScreen mainScreen];
+    CGFloat scale = ([mainScreen respondsToSelector:@selector(scale)] ? mainScreen.scale : 1.0f);
     
     // 新しい画像サイズ
-    CGSize newSize = CGSizeMake(70.0f, 70.0f);
+    CGSize newSize = CGSizeMake(70.0f * scale, 70.0f * scale);
     
     // ソーズ画像のサイズと、新しいサイズの比率計算
-    CGRect imageRect = [sourceImage extent];
     CGFloat min = MIN(editor.appliedImageSaturation.size.width, editor.appliedImageSaturation.size.height);
-    CGPoint scale = CGPointMake(newSize.width / min,
+    CGPoint scales = CGPointMake(newSize.width / min,
                                 newSize.width / min);
     
     // AffineTransformでサイズを変更し、切り抜く
-    CIImage *filteredImage = [sourceImage imageByApplyingTransform:CGAffineTransformMakeScale(scale.x,scale.y)];
+    CIImage *filteredImage = [sourceImage imageByApplyingTransform:CGAffineTransformMakeScale(scales.x,scales.y)];
     filteredImage = [filteredImage imageByCroppingToRect:CGRectMake(0, 0, newSize.width,newSize.height)];
     
     // UIImageに変換する
@@ -890,7 +891,7 @@
         */
         
     
-        GPUEffectVanilla* effect = [[GPUEffectVanilla alloc] init];
+        GPUEffectSpringLight* effect = [[GPUEffectSpringLight alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
         

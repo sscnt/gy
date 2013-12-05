@@ -212,17 +212,17 @@
         self.effectedLeftBottomImage = [effect process];
     }
     @autoreleasepool {
-        GPUEffectHaze3* effect = [[GPUEffectHaze3 alloc] init];
+        GPUEffectGentleMemories* effect = [[GPUEffectGentleMemories alloc] init];
         effect.imageToProcess = self.appliedImageSaturation;
         self.effectedLeftTopImage = [effect process];
     }
     @autoreleasepool {
-        GPUEffectSoftPop* effect = [[GPUEffectSoftPop alloc] init];
+        GPUEffectVanilla* effect = [[GPUEffectVanilla alloc] init];
         effect.imageToProcess = self.appliedImageSaturation;
         self.effectedRightBottomImage = [effect process];
     }
     @autoreleasepool {
-        GPUEffectFaerieBloom* effect = [[GPUEffectFaerieBloom alloc] init];
+        GPUEffectSpringLight* effect = [[GPUEffectSpringLight alloc] init];
         effect.imageToProcess = self.appliedImageSaturation;
         self.effectedRightTopImage = [effect process];
     }
