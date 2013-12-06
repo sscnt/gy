@@ -64,6 +64,44 @@ NSString *const kGPUAdjustmentsSaturationFragmentShaderString = SHADER_STRING
      return vec3(h, s, v);
  }
  
+ vec3 rgb2hsv2(vec3 color){
+     mediump float r = color.r;
+     mediump float g = color.g;
+     mediump float b = color.b;
+     
+     mediump float max = max(r, max(g, b));
+     mediump float min = min(r, min(g, b));
+     mediump float h = 0.0;
+     if(max < min){
+         max = 0.0;
+         min = 0.0;
+     }
+     
+     if(max == min){
+         
+     } else if(max == r){
+         h = 60.0 * (g - b) / (max - min);
+     } else if(max == g){
+         h = 60.0 * (b - r) / (max - min) + 120.0;
+     } else if(max == b){
+         h = 60.0 * (r - g) / (max - min) + 240.0;
+     }
+     if(h < 0.0){
+         h += 360.0;
+     }
+     h = mod(h, 360.0);
+     
+     mediump float s;
+     if(max == 0.0) {
+         s = 0.0;
+     } else {
+         s = (max - min) / max;
+     }
+     mediump float v = max;
+     
+     return vec3(h, s, v);
+ }
+
  vec3 hsv2rgb(vec3 color){
      mediump float h = color.r;
      mediump float s = color.g;
@@ -163,7 +201,16 @@ NSString *const kGPUAdjustmentsSaturationFragmentShaderString = SHADER_STRING
      mediump vec4 pixel   = texture2D(inputImageTexture, textureCoordinate);
      mediump vec3 hsv = rgb2hsv(pixel.rgb);
      mediump float increase = sin(hsv.y * 3.141592654) * sin(hsv.z * 3.141592654) * 0.4 * saturation;
-     hsv.y += increase;
+     
+     mediump vec3 redHsv = rgb2hsv2(vec3(1.0, 0.0, 0.0));
+     mediump float diff = abs(hsv.x - redHsv.x);
+     if(diff > 180.0){
+         diff = 360.0 - diff;
+     }
+     mediump float redsWeight = (1.0 - max(0.0, min(1.0, diff / 90.0))) * hsv.y;
+     
+     hsv.y += increase * ((1.0 - redsWeight) * 0.7 + 0.3);
+
      
      mediump float x = textureCoordinate.x;
      mediump float y = textureCoordinate.y;

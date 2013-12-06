@@ -128,10 +128,11 @@
         
     [scrollView addSubview:wrapper];
     
-    
+    /*
     GPUEffectSpringLight* effect = [[GPUEffectSpringLight alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
+     */
     
     
 }
@@ -879,7 +880,6 @@
         UIImage* resultImage;
         UIImage* resizedImage = editor.originalImageResized;
         
-        /*
         
         editor.originalImageResized = self.originalImage;
         [editor applyBrightnessShadowAmount];
@@ -888,13 +888,15 @@
         [editor applyCurrentSelectedEffect];
         [editor adjustCurrentSelectedEffect];
         resultImage = editor.appliedImageEffect;
-        */
         
-    
+        /*
+        
         GPUEffectSpringLight* effect = [[GPUEffectSpringLight alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
-        
+
+        */
+                
         
         UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil);
         
