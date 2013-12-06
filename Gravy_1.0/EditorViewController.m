@@ -630,6 +630,7 @@
         }
         effectSelectionView.effectPreviewImage = effectSelectionPreviewImgae;
         [effectImageView setImage:editor.appliedImageEffect];
+        [effectSelectionView highlightButton:editor.currentSelectedEffectId];
         state = EditorStateEffect;
         saveBtn.hidden = NO;
         nextBtn.hidden = YES;

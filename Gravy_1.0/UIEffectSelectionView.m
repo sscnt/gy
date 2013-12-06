@@ -88,12 +88,39 @@
 
 - (void)buttonPressed:(UIEffectSelectionButton *)button
 {
+    [self highlightButton:button.effectId];
+    [self.delegate effectSelected:button.effectId];
+}
+
+- (void)highlightButton:(EffectId)effectId
+{
     buttonNone.selected = NO;
+    buttonCreamy.selected = NO;
     buttonCandy.selected = NO;
     buttonVintage.selected = NO;
     buttonSunset.selected = NO;
-    button.selected = YES;
-    [self.delegate effectSelected:button.effectId];
+    
+    if(effectId == EffectIdNone){
+        buttonNone.selected = YES;
+        return;
+    }
+    if(effectId == EffectIdCreamy){
+        buttonCreamy.selected = YES;
+        return;
+    }
+    if(effectId == EffectIdCandy){
+        buttonCandy.selected = YES;
+        return;
+    }
+    if(effectId == EffectIdVintage){
+        buttonVintage.selected = YES;
+        return;
+    }
+    if(effectId == EffectIdSunset){
+        buttonSunset.selected = YES;
+        return;
+    }
+
 }
 
 /*

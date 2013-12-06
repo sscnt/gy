@@ -30,4 +30,7 @@
 @property (nonatomic, weak) id<UIEffectSelectionViewDelegate> delegate;
 @property (nonatomic, weak) UIImage* effectPreviewImage;
 
+- (void)highlightButton:(EffectId)effectId;
+- (void)buttonPressed:(UIEffectSelectionButton *)button;
+
 @end

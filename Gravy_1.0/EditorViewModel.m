@@ -13,6 +13,7 @@
 - (void)initialize
 {
     _state = EditorViewStateWhiteBalance;
+    _currentSelectedEffectId = EffectIdNone;
 
     adjustmentsWhiteBalance = [[GPUAdjustmentsWhiteBalance alloc] init];
     adjustmentsBrightness = [[GPUAdjustmentsBrightness alloc] init];

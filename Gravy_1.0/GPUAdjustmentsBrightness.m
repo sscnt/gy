@@ -143,26 +143,35 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
  }
  
  vec3 adjustLevels(mediump vec3 rgb){
+     
      mediump vec3 yuv = rgb2yuv(rgb);
-     mediump vec3 hsv = rgb2hsv(rgb);
-     mediump float saturation = hsv.y;
-     mediump float y = yuv.x;
-     mediump float _y;
-     
-     if(y > shadowsRadius){
-         _y = (y - shadowsRadius) * 0.500 / (1.0 - shadowsRadius) + 0.500;
-     } else {
-         _y = y * 0.500 / shadowsRadius;
-     }
-
-     yuv.x = max(0.0 , min(1.0, _y));
-     
-     hsv = rgb2hsv(yuv2rgb(yuv));
      if(decreaseSaturationEnabled == 1){
-         saturation *= (shadowsRadius - 0.25) * 4.0 * 0.3 + 0.7;
+         mediump vec3 hsv = rgb2hsv(rgb);
+         mediump float saturation = hsv.y;
+         mediump float y = yuv.x;
+         mediump float _y;
+         
+         if(y > shadowsRadius){
+             _y = (y - shadowsRadius) * 0.500 / (1.0 - shadowsRadius) + 0.500;
+         } else {
+             _y = y * 0.500 / shadowsRadius;
+         }
+         
+         yuv.x = max(0.0 , min(1.0, _y));
+         
+         hsv = rgb2hsv(yuv2rgb(yuv));
+         /*
+          if(decreaseSaturationEnabled == 1){
+          saturation *= (shadowsRadius - 0.25) * 4.0 * 0.3 + 0.7;
+          }
+          */
+         hsv.y = saturation;
+         return hsv2rgb(hsv);
+     } else {
+         rgb *= pow(1.0 + 1.2 * (1.0 - yuv.x), 1.0 - 4.0 * (shadowsRadius - 0.25));
+         return rgb;
+
      }
-     hsv.y = saturation;
-     return hsv2rgb(hsv);
  }
  
  void main()
