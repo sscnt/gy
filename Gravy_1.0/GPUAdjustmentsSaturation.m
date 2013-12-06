@@ -200,9 +200,9 @@ NSString *const kGPUAdjustmentsSaturationFragmentShaderString = SHADER_STRING
  {
      mediump vec4 pixel   = texture2D(inputImageTexture, textureCoordinate);
      mediump vec3 hsv = rgb2hsv(pixel.rgb);
-     mediump float increase = sin(hsv.y * 3.141592654) * sin(hsv.z * 3.141592654) * 0.4 * saturation;
+     mediump float increase = (1.0 - abs(hsv.y * 2.0 - 1.0)) * (1.0 - abs(hsv.z * 2.0 - 1.0)) * 0.4 * saturation;
      
-     mediump vec3 redHsv = rgb2hsv2(vec3(1.0, 0.0, 0.0));
+     mediump vec3 redHsv = rgb2hsv2(vec3(1.0, 84.0/255.0, 0.0));
      mediump float diff = abs(hsv.x - redHsv.x);
      if(diff > 180.0){
          diff = 360.0 - diff;

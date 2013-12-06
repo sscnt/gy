@@ -160,11 +160,6 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
          yuv.x = max(0.0 , min(1.0, _y));
          
          hsv = rgb2hsv(yuv2rgb(yuv));
-         /*
-          if(decreaseSaturationEnabled == 1){
-          saturation *= (shadowsRadius - 0.25) * 4.0 * 0.3 + 0.7;
-          }
-          */
          hsv.y = saturation;
          return hsv2rgb(hsv);
      } else {
