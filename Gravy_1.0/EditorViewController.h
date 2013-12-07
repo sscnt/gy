@@ -61,6 +61,7 @@ typedef NS_ENUM(NSInteger, KnobId){
     UIEffectSelectionView* effectSelectionView;
 
     UIImageView* bgImageView;
+    UIImageView* demoImageView;
     UIScrollView* scrollView;
     UIPageControl* pageControl;
     UIThumbnailView* whitebalanceImageView;

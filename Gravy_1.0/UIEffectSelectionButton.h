@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "PurchaseManager.h"
 #import "GPUEffectCreamyNoon.h"
 #import "GPUEffectColorfulCandy.h"
 #import "GPUEffectVintageFilm.h"

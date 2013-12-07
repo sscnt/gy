@@ -204,14 +204,18 @@
 - (void)layoutEffectEditor
 {
     UIWrapperView* wrapper = [[UIWrapperView alloc] initWithFrame:self.view.bounds];
-    
+    demoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"demo"]];
+    demoImageView.alpha = 0.30f;
+    demoImageView.hidden = YES;
     
     // place original image
-    effectImageView = [[UIThumbnailView alloc] initWithImage:editor.originalImageResized];
-    [effectImageView setCenter:CGPointMake(imageCenterX, imageCenterY - 25.0f)];
+    effectImageView = [[UIThumbnailView alloc] initWithImage:editor.originalImageResized];    [effectImageView setCenter:CGPointMake(imageCenterX, imageCenterY - 25.0f)];
     effectImageView.delegate = self;
     effectImageView.userInteractionEnabled = YES;
     effectImageView.thumbnailId = ThumbnailViewIdEffect;
+    demoImageView.center = CGPointMake(effectImageView.center.x, effectImageView.frame.size.height / 2.0f);
+    [effectImageView addSubview:demoImageView];
+
     [wrapper addSubview:effectImageView];
     [wrapper setX:[UIScreen screenSize].width * 3.0f];
     
@@ -703,6 +707,10 @@
             [effectImageView setImage:editor.appliedImageEffect];
             effectKnobView.hidden = NO;
             effectKnobView.center = effectImageView.center;
+            demoImageView.hidden = YES;
+            if(![PurchaseManager didPurchaseEffectId:editor.currentSelectedEffectId]){
+                demoImageView.hidden = NO;
+            }
             [SVProgressHUD dismiss];
         });
     });

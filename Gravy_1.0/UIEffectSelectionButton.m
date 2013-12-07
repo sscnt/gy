@@ -35,6 +35,25 @@
         titleLabel.numberOfLines = 0;
         [self addSubview:titleLabel];
         
+        UIImageView* lockedImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cart"]];
+        lockedImageView.center = CGPointMake(50.0f, 30.0f);
+        
+        if(effectId != EffectIdNone){
+            if(effectId == EffectIdCandy){
+                if (![PurchaseManager didPurchaseCandyEffect]) {
+                    [self addSubview:lockedImageView];
+                }
+            } else if(effectId == EffectIdVintage){
+                if (![PurchaseManager didPurchaseVintageEffect]) {
+                    [self addSubview:lockedImageView];
+                }
+            } else if(effectId == EffectIdSunset){
+                if (![PurchaseManager didPurchaseSunsetEffect]) {
+                    [self addSubview:lockedImageView];
+                }
+            }
+        }
+        
         [self initPreviewImageView:baseImage];
         [self addTarget:self action:@selector(didPress) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -95,7 +114,7 @@
         return NSLocalizedString(@"Creamy", nil);
     }
     if(effectId == EffectIdCandy){
-        return NSLocalizedString(@"Candy", nil);
+        return NSLocalizedString(@"Bloom", nil);
     }
     if(effectId == EffectIdVintage){
         return NSLocalizedString(@"Vintage", nil);
