@@ -14,16 +14,29 @@
 {
     _state = EditorViewStateWhiteBalance;
     _currentSelectedEffectId = EffectIdNone;
-
-    adjustmentsWhiteBalance = [[GPUAdjustmentsWhiteBalance alloc] init];
-    adjustmentsBrightness = [[GPUAdjustmentsBrightness alloc] init];
-    adjustmentsSaturation = [[GPUAdjustmentsSaturation alloc] init];
+    
+    _brShadowAmount = 0.0f;
+    _brShadowRadius = 0.0f;
+    _brDec = 0;
+    
+    _wbBlueAmount = 0.0f;
+    _wbRedAmount = 0.0f;
+    
+    _stAmount = 0.0f;
+    _stRadius = 0.0f;
     
 }
 
 - (void)setOriginalImageResized:(UIImage *)originalImageResized
 {
     _originalImageResized = originalImageResized;
+    _pictureBrightness = nil;
+    _pictureWhiteBalance = nil;
+    _pictureSaturation = nil;
+    
+    _adjustmentsBrightness = nil;
+    _adjustmentsWhiteBalance = nil;
+    _adjustmentsSaturation = nil;
 }
 
 
@@ -35,18 +48,19 @@
 - (void)applyBrightnessShadowAmount:(float)amount Radius:(float)radius
 {
     float _amount = (amount < 0.0f) ? -amount : amount;
-    adjustmentsBrightness.shadowsAmount = _amount;
-    adjustmentsBrightness.shadowsRadius = (radius > 0.0f) ? -radius : radius;
-    adjustmentsBrightness.decreaseSaturationEnabled = (radius < 0.0f);
+    
+    _brShadowAmount = _amount;
+    _brShadowRadius = (radius > 0.0f) ? -radius : radius;
+    _brDec = (radius < 0.0f);
 
     if(radius < 0.0f){  // Top
         //adjustmentsBrightness.highlightsAmount = -radius * 0.20f;
         if(amount < 0.0f){  // Top Left
-            adjustmentsBrightness.contrastAmount = _amount * 0.20f;
+            _adjustmentsBrightness.contrastAmount = _amount * 0.20f;
         }
     } else{ // Bottom
         if(amount > 0.0f){  // Bottom Right
-            adjustmentsBrightness.contrastAmount = _amount * 0.10f;
+            _adjustmentsBrightness.contrastAmount = _amount * 0.10f;
         }
     }
     [self applyBrightnessShadowAmount];
@@ -54,47 +68,87 @@
 
 - (void)applyBrightnessShadowAmount
 {
-    if(!_pictureBrightness){
-        _pictureBrightness = [[GPUImagePicture alloc] initWithImage:self.originalImageResized];
-        [_pictureBrightness addTarget:adjustmentsBrightness];
-    }
-    [_pictureBrightness processImage];
-    self.appliedImageBrightness = [adjustmentsBrightness imageFromCurrentlyProcessedOutput];
+    self.appliedImageBrightness = [self executeBrightnessShadow:self.originalImageResized];
+}
+
+- (UIImage*)executeBrightnessShadow:(UIImage *)inputImage
+{
+    GPUAdjustmentsBrightness* adjustment = [[GPUAdjustmentsBrightness alloc] init];
+    
+    GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:inputImage];
+    [picture addTarget:adjustment];
+    CGSize size = self.originalImageResized.size;
+    size = CGSizeMake(size.width * 2.0, size.height * 2.0);
+    [adjustment forceProcessingAtSize:size];
+    
+    adjustment.shadowsAmount = _brShadowAmount;
+    adjustment.shadowsRadius = _brShadowRadius;
+    adjustment.decreaseSaturationEnabled = _brDec;
+    
+    [picture processImage];
+    return [adjustment imageFromCurrentlyProcessedOutput];
+    
 }
 
 - (void)applyWhiteBalanceAmountRed:(float)red Blue:(float)blue
 {
     red *= -0.1f;
     blue *= 0.1f;
-    adjustmentsWhiteBalance.redWeight = blue;
-    adjustmentsWhiteBalance.blueWeight = red;
+    _wbBlueAmount = blue;
+    _wbRedAmount = red;
     [self applyWhiteBalance];
 }
 
 - (void)applyWhiteBalance
 {
-    if(!_pictureWhiteBalance){
-        _pictureWhiteBalance = [[GPUImagePicture alloc] initWithImage:self.appliedImageBrightness];
-        [_pictureWhiteBalance addTarget:adjustmentsWhiteBalance];
-    }
-    [_pictureWhiteBalance processImage];
-    self.appliedImageWhiteBalancee = [adjustmentsWhiteBalance imageFromCurrentlyProcessedOutput];
+    self.appliedImageWhiteBalancee = [self executeWhiteBalance:self.appliedImageBrightness];
 }
+
+- (UIImage*)executeWhiteBalance:(UIImage *)inputImage
+{
+    
+    GPUAdjustmentsWhiteBalance*  adjustment = [[GPUAdjustmentsWhiteBalance alloc] init];
+    
+    GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:inputImage];
+    [picture addTarget:adjustment];
+    CGSize size = self.originalImageResized.size;
+    size = CGSizeMake(size.width * 2.0, size.height * 2.0);
+    [adjustment forceProcessingAtSize:size];
+    
+    adjustment.redWeight = _wbBlueAmount;
+    adjustment.blueWeight = _wbRedAmount;
+    [picture processImage];
+    return [adjustment imageFromCurrentlyProcessedOutput];
+    
+}
+
 - (void)applySaturationAmount:(float)amount Radius:(float)radius
 {
-    adjustmentsSaturation.saturation = radius;
-    adjustmentsSaturation.vibrance = amount;
+    _stRadius = radius;
+    _stAmount = amount;
     [self applySaturation];
 }
 
 - (void)applySaturation
 {
-    if(!_pictureSaturation){
-        _pictureSaturation = [[GPUImagePicture alloc] initWithImage:self.appliedImageWhiteBalancee];
-        [_pictureSaturation addTarget:adjustmentsSaturation];
-    }
-    [_pictureSaturation processImage];
-    self.appliedImageSaturation = [adjustmentsSaturation imageFromCurrentlyProcessedOutput];
+    self.appliedImageSaturation = [self executeSaturation:self.appliedImageWhiteBalancee];
+    
+}
+
+- (UIImage*)executeSaturation:(UIImage *)inputImage
+{
+    GPUAdjustmentsSaturation* adjustment = [[GPUAdjustmentsSaturation alloc] init];
+    
+    GPUImagePicture* picutre = [[GPUImagePicture alloc] initWithImage:inputImage];
+    [picutre addTarget:adjustment];
+    CGSize size = self.originalImageResized.size;
+    size = CGSizeMake(size.width * 2.0, size.height * 2.0);
+    [adjustment forceProcessingAtSize:size];
+    
+    adjustment.saturation = _stRadius;
+    adjustment.vibrance = _stAmount;
+    [picutre processImage];
+    return [adjustment imageFromCurrentlyProcessedOutput];
 }
 
 - (UIImage*)merge2pictureBase:(GPUImagePicture *)basePicture overlay:(GPUImagePicture *)overlayPicture opacity:(CGFloat)opacity
@@ -139,6 +193,7 @@
 
 - (void)adjustCurrentSelectedEffect
 {
+    
     if(self.currentSelectedEffectId == EffectIdNone){
         self.appliedImageEffect = self.appliedImageSaturation;
         return;
@@ -181,28 +236,25 @@
 
 }
 
-- (void)applyEffectCandy
+- (UIImage*)executeCurrentSelectedEffectWithWeight:(UIImage *)inputImage
 {
-    @autoreleasepool {
-        GPUEffectColorfulCandy* effect = [[GPUEffectColorfulCandy alloc] init];
-        effect.imageToProcess = self.appliedImageSaturation;
-        self.effectedLeftBottomImage = [effect process];
+    
+    if(self.currentSelectedEffectId == EffectIdCreamy){
+        return [self executeEffectCreamyWithWeight:inputImage];
     }
-    @autoreleasepool {
-        GPUEffectHaze3* effect = [[GPUEffectHaze3 alloc] init];
-        effect.imageToProcess = self.appliedImageSaturation;
-        self.effectedLeftTopImage = [effect process];
+    
+    if(self.currentSelectedEffectId == EffectIdCandy){
+        return [self executeEffectCreamyWithWeight:inputImage];
     }
-    @autoreleasepool {
-        GPUEffectSoftPop* effect = [[GPUEffectSoftPop alloc] init];
-        effect.imageToProcess = self.appliedImageSaturation;
-        self.effectedRightBottomImage = [effect process];
+    
+    if(self.currentSelectedEffectId == EffectIdVintage){
+        return [self executeEffectCreamyWithWeight:inputImage];
     }
-    @autoreleasepool {
-        GPUEffectFaerieBloom* effect = [[GPUEffectFaerieBloom alloc] init];
-        effect.imageToProcess = self.appliedImageSaturation;
-        self.effectedRightTopImage = [effect process];
+    
+    if(self.currentSelectedEffectId == EffectIdSunset){
+        return [self executeEffectCreamyWithWeight:inputImage];
     }
+    return nil;
 }
 
 - (void)applyEffectCreamy
@@ -224,6 +276,77 @@
     }
     @autoreleasepool {
         GPUEffectSpringLight* effect = [[GPUEffectSpringLight alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedRightTopImage = [effect process];
+    }
+}
+
+- (UIImage*)executeEffectCreamyWithWeight:(UIImage *)inputImage
+{
+    
+    UIImage* resultImage = inputImage;
+    
+    if(self.weightLeftBottom > 0.0f){
+        @autoreleasepool {
+            GPUEffectCreamyNoon* effect = [[GPUEffectCreamyNoon alloc] init];
+            effect.imageToProcess = inputImage;
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftBottom];
+        }
+    }
+    
+    if(self.weightLeftTop > 0.0f){
+        @autoreleasepool {
+            GPUEffectGentleMemories* effect = [[GPUEffectGentleMemories alloc] init];
+            effect.imageToProcess = inputImage;
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftTop];
+        }
+    }
+    
+    if(self.weightRightBottom > 0.0f){
+        @autoreleasepool {
+            GPUEffectVanilla* effect = [[GPUEffectVanilla alloc] init];
+            effect.imageToProcess = inputImage;
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightBottom];
+        }
+    }
+    
+    if(self.weightRightTop > 0.0f){
+        @autoreleasepool {
+            GPUEffectSpringLight* effect = [[GPUEffectSpringLight alloc] init];
+            effect.imageToProcess = inputImage;
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightTop];
+        }
+    }
+    return resultImage;
+}
+
+- (void)applyEffectCandy
+{
+    @autoreleasepool {
+        GPUEffectColorfulCandy* effect = [[GPUEffectColorfulCandy alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedLeftBottomImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectHaze3* effect = [[GPUEffectHaze3 alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedLeftTopImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectSoftPop* effect = [[GPUEffectSoftPop alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedRightBottomImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectFaerieBloom* effect = [[GPUEffectFaerieBloom alloc] init];
         effect.imageToProcess = self.appliedImageSaturation;
         self.effectedRightTopImage = [effect process];
     }

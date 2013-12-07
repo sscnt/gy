@@ -25,9 +25,13 @@ typedef NS_ENUM(NSInteger, EditorViewState){
 
 @interface EditorViewModel : NSObject
 {
-    GPUAdjustmentsWhiteBalance* adjustmentsWhiteBalance;
-    GPUAdjustmentsBrightness* adjustmentsBrightness;
-    GPUAdjustmentsSaturation* adjustmentsSaturation;
+    float _wbRedAmount;
+    float _wbBlueAmount;
+    float _brShadowAmount;
+    float _brShadowRadius;
+    int _brDec;
+    float _stAmount;
+    float _stRadius;
 }
 
 @property (nonatomic, assign) EditorViewState state;
@@ -46,7 +50,10 @@ typedef NS_ENUM(NSInteger, EditorViewState){
 @property (nonatomic, strong) GPUImagePicture* pictureWhiteBalance;
 @property (nonatomic, strong) GPUImagePicture* pictureBrightness;
 @property (nonatomic, strong) GPUImagePicture* pictureSaturation;
-@property (nonatomic, strong) GPUImagePicture* pictureEffect;
+
+@property (nonatomic, strong) GPUAdjustmentsWhiteBalance* adjustmentsWhiteBalance;
+@property (nonatomic, strong) GPUAdjustmentsBrightness* adjustmentsBrightness;
+@property (nonatomic, strong) GPUAdjustmentsSaturation* adjustmentsSaturation;
 
 @property (nonatomic, assign) float weightRightTop;
 @property (nonatomic, assign) float weightRightBottom;
@@ -58,18 +65,27 @@ typedef NS_ENUM(NSInteger, EditorViewState){
 - (void)initialize;
 - (void)applyWhiteBalanceAmountRed:(float)red Blue:(float)blue;
 - (void)applyWhiteBalance;
+- (UIImage*)executeWhiteBalance:(UIImage*)inputImage;
+
 - (void)applyBrightnessShadowAmount:(float)amount Radius:(float)radius;
 - (void)applyBrightnessShadowAmount;
+- (UIImage*)executeBrightnessShadow:(UIImage*)inputImage;
+
 - (void)applyBrightnessHighlightAmount:(float)amount Radius:(float)radius;
+
 - (void)applySaturationAmount:(float)amount Radius:(float)radius;
 - (void)applySaturation;
+- (UIImage*)executeSaturation:(UIImage*)inputImage;
 
 - (UIImage*)merge2pictureBase:(GPUImagePicture*)basePicture overlay:(GPUImagePicture*)overlayPicture opacity:(CGFloat)opacity;
 
 - (void)applyCurrentSelectedEffect;
 - (void)adjustCurrentSelectedEffect;
 
+- (UIImage*)executeCurrentSelectedEffectWithWeight:(UIImage*)inputImage;
+
 - (void)applyEffectCreamy;
+- (UIImage*)executeEffectCreamyWithWeight:(UIImage*)inputImage;
 - (void)applyEffectCandy;
 - (void)applyEffectVintage;
 - (void)applyEffectSunset;

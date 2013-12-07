@@ -620,9 +620,11 @@
 {
     if(state == EditorStateLevels){
         [whitebalanceImageView setImage:editor.appliedImageWhiteBalancee];
+        editor.adjustmentsBrightness = nil;
         state = EditorStateWhiteBalance;
     } else if(state == EditorStateWhiteBalance){
         [saturationImageView setImage:editor.appliedImageSaturation];
+        editor.adjustmentsWhiteBalance = nil;
         state = EditorStateSaturation;
     } else if(state == EditorStateSaturation){
         if(!editor.appliedImageEffect){
@@ -631,6 +633,7 @@
         effectSelectionView.effectPreviewImage = effectSelectionPreviewImgae;
         [effectImageView setImage:editor.appliedImageEffect];
         [effectSelectionView highlightButton:editor.currentSelectedEffectId];
+        editor.adjustmentsSaturation = nil;
         state = EditorStateEffect;
         saveBtn.hidden = NO;
         nextBtn.hidden = YES;
@@ -879,17 +882,12 @@
     dispatch_async(processingQueue, ^{
         
         UIImage* resultImage;
-        UIImage* resizedImage = editor.originalImageResized;
         
-        
-        editor.originalImageResized = self.originalImage;
-        [editor applyBrightnessShadowAmount];
-        [editor applyWhiteBalance];
-        [editor applySaturation];
-        [editor applyCurrentSelectedEffect];
-        [editor adjustCurrentSelectedEffect];
-        resultImage = editor.appliedImageEffect;
-        
+        resultImage = [editor executeBrightnessShadow:self.originalImage];
+        resultImage = [editor executeWhiteBalance:resultImage];
+        resultImage = [editor executeSaturation:resultImage];
+        resultImage = [editor executeCurrentSelectedEffectWithWeight:resultImage];
+                
         /*
         
         GPUEffectSpringLight* effect = [[GPUEffectSpringLight alloc] init];
@@ -901,7 +899,6 @@
         
         UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil);
         
-        editor.originalImageResized = resizedImage;
         
         //メインスレッド
         dispatch_async(dispatch_get_main_queue(), ^{
