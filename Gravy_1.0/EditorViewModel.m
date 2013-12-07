@@ -235,15 +235,15 @@
     }
     
     if(self.currentSelectedEffectId == EffectIdCandy){
-        return [self executeEffectCreamyWithWeight:inputImage];
+        return [self executeEffectCandyWithWeight:inputImage];
     }
     
     if(self.currentSelectedEffectId == EffectIdVintage){
-        return [self executeEffectCreamyWithWeight:inputImage];
+        return [self executeEffectVintageWithWeight:inputImage];
     }
     
     if(self.currentSelectedEffectId == EffectIdSunset){
-        return [self executeEffectCreamyWithWeight:inputImage];
+        return [self executeEffectSunsetWithWeight:inputImage];
     }
     return nil;
 }

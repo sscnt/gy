@@ -112,7 +112,7 @@
         resultImage = [self mergeBaseImage:resultImage overlayFilter:gradientColor opacity:0.50f blendingMode:MergeBlendingModeSoftLight];
     }
     
-    
+    /*
     // Fill Layer
     @autoreleasepool {
         GPUImageGradientColorGenerator* gradientColor = [[GPUImageGradientColorGenerator alloc] init];
@@ -126,6 +126,7 @@
         
         resultImage = [self mergeBaseImage:resultImage overlayFilter:gradientColor opacity:0.72 blendingMode:MergeBlendingModeSoftLight];
     }
+     */
     
     
     // Fill Layer
