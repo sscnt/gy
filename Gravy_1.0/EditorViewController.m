@@ -883,11 +883,23 @@
         
         UIImage* resultImage;
         
-        resultImage = [editor executeBrightnessShadow:self.originalImage];
-        resultImage = [editor executeWhiteBalance:resultImage];
-        resultImage = [editor executeSaturation:resultImage];
-        resultImage = [editor executeCurrentSelectedEffectWithWeight:resultImage];
-                
+        @autoreleasepool {
+            resultImage = [editor executeBrightnessShadow:self.originalImage];
+            
+        }
+        @autoreleasepool {
+            resultImage = [editor executeWhiteBalance:resultImage];
+            
+        }
+        @autoreleasepool {
+            resultImage = [editor executeSaturation:resultImage];
+            
+        }
+        @autoreleasepool {
+            resultImage = [editor executeCurrentSelectedEffectWithWeight:resultImage];
+            
+        }
+        
         /*
         
         GPUEffectSpringLight* effect = [[GPUEffectSpringLight alloc] init];

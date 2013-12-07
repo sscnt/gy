@@ -87,7 +87,10 @@ typedef NS_ENUM(NSInteger, EditorViewState){
 - (void)applyEffectCreamy;
 - (UIImage*)executeEffectCreamyWithWeight:(UIImage*)inputImage;
 - (void)applyEffectCandy;
+- (UIImage*)executeEffectCandyWithWeight:(UIImage*)inputImage;
 - (void)applyEffectVintage;
+- (UIImage*)executeEffectVintageWithWeight:(UIImage*)inputImage;
 - (void)applyEffectSunset;
+- (UIImage*)executeEffectSunsetWithWeight:(UIImage*)inputImage;
 
 @end
