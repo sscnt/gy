@@ -19,6 +19,7 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
  uniform mediump float shadowsRadius;
  uniform mediump float highlightsAmount;
  uniform mediump float contrastAmount;
+ uniform mediump float avarageLuminosity;
  uniform int decreaseSaturationEnabled;
  
  
@@ -254,6 +255,8 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
     self.contrastAmount = 0.0f;
     decreaseSaturationEnabledUniform = [filterProgram uniformIndex:@"decreaseSaturationEnabled"];
     self.decreaseSaturationEnabled = NO;
+    avarageLuminosityUniform = [filterProgram uniformIndex:@"avarageLuminosity"];
+    self.avarageLuminosity = 0.0f;
     return self;
 }
 
@@ -280,6 +283,11 @@ NSString *const kGravyBrightnessFragmentShaderString = SHADER_STRING
 {
     _highlightsAmount = MIN(1.0f, MAX(0.0f, highlights));
     [self setFloat:_highlightsAmount forUniform:highlightsAmountUniform program:filterProgram];
+}
+
+- (void)setAvarageLuminosity:(float)avarageLuminosity
+{
+    [self setFloat:avarageLuminosity forUniform:avarageLuminosityUniform program:filterProgram];
 }
 
 - (void)setDecreaseSaturationEnabled:(BOOL)decreaseSaturationEnabled

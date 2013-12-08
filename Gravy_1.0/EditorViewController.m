@@ -728,16 +728,17 @@
         UIScreen *mainScreen = [UIScreen mainScreen];
         CGFloat scale = ([mainScreen respondsToSelector:@selector(scale)] ? mainScreen.scale : 1.0f);
         
-            CIImage* ciImage = [[CIImage alloc] initWithImage:self.originalImage];
-            CGFloat zoom;
-            if(portrait){
-                zoom = [UIScreen screenSize].width * scale / self.originalImage.size.height;
-            } else{
-                zoom = [UIScreen screenSize].width * scale / self.originalImage.size.width;
-            }
-            CIImage* filteredImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(zoom, zoom)];
-            editor.originalImageResized = [self uiImageFromCIImage:filteredImage];
-            [editor initialize];
+        CIImage* ciImage = [[CIImage alloc] initWithImage:self.originalImage];
+        CGFloat zoom;
+        if(portrait){
+            zoom = [UIScreen screenSize].width * scale / self.originalImage.size.height;
+        } else{
+            zoom = [UIScreen screenSize].width * scale / self.originalImage.size.width;
+        }
+        CIImage* filteredImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(zoom, zoom)];
+        editor.originalImageResized = [self uiImageFromCIImage:filteredImage];
+        [editor initialize];
+        editor.avarageLuminosity = [self detectImageBrightness:editor.originalImageResized];
 
         
     }
@@ -787,7 +788,70 @@
      */
 }
 
+- (float)detectImageBrightness:(UIImage *)inputImage
+{
+    float avaBrightness = 0.0f;
+    
+    // CGImageを取得する
+    CGImageRef  cgImage = inputImage.CGImage;
+    
+    // 画像情報を取得する
+    size_t                  width;
+    size_t                  height;
+    size_t                  bitsPerComponent;
+    size_t                  bitsPerPixel;
+    size_t                  bytesPerRow;
+    CGColorSpaceRef         colorSpace;
+    CGBitmapInfo            bitmapInfo;
+    bool                    shouldInterpolate;
+    CGColorRenderingIntent  intent;
+    width = CGImageGetWidth(cgImage);
+    height = CGImageGetHeight(cgImage);
+    bitsPerComponent = CGImageGetBitsPerComponent(cgImage);
+    bitsPerPixel = CGImageGetBitsPerPixel(cgImage);
+    bytesPerRow = CGImageGetBytesPerRow(cgImage);
+    colorSpace = CGImageGetColorSpace(cgImage);
+    bitmapInfo = CGImageGetBitmapInfo(cgImage);
+    shouldInterpolate = CGImageGetShouldInterpolate(cgImage);
+    intent = CGImageGetRenderingIntent(cgImage);
+    
+    
+    // データプロバイダを取得する
+    CGDataProviderRef   dataProvider;
+    dataProvider = CGImageGetDataProvider(cgImage);
+    
+    // ビットマップデータを取得する
+    CFDataRef   data;
+    UInt8*      buffer;
+    data = CGDataProviderCopyData(dataProvider);
+    buffer = (UInt8*)CFDataGetBytePtr(data);
+    
+    // ビットマップに効果を与える
+    UInt8   r, g, b;
+    NSUInteger  i, j;
+    for (j = 0; j < height; j++) {
+        for (i = 0; i < width; i++) {
+            // ピクセルのポインタを取得する
+            UInt8*  tmp;
+            tmp = buffer + j * bytesPerRow + i * 4;
+            
+            // RGBの値を取得する
+            r = *(tmp + 3);
+            g = *(tmp + 2);
+            b = *(tmp + 1);
+            
+            avaBrightness += r * 0.216f * 0.00392156862f + g * 0.7152f * 0.00392156862f + b * 0.0722 * 0.00392156862f;
 
+        }
+    }
+    
+    avaBrightness /= height * width;
+    
+    //CGDataProviderRelease(dataProvider);
+    //CFRelease(data);
+    
+    return avaBrightness;
+}
 
 - (UIImage *)fixOrientationOfImage:(UIImage *)image {
     

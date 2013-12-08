@@ -78,9 +78,10 @@
     GPUImagePicture* picture = [[GPUImagePicture alloc] initWithImage:inputImage];
     [picture addTarget:adjustment];
     
-    adjustment.shadowsAmount = _brShadowAmount;
-    adjustment.shadowsRadius = _brShadowRadius;
+    adjustment.shadowsAmount = _brShadowAmount * (1.0f - _avarageLuminosity) * 3.0f;
+    adjustment.shadowsRadius = _brShadowRadius * (1.0f - _avarageLuminosity);
     adjustment.decreaseSaturationEnabled = _brDec;
+    adjustment.avarageLuminosity = _avarageLuminosity;
     
     [picture processImage];
     return [adjustment imageFromCurrentlyProcessedOutput];

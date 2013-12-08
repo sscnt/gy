@@ -106,5 +106,6 @@ typedef NS_ENUM(NSInteger, KnobId){
 - (CGPoint)currentImageCenter;
 - (void)resizeOriginalImage;
 - (void)createPreviewImage;
+- (float)detectImageBrightness:(UIImage*)inputImage;
 
 @end

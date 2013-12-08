@@ -60,6 +60,8 @@ typedef NS_ENUM(NSInteger, EditorViewState){
 @property (nonatomic, assign) float weightLeftTop;
 @property (nonatomic, assign) float weightLeftBottom;
 
+@property (nonatomic, assign) float avarageLuminosity;
+
 @property (nonatomic, assign) EffectId currentSelectedEffectId;
 
 - (void)initialize;
