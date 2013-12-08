@@ -23,6 +23,7 @@
 #import "SVProgressHUD.h"
 #import "UIEffectSelectionView.h"
 #import "UIShareButton.h"
+#import "UIBuyButton.h"
 
 #import "GPUImage.h"
 #import "GPUAdjustmentsWhiteBalance.h"
@@ -61,6 +62,7 @@ typedef NS_ENUM(NSInteger, KnobId){
     UIEffectSelectionView* effectSelectionView;
 
     UIImageView* bgImageView;
+    UIBuyButton* buyButton;
     UIImageView* demoImageView;
     UIScrollView* scrollView;
     UIPageControl* pageControl;
@@ -107,5 +109,7 @@ typedef NS_ENUM(NSInteger, KnobId){
 - (void)resizeOriginalImage;
 - (void)createPreviewImage;
 - (float)detectImageBrightness:(UIImage*)inputImage;
+
+- (void)buyEffect;
 
 @end

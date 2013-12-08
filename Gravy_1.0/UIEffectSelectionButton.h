@@ -22,6 +22,7 @@
 @interface UIEffectSelectionButton : UIButton
 {
     UIImageView* previewImageView;
+    UIImageView* lockingImageView;
     UILabel* titleLabel;
     BOOL _selected;
 }

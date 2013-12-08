@@ -204,19 +204,26 @@
 - (void)layoutEffectEditor
 {
     UIWrapperView* wrapper = [[UIWrapperView alloc] initWithFrame:self.view.bounds];
-    demoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"demo"]];
-    demoImageView.alpha = 0.30f;
-    demoImageView.hidden = YES;
     
     // place original image
     effectImageView = [[UIThumbnailView alloc] initWithImage:editor.originalImageResized];    [effectImageView setCenter:CGPointMake(imageCenterX, imageCenterY - 25.0f)];
     effectImageView.delegate = self;
     effectImageView.userInteractionEnabled = YES;
     effectImageView.thumbnailId = ThumbnailViewIdEffect;
-    demoImageView.center = CGPointMake(effectImageView.center.x, effectImageView.frame.size.height / 2.0f);
-    [effectImageView addSubview:demoImageView];
-
     [wrapper addSubview:effectImageView];
+
+    // Demo
+    demoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"demo_str"]];
+    demoImageView.alpha = 0.40f;
+    demoImageView.hidden = YES;
+    if(demoImageView.frame.size.width > effectImageView.frame.size.width){
+        CGFloat width = effectImageView.frame.size.width;
+        CGFloat height = demoImageView.frame.size.height * width / demoImageView.frame.size.width;
+        demoImageView.frame = CGRectMake(0.0f, 0.0f, width, height);
+    }
+    demoImageView.center = effectImageView.center;
+    [wrapper addSubview:demoImageView];
+    
     [wrapper setX:[UIScreen screenSize].width * 3.0f];
     
     // Selection Vier
@@ -240,6 +247,14 @@
     effectKnobView.center = effectImageView.center;
     effectKnobView.hidden = YES;
     [wrapper addSubview:effectKnobView];
+    
+    // Buy
+    buyButton = [[UIBuyButton alloc] initWithFrame:CGRectMake([UIScreen screenSize].width - 90.0f, label.center.y - 20.0f, 80.0f, 36.0f)];
+    [buyButton addTarget:self action:@selector(buyEffect) forControlEvents:UIControlEventTouchUpInside];
+    [buyButton setTitle:NSLocalizedString(@"Buy", nil) forState:UIControlStateNormal];
+    buyButton.hidden = YES;
+    [wrapper addSubview:buyButton];
+    
     [scrollView addSubview:wrapper];
 }
 
@@ -707,9 +722,14 @@
             [effectImageView setImage:editor.appliedImageEffect];
             effectKnobView.hidden = NO;
             effectKnobView.center = effectImageView.center;
-            demoImageView.hidden = YES;
-            if(![PurchaseManager didPurchaseEffectId:editor.currentSelectedEffectId]){
+            if([PurchaseManager didPurchaseEffectId:editor.currentSelectedEffectId]){
+                saveBtn.hidden = NO;
+                demoImageView.hidden = YES;
+                buyButton.hidden = YES;
+            } else {
+                saveBtn.hidden = YES;
                 demoImageView.hidden = NO;
+                buyButton.hidden = NO;
             }
             [SVProgressHUD dismiss];
         });
@@ -967,9 +987,10 @@
             resultImage = [editor executeSaturation:resultImage];
             
         }
-        @autoreleasepool {
-            resultImage = [editor executeCurrentSelectedEffectWithWeight:resultImage];
-            
+        if([PurchaseManager didPurchaseEffectId:editor.currentSelectedEffectId]){
+            @autoreleasepool {
+                resultImage = [editor executeCurrentSelectedEffectWithWeight:resultImage];
+            }
         }
         
         /*
@@ -992,6 +1013,13 @@
             [_self didClickNextButton];
         });
     });
+    
+}
+
+#pragma mark in app purchase
+
+- (void)buyEffect
+{
     
 }
 

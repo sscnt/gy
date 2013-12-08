@@ -35,21 +35,25 @@
         titleLabel.numberOfLines = 0;
         [self addSubview:titleLabel];
         
-        UIImageView* lockedImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cart"]];
-        lockedImageView.center = CGPointMake(50.0f, 30.0f);
+        lockingImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"locking_test8"]];
+        lockingImageView.center = CGPointMake(55.0f, 25.0f);
+        //lockedImageView.center = previewImageView.center;
         
+
+        
+
         if(effectId != EffectIdNone){
             if(effectId == EffectIdCandy){
                 if (![PurchaseManager didPurchaseCandyEffect]) {
-                    [self addSubview:lockedImageView];
+                    [self addSubview:lockingImageView];
                 }
             } else if(effectId == EffectIdVintage){
                 if (![PurchaseManager didPurchaseVintageEffect]) {
-                    [self addSubview:lockedImageView];
+                    [self addSubview:lockingImageView];
                 }
             } else if(effectId == EffectIdSunset){
                 if (![PurchaseManager didPurchaseSunsetEffect]) {
-                    [self addSubview:lockedImageView];
+                    [self addSubview:lockingImageView];
                 }
             }
         }

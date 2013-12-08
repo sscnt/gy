@@ -40,6 +40,8 @@ typedef NS_ENUM(NSInteger, ButtonType){
 + (UIShareButton*)line:(CGRect)frame;
 - (void)setLineColor;
 
++ (UIShareButton*)buy:(CGRect)frame;
+- (void)setBuyColor;
 
 - (void)setFont;
 
