@@ -22,7 +22,7 @@
 @interface UIEffectSelectionButton : UIButton
 {
     UIImageView* previewImageView;
-    UIImageView* lockingImageView;
+    UIImageView* lockedImageView;
     UILabel* titleLabel;
     BOOL _selected;
 }
@@ -36,5 +36,6 @@
 - (void)initPreviewImageView:(UIImage*)baseImage;
 - (void)didPress;
 - (NSString*)titleFromEffectId:(EffectId)effectId;
+- (void)displayLockedImageView;
 
 @end

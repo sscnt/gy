@@ -35,25 +35,20 @@
         titleLabel.numberOfLines = 0;
         [self addSubview:titleLabel];
         
-        lockingImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"locking_test8"]];
-        lockingImageView.center = CGPointMake(55.0f, 25.0f);
-        //lockedImageView.center = previewImageView.center;
-        
 
-        
 
         if(effectId != EffectIdNone){
             if(effectId == EffectIdCandy){
                 if (![PurchaseManager didPurchaseCandyEffect]) {
-                    [self addSubview:lockingImageView];
+                    [self displayLockedImageView];
                 }
             } else if(effectId == EffectIdVintage){
                 if (![PurchaseManager didPurchaseVintageEffect]) {
-                    [self addSubview:lockingImageView];
+                    [self displayLockedImageView];
                 }
             } else if(effectId == EffectIdSunset){
                 if (![PurchaseManager didPurchaseSunsetEffect]) {
-                    [self addSubview:lockingImageView];
+                    [self displayLockedImageView];
                 }
             }
         }
@@ -62,6 +57,19 @@
         [self addTarget:self action:@selector(didPress) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
+}
+
+- (void)displayLockedImageView
+{
+    previewImageView.hidden = YES;
+    lockedImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lock_nfs"]];
+    lockedImageView.center = previewImageView.center;
+    CALayer* l = [lockedImageView layer];
+    [l setMasksToBounds:YES];
+    [l setCornerRadius:4.0];
+    [l setBorderWidth:4.0];
+    [l setBorderColor:[[UIColor clearColor] CGColor]];
+    [self addSubview:lockedImageView];
 }
 
 - (void)initPreviewImageView:(UIImage *)baseImage
@@ -103,7 +111,12 @@
 - (void)setSelected:(BOOL)selected
 {
     _selected = selected;
-    CALayer* l = [previewImageView layer];
+    CALayer* l;
+    if(lockedImageView){
+        l = [lockedImageView layer];
+    } else {
+        l = [previewImageView layer];
+    }
     if(_selected){
         [l setBorderColor:[[UIColor colorWithRed:41.0f/255.0f green:128.0f/255.0f blue:185.0f/255.0f alpha:1.0f] CGColor]];
     } else{
