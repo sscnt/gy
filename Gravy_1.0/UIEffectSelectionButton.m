@@ -62,7 +62,7 @@
 - (void)displayLockedImageView
 {
     previewImageView.hidden = YES;
-    lockedImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lock_nfs"]];
+    lockedImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"preview_locked"]];
     lockedImageView.center = previewImageView.center;
     CALayer* l = [lockedImageView layer];
     [l setMasksToBounds:YES];

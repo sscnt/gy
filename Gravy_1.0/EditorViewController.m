@@ -224,6 +224,11 @@
     demoImageView.center = effectImageView.center;
     [wrapper addSubview:demoImageView];
     
+    // Libon
+    libonImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"libon_test3"]];
+    libonImageView.frame = CGRectMake(effectImageView.frame.size.width - 68.0f, 0.0f, libonImageView.frame.size.width, libonImageView.frame.size.height);
+    [effectImageView addSubview:libonImageView];
+    
     [wrapper setX:[UIScreen screenSize].width * 3.0f];
     
     // Selection Vier
@@ -869,6 +874,8 @@
     
     //CGDataProviderRelease(dataProvider);
     //CFRelease(data);
+    
+    dlog(@"ava: %f", avaBrightness);
     
     return avaBrightness;
 }

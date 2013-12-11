@@ -64,6 +64,7 @@ typedef NS_ENUM(NSInteger, KnobId){
     UIImageView* bgImageView;
     UIBuyButton* buyButton;
     UIImageView* demoImageView;
+    UIImageView* libonImageView;
     UIScrollView* scrollView;
     UIPageControl* pageControl;
     UIThumbnailView* whitebalanceImageView;
