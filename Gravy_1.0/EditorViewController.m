@@ -206,27 +206,21 @@
     UIWrapperView* wrapper = [[UIWrapperView alloc] initWithFrame:self.view.bounds];
     
     // place original image
-    effectImageView = [[UIThumbnailView alloc] initWithImage:editor.originalImageResized];    [effectImageView setCenter:CGPointMake(imageCenterX, imageCenterY - 25.0f)];
+    effectImageView = [[UIThumbnailView alloc] initWithImage:editor.originalImageResized];
+    [effectImageView setCenter:CGPointMake(imageCenterX, imageCenterY)];
+    [effectImageView setCenter:CGPointMake(imageCenterX, imageCenterY)];
+    if(effectImageView.center.y + effectImageView.frame.size.height / 2.0f > [UIScreen screenSize].height - 205.0f){
+        [effectImageView setY:[UIScreen screenSize].height - 205.0f - effectImageView.bounds.size.height];
+    }
     effectImageView.delegate = self;
     effectImageView.userInteractionEnabled = YES;
     effectImageView.thumbnailId = ThumbnailViewIdEffect;
     [wrapper addSubview:effectImageView];
-
-    // Demo
-    demoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"demo_str"]];
-    demoImageView.alpha = 0.40f;
-    demoImageView.hidden = YES;
-    if(demoImageView.frame.size.width > effectImageView.frame.size.width){
-        CGFloat width = effectImageView.frame.size.width;
-        CGFloat height = demoImageView.frame.size.height * width / demoImageView.frame.size.width;
-        demoImageView.frame = CGRectMake(0.0f, 0.0f, width, height);
-    }
-    demoImageView.center = effectImageView.center;
-    [wrapper addSubview:demoImageView];
     
     // Libon
     libonImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"libon_test3"]];
     libonImageView.frame = CGRectMake(effectImageView.frame.size.width - 68.0f, 0.0f, libonImageView.frame.size.width, libonImageView.frame.size.height);
+    libonImageView.hidden = YES;
     [effectImageView addSubview:libonImageView];
     
     [wrapper setX:[UIScreen screenSize].width * 3.0f];
@@ -258,7 +252,13 @@
     [buyButton addTarget:self action:@selector(buyEffect) forControlEvents:UIControlEventTouchUpInside];
     [buyButton setTitle:NSLocalizedString(@"Buy", nil) forState:UIControlStateNormal];
     buyButton.hidden = YES;
+    [buyButton setY:bottom - 64.0f];
+    [buyButton setX:[UIScreen screenSize].width - 90.0f];
     [wrapper addSubview:buyButton];
+    
+    UIImageView* buy = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"buy_test"]];
+    [buy setY:bottom - 64.0f];
+    [buy setX:170.0f];
     
     [scrollView addSubview:wrapper];
 }
@@ -729,11 +729,11 @@
             effectKnobView.center = effectImageView.center;
             if([PurchaseManager didPurchaseEffectId:editor.currentSelectedEffectId]){
                 saveBtn.hidden = NO;
-                demoImageView.hidden = YES;
+                libonImageView.hidden = YES;
                 buyButton.hidden = YES;
             } else {
                 saveBtn.hidden = YES;
-                demoImageView.hidden = NO;
+                libonImageView.hidden = NO;
                 buyButton.hidden = NO;
             }
             [SVProgressHUD dismiss];
@@ -754,11 +754,14 @@
         CGFloat scale = ([mainScreen respondsToSelector:@selector(scale)] ? mainScreen.scale : 1.0f);
         
         CIImage* ciImage = [[CIImage alloc] initWithImage:self.originalImage];
+        
+        CGFloat areaHeight = [UIScreen screenSize].height - 205.0f;
+        CGFloat baseWidth = [UIScreen screenSize].width;
         CGFloat zoom;
         if(portrait){
-            zoom = [UIScreen screenSize].width * scale / self.originalImage.size.height;
+            zoom = areaHeight * scale / self.originalImage.size.height;
         } else{
-            zoom = [UIScreen screenSize].width * scale / self.originalImage.size.width;
+            zoom = baseWidth * scale / self.originalImage.size.width;
         }
         CIImage* filteredImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(zoom, zoom)];
         editor.originalImageResized = [self uiImageFromCIImage:filteredImage];

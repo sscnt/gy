@@ -77,6 +77,7 @@
 		58F0271B181A8B6600938725 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 58F02718181A8B6600938725 /* SVProgressHUD.bundle */; };
 		58F0271C181A8B6600938725 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F0271A181A8B6600938725 /* SVProgressHUD.m */; };
 		58F14A51182BB484009DA863 /* GPUImageSelectiveColorFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F14A50182BB484009DA863 /* GPUImageSelectiveColorFilter.m */; };
+		58F1B0481859D23E00C88724 /* buy_test@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F1B0471859D23E00C88724 /* buy_test@2x.png */; };
 		58F2A272183F883700C96E59 /* GPUEffectHazelnut.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F2A271183F883700C96E59 /* GPUEffectHazelnut.m */; };
 		58F2A277183F88E200C96E59 /* Hazelnut1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F2A275183F88E200C96E59 /* Hazelnut1.acv */; };
 		58F2A278183F88E200C96E59 /* Hazelnut2.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F2A276183F88E200C96E59 /* Hazelnut2.acv */; };
@@ -302,6 +303,7 @@
 		58F0271A181A8B6600938725 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		58F14A4F182BB484009DA863 /* GPUImageSelectiveColorFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageSelectiveColorFilter.h; sourceTree = "<group>"; };
 		58F14A50182BB484009DA863 /* GPUImageSelectiveColorFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageSelectiveColorFilter.m; sourceTree = "<group>"; };
+		58F1B0471859D23E00C88724 /* buy_test@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buy_test@2x.png"; sourceTree = "<group>"; };
 		58F2A270183F883700C96E59 /* GPUEffectHazelnut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectHazelnut.h; sourceTree = "<group>"; };
 		58F2A271183F883700C96E59 /* GPUEffectHazelnut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectHazelnut.m; sourceTree = "<group>"; };
 		58F2A275183F88E200C96E59 /* Hazelnut1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Hazelnut1.acv; sourceTree = "<group>"; };
@@ -673,6 +675,7 @@
 		5802E81B180C2A2F00AA2227 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				58F1B0471859D23E00C88724 /* buy_test@2x.png */,
 				58F2BAE31858A07400DFAB7B /* libon_test3@2x.png */,
 				58FD136618589542009542EF /* preview_locked@2x.png */,
 				580055DC18547CE200979CDC /* demo_str@2x.png */,
@@ -1425,6 +1428,7 @@
 				58EEE5FE1820D740008C4B2A /* icon-120.png in Resources */,
 				58FBB40818156410001CFDC8 /* icon_download.png in Resources */,
 				58FC5CDA18321C46009EBCF0 /* Sweet1.acv in Resources */,
+				58F1B0481859D23E00C88724 /* buy_test@2x.png in Resources */,
 				5800329C180D134D0021F73C /* bottomBg.png in Resources */,
 				580032A6180D16FD0021F73C /* rounded-mplus-1p-heavy.ttf in Resources */,
 				58FBB40218155FB4001CFDC8 /* slider@2x.png in Resources */,

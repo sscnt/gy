@@ -15,11 +15,11 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        _borderColor = [UIColor colorWithRed:160.0f/255.0f green:160.0f/255.0f blue:160.0f/255.0f alpha:1.00f];
+        _borderColor = [UIColor colorWithRed:60.0f/255.0f green:60.0f/255.0f blue:60.0f/255.0f alpha:1.00f];
         _topColor = [UIColor colorWithRed:250.0f/255.0f green:250.0f/255.0f blue:250.0f/255.0f alpha:1.00f];
         _bottomColor = [UIColor colorWithRed:228.0f/255.0f green:227.0f/255.0f blue:223.0f/255.0f alpha:1.00f];
         _innerGlow = [UIColor colorWithWhite:1.0 alpha:1.0f];
-        _textColor = [UIColor colorWithWhite:102.0f/255.0f alpha:1.0f];
+        _textColor = [UIColor colorWithWhite:80.0f/255.0f alpha:1.0f];
         _highlightedColor = [UIColor colorWithWhite:90.0f/255.0f alpha:1.0f];
         _textShadowColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
 

@@ -10,6 +10,7 @@
 #import <QuartzCore/CALayer.h>
 #import "EditorViewModel.h"
 #import "UIScreen+Gravy.h"
+#import "UIDevice+Gravy.h"
 #import "UIView+Gravy.h"
 #import "UIDockView.h"
 #import "UIDockButtonBack.h"
@@ -63,7 +64,6 @@ typedef NS_ENUM(NSInteger, KnobId){
 
     UIImageView* bgImageView;
     UIBuyButton* buyButton;
-    UIImageView* demoImageView;
     UIImageView* libonImageView;
     UIScrollView* scrollView;
     UIPageControl* pageControl;
