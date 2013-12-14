@@ -7,24 +7,49 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <StoreKit/StoreKit.h>
 #import "UICKeyChainStore.h"
 
-@interface PurchaseManager : NSObject
+typedef NS_ENUM(NSInteger, PurchaseManagerError){
+    PurchaseManagerErrorIAPNotAllowed = 1,
+    PurchaseManagerErrorInvalidProduct,
+    PurchaseManagerErrorPaymentFailed,
+    PurchaseManagerErrorUnknown,
+    PurchaseManagerErrorClientInvalid,
+    PurchaseManagerErrorPaymentCancelled,
+    PurchaseManagerErrorPaymentInvalid,
+    PurchaseManagerErrorPaymentNotAllowed
+};
+
+@protocol PurchaseManagerDelegate <NSObject>
+- (void)didPurchase;
+- (void)didFailToPurchaseWithError:(PurchaseManagerError)error;
+@end
+
+
+
+@interface PurchaseManager : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver>
 {
-    NSString* keyForPurchasesEffectsCandy;
-    NSString* keyForPurchasesEffectsVintage;
-    NSString* keyForPurchasesEffectsSunset;
-    
-    NSString* candyEffectCheckingStr;
-    NSString* vintageEffectCheckingStr;
-    NSString* sunsetEffectCheckingStr;
+    EffectId targetEffectId;
+    SKProductsRequest *productsRequest;
 }
 
+@property (nonatomic, weak) id<PurchaseManagerDelegate> delegate;
+
++ (BOOL)isUntreatedTransaction;
++ (void)finishUntreatedTransaction;
+
 + (BOOL)didPurchaseCreamyEffect;
-+ (BOOL)didPurchaseCandyEffect;
++ (BOOL)didPurchaseBloomEffect;
 + (BOOL)didPurchaseVintageEffect;
 + (BOOL)didPurchaseSunsetEffect;
 
 + (BOOL)didPurchaseEffectId:(EffectId)effectId;
+
+- (void)purchaseEffectByID:(EffectId)effectId;
+- (void)purchaseProductByID:(NSString*)productId;
+
+- (void)didPurchase;
+- (void)updatePurchasedFlag;
 
 @end

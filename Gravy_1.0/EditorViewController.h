@@ -50,7 +50,7 @@ typedef NS_ENUM(NSInteger, KnobId){
     KnobIdEffect
 };
 
-@interface EditorViewController : UIViewController <UIScrollViewDelegate, UIThumbnailViewDelegate, UIEffectSelectionViewDelegate>
+@interface EditorViewController : UIViewController <UIScrollViewDelegate, UIThumbnailViewDelegate, UIEffectSelectionViewDelegate, PurchaseManagerDelegate>
 {
     EditorViewModel* editor;    
     
@@ -87,6 +87,8 @@ typedef NS_ENUM(NSInteger, KnobId){
     CGFloat screenWidth;
     CGFloat screenHeight;
     dispatch_queue_t processingQueue;
+    
+    PurchaseManager* purchaseManager;
     
 }
 

@@ -167,8 +167,8 @@
         return;
     }
     
-    if(self.currentSelectedEffectId == EffectIdCandy){
-        [self applyEffectCandy];
+    if(self.currentSelectedEffectId == EffectIdBloom){
+        [self applyEffectBloom];
         return;
     }
     
@@ -235,8 +235,8 @@
         return [self executeEffectCreamyWithWeight:inputImage];
     }
     
-    if(self.currentSelectedEffectId == EffectIdCandy){
-        return [self executeEffectCandyWithWeight:inputImage];
+    if(self.currentSelectedEffectId == EffectIdBloom){
+        return [self executeEffectBloomWithWeight:inputImage];
     }
     
     if(self.currentSelectedEffectId == EffectIdVintage){
@@ -320,7 +320,7 @@
     return resultImage;
 }
 
-- (void)applyEffectCandy
+- (void)applyEffectBloom
 {
     @autoreleasepool {
         GPUEffectColorfulCandy* effect = [[GPUEffectColorfulCandy alloc] init];
@@ -344,7 +344,7 @@
     }
 }
 
-- (UIImage*)executeEffectCandyWithWeight:(UIImage *)inputImage
+- (UIImage*)executeEffectBloomWithWeight:(UIImage *)inputImage
 {
     
     UIImage* resultImage = inputImage;

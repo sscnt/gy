@@ -137,6 +137,7 @@
 		58F79123180D696700968648 /* EditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F79122180D696700968648 /* EditorViewController.m */; };
 		58F79126180D6CCB00968648 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F79125180D6CCB00968648 /* RootViewController.m */; };
 		58F7F8F218549AF7006286FD /* UIBuyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F7F8F118549AF7006286FD /* UIBuyButton.m */; };
+		58F8A8E9185B0EE600647722 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F8A8E8185B0EE600647722 /* StoreKit.framework */; };
 		58F92BAE1840C7F500A4EDBE /* GPUEffectVintage2.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F92BAD1840C7F500A4EDBE /* GPUEffectVintage2.m */; };
 		58F92BB01840CB1600A4EDBE /* Vintage22.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F92BAF1840CB1600A4EDBE /* Vintage22.acv */; };
 		58F92BB21840D33100A4EDBE /* Vintage21.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F92BB11840D33100A4EDBE /* Vintage21.acv */; };
@@ -385,6 +386,7 @@
 		58F79125180D6CCB00968648 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		58F7F8F018549AF7006286FD /* UIBuyButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIBuyButton.h; sourceTree = "<group>"; };
 		58F7F8F118549AF7006286FD /* UIBuyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIBuyButton.m; sourceTree = "<group>"; };
+		58F8A8E8185B0EE600647722 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		58F92BAC1840C7F400A4EDBE /* GPUEffectVintage2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectVintage2.h; sourceTree = "<group>"; };
 		58F92BAD1840C7F500A4EDBE /* GPUEffectVintage2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectVintage2.m; sourceTree = "<group>"; };
 		58F92BAF1840CB1600A4EDBE /* Vintage22.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Vintage22.acv; sourceTree = "<group>"; };
@@ -454,6 +456,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58F8A8E9185B0EE600647722 /* StoreKit.framework in Frameworks */,
 				58FA30881852F0E400A87190 /* Security.framework in Frameworks */,
 				58F3C430181C8AA800F7129D /* libGPUImage.a in Frameworks */,
 				58F3C42F181C8A9C00F7129D /* QuartzCore.framework in Frameworks */,
@@ -553,6 +556,7 @@
 		5802E7BD180C0F1400AA2227 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				58F8A8E8185B0EE600647722 /* StoreKit.framework */,
 				58FA30871852F0E400A87190 /* Security.framework */,
 				58916506184B1423007FCD5D /* Twitter.framework */,
 				58916504184B140E007FCD5D /* Social.framework */,
@@ -1621,7 +1625,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Toshiki Nakanishi (WRHUFP3254)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Toshiki Nakanishi (WRHUFP3254)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1639,6 +1644,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "5E485D2E-348A-4082-AAC4-0964E40B357E";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1660,7 +1666,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Toshiki Nakanishi";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Toshiki Nakanishi";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1671,6 +1678,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PROVISIONING_PROFILE = "D53FC610-D74E-487D-85F0-DA60ACD3208A";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1682,6 +1690,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Toshiki Nakanishi (WRHUFP3254)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Gravy_1.0/Gravy_1.0-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1692,6 +1701,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "5E485D2E-348A-4082-AAC4-0964E40B357E";
 				USER_HEADER_SEARCH_PATHS = "./GPUImage/framework/Source/**";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1703,6 +1713,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Toshiki Nakanishi";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Gravy_1.0/Gravy_1.0-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1713,6 +1724,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "D53FC610-D74E-487D-85F0-DA60ACD3208A";
 				USER_HEADER_SEARCH_PATHS = "./GPUImage/framework/Source/**";
 				WRAPPER_EXTENSION = app;
 			};

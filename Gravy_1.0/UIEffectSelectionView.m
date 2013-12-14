@@ -36,9 +36,9 @@
         buttonCreamy.delegate = nil;
         [buttonCreamy removeFromSuperview];
     }
-    if(buttonCandy){
-        buttonCandy.delegate = nil;
-        [buttonCandy removeFromSuperview];
+    if(buttonBloom){
+        buttonBloom.delegate = nil;
+        [buttonBloom removeFromSuperview];
     }
     if(buttonSunset){
         
@@ -66,10 +66,10 @@
     
     // Candy
     left += 80.0f;
-    buttonCandy = [[UIEffectSelectionButton alloc] initWithEffectId:EffectIdCandy previewImageBase:effectPreviewImage];
-    [buttonCandy setX:left];
-    buttonCandy.delegate = self;
-    [scrollView addSubview:buttonCandy];
+    buttonBloom = [[UIEffectSelectionButton alloc] initWithEffectId:EffectIdBloom previewImageBase:effectPreviewImage];
+    [buttonBloom setX:left];
+    buttonBloom.delegate = self;
+    [scrollView addSubview:buttonBloom];
     
     // Vintage
     left += 80.0f;
@@ -96,7 +96,7 @@
 {
     buttonNone.selected = NO;
     buttonCreamy.selected = NO;
-    buttonCandy.selected = NO;
+    buttonBloom.selected = NO;
     buttonVintage.selected = NO;
     buttonSunset.selected = NO;
     
@@ -108,8 +108,8 @@
         buttonCreamy.selected = YES;
         return;
     }
-    if(effectId == EffectIdCandy){
-        buttonCandy.selected = YES;
+    if(effectId == EffectIdBloom){
+        buttonBloom.selected = YES;
         return;
     }
     if(effectId == EffectIdVintage){

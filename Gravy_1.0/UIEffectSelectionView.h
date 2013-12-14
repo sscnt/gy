@@ -22,7 +22,7 @@
     
     UIEffectSelectionButton* buttonNone;
     UIEffectSelectionButton* buttonCreamy;
-    UIEffectSelectionButton* buttonCandy;
+    UIEffectSelectionButton* buttonBloom;
     UIEffectSelectionButton* buttonVintage;
     UIEffectSelectionButton* buttonSunset;
 }

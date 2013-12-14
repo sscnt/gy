@@ -25,6 +25,6 @@ typedef NS_ENUM(NSInteger, ThumbnailViewId){
 @end
 
 @interface UIThumbnailView : UIImageView
-@property (nonatomic, assign) id<UIThumbnailViewDelegate> delegate;
+@property (nonatomic, weak) id<UIThumbnailViewDelegate> delegate;
 @property (nonatomic, assign) ThumbnailViewId thumbnailId;
 @end

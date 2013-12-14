@@ -21,6 +21,8 @@
 	// Do any additional setup after loading the view.
     
     editor = [[EditorViewModel alloc] init];
+    purchaseManager = [[PurchaseManager alloc] init];
+    purchaseManager.delegate = self;
     
     _originalImage = [self fixOrientationOfImage:_originalImage];
     [self resizeOriginalImage];
@@ -238,15 +240,6 @@
     label.text = NSLocalizedString(@"Effect", nil);
     [wrapper addSubview:label];
     
-    UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
-    // knob
-    effectKnobView = [[UISliderView alloc] init];
-    effectKnobView.tag = KnobIdEffect;
-    [effectKnobView addGestureRecognizer:recognizer];
-    effectKnobView.center = effectImageView.center;
-    effectKnobView.hidden = YES;
-    [wrapper addSubview:effectKnobView];
-    
     // Buy
     buyButton = [[UIBuyButton alloc] initWithFrame:CGRectMake([UIScreen screenSize].width - 90.0f, label.center.y - 20.0f, 80.0f, 36.0f)];
     [buyButton addTarget:self action:@selector(buyEffect) forControlEvents:UIControlEventTouchUpInside];
@@ -256,9 +249,14 @@
     [buyButton setX:[UIScreen screenSize].width - 90.0f];
     [wrapper addSubview:buyButton];
     
-    UIImageView* buy = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"buy_test"]];
-    [buy setY:bottom - 64.0f];
-    [buy setX:170.0f];
+    UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragView:)];
+    // knob
+    effectKnobView = [[UISliderView alloc] init];
+    effectKnobView.tag = KnobIdEffect;
+    [effectKnobView addGestureRecognizer:recognizer];
+    effectKnobView.center = effectImageView.center;
+    effectKnobView.hidden = YES;
+    [wrapper addSubview:effectKnobView];
     
     [scrollView addSubview:wrapper];
 }
@@ -1030,12 +1028,25 @@
 
 - (void)buyEffect
 {
+    [purchaseManager purchaseEffectByID:editor.currentSelectedEffectId];
+
+}
+
+#pragma mark delegates
+
+- (void)didPurchase
+{
+}
+
+- (void)didFailToPurchaseWithError:(PurchaseManagerError)error
+{
     
 }
 
 - (void)dealloc
 {
     scrollView.delegate = nil;
+    purchaseManager.delegate = nil;
 }
 
 - (void)didReceiveMemoryWarning

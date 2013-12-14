@@ -38,8 +38,8 @@
 
 
         if(effectId != EffectIdNone){
-            if(effectId == EffectIdCandy){
-                if (![PurchaseManager didPurchaseCandyEffect]) {
+            if(effectId == EffectIdBloom){
+                if (![PurchaseManager didPurchaseBloomEffect]) {
                     [self displayLockedImageView];
                 }
             } else if(effectId == EffectIdVintage){
@@ -87,7 +87,7 @@
         return;
     }
     
-    if(self.effectId == EffectIdCandy){
+    if(self.effectId == EffectIdBloom){
         GPUEffectColorfulCandy* effect = [[GPUEffectColorfulCandy alloc] init];
         effect.imageToProcess = baseImage;
         previewImageView.image = [effect process];
@@ -130,7 +130,7 @@
     if(effectId == EffectIdCreamy){
         return NSLocalizedString(@"Creamy", nil);
     }
-    if(effectId == EffectIdCandy){
+    if(effectId == EffectIdBloom){
         return NSLocalizedString(@"Bloom", nil);
     }
     if(effectId == EffectIdVintage){

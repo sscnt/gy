@@ -25,7 +25,7 @@
 typedef NS_ENUM(NSInteger, EffectId){
     EffectIdNone = 1,
     EffectIdCreamy,
-    EffectIdCandy,
+    EffectIdBloom,
     EffectIdVintage,
     EffectIdSunset
 };
