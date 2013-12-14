@@ -22,10 +22,13 @@ typedef NS_ENUM(NSInteger, PurchaseManagerError){
 };
 
 @protocol PurchaseManagerDelegate <NSObject>
+@optional
 - (void)didPurchase;
 - (void)didRestartPausedTransaction;
 - (void)didRestoreEffect:(EffectId)effectId;
+- (void)didAllRestorationsFinish;
 - (void)didFailToPurchaseWithError:(PurchaseManagerError)error;
+- (void)didFailToRestore;
 @end
 
 

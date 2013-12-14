@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PurchaseManager.h"
+#import "UIShareButton.h"
+#import "UIEditorTitleLabel.h"
+#import "SVProgressHUD.h"
 
-@interface SettingsViewController : UIViewController
-
+@interface SettingsViewController : UIViewController <PurchaseManagerDelegate>
+{
+    PurchaseManager* _purchaseManager;
+    UIShareButton* restoreButton;
+}
+- (void)restore;
 @end

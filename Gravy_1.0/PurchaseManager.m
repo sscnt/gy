@@ -14,9 +14,9 @@ NSString* const keyForPurchasesEffectsBloom = @"purchases.effects.bloom";
 NSString* const keyForPurchasesEffectsSunset = @"purchases.effects.sunset";
 NSString* const keyForPurchasesEffectsVintage = @"purchases.effects.vintage";
 
-NSString* const hashForEffectBloom = @"ywMnj9z5vf9lZ5gi";
-NSString* const hashForEffectVintage = @"D2z3xvVks3eAZj1q";
-NSString* const hashForEffectSunset = @"6kzBUT69PQKdbeBL";
+NSString* const hashForEffectBloom = @"c6I2JG9hliRr1kVA";
+NSString* const hashForEffectVintage = @"9N8wQZ7IP11134cm";
+NSString* const hashForEffectSunset = @"tLRQ6EEp6ZAhRvWY";
 
 NSString* const productIdForEffectBloom = @"jp.ssctech.gravy.bloom";
 NSString* const productIdForEffectVintage = @"jp.ssctech.gravy.vintage";
@@ -272,7 +272,17 @@ NSString* const productIdForEffectSunset = @"jp.ssctech.gravy.sunset";
 }
 - (void)paymentQueue:(SKPaymentQueue *)queue removedTransactions:(NSArray *)transactions
 {
+    
+}
 
+- (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error
+{
+    [self.delegate didFailToRestore];
+}
+
+- (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue
+{
+    [self.delegate didAllRestorationsFinish];
 }
 
 - (void)dealloc
