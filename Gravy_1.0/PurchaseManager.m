@@ -14,9 +14,9 @@ NSString* const keyForPurchasesEffectsBloom = @"purchases.effects.bloom";
 NSString* const keyForPurchasesEffectsSunset = @"purchases.effects.sunset";
 NSString* const keyForPurchasesEffectsVintage = @"purchases.effects.vintage";
 
-NSString* const hashForEffectBloom = @"c6I2JG9hliRr1kVA";
-NSString* const hashForEffectVintage = @"9N8wQZ7IP11134cm";
-NSString* const hashForEffectSunset = @"tLRQ6EEp6ZAhRvWY";
+NSString* const hashForEffectBloom = @"xDHScYhWhYDnsogx";
+NSString* const hashForEffectVintage = @"e5gktKcpB9D0ThCu";
+NSString* const hashForEffectSunset = @"68c1RYIildamgD7O";
 
 NSString* const productIdForEffectBloom = @"jp.ssctech.gravy.bloom";
 NSString* const productIdForEffectVintage = @"jp.ssctech.gravy.vintage";
