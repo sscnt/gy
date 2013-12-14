@@ -48,6 +48,7 @@
     UISettingsButton* settingsBtn = [[UISettingsButton alloc] init];
     [settingsBtn setX:10.0f];
     [settingsBtn setY:10.0f];
+    [settingsBtn addTarget:self action:@selector(didClickSettingsBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:settingsBtn];
     
     //////// labels
@@ -78,6 +79,16 @@
                      }];
 
 }
+- (void)showErrorAlertWithMessage:(NSString *)message
+{
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                                    message:NSLocalizedString(message, nil)
+                                                   delegate:nil
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:@"OK", nil];
+    [alert show];
+}
 
 #pragma mark button events
 
@@ -85,8 +96,25 @@
 {
     BOOL b = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
     if(!b){
+        [self showErrorAlertWithMessage:@"Camera is not available."];
         return;
     }
+    
+    if([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0f){;
+        ALAuthorizationStatus status = [ALAssetsLibrary authorizationStatus];
+        if (status == ALAuthorizationStatusNotDetermined){
+            
+        } else if (status == ALAuthorizationStatusRestricted){
+            [self showErrorAlertWithMessage:@"no_access_due_to_parental_controls"];
+            return;
+        } else if (status == ALAuthorizationStatusDenied){
+            [self showErrorAlertWithMessage:@"no_access_to_your_photos"];
+            return;
+        } else if (status == ALAuthorizationStatusAuthorized){
+
+        }
+    }
+    
     UIImagePickerController *pickerController = [[UIImagePickerController alloc] init];
     pickerController.delegate = self;
     [pickerController setSourceType:UIImagePickerControllerSourceTypeCamera];
@@ -101,6 +129,13 @@
     [pickerController setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     pickerController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentViewController:pickerController animated:YES completion:nil];
+}
+
+- (void)didClickSettingsBtn
+{
+    SettingsViewController* controller = [[SettingsViewController alloc] init];
+    controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 #pragma mark delegates

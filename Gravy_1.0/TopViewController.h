@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 #import "UIScreen+Gravy.h"
 #import "UIView+Gravy.h"
 #import "UIDockView.h"
@@ -14,6 +15,7 @@
 #import "UIDockButtonPhotos.h"
 #import "UISettingsButton.h"
 #import "EditorViewController.h"
+#import "SettingsViewController.h"
 
 @interface TopViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 {
@@ -25,7 +27,10 @@
 
 - (void)didClickCameraBtn;
 - (void)didClickPhotosBtn;
+- (void)didClickSettingsBtn;
 
 - (void)prepareForEditor;
+
+- (void)showErrorAlertWithMessage:(NSString*)message;
 
 @end

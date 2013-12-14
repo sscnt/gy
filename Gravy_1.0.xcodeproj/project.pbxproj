@@ -50,6 +50,8 @@
 		5809B4FF180EB902007670D1 /* UIWrapperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5809B4FE180EB902007670D1 /* UIWrapperView.m */; };
 		5809B503180EBAD2007670D1 /* UIEditorTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5809B502180EBAD2007670D1 /* UIEditorTitleLabel.m */; };
 		5822B22D1848C1F6009577D2 /* GPUImagePhotoFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5822B22C1848C1F6009577D2 /* GPUImagePhotoFilter.m */; };
+		588C2F62185C4FFA00D7736E /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 588C2F61185C4FFA00D7736E /* SettingsViewController.m */; };
+		588C2F67185C5DE400D7736E /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 588C2F66185C5DE400D7736E /* AssetsLibrary.framework */; };
 		589164F1184ACB7E007FCD5D /* GPUEffectOldTone.m in Sources */ = {isa = PBXBuildFile; fileRef = 589164F0184ACB7E007FCD5D /* GPUEffectOldTone.m */; };
 		589164F6184AE611007FCD5D /* GPUEffectFaerieBloom.m in Sources */ = {isa = PBXBuildFile; fileRef = 589164F5184AE611007FCD5D /* GPUEffectFaerieBloom.m */; };
 		589164F8184AE695007FCD5D /* FaerieBloom1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 589164F7184AE695007FCD5D /* FaerieBloom1.acv */; };
@@ -268,6 +270,9 @@
 		5809B502180EBAD2007670D1 /* UIEditorTitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIEditorTitleLabel.m; sourceTree = "<group>"; };
 		5822B22B1848C1F6009577D2 /* GPUImagePhotoFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImagePhotoFilter.h; sourceTree = "<group>"; };
 		5822B22C1848C1F6009577D2 /* GPUImagePhotoFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImagePhotoFilter.m; sourceTree = "<group>"; };
+		588C2F60185C4FFA00D7736E /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		588C2F61185C4FFA00D7736E /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		588C2F66185C5DE400D7736E /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		589164EF184ACB7E007FCD5D /* GPUEffectOldTone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectOldTone.h; sourceTree = "<group>"; };
 		589164F0184ACB7E007FCD5D /* GPUEffectOldTone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectOldTone.m; sourceTree = "<group>"; };
 		589164F4184AE611007FCD5D /* GPUEffectFaerieBloom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectFaerieBloom.h; sourceTree = "<group>"; };
@@ -456,6 +461,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				588C2F67185C5DE400D7736E /* AssetsLibrary.framework in Frameworks */,
 				58F8A8E9185B0EE600647722 /* StoreKit.framework in Frameworks */,
 				58FA30881852F0E400A87190 /* Security.framework in Frameworks */,
 				58F3C430181C8AA800F7129D /* libGPUImage.a in Frameworks */,
@@ -556,6 +562,7 @@
 		5802E7BD180C0F1400AA2227 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				588C2F66185C5DE400D7736E /* AssetsLibrary.framework */,
 				58F8A8E8185B0EE600647722 /* StoreKit.framework */,
 				58FA30871852F0E400A87190 /* Security.framework */,
 				58916506184B1423007FCD5D /* Twitter.framework */,
@@ -661,6 +668,8 @@
 				58F79122180D696700968648 /* EditorViewController.m */,
 				58F79124180D6CCB00968648 /* RootViewController.h */,
 				58F79125180D6CCB00968648 /* RootViewController.m */,
+				588C2F60185C4FFA00D7736E /* SettingsViewController.h */,
+				588C2F61185C4FFA00D7736E /* SettingsViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -1533,6 +1542,7 @@
 				58F6CB7A18509B4F006BC6F2 /* GPUEffectSpringLight.m in Sources */,
 				58003296180D10B10021F73C /* UIDockView.m in Sources */,
 				58EC8A711833508B00D659CE /* GPUAdjustmentsBrightness.m in Sources */,
+				588C2F62185C4FFA00D7736E /* SettingsViewController.m in Sources */,
 				58FA2E291813F3EC00DFB4FB /* UIScrollView+Gravy.m in Sources */,
 				580032BC180D2C1C0021F73C /* UIDockButtonPhotos.m in Sources */,
 				58F471B5180E74B000C64E46 /* UIDockButtonBack.m in Sources */,
