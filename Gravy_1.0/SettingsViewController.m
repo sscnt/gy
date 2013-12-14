@@ -32,6 +32,12 @@
     _purchaseManager = [[PurchaseManager alloc] init];
     _purchaseManager.delegate = self;
     
+    // Close
+    UICloseButton* closeBtn = [[UICloseButton alloc] init];
+    [closeBtn setX:-2.0f];
+    [closeBtn setY:-2.0f];
+    [closeBtn addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:closeBtn];
     
     // label
     UIEditorTitleLabel* label = [[UIEditorTitleLabel alloc] initWithFrame:CGRectMake(0.0f, 50.0f, 320.0f, 20.0f)];
@@ -40,7 +46,7 @@
     
     // Buttons
     CGFloat bottom = 80.0f;
-    restoreButton = [UIShareButton restore:CGRectMake(20.0f, bottom, 280.0f, 44.0f)];
+    restoreButton = [UIShareButton restore:CGRectMake(40.0f, bottom, 240.0f, 44.0f)];
     restoreButton.type = ButtonTypeTwitter;
     [restoreButton addTarget:self action:@selector(restore) forControlEvents:UIControlEventTouchUpInside];
     [restoreButton setTitle:NSLocalizedString(@"Restore Purchase", nil) forState:UIControlStateNormal];
@@ -51,6 +57,11 @@
 {
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [_purchaseManager restore];
+}
+
+- (void)close
+{
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)didRestoreEffect:(EffectId)effectId

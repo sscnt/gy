@@ -11,6 +11,8 @@
 #import "UIShareButton.h"
 #import "UIEditorTitleLabel.h"
 #import "SVProgressHUD.h"
+#import "UICloseButton.h"
+#import "UIView+Gravy.h"
 
 @interface SettingsViewController : UIViewController <PurchaseManagerDelegate>
 {
@@ -18,4 +20,6 @@
     UIShareButton* restoreButton;
 }
 - (void)restore;
+- (void)close;
+
 @end

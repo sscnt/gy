@@ -1,14 +1,14 @@
 //
-//  UISettingsButton.m
+//  UICloseButton.m
 //  Gravy_1.0
 //
-//  Created by SSC on 2013/10/15.
+//  Created by SSC on 2013/12/14.
 //  Copyright (c) 2013年 SSC. All rights reserved.
 //
 
-#import "UISettingsButton.h"
+#import "UICloseButton.h"
 
-@implementation UISettingsButton
+@implementation UICloseButton
 
 - (id)init
 {
@@ -21,8 +21,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        [self setImage:[UIImage imageNamed:@"icon_settings.png"] forState:UIControlStateNormal];
-    
+        [self setImage:[UIImage imageNamed:@"close_test3.png"] forState:UIControlStateNormal];
+        
     }
     return self;
 }

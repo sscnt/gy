@@ -46,8 +46,8 @@
     [self.view addSubview:photoBtn];
     //////////// settings button
     UISettingsButton* settingsBtn = [[UISettingsButton alloc] init];
-    [settingsBtn setX:10.0f];
-    [settingsBtn setY:10.0f];
+    [settingsBtn setX:-2.0f];
+    [settingsBtn setY:-2.0f];
     [settingsBtn addTarget:self action:@selector(didClickSettingsBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:settingsBtn];
     

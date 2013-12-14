@@ -139,6 +139,8 @@
 		58F79123180D696700968648 /* EditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F79122180D696700968648 /* EditorViewController.m */; };
 		58F79126180D6CCB00968648 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F79125180D6CCB00968648 /* RootViewController.m */; };
 		58F7F8F218549AF7006286FD /* UIBuyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F7F8F118549AF7006286FD /* UIBuyButton.m */; };
+		58F82C05185C84F400012552 /* UICloseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F82C04185C84F400012552 /* UICloseButton.m */; };
+		58F82C0E185C868D00012552 /* close_test3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F82C0D185C868D00012552 /* close_test3@2x.png */; };
 		58F8A8E9185B0EE600647722 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F8A8E8185B0EE600647722 /* StoreKit.framework */; };
 		58F92BAE1840C7F500A4EDBE /* GPUEffectVintage2.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F92BAD1840C7F500A4EDBE /* GPUEffectVintage2.m */; };
 		58F92BB01840CB1600A4EDBE /* Vintage22.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F92BAF1840CB1600A4EDBE /* Vintage22.acv */; };
@@ -391,6 +393,9 @@
 		58F79125180D6CCB00968648 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		58F7F8F018549AF7006286FD /* UIBuyButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIBuyButton.h; sourceTree = "<group>"; };
 		58F7F8F118549AF7006286FD /* UIBuyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIBuyButton.m; sourceTree = "<group>"; };
+		58F82C03185C84F400012552 /* UICloseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICloseButton.h; sourceTree = "<group>"; };
+		58F82C04185C84F400012552 /* UICloseButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICloseButton.m; sourceTree = "<group>"; };
+		58F82C0D185C868D00012552 /* close_test3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close_test3@2x.png"; sourceTree = "<group>"; };
 		58F8A8E8185B0EE600647722 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		58F92BAC1840C7F400A4EDBE /* GPUEffectVintage2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectVintage2.h; sourceTree = "<group>"; };
 		58F92BAD1840C7F500A4EDBE /* GPUEffectVintage2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectVintage2.m; sourceTree = "<group>"; };
@@ -520,6 +525,8 @@
 				58FBB40418155FE4001CFDC8 /* UIDockButtonSave.m */,
 				580032C1180D34490021F73C /* UISettingsButton.h */,
 				580032C2180D34490021F73C /* UISettingsButton.m */,
+				58F82C03185C84F400012552 /* UICloseButton.h */,
+				58F82C04185C84F400012552 /* UICloseButton.m */,
 				58916508184B178B007FCD5D /* UIShareButton.h */,
 				58916509184B178B007FCD5D /* UIShareButton.m */,
 				58F7F8F018549AF7006286FD /* UIBuyButton.h */,
@@ -688,6 +695,7 @@
 		5802E81B180C2A2F00AA2227 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				58F82C0D185C868D00012552 /* close_test3@2x.png */,
 				58F1B0471859D23E00C88724 /* buy_test@2x.png */,
 				58F2BAE31858A07400DFAB7B /* libon_test3@2x.png */,
 				58FD136618589542009542EF /* preview_locked@2x.png */,
@@ -1384,6 +1392,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				589164FC184AE7EF007FCD5D /* FaerieBloom3.acv in Resources */,
+				58F82C0E185C868D00012552 /* close_test3@2x.png in Resources */,
 				58FBAB6A1849D32B00F74156 /* Weekend.acv in Resources */,
 				58F5F815184480CC00C20573 /* Morning2.acv in Resources */,
 				58FA7A75182631F400848AFD /* Candy.acv in Resources */,
@@ -1552,6 +1561,7 @@
 				58F14A51182BB484009DA863 /* GPUImageSelectiveColorFilter.m in Sources */,
 				58FEFFDD18101D2C008B4E8D /* UIThumbnailView.m in Sources */,
 				589164F1184ACB7E007FCD5D /* GPUEffectOldTone.m in Sources */,
+				58F82C05185C84F400012552 /* UICloseButton.m in Sources */,
 				58F3C6CC184DFE1C00F51A3D /* GPUImageLinearDodgeBlendFilter.m in Sources */,
 				58F9FD6A182330CB003D32F4 /* GPUEffectHaze3.m in Sources */,
 				58FC5CD818321056009EBCF0 /* GPUImageColorBalanceFilter.m in Sources */,
