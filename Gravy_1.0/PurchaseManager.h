@@ -23,6 +23,8 @@ typedef NS_ENUM(NSInteger, PurchaseManagerError){
 
 @protocol PurchaseManagerDelegate <NSObject>
 - (void)didPurchase;
+- (void)didRestartPausedTransaction;
+- (void)didRestoreEffect:(EffectId)effectId;
 - (void)didFailToPurchaseWithError:(PurchaseManagerError)error;
 @end
 
@@ -45,11 +47,16 @@ typedef NS_ENUM(NSInteger, PurchaseManagerError){
 + (BOOL)didPurchaseSunsetEffect;
 
 + (BOOL)didPurchaseEffectId:(EffectId)effectId;
++ (EffectId)productId2EffectId:(NSString*)productId;
+
+- (void)restore;
 
 - (void)purchaseEffectByID:(EffectId)effectId;
 - (void)purchaseProductByID:(NSString*)productId;
 
 - (void)didPurchase;
-- (void)updatePurchasedFlag;
+- (void)didRestoreProductId:(NSString*)productId;
+- (void)updatePurchasedFlagByEffectId:(EffectId)effectId;
+- (void)updatePurchasedFlagByProductId:(NSString*)productId;
 
 @end

@@ -123,6 +123,22 @@
 
 }
 
+- (void)unlockButtonByEffectId:(EffectId)effectId
+{
+    if(effectId == EffectIdBloom){
+        [buttonBloom unlock];
+        return;
+    }
+    if(effectId == EffectIdVintage){
+        [buttonVintage unlock];
+        return;
+    }
+    if(effectId == EffectIdSunset){
+        [buttonSunset unlock];
+        return;
+    }
+}
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

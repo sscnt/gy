@@ -32,5 +32,6 @@
 
 - (void)highlightButton:(EffectId)effectId;
 - (void)buttonPressed:(UIEffectSelectionButton *)button;
+- (void)unlockButtonByEffectId:(EffectId)effectId;
 
 @end

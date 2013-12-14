@@ -37,5 +37,6 @@
 - (void)didPress;
 - (NSString*)titleFromEffectId:(EffectId)effectId;
 - (void)displayLockedImageView;
+- (void)unlock;
 
 @end

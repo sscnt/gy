@@ -89,6 +89,7 @@ typedef NS_ENUM(NSInteger, KnobId){
     dispatch_queue_t processingQueue;
     
     PurchaseManager* purchaseManager;
+    EffectId targetEffectIdForPurchasing;
     
 }
 

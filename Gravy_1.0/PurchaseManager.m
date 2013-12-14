@@ -14,14 +14,22 @@ NSString* const keyForPurchasesEffectsBloom = @"purchases.effects.bloom";
 NSString* const keyForPurchasesEffectsSunset = @"purchases.effects.sunset";
 NSString* const keyForPurchasesEffectsVintage = @"purchases.effects.vintage";
 
-NSString* const hashForEffectBloom = @"Qx2aVnJnJq8JoVYJ";
-NSString* const hashForEffectVintage = @"PZCHkoEHOUDMMoZ6";
-NSString* const hashForEffectSunset = @"GYDAllwCr7ScGuR3";
+NSString* const hashForEffectBloom = @"ywMnj9z5vf9lZ5gi";
+NSString* const hashForEffectVintage = @"D2z3xvVks3eAZj1q";
+NSString* const hashForEffectSunset = @"6kzBUT69PQKdbeBL";
 
 NSString* const productIdForEffectBloom = @"jp.ssctech.gravy.bloom";
 NSString* const productIdForEffectVintage = @"jp.ssctech.gravy.vintage";
 NSString* const productIdForEffectSunset = @"jp.ssctech.gravy.sunset";
 
+- (id)init
+{
+    self = [super init];
+    if(self){
+        [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+    }
+    return self;
+}
 
 + (BOOL)isUntreatedTransaction
 {
@@ -84,6 +92,28 @@ NSString* const productIdForEffectSunset = @"jp.ssctech.gravy.sunset";
     return NO;
 }
 
++ (EffectId)productId2EffectId:(NSString *)productId
+{
+    if([productId isEqualToString:productIdForEffectBloom]){
+        return EffectIdBloom;
+    }
+    if([productId isEqualToString:productIdForEffectVintage]){
+        return EffectIdVintage;
+    }
+    if([productId isEqualToString:productIdForEffectSunset]){
+        return EffectIdSunset;
+    }
+    return 0;
+}
+
+
+#pragma mark restoring
+
+- (void)restore
+{
+     [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+}
+
 #pragma mark purchasing
 
 - (void)purchaseEffectByID:(EffectId)effectId
@@ -113,11 +143,16 @@ NSString* const productIdForEffectSunset = @"jp.ssctech.gravy.sunset";
     }
     if([PurchaseManager isUntreatedTransaction]){
         dlog(@"未完了のトランザクションが見つかりました.");
+        [self.delegate didRestartPausedTransaction];
         [PurchaseManager finishUntreatedTransaction];
+        return;
     }
     
     dlog(@"プロダクト情報を取得します.");
     NSSet *set = [NSSet setWithObjects:productId, nil];
+    if(productsRequest){
+        productsRequest.delegate = nil;
+    }
     productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:set];
     productsRequest.delegate = self;
     [productsRequest start];
@@ -136,7 +171,6 @@ NSString* const productIdForEffectSunset = @"jp.ssctech.gravy.sunset";
     }
     // 購入処理開始
     dlog(@"購入処理を開始しました.");
-    [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
     for (SKProduct *product in response.products) {
         SKPayment *payment = [SKPayment paymentWithProduct:product];
         [[SKPaymentQueue defaultQueue] addPayment:payment];
@@ -144,8 +178,8 @@ NSString* const productIdForEffectSunset = @"jp.ssctech.gravy.sunset";
 }
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
 {
-    dlog(@"トランザクションが更新されました.");
     for (SKPaymentTransaction *transaction in transactions) {
+        dlog(@"トランザクション[%@]が更新されました.", transaction.transactionIdentifier);
         if (transaction.transactionState == SKPaymentTransactionStatePurchasing) {
             // 購入処理中
             /*
@@ -161,28 +195,35 @@ NSString* const productIdForEffectSunset = @"jp.ssctech.gravy.sunset";
             [queue finishTransaction:transaction];
             [self didPurchase];
         } else if (transaction.transactionState == SKPaymentTransactionStateFailed) {
+            dlog(@"トランザクション失敗.");
             // 購入処理エラー。ユーザが購入処理をキャンセルした場合もここにくる
+            [queue finishTransaction:transaction];
             switch (transaction.error.code) {
                 case SKErrorUnknown:
                     dlog(@"エラー:不明なエラー.");
+                    [self.delegate didFailToPurchaseWithError:PurchaseManagerErrorUnknown];
                     break;
                 case SKErrorClientInvalid:
                     dlog(@"エラー:許可されていない操作です.");
+                    [self.delegate didFailToPurchaseWithError:PurchaseManagerErrorClientInvalid];
                     break;
                 case SKErrorPaymentCancelled:
-                    dlog(@"エラー:");
+                    dlog(@"エラー:キャンセルされました.");
+                    [self.delegate didFailToPurchaseWithError:PurchaseManagerErrorPaymentCancelled];
                     break;
                 case SKErrorPaymentNotAllowed:
-                    dlog(@"エラー:");
+                    dlog(@"エラー:アプリ内の購入が許可されていません.");
+                    [self.delegate didFailToPurchaseWithError:PurchaseManagerErrorPaymentNotAllowed];
                     break;
                 case SKErrorPaymentInvalid:
-                    dlog(@"エラー:");
+                    dlog(@"エラー:不正な購入です.");
+                    [self.delegate didFailToPurchaseWithError:PurchaseManagerErrorPaymentInvalid];
                     break;
                 default:
+                    dlog(@"エラー:予期せぬエラー.");
+                    [self.delegate didFailToPurchaseWithError:PurchaseManagerErrorUnknown];
                     break;
             }
-            [queue finishTransaction:transaction];
-            [self.delegate didFailToPurchaseWithError:PurchaseManagerErrorPaymentFailed];
         } else {
             // リストア処理完了
             /*
@@ -190,42 +231,53 @@ NSString* const productIdForEffectSunset = @"jp.ssctech.gravy.sunset";
              */
             dlog(@"リストアしました.");
             [queue finishTransaction:transaction];
-            [self didPurchase];
+            [self didRestoreProductId:transaction.originalTransaction.payment.productIdentifier];
         }
     }		
 }
 
-- (void)updatePurchasedFlag
+- (void)updatePurchasedFlagByEffectId:(EffectId)effectId
 {
-    if(targetEffectId == EffectIdBloom){
+    if(effectId == EffectIdBloom){
         [UICKeyChainStore setString:hashForEffectBloom forKey:keyForPurchasesEffectsBloom];
         return;
     }
     
-    if(targetEffectId == EffectIdVintage){
+    if(effectId == EffectIdVintage){
         [UICKeyChainStore setString:hashForEffectVintage forKey:keyForPurchasesEffectsVintage];
         return;
     }
     
-    if(targetEffectId == EffectIdSunset){
+    if(effectId == EffectIdSunset){
         [UICKeyChainStore setString:hashForEffectSunset forKey:keyForPurchasesEffectsSunset];
         return;
     }
 }
 
+- (void)updatePurchasedFlagByProductId:(NSString *)productId
+{
+    [self updatePurchasedFlagByEffectId:[PurchaseManager productId2EffectId:productId]];
+}
+
 - (void)didPurchase
 {
-    [self updatePurchasedFlag];
+    [self updatePurchasedFlagByEffectId:targetEffectId];
     [self.delegate didPurchase];
 }
 
+- (void)didRestoreProductId:(NSString *)productId
+{
+    [self updatePurchasedFlagByProductId:productId];
+    
+}
 - (void)paymentQueue:(SKPaymentQueue *)queue removedTransactions:(NSArray *)transactions
 {
-    [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
+
 }
 
 - (void)dealloc
 {
+    [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
     productsRequest.delegate = nil;
 }
 @end

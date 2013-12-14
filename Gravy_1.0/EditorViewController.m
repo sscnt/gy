@@ -23,6 +23,7 @@
     editor = [[EditorViewModel alloc] init];
     purchaseManager = [[PurchaseManager alloc] init];
     purchaseManager.delegate = self;
+    targetEffectIdForPurchasing = 0;
     
     _originalImage = [self fixOrientationOfImage:_originalImage];
     [self resizeOriginalImage];
@@ -1028,19 +1029,81 @@
 
 - (void)buyEffect
 {
+    targetEffectIdForPurchasing = editor.currentSelectedEffectId;
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [purchaseManager purchaseEffectByID:editor.currentSelectedEffectId];
-
 }
 
 #pragma mark delegates
 
 - (void)didPurchase
 {
+    if(state == EditorStateEffect){
+        if(targetEffectIdForPurchasing == editor.currentSelectedEffectId){
+            [effectSelectionView unlockButtonByEffectId:editor.currentSelectedEffectId];
+            libonImageView.hidden = YES;
+            saveBtn.hidden = NO;
+            buyButton.hidden = YES;
+            [SVProgressHUD dismiss];
+        }
+    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                    message:NSLocalizedString(@"Thank You!", nil)
+                                                   delegate:nil
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:@"OK", nil];
+    [alert show];
+}
+
+- (void)didRestartPausedTransaction
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                    message:NSLocalizedString(@"Resuming interrupted purchase.", nil)
+                                                   delegate:nil
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:@"OK", nil];
+    [alert show];
 }
 
 - (void)didFailToPurchaseWithError:(PurchaseManagerError)error
 {
-    
+    [SVProgressHUD dismiss];
+    NSString* message;
+    switch (error) {
+        case PurchaseManagerErrorClientInvalid:
+            message = NSLocalizedString(@"You are not allowed to perform the attempted action.", nil);
+            break;
+        case PurchaseManagerErrorIAPNotAllowed:
+            message = NSLocalizedString(@"In-App Purchase is not allowed.", nil);
+            break;
+        case PurchaseManagerErrorInvalidProduct:
+            message = NSLocalizedString(@"Invalid product. Please try again.", nil);
+            break;
+        case PurchaseManagerErrorPaymentCancelled:
+            message = NSLocalizedString(@"Cancelled.", nil);
+            break;
+        case PurchaseManagerErrorPaymentFailed:
+            message = NSLocalizedString(@"Purchase failed.", nil);
+            break;
+        case PurchaseManagerErrorPaymentInvalid:
+            message = NSLocalizedString(@"Invalid payment.", nil);
+            break;
+        case PurchaseManagerErrorPaymentNotAllowed:
+            message = NSLocalizedString(@"This device is not allowed to make the payment.", nil);
+            break;
+        case PurchaseManagerErrorUnknown:
+            message = NSLocalizedString(@"Unknown error.", nil);
+            break;
+        default:
+            break;
+    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                    message:NSLocalizedString(message, nil)
+                                                   delegate:nil
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:@"OK", nil];
+    [alert show];
+
 }
 
 - (void)dealloc

@@ -71,6 +71,11 @@
     [l setBorderColor:[[UIColor clearColor] CGColor]];
     [self addSubview:lockedImageView];
 }
+- (void)unlock
+{
+    previewImageView.hidden = NO;
+    lockedImageView.hidden = YES;
+}
 
 - (void)initPreviewImageView:(UIImage *)baseImage
 {
