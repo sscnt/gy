@@ -19,3 +19,7 @@
 #import "GPUEffectGentleMemories.h"
 #import "GPUEffectVanilla.h"
 #import "GPUEffectSpringLight.h"
+
+#import "GPUEffectSoftGlare.h"
+#import "GPUEffectSunkissed.h"
+#import "GPUEffectLeakLight.h"

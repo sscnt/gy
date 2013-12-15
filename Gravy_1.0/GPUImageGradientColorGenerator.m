@@ -75,7 +75,7 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
      mediump float amid = adiff / 2.0;
      
      
-     if(d > 1.0){
+     if(d >= 1.0){
          r = colors[stopsCount - 1].r;
          g = colors[stopsCount - 1].g;
          b = colors[stopsCount - 1].b;
@@ -147,9 +147,18 @@ NSString *const kGPUImageGradientColorGeneratorFragmentShaderString = SHADER_STR
      }
      if(style == 3){
          if (d > 1.0){
+             d = 1.0;
+             /*
+             if(d > 2.0){
+                 d = 2.0;
+             }
              d = 1.0 - (d - 1.0);
+              */
          }
          if(d < 0.0){
+             if(d < -1.0){
+                 d = -1.0;
+             }
              d = -1.0 * d;
          }
      }

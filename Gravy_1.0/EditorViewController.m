@@ -131,11 +131,11 @@
         
     [scrollView addSubview:wrapper];
     
-    /*
-    GPUEffectSpringLight* effect = [[GPUEffectSpringLight alloc] init];
+    
+    GPUEffectLeakLight* effect = [[GPUEffectLeakLight alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
-     */
+     
     
     
 }
@@ -984,6 +984,7 @@
         
         UIImage* resultImage;
         
+        /*
         @autoreleasepool {
             resultImage = [editor executeBrightnessShadow:self.originalImage];
             
@@ -1002,13 +1003,12 @@
             }
         }
         
-        /*
+        */
         
-        GPUEffectSpringLight* effect = [[GPUEffectSpringLight alloc] init];
+        GPUEffectLeakLight* effect = [[GPUEffectLeakLight alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
 
-        */
                 
         
         UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil);

@@ -28,22 +28,50 @@ NSString *const kGPUImageVividLightBlendFragmentShaderString = SHADER_STRING
      
      mediump float ra;
      if (overlay.r < 0.5) {
-         ra = 1.0 - (1.0 - base.r) / (2.0 * overlay.r);
+         if(overlay.r == 0.0){
+             ra = 0.0;
+         } else {
+             ra = 1.0 - (1.0 - base.r) / (2.0 * overlay.r);
+         }
      } else {
-         ra = base.r / (1.0 - 2.0 * (overlay.r - 0.5));
+         if(overlay.r == 1.0){
+             ra = 1.0;
+         } else {
+             ra = base.r / (2.0 * (1.0 - overlay.r));
+         }
      }
      mediump float ga;
      if (overlay.g < 0.5) {
-         ga = 1.0 - (1.0 - base.g) / (2.0 * overlay.g);
+         if(overlay.g == 0.0){
+             ga = 0.0;
+         } else {
+             ga = 1.0 - (1.0 - base.g) / (2.0 * overlay.g);
+         }
      } else {
-         ga = base.g / (1.0 - 2.0 * (overlay.g - 0.5));
+         if(overlay.g == 1.0){
+             ga = 1.0;
+         } else {
+             ga = base.g / (2.0 * (1.0 - overlay.g));
+         }
      }
      mediump float ba;
      if (overlay.b < 0.5) {
-         ba = 1.0 - (1.0 - base.b) / (2.0 * overlay.b);
+         if(overlay.b == 0.0){
+             ba = 0.0;
+         } else {
+             ba = 1.0 - (1.0 - base.b) / (2.0 * overlay.b);
+         }
      } else {
-         ba = base.b / (1.0 - 2.0 * (overlay.b - 0.5));
+         if(overlay.b == 1.0){
+             ba = 1.0;
+         } else {
+             ba = base.b / (2.0 * (1.0 - overlay.b));
+         }
      }
+     
+     ra = min(1.0, max(0.0, ra));
+     ga = min(1.0, max(0.0, ga));
+     ba = min(1.0, max(0.0, ba));
      
      ra = ra * overlay.a + (1.0 - overlay.a) * base.r;
      ga = ga * overlay.a + (1.0 - overlay.a) * base.g;
@@ -65,31 +93,7 @@ NSString *const kGPUImageVividLightBlendFragmentShaderString = SHADER_STRING
  
  void main()
  {
-     vec4 base = texture2D(inputImageTexture, textureCoordinate);
-     vec4 overlay = texture2D(inputImageTexture2, textureCoordinate2);
-     
-     float ra;
-     if (2.0 * overlay.r < overlay.a) {
-         ra = 2.0 * overlay.r * base.r + overlay.r * (1.0 - base.a) + base.r * (1.0 - overlay.a);
-     } else {
-         ra = overlay.a * base.a - 2.0 * (base.a - base.r) * (overlay.a - overlay.r) + overlay.r * (1.0 - base.a) + base.r * (1.0 - overlay.a);
-     }
-     
-     float ga;
-     if (2.0 * overlay.g < overlay.a) {
-         ga = 2.0 * overlay.g * base.g + overlay.g * (1.0 - base.a) + base.g * (1.0 - overlay.a);
-     } else {
-         ga = overlay.a * base.a - 2.0 * (base.a - base.g) * (overlay.a - overlay.g) + overlay.g * (1.0 - base.a) + base.g * (1.0 - overlay.a);
-     }
-     
-     float ba;
-     if (2.0 * overlay.b < overlay.a) {
-         ba = 2.0 * overlay.b * base.b + overlay.b * (1.0 - base.a) + base.b * (1.0 - overlay.a);
-     } else {
-         ba = overlay.a * base.a - 2.0 * (base.a - base.b) * (overlay.a - overlay.b) + overlay.b * (1.0 - base.a) + base.b * (1.0 - overlay.a);
-     }
-     
-     gl_FragColor = vec4(ra, ga, ba, 1.0);
+
  }
  );
 #endif
