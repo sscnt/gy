@@ -50,6 +50,10 @@
 		5802E825180C2E5E00AA2227 /* UIScreen+Gravy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5802E824180C2E5E00AA2227 /* UIScreen+Gravy.m */; };
 		5809B4FF180EB902007670D1 /* UIWrapperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5809B4FE180EB902007670D1 /* UIWrapperView.m */; };
 		5809B503180EBAD2007670D1 /* UIEditorTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5809B502180EBAD2007670D1 /* UIEditorTitleLabel.m */; };
+		5816D613185DCC970007FCCE /* FaerieVintage2.acv in Resources */ = {isa = PBXBuildFile; fileRef = 5816D612185DCC970007FCCE /* FaerieVintage2.acv */; };
+		5816D61D185DCF020007FCCE /* GPUEffectVanilla.m in Sources */ = {isa = PBXBuildFile; fileRef = 5816D61C185DCF020007FCCE /* GPUEffectVanilla.m */; };
+		5816D621185DCF590007FCCE /* GPUEffectMarshmallow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5816D620185DCF590007FCCE /* GPUEffectMarshmallow.m */; };
+		5816D624185DCF810007FCCE /* Marshmallow1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 5816D623185DCF810007FCCE /* Marshmallow1.acv */; };
 		5822B22D1848C1F6009577D2 /* GPUImagePhotoFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5822B22C1848C1F6009577D2 /* GPUImagePhotoFilter.m */; };
 		588C2F62185C4FFA00D7736E /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 588C2F61185C4FFA00D7736E /* SettingsViewController.m */; };
 		588C2F67185C5DE400D7736E /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 588C2F66185C5DE400D7736E /* AssetsLibrary.framework */; };
@@ -123,7 +127,6 @@
 		58F3C6D1184E052400F51A3D /* GentleMemories2.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F3C6D0184E052400F51A3D /* GentleMemories2.acv */; };
 		58F3C6D3184E075600F51A3D /* GentleMemories3.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F3C6D2184E075600F51A3D /* GentleMemories3.acv */; };
 		58F3C6D5184E07A600F51A3D /* GentleMemories4.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F3C6D4184E07A600F51A3D /* GentleMemories4.acv */; };
-		58F3C6D9184E0A8500F51A3D /* GPUEffectVanilla.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F3C6D8184E0A8500F51A3D /* GPUEffectVanilla.m */; };
 		58F3C6DC184E0ADD00F51A3D /* Vanilla1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F3C6DB184E0ADD00F51A3D /* Vanilla1.acv */; };
 		58F3C6DE184E0C8C00F51A3D /* Vanilla2.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F3C6DD184E0C8C00F51A3D /* Vanilla2.acv */; };
 		58F3C6E0184E0FAD00F51A3D /* Vanilla3.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F3C6DF184E0FAD00F51A3D /* Vanilla3.acv */; };
@@ -294,6 +297,12 @@
 		5809B4FE180EB902007670D1 /* UIWrapperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIWrapperView.m; sourceTree = "<group>"; };
 		5809B501180EBAD2007670D1 /* UIEditorTitleLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIEditorTitleLabel.h; sourceTree = "<group>"; };
 		5809B502180EBAD2007670D1 /* UIEditorTitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIEditorTitleLabel.m; sourceTree = "<group>"; };
+		5816D612185DCC970007FCCE /* FaerieVintage2.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = FaerieVintage2.acv; sourceTree = "<group>"; };
+		5816D61B185DCF020007FCCE /* GPUEffectVanilla.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectVanilla.h; sourceTree = "<group>"; };
+		5816D61C185DCF020007FCCE /* GPUEffectVanilla.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectVanilla.m; sourceTree = "<group>"; };
+		5816D61F185DCF590007FCCE /* GPUEffectMarshmallow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectMarshmallow.h; sourceTree = "<group>"; };
+		5816D620185DCF590007FCCE /* GPUEffectMarshmallow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectMarshmallow.m; sourceTree = "<group>"; };
+		5816D623185DCF810007FCCE /* Marshmallow1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Marshmallow1.acv; sourceTree = "<group>"; };
 		5822B22B1848C1F6009577D2 /* GPUImagePhotoFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImagePhotoFilter.h; sourceTree = "<group>"; };
 		5822B22C1848C1F6009577D2 /* GPUImagePhotoFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImagePhotoFilter.m; sourceTree = "<group>"; };
 		588C2F60185C4FFA00D7736E /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -397,8 +406,6 @@
 		58F3C6D0184E052400F51A3D /* GentleMemories2.acv */ = {isa = PBXFileReference; lastKnownFileType = file; name = GentleMemories2.acv; path = "../../../../../Volumes/VMware Shared Folders/Shared/Gravy/Curves/GentleMemories2.acv"; sourceTree = "<group>"; };
 		58F3C6D2184E075600F51A3D /* GentleMemories3.acv */ = {isa = PBXFileReference; lastKnownFileType = file; name = GentleMemories3.acv; path = "../../../../../Volumes/VMware Shared Folders/Shared/Gravy/Curves/GentleMemories3.acv"; sourceTree = "<group>"; };
 		58F3C6D4184E07A600F51A3D /* GentleMemories4.acv */ = {isa = PBXFileReference; lastKnownFileType = file; name = GentleMemories4.acv; path = "../../../../../Volumes/VMware Shared Folders/Shared/Gravy/Curves/GentleMemories4.acv"; sourceTree = "<group>"; };
-		58F3C6D7184E0A8500F51A3D /* GPUEffectVanilla.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectVanilla.h; sourceTree = "<group>"; };
-		58F3C6D8184E0A8500F51A3D /* GPUEffectVanilla.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectVanilla.m; sourceTree = "<group>"; };
 		58F3C6DB184E0ADD00F51A3D /* Vanilla1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; name = Vanilla1.acv; path = "../../../../../Volumes/VMware Shared Folders/Shared/Gravy/Curves/Vanilla1.acv"; sourceTree = "<group>"; };
 		58F3C6DD184E0C8C00F51A3D /* Vanilla2.acv */ = {isa = PBXFileReference; lastKnownFileType = file; name = Vanilla2.acv; path = "../../../../../Volumes/VMware Shared Folders/Shared/Gravy/Curves/Vanilla2.acv"; sourceTree = "<group>"; };
 		58F3C6DF184E0FAD00F51A3D /* Vanilla3.acv */ = {isa = PBXFileReference; lastKnownFileType = file; name = Vanilla3.acv; path = "../../../../../Volumes/VMware Shared Folders/Shared/Gravy/Curves/Vanilla3.acv"; sourceTree = "<group>"; };
@@ -842,13 +849,31 @@
 			name = Editor;
 			sourceTree = "<group>";
 		};
+		5816D61E185DCF410007FCCE /* Marshmallow */ = {
+			isa = PBXGroup;
+			children = (
+				5816D622185DCF760007FCCE /* Curves */,
+				5816D61F185DCF590007FCCE /* GPUEffectMarshmallow.h */,
+				5816D620185DCF590007FCCE /* GPUEffectMarshmallow.m */,
+			);
+			name = Marshmallow;
+			sourceTree = "<group>";
+		};
+		5816D622185DCF760007FCCE /* Curves */ = {
+			isa = PBXGroup;
+			children = (
+				5816D623185DCF810007FCCE /* Marshmallow1.acv */,
+			);
+			name = Curves;
+			sourceTree = "<group>";
+		};
 		58832B8E182282AA003E0DDB /* GPUImageEffects */ = {
 			isa = PBXGroup;
 			children = (
 				58F31AA71838E1DA00122C65 /* GPUImageEffectsImport.h */,
 				58F6FECF1827CA61003F49C6 /* GPUImageEffects.h */,
 				58F6FED01827CA61003F49C6 /* GPUImageEffects.m */,
-				58EDEC56185DA9F4004C25BD /* Beach */,
+				58EDEC56185DA9F4004C25BD /* Cake */,
 				58EDEC35185D9268004C25BD /* Vivid */,
 				5800D3B2185D4425009383B9 /* Flare */,
 				58F3CFF5184DB0260042C96C /* Creamy */,
@@ -1029,14 +1054,15 @@
 			name = Curves;
 			sourceTree = "<group>";
 		};
-		58EDEC56185DA9F4004C25BD /* Beach */ = {
+		58EDEC56185DA9F4004C25BD /* Cake */ = {
 			isa = PBXGroup;
 			children = (
+				5816D61E185DCF410007FCCE /* Marshmallow */,
 				58EDEC64185DB2B8004C25BD /* Faerie Vintage */,
 				58EDEC5B185DAF05004C25BD /* Pink Bubble Tea */,
 				58EDEC57185DAAC7004C25BD /* Beach Vintage */,
 			);
-			name = Beach;
+			name = Cake;
 			sourceTree = "<group>";
 		};
 		58EDEC57185DAAC7004C25BD /* Beach Vintage */ = {
@@ -1080,6 +1106,7 @@
 			isa = PBXGroup;
 			children = (
 				58EDEC69185DB388004C25BD /* FaerieVintage1.acv */,
+				5816D612185DCC970007FCCE /* FaerieVintage2.acv */,
 			);
 			name = Curves;
 			sourceTree = "<group>";
@@ -1212,8 +1239,8 @@
 			isa = PBXGroup;
 			children = (
 				58F3C6DA184E0ACF00F51A3D /* Curves */,
-				58F3C6D7184E0A8500F51A3D /* GPUEffectVanilla.h */,
-				58F3C6D8184E0A8500F51A3D /* GPUEffectVanilla.m */,
+				5816D61B185DCF020007FCCE /* GPUEffectVanilla.h */,
+				5816D61C185DCF020007FCCE /* GPUEffectVanilla.m */,
 			);
 			name = Vanilla;
 			sourceTree = "<group>";
@@ -1689,6 +1716,7 @@
 				58F2A278183F88E200C96E59 /* Hazelnut2.acv in Resources */,
 				58F79120180D65E500968648 /* editor_bg@2x.jpg in Resources */,
 				580032B0180D275F0021F73C /* icon_camera@2x.png in Resources */,
+				5816D613185DCC970007FCCE /* FaerieVintage2.acv in Resources */,
 				58F5F816184480CC00C20573 /* Morning3.acv in Resources */,
 				58F3C6E0184E0FAD00F51A3D /* Vanilla3.acv in Resources */,
 				5800329D180D134D0021F73C /* bottomBg@2x.png in Resources */,
@@ -1726,6 +1754,7 @@
 				58EDEC23185D5C47004C25BD /* Sunkissed1.acv in Resources */,
 				58EDEC34185D87AA004C25BD /* MysticGlow1.acv in Resources */,
 				58F31AAA1838FCD300122C65 /* VintageFilm.acv in Resources */,
+				5816D624185DCF810007FCCE /* Marshmallow1.acv in Resources */,
 				58F92BB21840D33100A4EDBE /* Vintage21.acv in Resources */,
 				58EEE5FC1820D740008C4B2A /* icon-100.png in Resources */,
 				58EDEC3C185D955E004C25BD /* VividVintage1.acv in Resources */,
@@ -1823,10 +1852,10 @@
 				5802E7CF180C0F1400AA2227 /* AppDelegate.m in Sources */,
 				58F3D009184DCECB0042C96C /* GPUEffectGentleMemories.m in Sources */,
 				58F5F80F1844800100C20573 /* GPUEffectGoodMorning.m in Sources */,
+				5816D61D185DCF020007FCCE /* GPUEffectVanilla.m in Sources */,
 				58FA308D1852F21200A87190 /* UICKeyChainStore.m in Sources */,
 				58FD6BFB18476B2D00F0B31E /* GPUEffectWeekend.m in Sources */,
 				58F2A272183F883700C96E59 /* GPUEffectHazelnut.m in Sources */,
-				58F3C6D9184E0A8500F51A3D /* GPUEffectVanilla.m in Sources */,
 				58F79123180D696700968648 /* EditorViewController.m in Sources */,
 				58EDEC32185D8308004C25BD /* GPUEffectMysticGlow.m in Sources */,
 				58EDEC39185D93A3004C25BD /* GPUEffectVividVintage.m in Sources */,
@@ -1863,6 +1892,7 @@
 				58FEFFDD18101D2C008B4E8D /* UIThumbnailView.m in Sources */,
 				589164F1184ACB7E007FCD5D /* GPUEffectOldTone.m in Sources */,
 				58EDEC20185D5B97004C25BD /* GPUEffectSunkissed.m in Sources */,
+				5816D621185DCF590007FCCE /* GPUEffectMarshmallow.m in Sources */,
 				58F82C05185C84F400012552 /* UICloseButton.m in Sources */,
 				58F3C6CC184DFE1C00F51A3D /* GPUImageLinearDodgeBlendFilter.m in Sources */,
 				58F9FD6A182330CB003D32F4 /* GPUEffectHaze3.m in Sources */,

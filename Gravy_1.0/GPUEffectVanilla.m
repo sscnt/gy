@@ -15,7 +15,7 @@
     UIImage* resultImage = self.imageToProcess;
     
     
-
+    
     // Curve
     @autoreleasepool {
         GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"Vanilla1"];

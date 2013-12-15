@@ -45,6 +45,7 @@ typedef NS_ENUM(NSInteger, PurchaseManagerError){
 + (void)finishUntreatedTransaction;
 
 + (BOOL)didPurchaseCreamyEffect;
++ (BOOL)didPurchaseCakeEffect;
 + (BOOL)didPurchaseBloomEffect;
 + (BOOL)didPurchaseVintageEffect;
 + (BOOL)didPurchaseSunsetEffect;

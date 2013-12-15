@@ -98,6 +98,13 @@
         return;
     }
     
+    if(self.effectId == effectidCake){
+        GPUEffectMarshmallow* effect = [[GPUEffectMarshmallow alloc] init];
+        effect.imageToProcess = baseImage;
+        previewImageView.image = [effect process];
+        return;
+    }
+    
     if(self.effectId == EffectIdBloom){
         GPUEffectColorfulCandy* effect = [[GPUEffectColorfulCandy alloc] init];
         effect.imageToProcess = baseImage;
@@ -153,7 +160,10 @@
 - (NSString*)titleFromEffectId:(EffectId)effectId
 {
     if(effectId == EffectIdCreamy){
-        return NSLocalizedString(@"Creamy", nil);
+        return NSLocalizedString(@"Cream", nil);
+    }
+    if(effectId == effectidCake){
+        return NSLocalizedString(@"Cake", nil);
     }
     if(effectId == EffectIdBloom){
         return NSLocalizedString(@"Bloom", nil);

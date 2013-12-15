@@ -33,3 +33,4 @@
 #import "GPUEffectBeachVintage.h"
 #import "GPUEffectPinkBubbleTea.h"
 #import "GPUEffectFaerieVintage.h"
+#import "GPUEffectMarshmallow.h"

@@ -10,18 +10,21 @@
 
 @implementation PurchaseManager
 
+/* * 編集禁止 * */
 NSString* const keyForPurchasesEffectsBloom = @"purchases.effects.bloom";
 NSString* const keyForPurchasesEffectsSunset = @"purchases.effects.sunset";
 NSString* const keyForPurchasesEffectsVintage = @"purchases.effects.vintage";
 NSString* const keyForPurchasesEffectsFlare = @"purchases.effects.flare";
 NSString* const keyForPurchasesEffectsVivid = @"purchases.effects.vivid";
 
+/* * 編集禁止 * */
 NSString* const hashForEffectBloom = @"xDHScYhWhYDnsogx";
 NSString* const hashForEffectVintage = @"e5gktKcpB9D0ThCu";
 NSString* const hashForEffectSunset = @"68c1RYIildamgD7O";
 NSString* const hashForEffectFlare = @"4vwmfDiyAxgNS4iY";
 NSString* const hashForEffectVivid = @"AYZhUbChH2FvONAg";
 
+/* * 編集禁止 * */
 NSString* const productIdForEffectBloom = @"jp.ssctech.gravy.bloom";
 NSString* const productIdForEffectVintage = @"jp.ssctech.gravy.vintage";
 NSString* const productIdForEffectSunset = @"jp.ssctech.gravy.sunset";
@@ -52,7 +55,13 @@ NSString* const productIdForEffectVivid = @"jp.ssctech.gravy.vivid";
 }
 
 #pragma  mark checking
+
 + (BOOL)didPurchaseCreamyEffect
+{
+    return true;
+}
+
++ (BOOL)didPurchaseCakeEffect
 {
     return true;
 }
@@ -111,6 +120,12 @@ NSString* const productIdForEffectVivid = @"jp.ssctech.gravy.vivid";
     if(effectId == EffectIdSunset){
         return [PurchaseManager didPurchaseSunsetEffect];
     }
+    if(effectId == EffectIdFlare){
+        return [PurchaseManager didPurchaseFlareEffect];
+    }
+    if(effectId == EffectIdVivid){
+        return [PurchaseManager didPurchaseVividEffect];
+    }
     return NO;
 }
 
@@ -123,6 +138,12 @@ NSString* const productIdForEffectVivid = @"jp.ssctech.gravy.vivid";
         return EffectIdVintage;
     }
     if([productId isEqualToString:productIdForEffectSunset]){
+        return EffectIdSunset;
+    }
+    if([productId isEqualToString:productIdForEffectFlare]){
+        return EffectIdSunset;
+    }
+    if([productId isEqualToString:productIdForEffectVivid]){
         return EffectIdSunset;
     }
     return 0;

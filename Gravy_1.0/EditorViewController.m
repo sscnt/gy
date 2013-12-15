@@ -131,7 +131,7 @@
         
     [scrollView addSubview:wrapper];
     
-    GPUEffectFaerieVintage* effect = [[GPUEffectFaerieVintage alloc] init];
+    GPUEffectMarshmallow* effect = [[GPUEffectMarshmallow alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
 }
@@ -1001,7 +1001,7 @@
         
         */
         
-        GPUEffectFaerieVintage* effect = [[GPUEffectFaerieVintage alloc] init];
+        GPUEffectMarshmallow* effect = [[GPUEffectMarshmallow alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
         

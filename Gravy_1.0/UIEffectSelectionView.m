@@ -16,7 +16,7 @@
     self = [super initWithFrame:frame];
     if(self){
         scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen screenSize].width, frame.size.height)];
-        scrollView.contentSize = CGSizeMake(frame.size.width + 380.0f, frame.size.height);
+        scrollView.contentSize = CGSizeMake(frame.size.width + 450.0f, frame.size.height);
         scrollView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
         scrollView.showsHorizontalScrollIndicator = NO;
         scrollView.showsVerticalScrollIndicator = NO;
@@ -41,13 +41,24 @@
         [buttonBloom removeFromSuperview];
     }
     if(buttonSunset){
-        
         buttonSunset.delegate = nil;
         [buttonSunset removeFromSuperview];
     }
     if(buttonVintage){
         buttonVintage.delegate = nil;
         [buttonVintage removeFromSuperview];
+    }
+    if(buttonFlare){
+        buttonFlare.delegate = nil;
+        [buttonFlare removeFromSuperview];
+    }
+    if(buttonVivid){
+        buttonVivid.delegate = nil;
+        [buttonVivid removeFromSuperview];
+    }
+    if(buttonCake){
+        buttonCake.delegate = nil;
+        [buttonCake removeFromSuperview];
     }
 
     CGFloat left = [UIScreen screenRect].size.width / 2.0f - 35.0f;
@@ -63,6 +74,13 @@
     [buttonCreamy setX:left];
     buttonCreamy.delegate = self;
     [scrollView addSubview:buttonCreamy];
+    
+    // Cake
+    left += 80.0f;
+    buttonCake = [[UIEffectSelectionButton alloc] initWithEffectId:effectidCake previewImageBase:effectPreviewImage];
+    [buttonCake setX:left];
+    buttonCake.delegate = self;
+    [scrollView addSubview:buttonCake];
     
     // Bloom
     left += 80.0f;
