@@ -125,7 +125,7 @@
         [gradientColor setScalePercent:20];
         [gradientColor setOffsetX:25.0f Y:34.0f];
         [gradientColor addColorRed:255.0f Green:0.0f Blue:0.0f Opacity:90.0f Location:0 Midpoint:50];
-        [gradientColor addColorRed:255.0f Green:0.0f Blue:90.0f Opacity:50.0f Location:2551 Midpoint:50];
+        [gradientColor addColorRed:255.0f Green:0.0f Blue:90.0f Opacity:30.0f Location:2551 Midpoint:50];
         [gradientColor addColorRed:242.0f Green:8.0f Blue:117.0f Opacity:0.0f Location:4096 Midpoint:50];
         
         resultImage = [self mergeBaseImage:resultImage overlayFilter:gradientColor opacity:1.0f blendingMode:MergeBlendingModeScreen];

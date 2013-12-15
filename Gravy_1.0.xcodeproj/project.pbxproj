@@ -68,6 +68,8 @@
 		58EDEC23185D5C47004C25BD /* Sunkissed1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58EDEC22185D5C47004C25BD /* Sunkissed1.acv */; };
 		58EDEC27185D766D004C25BD /* GPUEffectLeakLight.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EDEC26185D766D004C25BD /* GPUEffectLeakLight.m */; };
 		58EDEC2A185D7699004C25BD /* LeakLight1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58EDEC29185D7699004C25BD /* LeakLight1.acv */; };
+		58EDEC32185D8308004C25BD /* GPUEffectMysticGlow.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EDEC31185D8308004C25BD /* GPUEffectMysticGlow.m */; };
+		58EDEC34185D87AA004C25BD /* MysticGlow1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58EDEC33185D87AA004C25BD /* MysticGlow1.acv */; };
 		58EEE5F41820D740008C4B2A /* icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 58EEE5E71820D740008C4B2A /* icon-29.png */; };
 		58EEE5F51820D740008C4B2A /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 58EEE5E81820D740008C4B2A /* icon-40.png */; };
 		58EEE5F61820D740008C4B2A /* icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 58EEE5E91820D740008C4B2A /* icon-50.png */; };
@@ -306,6 +308,9 @@
 		58EDEC25185D766D004C25BD /* GPUEffectLeakLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectLeakLight.h; sourceTree = "<group>"; };
 		58EDEC26185D766D004C25BD /* GPUEffectLeakLight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectLeakLight.m; sourceTree = "<group>"; };
 		58EDEC29185D7699004C25BD /* LeakLight1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = LeakLight1.acv; sourceTree = "<group>"; };
+		58EDEC30185D8308004C25BD /* GPUEffectMysticGlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectMysticGlow.h; sourceTree = "<group>"; };
+		58EDEC31185D8308004C25BD /* GPUEffectMysticGlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectMysticGlow.m; sourceTree = "<group>"; };
+		58EDEC33185D87AA004C25BD /* MysticGlow1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = MysticGlow1.acv; sourceTree = "<group>"; };
 		58EEE5E71820D740008C4B2A /* icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-29.png"; sourceTree = "<group>"; };
 		58EEE5E81820D740008C4B2A /* icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40.png"; sourceTree = "<group>"; };
 		58EEE5E91820D740008C4B2A /* icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-50.png"; sourceTree = "<group>"; };
@@ -551,6 +556,7 @@
 		5800D3B2185D4425009383B9 /* Flare */ = {
 			isa = PBXGroup;
 			children = (
+				58EDEC2B185D823E004C25BD /* Mystic Glow */,
 				58EDEC24185D75A4004C25BD /* LeakLight */,
 				58EDEC1A185D5B70004C25BD /* Sunkissed */,
 				5800D3B6185D44EC009383B9 /* Soft Glare */,
@@ -877,6 +883,24 @@
 			isa = PBXGroup;
 			children = (
 				58EDEC29185D7699004C25BD /* LeakLight1.acv */,
+			);
+			name = Curves;
+			sourceTree = "<group>";
+		};
+		58EDEC2B185D823E004C25BD /* Mystic Glow */ = {
+			isa = PBXGroup;
+			children = (
+				58EDEC2F185D825A004C25BD /* Curves */,
+				58EDEC30185D8308004C25BD /* GPUEffectMysticGlow.h */,
+				58EDEC31185D8308004C25BD /* GPUEffectMysticGlow.m */,
+			);
+			name = "Mystic Glow";
+			sourceTree = "<group>";
+		};
+		58EDEC2F185D825A004C25BD /* Curves */ = {
+			isa = PBXGroup;
+			children = (
+				58EDEC33185D87AA004C25BD /* MysticGlow1.acv */,
 			);
 			name = Curves;
 			sourceTree = "<group>";
@@ -1516,6 +1540,7 @@
 				58E9C5F5181FD57800BBDA5A /* bg-568h@2x.jpg in Resources */,
 				58F5A8A3184A236700E4FBEF /* Joyful2.acv in Resources */,
 				58EDEC23185D5C47004C25BD /* Sunkissed1.acv in Resources */,
+				58EDEC34185D87AA004C25BD /* MysticGlow1.acv in Resources */,
 				58F31AAA1838FCD300122C65 /* VintageFilm.acv in Resources */,
 				58F92BB21840D33100A4EDBE /* Vintage21.acv in Resources */,
 				58EEE5FC1820D740008C4B2A /* icon-100.png in Resources */,
@@ -1613,6 +1638,7 @@
 				58F2A272183F883700C96E59 /* GPUEffectHazelnut.m in Sources */,
 				58F3C6D9184E0A8500F51A3D /* GPUEffectVanilla.m in Sources */,
 				58F79123180D696700968648 /* EditorViewController.m in Sources */,
+				58EDEC32185D8308004C25BD /* GPUEffectMysticGlow.m in Sources */,
 				58F31AAE1838FFCB00122C65 /* GPUImageHueSaturationFilter.m in Sources */,
 				5809B503180EBAD2007670D1 /* UIEditorTitleLabel.m in Sources */,
 				580032B9180D28840021F73C /* UIDockButtonCamera.m in Sources */,

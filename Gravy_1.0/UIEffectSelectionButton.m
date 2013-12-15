@@ -34,8 +34,6 @@
         titleLabel.textColor = [UIColor whiteColor];
         titleLabel.numberOfLines = 0;
         [self addSubview:titleLabel];
-        
-
 
         if(effectId != EffectIdNone){
             if(effectId == EffectIdBloom){
@@ -48,6 +46,14 @@
                 }
             } else if(effectId == EffectIdSunset){
                 if (![PurchaseManager didPurchaseSunsetEffect]) {
+                    [self displayLockedImageView];
+                }
+            } else if(effectId == EffectIdFlare){
+                if (![PurchaseManager didPurchaseFlareEffect]) {
+                    [self displayLockedImageView];
+                }
+            } else if(effectId == EffectIdVivid){
+                if (![PurchaseManager didPurchaseVividEffect]) {
                     [self displayLockedImageView];
                 }
             }
@@ -112,6 +118,20 @@
         previewImageView.image = [effect process];
         return;
     }
+    
+    if(self.effectId == EffectIdFlare){
+        GPUEffectMysticGlow* effect = [[GPUEffectMysticGlow alloc] init];
+        effect.imageToProcess = baseImage;
+        previewImageView.image = [effect process];
+        return;
+    }
+    
+    if(self.effectId == EffectIdVivid){
+        GPUEffectMysticGlow* effect = [[GPUEffectMysticGlow alloc] init];
+        effect.imageToProcess = baseImage;
+        previewImageView.image = [effect process];
+        return;
+    }
 }
 - (void)setSelected:(BOOL)selected
 {
@@ -143,6 +163,12 @@
     }
     if(effectId == EffectIdSunset){
         return NSLocalizedString(@"Sunset", nil);
+    }
+    if(effectId == EffectIdFlare){
+        return NSLocalizedString(@"Flare", nil);
+    }
+    if(effectId == EffectIdVivid){
+        return NSLocalizedString(@"Vivid", nil);
     }
     
     return NSLocalizedString(@"None", nil);

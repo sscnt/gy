@@ -13,14 +13,20 @@
 NSString* const keyForPurchasesEffectsBloom = @"purchases.effects.bloom";
 NSString* const keyForPurchasesEffectsSunset = @"purchases.effects.sunset";
 NSString* const keyForPurchasesEffectsVintage = @"purchases.effects.vintage";
+NSString* const keyForPurchasesEffectsFlare = @"purchases.effects.flare";
+NSString* const keyForPurchasesEffectsVivid = @"purchases.effects.vivid";
 
 NSString* const hashForEffectBloom = @"xDHScYhWhYDnsogx";
 NSString* const hashForEffectVintage = @"e5gktKcpB9D0ThCu";
 NSString* const hashForEffectSunset = @"68c1RYIildamgD7O";
+NSString* const hashForEffectFlare = @"4vwmfDiyAxgNS4iY";
+NSString* const hashForEffectVivid = @"AYZhUbChH2FvONAg";
 
 NSString* const productIdForEffectBloom = @"jp.ssctech.gravy.bloom";
 NSString* const productIdForEffectVintage = @"jp.ssctech.gravy.vintage";
 NSString* const productIdForEffectSunset = @"jp.ssctech.gravy.sunset";
+NSString* const productIdForEffectFlare = @"jp.ssctech.gravy.flare";
+NSString* const productIdForEffectVivid = @"jp.ssctech.gravy.vivid";
 
 - (id)init
 {
@@ -70,6 +76,22 @@ NSString* const productIdForEffectSunset = @"jp.ssctech.gravy.sunset";
 + (BOOL)didPurchaseSunsetEffect
 {
     if([[UICKeyChainStore stringForKey:keyForPurchasesEffectsSunset] isEqualToString:hashForEffectSunset]){
+        return true;
+    }
+    return false;
+}
+
++ (BOOL)didPurchaseFlareEffect
+{
+    if([[UICKeyChainStore stringForKey:keyForPurchasesEffectsFlare] isEqualToString:hashForEffectFlare]){
+        return true;
+    }
+    return false;
+}
+
++ (BOOL)didPurchaseVividEffect
+{
+    if([[UICKeyChainStore stringForKey:keyForPurchasesEffectsVivid] isEqualToString:hashForEffectVivid]){
         return true;
     }
     return false;

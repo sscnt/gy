@@ -23,3 +23,5 @@
 #import "GPUEffectSoftGlare.h"
 #import "GPUEffectSunkissed.h"
 #import "GPUEffectLeakLight.h"
+#import "GPUEffectMysticGlow.h"
+

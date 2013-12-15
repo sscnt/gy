@@ -131,13 +131,9 @@
         
     [scrollView addSubview:wrapper];
     
-    
-    GPUEffectLeakLight* effect = [[GPUEffectLeakLight alloc] init];
+    GPUEffectMysticGlow* effect = [[GPUEffectMysticGlow alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
-     
-    
-    
 }
 
 - (void)layoutWhiteBalanceEditor
@@ -1005,7 +1001,7 @@
         
         */
         
-        GPUEffectLeakLight* effect = [[GPUEffectLeakLight alloc] init];
+        GPUEffectMysticGlow* effect = [[GPUEffectMysticGlow alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
 

@@ -16,7 +16,7 @@
     self = [super initWithFrame:frame];
     if(self){
         scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen screenSize].width, frame.size.height)];
-        scrollView.contentSize = CGSizeMake(frame.size.width + 240.0f, frame.size.height);
+        scrollView.contentSize = CGSizeMake(frame.size.width + 300.0f, frame.size.height);
         scrollView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
         scrollView.showsHorizontalScrollIndicator = NO;
         scrollView.showsVerticalScrollIndicator = NO;
@@ -64,13 +64,27 @@
     buttonCreamy.delegate = self;
     [scrollView addSubview:buttonCreamy];
     
-    // Candy
+    // Bloom
     left += 80.0f;
     buttonBloom = [[UIEffectSelectionButton alloc] initWithEffectId:EffectIdBloom previewImageBase:effectPreviewImage];
     [buttonBloom setX:left];
     buttonBloom.delegate = self;
     [scrollView addSubview:buttonBloom];
     
+    // Flare
+    left += 80.0f;
+    buttonFlare = [[UIEffectSelectionButton alloc] initWithEffectId:EffectIdFlare previewImageBase:effectPreviewImage];
+    [buttonFlare setX:left];
+    buttonFlare.delegate = self;
+    [scrollView addSubview:buttonFlare];
+    
+    // Vivid
+    left += 80.0f;
+    buttonVivid = [[UIEffectSelectionButton alloc] initWithEffectId:EffectIdVivid previewImageBase:effectPreviewImage];
+    [buttonVivid setX:left];
+    buttonVivid.delegate = self;
+    [scrollView addSubview:buttonVivid];
+
     // Vintage
     left += 80.0f;
     buttonVintage = [[UIEffectSelectionButton alloc] initWithEffectId:EffectIdVintage previewImageBase:effectPreviewImage];
@@ -99,26 +113,29 @@
     buttonBloom.selected = NO;
     buttonVintage.selected = NO;
     buttonSunset.selected = NO;
+    buttonFlare.selected = NO;
+    buttonVivid.selected = NO;
     
     if(effectId == EffectIdNone){
-        buttonNone.selected = YES;
-        return;
+        buttonNone.selected = YES;return;
     }
     if(effectId == EffectIdCreamy){
-        buttonCreamy.selected = YES;
-        return;
+        buttonCreamy.selected = YES;return;
     }
     if(effectId == EffectIdBloom){
-        buttonBloom.selected = YES;
-        return;
+        buttonBloom.selected = YES;return;
+    }
+    if(effectId == EffectIdFlare){
+        buttonFlare.selected = YES;return;
+    }
+    if(effectId == EffectIdVivid){
+        buttonVivid.selected = YES;return;
     }
     if(effectId == EffectIdVintage){
-        buttonVintage.selected = YES;
-        return;
+        buttonVintage.selected = YES;return;
     }
     if(effectId == EffectIdSunset){
-        buttonSunset.selected = YES;
-        return;
+        buttonSunset.selected = YES;return;
     }
 
 }
@@ -126,16 +143,22 @@
 - (void)unlockButtonByEffectId:(EffectId)effectId
 {
     if(effectId == EffectIdBloom){
-        [buttonBloom unlock];
-        return;
+        [buttonBloom unlock];return;
     }
     if(effectId == EffectIdVintage){
-        [buttonVintage unlock];
-        return;
+        [buttonVintage unlock];return;
+    }
+    if(effectId == EffectIdVintage){
+        [buttonVintage unlock];return;
     }
     if(effectId == EffectIdSunset){
-        [buttonSunset unlock];
-        return;
+        [buttonSunset unlock];return;
+    }
+    if(effectId == EffectIdFlare){
+        [buttonFlare unlock];return;
+    }
+    if(effectId == EffectIdVivid){
+        [buttonVivid unlock];return;
     }
 }
 

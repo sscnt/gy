@@ -48,6 +48,8 @@ typedef NS_ENUM(NSInteger, PurchaseManagerError){
 + (BOOL)didPurchaseBloomEffect;
 + (BOOL)didPurchaseVintageEffect;
 + (BOOL)didPurchaseSunsetEffect;
++ (BOOL)didPurchaseFlareEffect;
++ (BOOL)didPurchaseVividEffect;
 
 + (BOOL)didPurchaseEffectId:(EffectId)effectId;
 + (EffectId)productId2EffectId:(NSString*)productId;
