@@ -11,6 +11,14 @@
 "Open" = "開く";
 "Buy" = "購入";
 "Error" = "エラー";
+"Cancelled." = "キャンセルしました";
+"You are not allowed to perform the attempted action." = "許可されていない操作です";
+"In-App Purchase is not allowed." = "アプリ内の購入が許可されていません";
+"Invalid product. Please try again." = "不正なプロダクトです。やり直してください。";
+"Purchase failed." = "購入に失敗しました";
+"Invalid payment." = "不正な購入です";
+"This device is not allowed to make the payment." = "このデバイスでの購入は許可されていません";
+"Unknown error." = "不明なエラー";
 
 "Saved successfully" = "保存しました";
 

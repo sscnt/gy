@@ -153,6 +153,14 @@ NSString* const productIdForEffectVivid = @"jp.ssctech.gravy.vivid";
         [self purchaseProductByID:productIdForEffectSunset];
         return;
     }
+    if(effectId == EffectIdFlare){
+        [self purchaseProductByID:productIdForEffectFlare];
+        return;
+    }
+    if(effectId == EffectIdVivid){
+        [self purchaseProductByID:productIdForEffectVivid];
+        return;
+    }
 }
 
 - (void)purchaseProductByID:(NSString*)productId
@@ -272,6 +280,16 @@ NSString* const productIdForEffectVivid = @"jp.ssctech.gravy.vivid";
     
     if(effectId == EffectIdSunset){
         [UICKeyChainStore setString:hashForEffectSunset forKey:keyForPurchasesEffectsSunset];
+        return;
+    }
+    
+    if(effectId == EffectIdFlare){
+        [UICKeyChainStore setString:hashForEffectFlare forKey:keyForPurchasesEffectsFlare];
+        return;
+    }
+    
+    if(effectId == EffectIdVivid){
+        [UICKeyChainStore setString:hashForEffectVivid forKey:keyForPurchasesEffectsVivid];
         return;
     }
 }

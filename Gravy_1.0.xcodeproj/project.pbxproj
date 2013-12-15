@@ -835,6 +835,7 @@
 				58F31AA71838E1DA00122C65 /* GPUImageEffectsImport.h */,
 				58F6FECF1827CA61003F49C6 /* GPUImageEffects.h */,
 				58F6FED01827CA61003F49C6 /* GPUImageEffects.m */,
+				58EDEC56185DA9F4004C25BD /* Beach */,
 				58EDEC35185D9268004C25BD /* Vivid */,
 				5800D3B2185D4425009383B9 /* Flare */,
 				58F3CFF5184DB0260042C96C /* Creamy */,
@@ -1013,6 +1014,21 @@
 				58EDEC54185DA350004C25BD /* SunsetCarnevale1.acv */,
 			);
 			name = Curves;
+			sourceTree = "<group>";
+		};
+		58EDEC56185DA9F4004C25BD /* Beach */ = {
+			isa = PBXGroup;
+			children = (
+				58EDEC57185DAAC7004C25BD /* Beach Vintage */,
+			);
+			name = Beach;
+			sourceTree = "<group>";
+		};
+		58EDEC57185DAAC7004C25BD /* Beach Vintage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Beach Vintage";
 			sourceTree = "<group>";
 		};
 		58F02716181A8B1D00938725 /* Libraries */ = {

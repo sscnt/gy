@@ -256,6 +256,14 @@
     if(self.currentSelectedEffectId == EffectIdSunset){
         return [self executeEffectSunsetWithWeight:inputImage];
     }
+    
+    if(self.currentSelectedEffectId == EffectIdFlare){
+        return [self executeEffectFlareWithWeight:inputImage];
+    }
+    
+    if(self.currentSelectedEffectId == EffectIdSunset){
+        return [self executeEffectVividWithWeight:inputImage];
+    }
     return nil;
 }
 
@@ -620,22 +628,22 @@
 - (void)applyEffectVivid
 {
     @autoreleasepool {
-        GPUEffectGoodMorning* effect = [[GPUEffectGoodMorning alloc] init];
+        GPUEffectVividVintage* effect = [[GPUEffectVividVintage alloc] init];
         effect.imageToProcess = self.appliedImageSaturation;
         self.effectedLeftBottomImage = [effect process];
     }
     @autoreleasepool {
-        GPUEffectWeekend* effect = [[GPUEffectWeekend alloc] init];
+        GPUEffectSunsetCarnevale* effect = [[GPUEffectSunsetCarnevale alloc] init];
         effect.imageToProcess = self.appliedImageSaturation;
         self.effectedLeftTopImage = [effect process];
     }
     @autoreleasepool {
-        GPUEffectWarmAutumn* effect = [[GPUEffectWarmAutumn alloc] init];
+        GPUEffectDreamyVintage* effect = [[GPUEffectDreamyVintage alloc] init];
         effect.imageToProcess = self.appliedImageSaturation;
         self.effectedRightBottomImage = [effect process];
     }
     @autoreleasepool {
-        GPUEffectJoyful* effect = [[GPUEffectJoyful alloc] init];
+        GPUEffectCavalleriaRusticana* effect = [[GPUEffectCavalleriaRusticana alloc] init];
         effect.imageToProcess = self.appliedImageSaturation;
         self.effectedRightTopImage = [effect process];
     }
@@ -649,7 +657,7 @@
     
     if(self.weightLeftBottom > 0.0f){
         @autoreleasepool {
-            GPUEffectGoodMorning* effect = [[GPUEffectGoodMorning alloc] init];
+            GPUEffectVividVintage* effect = [[GPUEffectVividVintage alloc] init];
             effect.imageToProcess = inputImage;
             GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
             GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];
@@ -659,7 +667,7 @@
     
     if(self.weightLeftTop > 0.0f){
         @autoreleasepool {
-            GPUEffectWeekend* effect = [[GPUEffectWeekend alloc] init];
+            GPUEffectSunsetCarnevale* effect = [[GPUEffectSunsetCarnevale alloc] init];
             effect.imageToProcess = inputImage;
             GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
             GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];
@@ -669,7 +677,7 @@
     
     if(self.weightRightBottom > 0.0f){
         @autoreleasepool {
-            GPUEffectWarmAutumn* effect = [[GPUEffectWarmAutumn alloc] init];
+            GPUEffectDreamyVintage* effect = [[GPUEffectDreamyVintage alloc] init];
             effect.imageToProcess = inputImage;
             GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
             GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];
@@ -679,7 +687,7 @@
     
     if(self.weightRightTop > 0.0f){
         @autoreleasepool {
-            GPUEffectJoyful* effect = [[GPUEffectJoyful alloc] init];
+            GPUEffectCavalleriaRusticana* effect = [[GPUEffectCavalleriaRusticana alloc] init];
             effect.imageToProcess = inputImage;
             GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
             GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];
