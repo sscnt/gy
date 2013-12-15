@@ -29,3 +29,7 @@
 #import "GPUEffectCavalleriaRusticana.h"
 #import "GPUEffectDreamyVintage.h"
 #import "GPUEffectSunsetCarnevale.h"
+
+#import "GPUEffectBeachVintage.h"
+#import "GPUEffectPinkBubbleTea.h"
+#import "GPUEffectFaerieVintage.h"

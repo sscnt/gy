@@ -24,6 +24,7 @@ typedef NS_ENUM(NSInteger, MergeBlendingMode){
     MergeBlendingModeDarken,
     MergeBlendingModeScreen,
     MergeBlendingModeMultiply,
+    MergeBlendingModeLighten,
     MergeBlendingModeSoftLight,
     MergeBlendingModeHardLight,
     MergeBlendingModeVividLight,

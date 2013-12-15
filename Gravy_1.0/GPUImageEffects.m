@@ -100,6 +100,9 @@
     if(blendingMode == MergeBlendingModeSoftLight){
         blending = [[GPUImageSoftLightBlendFilter alloc] init];
     }
+    if(blendingMode == MergeBlendingModeLighten){
+        blending = [[GPUImageLightenBlendFilter alloc] init];
+    }
     if(blendingMode == MergeBlendingModeHardLight){
         blending = [[GPUImageHardLightBlendFilter alloc] init];
     }

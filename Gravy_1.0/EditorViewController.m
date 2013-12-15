@@ -131,7 +131,7 @@
         
     [scrollView addSubview:wrapper];
     
-    GPUEffectSunsetCarnevale* effect = [[GPUEffectSunsetCarnevale alloc] init];
+    GPUEffectFaerieVintage* effect = [[GPUEffectFaerieVintage alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
 }
@@ -1001,7 +1001,7 @@
         
         */
         
-        GPUEffectSunsetCarnevale* effect = [[GPUEffectSunsetCarnevale alloc] init];
+        GPUEffectFaerieVintage* effect = [[GPUEffectFaerieVintage alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
         

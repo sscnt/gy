@@ -80,6 +80,11 @@
 		58EDEC4E185DA243004C25BD /* DreamyVintage1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58EDEC4D185DA243004C25BD /* DreamyVintage1.acv */; };
 		58EDEC52185DA2D3004C25BD /* GPUEffectSunsetCarnevale.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EDEC51185DA2D3004C25BD /* GPUEffectSunsetCarnevale.m */; };
 		58EDEC55185DA350004C25BD /* SunsetCarnevale1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58EDEC54185DA350004C25BD /* SunsetCarnevale1.acv */; };
+		58EDEC5A185DAB3B004C25BD /* GPUEffectBeachVintage.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EDEC59185DAB3B004C25BD /* GPUEffectBeachVintage.m */; };
+		58EDEC5E185DAF35004C25BD /* GPUEffectPinkBubbleTea.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EDEC5D185DAF35004C25BD /* GPUEffectPinkBubbleTea.m */; };
+		58EDEC63185DB1E6004C25BD /* PinkBubbleTea.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58EDEC62185DB1E6004C25BD /* PinkBubbleTea.acv */; };
+		58EDEC67185DB2D7004C25BD /* GPUEffectFaerieVintage.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EDEC66185DB2D7004C25BD /* GPUEffectFaerieVintage.m */; };
+		58EDEC6A185DB388004C25BD /* FaerieVintage1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58EDEC69185DB388004C25BD /* FaerieVintage1.acv */; };
 		58EEE5F41820D740008C4B2A /* icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 58EEE5E71820D740008C4B2A /* icon-29.png */; };
 		58EEE5F51820D740008C4B2A /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 58EEE5E81820D740008C4B2A /* icon-40.png */; };
 		58EEE5F61820D740008C4B2A /* icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 58EEE5E91820D740008C4B2A /* icon-50.png */; };
@@ -335,6 +340,14 @@
 		58EDEC50185DA2D3004C25BD /* GPUEffectSunsetCarnevale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectSunsetCarnevale.h; sourceTree = "<group>"; };
 		58EDEC51185DA2D3004C25BD /* GPUEffectSunsetCarnevale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectSunsetCarnevale.m; sourceTree = "<group>"; };
 		58EDEC54185DA350004C25BD /* SunsetCarnevale1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = SunsetCarnevale1.acv; sourceTree = "<group>"; };
+		58EDEC58185DAB3B004C25BD /* GPUEffectBeachVintage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectBeachVintage.h; sourceTree = "<group>"; };
+		58EDEC59185DAB3B004C25BD /* GPUEffectBeachVintage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectBeachVintage.m; sourceTree = "<group>"; };
+		58EDEC5C185DAF35004C25BD /* GPUEffectPinkBubbleTea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectPinkBubbleTea.h; sourceTree = "<group>"; };
+		58EDEC5D185DAF35004C25BD /* GPUEffectPinkBubbleTea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectPinkBubbleTea.m; sourceTree = "<group>"; };
+		58EDEC62185DB1E6004C25BD /* PinkBubbleTea.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = PinkBubbleTea.acv; sourceTree = "<group>"; };
+		58EDEC65185DB2D7004C25BD /* GPUEffectFaerieVintage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectFaerieVintage.h; sourceTree = "<group>"; };
+		58EDEC66185DB2D7004C25BD /* GPUEffectFaerieVintage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectFaerieVintage.m; sourceTree = "<group>"; };
+		58EDEC69185DB388004C25BD /* FaerieVintage1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = FaerieVintage1.acv; sourceTree = "<group>"; };
 		58EEE5E71820D740008C4B2A /* icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-29.png"; sourceTree = "<group>"; };
 		58EEE5E81820D740008C4B2A /* icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40.png"; sourceTree = "<group>"; };
 		58EEE5E91820D740008C4B2A /* icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-50.png"; sourceTree = "<group>"; };
@@ -1019,6 +1032,8 @@
 		58EDEC56185DA9F4004C25BD /* Beach */ = {
 			isa = PBXGroup;
 			children = (
+				58EDEC64185DB2B8004C25BD /* Faerie Vintage */,
+				58EDEC5B185DAF05004C25BD /* Pink Bubble Tea */,
 				58EDEC57185DAAC7004C25BD /* Beach Vintage */,
 			);
 			name = Beach;
@@ -1027,8 +1042,46 @@
 		58EDEC57185DAAC7004C25BD /* Beach Vintage */ = {
 			isa = PBXGroup;
 			children = (
+				58EDEC58185DAB3B004C25BD /* GPUEffectBeachVintage.h */,
+				58EDEC59185DAB3B004C25BD /* GPUEffectBeachVintage.m */,
 			);
 			name = "Beach Vintage";
+			sourceTree = "<group>";
+		};
+		58EDEC5B185DAF05004C25BD /* Pink Bubble Tea */ = {
+			isa = PBXGroup;
+			children = (
+				58EDEC5F185DB160004C25BD /* Curves */,
+				58EDEC5C185DAF35004C25BD /* GPUEffectPinkBubbleTea.h */,
+				58EDEC5D185DAF35004C25BD /* GPUEffectPinkBubbleTea.m */,
+			);
+			name = "Pink Bubble Tea";
+			sourceTree = "<group>";
+		};
+		58EDEC5F185DB160004C25BD /* Curves */ = {
+			isa = PBXGroup;
+			children = (
+				58EDEC62185DB1E6004C25BD /* PinkBubbleTea.acv */,
+			);
+			name = Curves;
+			sourceTree = "<group>";
+		};
+		58EDEC64185DB2B8004C25BD /* Faerie Vintage */ = {
+			isa = PBXGroup;
+			children = (
+				58EDEC68185DB37E004C25BD /* Curves */,
+				58EDEC65185DB2D7004C25BD /* GPUEffectFaerieVintage.h */,
+				58EDEC66185DB2D7004C25BD /* GPUEffectFaerieVintage.m */,
+			);
+			name = "Faerie Vintage";
+			sourceTree = "<group>";
+		};
+		58EDEC68185DB37E004C25BD /* Curves */ = {
+			isa = PBXGroup;
+			children = (
+				58EDEC69185DB388004C25BD /* FaerieVintage1.acv */,
+			);
+			name = Curves;
 			sourceTree = "<group>";
 		};
 		58F02716181A8B1D00938725 /* Libraries */ = {
@@ -1655,6 +1708,7 @@
 				58EDEC47185D9CAE004C25BD /* CavalleriaRusticana1.acv in Resources */,
 				580032BF180D34310021F73C /* icon_settings.png in Resources */,
 				580032B1180D275F0021F73C /* icon_photos.png in Resources */,
+				58EDEC6A185DB388004C25BD /* FaerieVintage1.acv in Resources */,
 				58F3D00C184DDC880042C96C /* GentleMemories1.acv in Resources */,
 				58EEE5F81820D740008C4B2A /* icon-58.png in Resources */,
 				58F3C6D3184E075600F51A3D /* GentleMemories3.acv in Resources */,
@@ -1683,6 +1737,7 @@
 				58EEE5F91820D740008C4B2A /* icon-72.png in Resources */,
 				58EEE5FA1820D740008C4B2A /* icon-76.png in Resources */,
 				58EDEC4E185DA243004C25BD /* DreamyVintage1.acv in Resources */,
+				58EDEC63185DB1E6004C25BD /* PinkBubbleTea.acv in Resources */,
 				58EEE5FE1820D740008C4B2A /* icon-120.png in Resources */,
 				58FBB40818156410001CFDC8 /* icon_download.png in Resources */,
 				58FC5CDA18321C46009EBCF0 /* Sweet1.acv in Resources */,
@@ -1751,10 +1806,12 @@
 				58EDEC27185D766D004C25BD /* GPUEffectLeakLight.m in Sources */,
 				5891650A184B178B007FCD5D /* UIShareButton.m in Sources */,
 				589164F6184AE611007FCD5D /* GPUEffectFaerieBloom.m in Sources */,
+				58EDEC67185DB2D7004C25BD /* GPUEffectFaerieVintage.m in Sources */,
 				58F6FED41827CD8F003F49C6 /* GPUEffectSoftPop.m in Sources */,
 				5822B22D1848C1F6009577D2 /* GPUImagePhotoFilter.m in Sources */,
 				58F7F8F218549AF7006286FD /* UIBuyButton.m in Sources */,
 				58F31AA61838E05000122C65 /* GPUEffectVintageFilm.m in Sources */,
+				58EDEC5A185DAB3B004C25BD /* GPUEffectBeachVintage.m in Sources */,
 				5802E825180C2E5E00AA2227 /* UIScreen+Gravy.m in Sources */,
 				58FA30911852F74800A87190 /* PurchaseManager.m in Sources */,
 				58FA7A72182604D200848AFD /* GPUImageChannelMixerFilter.m in Sources */,
@@ -1780,6 +1837,7 @@
 				58F9D7B9182670D900A811FD /* GPUImageGradientColorGenerator.m in Sources */,
 				58F3C439181CA13C00F7129D /* GPULevelsImageFilter.m in Sources */,
 				58F92BAE1840C7F500A4EDBE /* GPUEffectVintage2.m in Sources */,
+				58EDEC5E185DAF35004C25BD /* GPUEffectPinkBubbleTea.m in Sources */,
 				58EDEC52185DA2D3004C25BD /* GPUEffectSunsetCarnevale.m in Sources */,
 				580032C3180D34490021F73C /* UISettingsButton.m in Sources */,
 				5800D3B9185D450A009383B9 /* GPUEffectSoftGlare.m in Sources */,
