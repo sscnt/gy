@@ -128,6 +128,7 @@
 {
     buttonNone.selected = NO;
     buttonCreamy.selected = NO;
+    buttonCake.selected = NO;
     buttonBloom.selected = NO;
     buttonVintage.selected = NO;
     buttonSunset.selected = NO;
@@ -139,6 +140,9 @@
     }
     if(effectId == EffectIdCreamy){
         buttonCreamy.selected = YES;return;
+    }
+    if(effectId == effectidCake){
+        buttonCake.selected = YES;return;
     }
     if(effectId == EffectIdBloom){
         buttonBloom.selected = YES;return;

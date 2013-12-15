@@ -19,6 +19,7 @@
 "Invalid payment." = "不正な購入です";
 "This device is not allowed to make the payment." = "このデバイスでの購入は許可されていません";
 "Unknown error." = "不明なエラー";
+"Done." = "完了しました";
 
 "Saved successfully" = "保存しました";
 

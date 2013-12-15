@@ -111,6 +111,9 @@ NSString* const productIdForEffectVivid = @"jp.ssctech.gravy.vivid";
     if(effectId == EffectIdCreamy){
         return [PurchaseManager didPurchaseCreamyEffect];
     }
+    if(effectId == effectidCake){
+        return [PurchaseManager didPurchaseCakeEffect];
+    }
     if(effectId == EffectIdBloom){
         return [PurchaseManager didPurchaseBloomEffect];
     }
