@@ -181,6 +181,16 @@
         [self applyEffectSunset];
         return;
     }
+    
+    if(self.currentSelectedEffectId == EffectIdFlare){
+        [self applyEffectFlare];
+        return;
+    }
+    
+    if(self.currentSelectedEffectId == EffectIdVivid){
+        [self applyEffectVivid];
+        return;
+    }
 }
 
 - (void)adjustCurrentSelectedEffect
@@ -533,6 +543,152 @@
     }
     return resultImage;
 }
+
+- (void)applyEffectFlare
+{
+    @autoreleasepool {
+        GPUEffectMysticGlow* effect = [[GPUEffectMysticGlow alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedLeftBottomImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectSoftGlare* effect = [[GPUEffectSoftGlare alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedLeftTopImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectLeakLight* effect = [[GPUEffectLeakLight alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedRightBottomImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectSunkissed* effect = [[GPUEffectSunkissed alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedRightTopImage = [effect process];
+    }
+}
+
+
+- (UIImage*)executeEffectFlareWithWeight:(UIImage *)inputImage
+{
+    
+    UIImage* resultImage = inputImage;
+    
+    if(self.weightLeftBottom > 0.0f){
+        @autoreleasepool {
+            GPUEffectMysticGlow* effect = [[GPUEffectMysticGlow alloc] init];
+            effect.imageToProcess = inputImage;
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftBottom];
+        }
+    }
+    
+    if(self.weightLeftTop > 0.0f){
+        @autoreleasepool {
+            GPUEffectSoftGlare* effect = [[GPUEffectSoftGlare alloc] init];
+            effect.imageToProcess = inputImage;
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftTop];
+        }
+    }
+    
+    if(self.weightRightBottom > 0.0f){
+        @autoreleasepool {
+            GPUEffectLeakLight* effect = [[GPUEffectLeakLight alloc] init];
+            effect.imageToProcess = inputImage;
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightBottom];
+        }
+    }
+    
+    if(self.weightRightTop > 0.0f){
+        @autoreleasepool {
+            GPUEffectSunkissed* effect = [[GPUEffectSunkissed alloc] init];
+            effect.imageToProcess = inputImage;
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightTop];
+        }
+    }
+    return resultImage;
+}
+
+
+- (void)applyEffectVivid
+{
+    @autoreleasepool {
+        GPUEffectGoodMorning* effect = [[GPUEffectGoodMorning alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedLeftBottomImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectWeekend* effect = [[GPUEffectWeekend alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedLeftTopImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectWarmAutumn* effect = [[GPUEffectWarmAutumn alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedRightBottomImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectJoyful* effect = [[GPUEffectJoyful alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedRightTopImage = [effect process];
+    }
+}
+
+
+- (UIImage*)executeEffectVividWithWeight:(UIImage *)inputImage
+{
+    
+    UIImage* resultImage = inputImage;
+    
+    if(self.weightLeftBottom > 0.0f){
+        @autoreleasepool {
+            GPUEffectGoodMorning* effect = [[GPUEffectGoodMorning alloc] init];
+            effect.imageToProcess = inputImage;
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftBottom];
+        }
+    }
+    
+    if(self.weightLeftTop > 0.0f){
+        @autoreleasepool {
+            GPUEffectWeekend* effect = [[GPUEffectWeekend alloc] init];
+            effect.imageToProcess = inputImage;
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftTop];
+        }
+    }
+    
+    if(self.weightRightBottom > 0.0f){
+        @autoreleasepool {
+            GPUEffectWarmAutumn* effect = [[GPUEffectWarmAutumn alloc] init];
+            effect.imageToProcess = inputImage;
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightBottom];
+        }
+    }
+    
+    if(self.weightRightTop > 0.0f){
+        @autoreleasepool {
+            GPUEffectJoyful* effect = [[GPUEffectJoyful alloc] init];
+            effect.imageToProcess = inputImage;
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightTop];
+        }
+    }
+    return resultImage;
+}
+
 
 
 

@@ -131,7 +131,7 @@
         
     [scrollView addSubview:wrapper];
     
-    GPUEffectMysticGlow* effect = [[GPUEffectMysticGlow alloc] init];
+    GPUEffectSunsetCarnevale* effect = [[GPUEffectSunsetCarnevale alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
 }
@@ -1001,11 +1001,9 @@
         
         */
         
-        GPUEffectMysticGlow* effect = [[GPUEffectMysticGlow alloc] init];
+        GPUEffectSunsetCarnevale* effect = [[GPUEffectSunsetCarnevale alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
-
-                
         
         UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil);
         

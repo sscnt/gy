@@ -25,3 +25,7 @@
 #import "GPUEffectLeakLight.h"
 #import "GPUEffectMysticGlow.h"
 
+#import "GPUEffectVividVintage.h"
+#import "GPUEffectCavalleriaRusticana.h"
+#import "GPUEffectDreamyVintage.h"
+#import "GPUEffectSunsetCarnevale.h"

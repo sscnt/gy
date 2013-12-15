@@ -127,7 +127,7 @@
     }
     
     if(self.effectId == EffectIdVivid){
-        GPUEffectMysticGlow* effect = [[GPUEffectMysticGlow alloc] init];
+        GPUEffectVividVintage* effect = [[GPUEffectVividVintage alloc] init];
         effect.imageToProcess = baseImage;
         previewImageView.image = [effect process];
         return;
