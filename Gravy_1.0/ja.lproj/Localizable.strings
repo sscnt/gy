@@ -19,6 +19,7 @@
 "Invalid payment." = "不正な購入です";
 "This device is not allowed to make the payment." = "このデバイスでの購入は許可されていません";
 "Unknown error." = "不明なエラー";
+"Network error." = "ネットワークエラー";
 "Done." = "完了しました";
 
 "Saved successfully" = "保存しました";
@@ -29,4 +30,4 @@
 "In-App Purchase" = "アプリ内の購入";
 "Restore Purchase" = "購入を復元";
 "Failed to restore purchase." = "購入を復元できません";
-"Resuming interrupted purchase." = "中断した購入を再開しています";
+"Resuming interrupted purchase." = "中断した購入を再開しました";

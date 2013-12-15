@@ -18,6 +18,7 @@ typedef NS_ENUM(NSInteger, PurchaseManagerError){
     PurchaseManagerErrorClientInvalid,
     PurchaseManagerErrorPaymentCancelled,
     PurchaseManagerErrorPaymentInvalid,
+    PurchaseManagerErrorNetworkError,
     PurchaseManagerErrorPaymentNotAllowed
 };
 
@@ -33,7 +34,7 @@ typedef NS_ENUM(NSInteger, PurchaseManagerError){
 
 
 
-@interface PurchaseManager : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver>
+@interface PurchaseManager : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver, SKRequestDelegate>
 {
     EffectId targetEffectId;
     SKProductsRequest *productsRequest;

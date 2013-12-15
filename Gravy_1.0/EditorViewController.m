@@ -1090,6 +1090,9 @@
         case PurchaseManagerErrorUnknown:
             message = NSLocalizedString(@"Unknown error.", nil);
             break;
+        case PurchaseManagerErrorNetworkError:
+            message = NSLocalizedString(@"Network error.", nil);
+            break;
         default:
             break;
     }

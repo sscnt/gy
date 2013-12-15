@@ -18,7 +18,7 @@ NSString* const keyForPurchasesEffectsFlare = @"purchases.effects.flare";
 NSString* const keyForPurchasesEffectsVivid = @"purchases.effects.vivid";
 
 /* * 編集禁止 * */
-NSString* const hashForEffectBloom = @"EVi5VX2xJFVAOi3k";
+NSString* const hashForEffectBloom = @"fww0tfv0EQG75q7w";
 NSString* const hashForEffectVintage = @"9r9sxQfF9xA6AH5t";
 NSString* const hashForEffectSunset = @"gOfbMSNDbxxUe1ao";
 NSString* const hashForEffectFlare = @"6AyXuJf5sgfKQl5c";
@@ -234,10 +234,7 @@ NSString* const productIdForEffectVivid = @"jp.ssctech.gravy.vivid";
 }
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
 {
-    if(isPausedPurchase){
-        [self.delegate didRestartPausedTransaction];
-        isPausedPurchase = NO;
-    }
+
     for (SKPaymentTransaction *transaction in transactions) {
         dlog(@"トランザクション[%@]が更新されました.", transaction.transactionIdentifier);
         if (transaction.transactionState == SKPaymentTransactionStatePurchasing) {
@@ -293,7 +290,17 @@ NSString* const productIdForEffectVivid = @"jp.ssctech.gravy.vivid";
             [queue finishTransaction:transaction];
             [self didRestoreProductId:transaction.originalTransaction.payment.productIdentifier];
         }
-    }		
+    }
+    if(isPausedPurchase){
+        dlog(@"購入を再開しています");
+        [self.delegate didRestartPausedTransaction];
+        isPausedPurchase = NO;
+    }
+}
+- (void)request:(SKRequest *)request didFailWithError:(NSError *)error
+{
+    dlog(@"接続がタイムアウトしました");
+    [self.delegate didFailToPurchaseWithError:PurchaseManagerErrorNetworkError];
 }
 
 - (void)updatePurchasedFlagByEffectId:(EffectId)effectId
