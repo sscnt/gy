@@ -37,6 +37,7 @@ typedef NS_ENUM(NSInteger, PurchaseManagerError){
 {
     EffectId targetEffectId;
     SKProductsRequest *productsRequest;
+    BOOL isPausedPurchase;
 }
 
 @property (nonatomic, weak) id<PurchaseManagerDelegate> delegate;

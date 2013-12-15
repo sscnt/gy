@@ -29,3 +29,4 @@
 "In-App Purchase" = "アプリ内の購入";
 "Restore Purchase" = "購入を復元";
 "Failed to restore purchase." = "購入を復元できません";
+"Resuming interrupted purchase." = "中断した購入を再開しています";

@@ -73,7 +73,7 @@
 {
     [SVProgressHUD dismiss];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                    message:NSLocalizedString(@"Done", nil)
+                                                    message:NSLocalizedString(@"Done.", nil)
                                                    delegate:nil
                                           cancelButtonTitle:nil
                                           otherButtonTitles:@"OK", nil];
@@ -130,6 +130,11 @@
                                           cancelButtonTitle:nil
                                           otherButtonTitles:@"OK", nil];
     [alert show];
+}
+
+- (void)didRestartPausedTransaction
+{
+    
 }
 
 - (void)didReceiveMemoryWarning

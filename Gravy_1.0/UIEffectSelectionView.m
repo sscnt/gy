@@ -130,34 +130,42 @@
     buttonCreamy.selected = NO;
     buttonCake.selected = NO;
     buttonBloom.selected = NO;
-    buttonVintage.selected = NO;
-    buttonSunset.selected = NO;
     buttonFlare.selected = NO;
     buttonVivid.selected = NO;
+    buttonVintage.selected = NO;
+    buttonSunset.selected = NO;
     
     if(effectId == EffectIdNone){
-        buttonNone.selected = YES;return;
+        buttonNone.selected = YES;
+        return;
     }
     if(effectId == EffectIdCreamy){
-        buttonCreamy.selected = YES;return;
+        buttonCreamy.selected = YES;
+        return;
     }
     if(effectId == effectidCake){
-        buttonCake.selected = YES;return;
+        buttonCake.selected = YES;
+        return;
     }
     if(effectId == EffectIdBloom){
-        buttonBloom.selected = YES;return;
+        buttonBloom.selected = YES;
+        return;
     }
     if(effectId == EffectIdFlare){
-        buttonFlare.selected = YES;return;
+        buttonFlare.selected = YES;
+        return;
     }
     if(effectId == EffectIdVivid){
-        buttonVivid.selected = YES;return;
+        buttonVivid.selected = YES;
+        return;
     }
     if(effectId == EffectIdVintage){
-        buttonVintage.selected = YES;return;
+        buttonVintage.selected = YES;
+        return;
     }
     if(effectId == EffectIdSunset){
-        buttonSunset.selected = YES;return;
+        buttonSunset.selected = YES;
+        return;
     }
 
 }

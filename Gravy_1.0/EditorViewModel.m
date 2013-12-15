@@ -250,6 +250,10 @@
         return [self executeEffectCreamyWithWeight:inputImage];
     }
     
+    if(self.currentSelectedEffectId == effectidCake){
+        return [self executeEffectCakeWithWeight:inputImage];
+    }
+
     if(self.currentSelectedEffectId == EffectIdBloom){
         return [self executeEffectBloomWithWeight:inputImage];
     }
@@ -266,7 +270,7 @@
         return [self executeEffectFlareWithWeight:inputImage];
     }
     
-    if(self.currentSelectedEffectId == EffectIdSunset){
+    if(self.currentSelectedEffectId == EffectIdVivid){
         return [self executeEffectVividWithWeight:inputImage];
     }
     return nil;

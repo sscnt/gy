@@ -18,11 +18,11 @@ NSString* const keyForPurchasesEffectsFlare = @"purchases.effects.flare";
 NSString* const keyForPurchasesEffectsVivid = @"purchases.effects.vivid";
 
 /* * 編集禁止 * */
-NSString* const hashForEffectBloom = @"xDHScYhWhYDnsogx";
-NSString* const hashForEffectVintage = @"e5gktKcpB9D0ThCu";
-NSString* const hashForEffectSunset = @"68c1RYIildamgD7O";
-NSString* const hashForEffectFlare = @"4vwmfDiyAxgNS4iY";
-NSString* const hashForEffectVivid = @"AYZhUbChH2FvONAg";
+NSString* const hashForEffectBloom = @"EVi5VX2xJFVAOi3k";
+NSString* const hashForEffectVintage = @"9r9sxQfF9xA6AH5t";
+NSString* const hashForEffectSunset = @"gOfbMSNDbxxUe1ao";
+NSString* const hashForEffectFlare = @"6AyXuJf5sgfKQl5c";
+NSString* const hashForEffectVivid = @"UYECYa2naOHuGVGw";
 
 /* * 編集禁止 * */
 NSString* const productIdForEffectBloom = @"jp.ssctech.gravy.bloom";
@@ -36,6 +36,7 @@ NSString* const productIdForEffectVivid = @"jp.ssctech.gravy.vivid";
     self = [super init];
     if(self){
         [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+        isPausedPurchase = YES;
     }
     return self;
 }
@@ -144,10 +145,10 @@ NSString* const productIdForEffectVivid = @"jp.ssctech.gravy.vivid";
         return EffectIdSunset;
     }
     if([productId isEqualToString:productIdForEffectFlare]){
-        return EffectIdSunset;
+        return EffectIdFlare;
     }
     if([productId isEqualToString:productIdForEffectVivid]){
-        return EffectIdSunset;
+        return EffectIdVivid;
     }
     return 0;
 }
@@ -190,6 +191,7 @@ NSString* const productIdForEffectVivid = @"jp.ssctech.gravy.vivid";
 - (void)purchaseProductByID:(NSString*)productId
 {
     dlog(@"購入の準備をしています.");
+    isPausedPurchase = NO;
     if (![SKPaymentQueue canMakePayments]) {
         dlog(@"エラー:アプリ内課金が無効です.");
         [self.delegate didFailToPurchaseWithError:PurchaseManagerErrorIAPNotAllowed];
@@ -232,6 +234,10 @@ NSString* const productIdForEffectVivid = @"jp.ssctech.gravy.vivid";
 }
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
 {
+    if(isPausedPurchase){
+        [self.delegate didRestartPausedTransaction];
+        isPausedPurchase = NO;
+    }
     for (SKPaymentTransaction *transaction in transactions) {
         dlog(@"トランザクション[%@]が更新されました.", transaction.transactionIdentifier);
         if (transaction.transactionState == SKPaymentTransactionStatePurchasing) {

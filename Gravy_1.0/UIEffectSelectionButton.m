@@ -81,6 +81,9 @@
 {
     previewImageView.hidden = NO;
     lockedImageView.hidden = YES;
+    [lockedImageView removeFromSuperview];
+    lockedImageView = nil;
+    [self setSelected:_selected];
 }
 
 - (void)initPreviewImageView:(UIImage *)baseImage
