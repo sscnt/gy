@@ -158,6 +158,7 @@
 		58F6FED11827CA61003F49C6 /* GPUImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F6FED01827CA61003F49C6 /* GPUImageEffects.m */; };
 		58F6FED41827CD8F003F49C6 /* GPUEffectSoftPop.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F6FED31827CD8F003F49C6 /* GPUEffectSoftPop.m */; };
 		58F6FED71827D40E003F49C6 /* Softpop.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F6FED61827D40E003F49C6 /* Softpop.acv */; };
+		58F77372185F1C7A00E7D656 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F77371185F1C7A00E7D656 /* Crashlytics.framework */; };
 		58F7911E180D65E500968648 /* editor_bg-568h@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58F7911B180D65E500968648 /* editor_bg-568h@2x.jpg */; };
 		58F7911F180D65E500968648 /* editor_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58F7911C180D65E500968648 /* editor_bg.jpg */; };
 		58F79120180D65E500968648 /* editor_bg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 58F7911D180D65E500968648 /* editor_bg@2x.jpg */; };
@@ -446,6 +447,7 @@
 		58F6FED21827CD8F003F49C6 /* GPUEffectSoftPop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectSoftPop.h; sourceTree = "<group>"; };
 		58F6FED31827CD8F003F49C6 /* GPUEffectSoftPop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectSoftPop.m; sourceTree = "<group>"; };
 		58F6FED61827D40E003F49C6 /* Softpop.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Softpop.acv; sourceTree = "<group>"; };
+		58F77371185F1C7A00E7D656 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		58F7911B180D65E500968648 /* editor_bg-568h@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "editor_bg-568h@2x.jpg"; sourceTree = "<group>"; };
 		58F7911C180D65E500968648 /* editor_bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = editor_bg.jpg; sourceTree = "<group>"; };
 		58F7911D180D65E500968648 /* editor_bg@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "editor_bg@2x.jpg"; sourceTree = "<group>"; };
@@ -534,6 +536,7 @@
 				58F3C430181C8AA800F7129D /* libGPUImage.a in Frameworks */,
 				58F3C42F181C8A9C00F7129D /* QuartzCore.framework in Frameworks */,
 				58F3C42D181C8A9200F7129D /* AVFoundation.framework in Frameworks */,
+				58F77372185F1C7A00E7D656 /* Crashlytics.framework in Frameworks */,
 				58F3C42B181C8A8300F7129D /* OpenGLES.framework in Frameworks */,
 				58F3C429181C8A7900F7129D /* CoreVideo.framework in Frameworks */,
 				58F3C427181C8A7100F7129D /* CoreMedia.framework in Frameworks */,
@@ -659,6 +662,7 @@
 		5802E7BD180C0F1400AA2227 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				58F77371185F1C7A00E7D656 /* Crashlytics.framework */,
 				588C2F66185C5DE400D7736E /* AssetsLibrary.framework */,
 				58F8A8E8185B0EE600647722 /* StoreKit.framework */,
 				58FA30871852F0E400A87190 /* Security.framework */,
@@ -1608,6 +1612,7 @@
 				5802E7B7180C0F1400AA2227 /* Sources */,
 				5802E7B8180C0F1400AA2227 /* Frameworks */,
 				5802E7B9180C0F1400AA2227 /* Resources */,
+				58F7736D185F1BFC00E7D656 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1817,6 +1822,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		58F7736D185F1BFC00E7D656 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run a8f7ec67dfb4ba747a4f4ed2d8a07acd5b1e5bf6";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5802E7B7180C0F1400AA2227 /* Sources */ = {
@@ -2043,6 +2064,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Toshiki Nakanishi (WRHUFP3254)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/ssc/Desktop/Gravy_1.0,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Gravy_1.0/Gravy_1.0-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2066,6 +2091,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Toshiki Nakanishi";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/ssc/Desktop/Gravy_1.0,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Gravy_1.0/Gravy_1.0-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
