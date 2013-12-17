@@ -14,6 +14,15 @@
 
 @implementation SettingsViewController
 
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
+
+- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation
+{
+    return UIStatusBarAnimationFade;
+}
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -27,6 +36,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+    }
 	// Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithWhite:0.15f alpha:1.0f];
     _purchaseManager = [[PurchaseManager alloc] init];

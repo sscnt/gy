@@ -8,8 +8,6 @@
 
 #import "GPUImageVividLightBlendFilter.h"
 
-
-#if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
 NSString *const kGPUImageVividLightBlendFragmentShaderString = SHADER_STRING
 (
  varying highp vec2 textureCoordinate;
@@ -80,23 +78,6 @@ NSString *const kGPUImageVividLightBlendFragmentShaderString = SHADER_STRING
      gl_FragColor = vec4(ra, ga, ba, 1.0);
  }
  );
-#else
-NSString *const kGPUImageVividLightBlendFragmentShaderString = SHADER_STRING
-(
- varying vec2 textureCoordinate;
- varying vec2 textureCoordinate2;
- 
- uniform sampler2D inputImageTexture;
- uniform sampler2D inputImageTexture2;
- 
- const vec3 W = vec3(0.2125, 0.7154, 0.0721);
- 
- void main()
- {
-
- }
- );
-#endif
 
 
 

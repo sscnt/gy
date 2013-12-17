@@ -14,9 +14,23 @@
 
 @implementation TopViewController
 
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
+
+- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation
+{
+    return UIStatusBarAnimationFade;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+    }
 	// Do any additional setup after loading the view, typically from a nib.
     float version = [[[UIDevice currentDevice] systemVersion] floatValue];
     
@@ -142,13 +156,31 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    originalImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-    if(picker.sourceType == UIImagePickerControllerSourceTypeCamera){
-        UIImageWriteToSavedPhotosAlbum(originalImage, nil, nil, nil);
-    }
-    //[picker.delegate performSelector:@selector(prepareForEditor) withObject:nil];
-    [self prepareForEditor];
     [picker dismissViewControllerAnimated:YES completion:nil];
+    originalImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    if(!originalImage){
+        __weak TopViewController* _self = self;
+        NSURL* imageurl = [info objectForKey:UIImagePickerControllerReferenceURL];
+        ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
+        [library assetForURL:imageurl
+                 resultBlock: ^(ALAsset *asset)
+         {
+             ALAssetRepresentation *representation;
+             representation = [asset defaultRepresentation];
+             originalImage = [[UIImage alloc] initWithCGImage:representation.fullResolutionImage];
+             [_self prepareForEditor];
+         }
+                failureBlock:^(NSError *error)
+         {
+             NSLog(@"error:%@", error);
+         }];
+    } else {
+        if(picker.sourceType == UIImagePickerControllerSourceTypeCamera){
+            UIImageWriteToSavedPhotosAlbum(originalImage, nil, nil, nil);
+        }
+        //[picker.delegate performSelector:@selector(prepareForEditor) withObject:nil];
+        [self prepareForEditor];
+    }
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -160,6 +192,7 @@
 {
     EditorViewController* controller = [[EditorViewController alloc] init];
     controller.originalImage = originalImage;
+    originalImage = nil;
     controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self.navigationController pushViewController:controller animated:NO];
 }
@@ -171,8 +204,4 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
 @end

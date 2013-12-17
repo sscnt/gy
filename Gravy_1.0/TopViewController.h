@@ -22,7 +22,7 @@
     UIImageView* defaultImageView;
     UIImageView* bgImageView;
     UIImageView* editorBgView;
-    __weak UIImage* originalImage;
+    UIImage* originalImage;
 }
 
 - (void)didClickCameraBtn;
