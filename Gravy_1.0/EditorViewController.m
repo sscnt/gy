@@ -274,6 +274,9 @@
     
     // Buttons
     CGFloat bottom = 100.0f;
+    if([UIDevice resolution] == UIDeviceResolution_iPhoneRetina4){
+        bottom = 66.0f;
+    }
     UIShareButton* twitter = [UIShareButton twitter:CGRectMake(20.0f, bottom, 280.0f, 44.0f)];
     twitter.type = ButtonTypeTwitter;
     [twitter addTarget:self action:@selector(didClickShareButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -300,6 +303,13 @@
     [line addTarget:self action:@selector(didClickShareButton:) forControlEvents:UIControlEventTouchUpInside];
     [line setTitle:@"LINE" forState:UIControlStateNormal];
     [wrapper addSubview:line];
+    bottom += 64.0f;
+    
+    UIShareButton* linecamera = [UIShareButton linecamera:CGRectMake(20.0f, bottom, 280.0f, 44.0f)];
+    linecamera.type = ButtonTypeLineCamera;
+    [linecamera addTarget:self action:@selector(didClickShareButton:) forControlEvents:UIControlEventTouchUpInside];
+    [linecamera setTitle:@"LINE Camera" forState:UIControlStateNormal];
+    [wrapper addSubview:linecamera];
     bottom += 64.0f;
     
     [scrollView addSubview:wrapper];
@@ -455,6 +465,18 @@
         }
         return;
     }
+    if(button.type == ButtonTypeLineCamera){
+        url = @"linecamera://";
+        BOOL canOpen = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:url]];
+        if(canOpen){
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+        } else {
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"LINE Camera not installed.", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:nil];
+            [alert show];
+        }
+        return;
+    }
+
 }
 
 - (void)didDragView:(UIPanGestureRecognizer *)sender

@@ -12,7 +12,8 @@ typedef NS_ENUM(NSInteger, ButtonType){
     ButtonTypeTwitter = 1,
     ButtonTypeFacebook,
     ButtonTypeLine,
-    ButtonTypeInstagram
+    ButtonTypeInstagram,
+    ButtonTypeLineCamera
 };
 
 @interface UIShareButton : UIButton
@@ -38,6 +39,7 @@ typedef NS_ENUM(NSInteger, ButtonType){
 - (void)setInstagramColor;
 
 + (UIShareButton*)line:(CGRect)frame;
++ (UIShareButton*)linecamera:(CGRect)frame;
 - (void)setLineColor;
 
 + (UIShareButton*)buy:(CGRect)frame;

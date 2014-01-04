@@ -80,6 +80,15 @@
     return button;
 }
 
++ (UIShareButton*)linecamera:(CGRect)frame
+{
+    UIShareButton* button = [[UIShareButton alloc] initWithFrame:frame];
+    [button setLineColor];
+    [button setFont];
+    [button.titleLabel setShadowOffset:CGSizeMake(0.0f, 1.0f)];
+    return button;
+}
+
 - (void)setLineColor
 {
     _borderColor = [UIColor colorWithRed:7.0f/255.0f green:129.0f/255.0f blue:0.0f/255.0f alpha:1.00f];

@@ -85,10 +85,7 @@ NSString* const productIdForEffectVivid = @"jp.ssctech.gravy.vivid";
 
 + (BOOL)didPurchaseSunsetEffect
 {
-    if([[UICKeyChainStore stringForKey:keyForPurchasesEffectsSunset] isEqualToString:hashForEffectSunset]){
-        return true;
-    }
-    return false;
+    return true;
 }
 
 + (BOOL)didPurchaseFlareEffect

@@ -82,6 +82,13 @@
     buttonCake.delegate = self;
     [scrollView addSubview:buttonCake];
     
+    // Sunset
+    left += 80.0f;
+    buttonSunset = [[UIEffectSelectionButton alloc] initWithEffectId:EffectIdSunset previewImageBase:effectPreviewImage];
+    [buttonSunset setX:left];
+    buttonSunset.delegate = self;
+    [scrollView addSubview:buttonSunset];
+
     // Bloom
     left += 80.0f;
     buttonBloom = [[UIEffectSelectionButton alloc] initWithEffectId:EffectIdBloom previewImageBase:effectPreviewImage];
@@ -109,14 +116,7 @@
     [buttonVintage setX:left];
     buttonVintage.delegate = self;
     [scrollView addSubview:buttonVintage];
-    
-    // Sunset
-    left += 80.0f;
-    buttonSunset = [[UIEffectSelectionButton alloc] initWithEffectId:EffectIdSunset previewImageBase:effectPreviewImage];
-    [buttonSunset setX:left];
-    buttonSunset.delegate = self;
-    [scrollView addSubview:buttonSunset];
-}
+    }
 
 - (void)buttonPressed:(UIEffectSelectionButton *)button
 {
