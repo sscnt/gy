@@ -131,11 +131,11 @@
         
     [scrollView addSubview:wrapper];
     
-    
+    /*
     GPUEffectFilmLightLeak* effect = [[GPUEffectFilmLightLeak alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
-     
+     */
 }
 
 - (void)layoutWhiteBalanceEditor
@@ -1023,11 +1023,11 @@
         }
         
         
-        
+        /*
         GPUEffectFilmLightLeak* effect = [[GPUEffectFilmLightLeak alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
-        
+        */
         
         UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil);
         

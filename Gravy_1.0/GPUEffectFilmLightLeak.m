@@ -82,7 +82,7 @@
     // Brightness
     @autoreleasepool {
         GPUImageBrightnessFilter* brightnessFilter = [[GPUImageBrightnessFilter alloc] init];
-        brightnessFilter.brightness = 0.10f;
+        brightnessFilter.brightness = 0.14f;
         
         resultImage = [self mergeBaseImage:resultImage overlayFilter:brightnessFilter opacity:1.0f blendingMode:MergeBlendingModeNormal];
     }

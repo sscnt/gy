@@ -640,7 +640,7 @@
         self.effectedLeftBottomImage = [effect process];
     }
     @autoreleasepool {
-        GPUEffectSoftGlare* effect = [[GPUEffectSoftGlare alloc] init];
+        GPUEffectFilmLightLeak* effect = [[GPUEffectFilmLightLeak alloc] init];
         effect.imageToProcess = self.appliedImageSaturation;
         self.effectedLeftTopImage = [effect process];
     }
@@ -674,7 +674,7 @@
     
     if(self.weightLeftTop > 0.0f){
         @autoreleasepool {
-            GPUEffectSoftGlare* effect = [[GPUEffectSoftGlare alloc] init];
+            GPUEffectFilmLightLeak* effect = [[GPUEffectFilmLightLeak alloc] init];
             effect.imageToProcess = inputImage;
             GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
             GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];
