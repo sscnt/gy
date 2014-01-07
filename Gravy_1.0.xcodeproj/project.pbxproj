@@ -145,6 +145,8 @@
 		58F471BE180E7AFF00C64E46 /* icon_next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471BC180E7AFF00C64E46 /* icon_next@2x.png */; };
 		58F471C1180E7B0500C64E46 /* icon_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471BF180E7B0500C64E46 /* icon_back.png */; };
 		58F471C2180E7B0500C64E46 /* icon_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F471C0180E7B0500C64E46 /* icon_back@2x.png */; };
+		58F520C8187BDD0500C7D282 /* SoftGlare1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F520C7187BDD0500C7D282 /* SoftGlare1.acv */; };
+		58F520CC187BE42600C7D282 /* GPUEffectFilmLightLeak.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F520CB187BE42600C7D282 /* GPUEffectFilmLightLeak.m */; };
 		58F5A89E184A1EB800E4FBEF /* GPUEffectJoyful.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F5A89D184A1EB800E4FBEF /* GPUEffectJoyful.m */; };
 		58F5A8A1184A1F3600E4FBEF /* Joyful1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F5A8A0184A1F3600E4FBEF /* Joyful1.acv */; };
 		58F5A8A3184A236700E4FBEF /* Joyful2.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F5A8A2184A236700E4FBEF /* Joyful2.acv */; };
@@ -429,6 +431,9 @@
 		58F471BC180E7AFF00C64E46 /* icon_next@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_next@2x.png"; sourceTree = "<group>"; };
 		58F471BF180E7B0500C64E46 /* icon_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_back.png; sourceTree = "<group>"; };
 		58F471C0180E7B0500C64E46 /* icon_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_back@2x.png"; sourceTree = "<group>"; };
+		58F520C7187BDD0500C7D282 /* SoftGlare1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = SoftGlare1.acv; sourceTree = "<group>"; };
+		58F520CA187BE42600C7D282 /* GPUEffectFilmLightLeak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectFilmLightLeak.h; sourceTree = "<group>"; };
+		58F520CB187BE42600C7D282 /* GPUEffectFilmLightLeak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectFilmLightLeak.m; sourceTree = "<group>"; };
 		58F5A89C184A1EB800E4FBEF /* GPUEffectJoyful.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectJoyful.h; sourceTree = "<group>"; };
 		58F5A89D184A1EB800E4FBEF /* GPUEffectJoyful.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectJoyful.m; sourceTree = "<group>"; };
 		58F5A8A0184A1F3600E4FBEF /* Joyful1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Joyful1.acv; sourceTree = "<group>"; };
@@ -603,6 +608,7 @@
 		5800D3B2185D4425009383B9 /* Flare */ = {
 			isa = PBXGroup;
 			children = (
+				58F520C9187BE3D700C7D282 /* File Light Leak */,
 				58EDEC2B185D823E004C25BD /* Mystic Glow */,
 				58EDEC24185D75A4004C25BD /* LeakLight */,
 				58EDEC1A185D5B70004C25BD /* Sunkissed */,
@@ -624,6 +630,7 @@
 		5800D3BA185D4552009383B9 /* Curves */ = {
 			isa = PBXGroup;
 			children = (
+				58F520C7187BDD0500C7D282 /* SoftGlare1.acv */,
 			);
 			name = Curves;
 			sourceTree = "<group>";
@@ -1312,6 +1319,15 @@
 			name = Curves;
 			sourceTree = "<group>";
 		};
+		58F520C9187BE3D700C7D282 /* File Light Leak */ = {
+			isa = PBXGroup;
+			children = (
+				58F520CA187BE42600C7D282 /* GPUEffectFilmLightLeak.h */,
+				58F520CB187BE42600C7D282 /* GPUEffectFilmLightLeak.m */,
+			);
+			name = "File Light Leak";
+			sourceTree = "<group>";
+		};
 		58F5A898184A1EA000E4FBEF /* Joyful */ = {
 			isa = PBXGroup;
 			children = (
@@ -1797,6 +1813,7 @@
 				58FBAB731849E2ED00F74156 /* WarmAutumn2.acv in Resources */,
 				58916503184B026A007FCD5D /* FaerieBloom5.acv in Resources */,
 				58FBA5401840AF1400AF186F /* Vintage11.acv in Resources */,
+				58F520C8187BDD0500C7D282 /* SoftGlare1.acv in Resources */,
 				5802E7F8180C0F8500AA2227 /* Default.png in Resources */,
 				580032AF180D275F0021F73C /* icon_camera.png in Resources */,
 				58FBB40118155FB4001CFDC8 /* slider.png in Resources */,
@@ -1889,6 +1906,7 @@
 				58F92BAE1840C7F500A4EDBE /* GPUEffectVintage2.m in Sources */,
 				58EDEC5E185DAF35004C25BD /* GPUEffectPinkBubbleTea.m in Sources */,
 				58EDEC52185DA2D3004C25BD /* GPUEffectSunsetCarnevale.m in Sources */,
+				58F520CC187BE42600C7D282 /* GPUEffectFilmLightLeak.m in Sources */,
 				580032C3180D34490021F73C /* UISettingsButton.m in Sources */,
 				5800D3B9185D450A009383B9 /* GPUEffectSoftGlare.m in Sources */,
 				58FBB40518155FE4001CFDC8 /* UIDockButtonSave.m in Sources */,
@@ -2105,7 +2123,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D53FC610-D74E-487D-85F0-DA60ACD3208A";
+				PROVISIONING_PROFILE = "6E52E7D2-A905-4F86-AEB7-B51ACFFD43EE";
 				USER_HEADER_SEARCH_PATHS = "./GPUImage/framework/Source/**";
 				WRAPPER_EXTENSION = app;
 			};

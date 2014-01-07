@@ -131,11 +131,11 @@
         
     [scrollView addSubview:wrapper];
     
-    /*
-    GPUEffectMarshmallow* effect = [[GPUEffectMarshmallow alloc] init];
+    
+    GPUEffectFilmLightLeak* effect = [[GPUEffectFilmLightLeak alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
-     */
+     
 }
 
 - (void)layoutWhiteBalanceEditor
@@ -1022,13 +1022,13 @@
             }
         }
         
-        /*
         
-        GPUEffectMarshmallow* effect = [[GPUEffectMarshmallow alloc] init];
+        
+        GPUEffectFilmLightLeak* effect = [[GPUEffectFilmLightLeak alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
         
-        */
+        
         UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil);
         
         

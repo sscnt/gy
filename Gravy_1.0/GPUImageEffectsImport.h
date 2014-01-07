@@ -24,6 +24,7 @@
 #import "GPUEffectSunkissed.h"
 #import "GPUEffectLeakLight.h"
 #import "GPUEffectMysticGlow.h"
+#import "GPUEffectFilmLightLeak.h"
 
 #import "GPUEffectVividVintage.h"
 #import "GPUEffectCavalleriaRusticana.h"
