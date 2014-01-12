@@ -16,6 +16,7 @@
 #import "GPUEffectMysticGlow.h"
 #import "GPUEffectVividVintage.h"
 #import "GPUEffectMarshmallow.h"
+#import "GPUEffectMiami.h"
 
 @class UIEffectSelectionButton;
 @protocol UIEffectSelectionButtonDelegate <NSObject>

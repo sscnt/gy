@@ -153,3 +153,5 @@
 #import "GPUImageLaplacianFilter.h"
 #import "GPUImageiOSBlurFilter.h"
 #import "GPUImageLuminanceRangeFilter.h"
+#import "GPUKelvinFilter.h"
+#import "GPUPhotoFilter.h"

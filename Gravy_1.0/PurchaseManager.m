@@ -67,6 +67,11 @@ NSString* const productIdForEffectVivid = @"jp.ssctech.gravy.vivid";
     return true;
 }
 
++ (BOOL)didPurchaseSummerEffect
+{
+    return true;
+}
+
 + (BOOL)didPurchaseBloomEffect
 {
     if([[UICKeyChainStore stringForKey:keyForPurchasesEffectsBloom] isEqualToString:hashForEffectBloom]){
@@ -127,6 +132,10 @@ NSString* const productIdForEffectVivid = @"jp.ssctech.gravy.vivid";
     if(effectId == EffectIdVivid){
         return [PurchaseManager didPurchaseVividEffect];
     }
+    if(effectId == EffectIdSummer){
+        return [PurchaseManager didPurchaseSummerEffect];
+    }
+
     return NO;
 }
 
@@ -137,9 +146,6 @@ NSString* const productIdForEffectVivid = @"jp.ssctech.gravy.vivid";
     }
     if([productId isEqualToString:productIdForEffectVintage]){
         return EffectIdVintage;
-    }
-    if([productId isEqualToString:productIdForEffectSunset]){
-        return EffectIdSunset;
     }
     if([productId isEqualToString:productIdForEffectFlare]){
         return EffectIdFlare;

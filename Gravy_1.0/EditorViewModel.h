@@ -100,5 +100,7 @@ typedef NS_ENUM(NSInteger, EditorViewState){
 - (UIImage*)executeEffectFlareWithWeight:(UIImage*)inputImage;
 - (void)applyEffectVivid;
 - (UIImage*)executeEffectVividWithWeight:(UIImage*)inputImage;
+- (void)applyEffectSummer;
+- (UIImage*)executeEffectSummerWithWeight:(UIImage*)inputImage;
 
 @end

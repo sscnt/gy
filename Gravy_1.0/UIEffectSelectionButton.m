@@ -142,6 +142,14 @@
         previewImageView.image = [effect process];
         return;
     }
+    
+    if(self.effectId == EffectIdSummer){
+        GPUEffectMiami* effect = [[GPUEffectMiami alloc] init];
+        effect.imageToProcess = baseImage;
+        previewImageView.image = [effect process];
+        return;
+    }
+    
 }
 - (void)setSelected:(BOOL)selected
 {
@@ -176,6 +184,9 @@
     }
     if(effectId == EffectIdSunset){
         return NSLocalizedString(@"Sunset", nil);
+    }
+    if(effectId == EffectIdSummer){
+        return NSLocalizedString(@"Summer", nil);
     }
     if(effectId == EffectIdFlare){
         return NSLocalizedString(@"Flare", nil);

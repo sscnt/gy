@@ -196,6 +196,11 @@
         [self applyEffectVivid];
         return;
     }
+    
+    if(self.currentSelectedEffectId == EffectIdSummer){
+        [self applyEffectSummer];
+        return;
+    }
 }
 
 - (void)adjustCurrentSelectedEffect
@@ -272,6 +277,10 @@
     
     if(self.currentSelectedEffectId == EffectIdVivid){
         return [self executeEffectVividWithWeight:inputImage];
+    }
+    
+    if(self.currentSelectedEffectId == EffectIdSummer){
+        return [self executeEffectSummerWithWeight:inputImage];
     }
     return nil;
 }
@@ -777,6 +786,78 @@
     return resultImage;
 }
 
+
+- (void)applyEffectSummer
+{
+    @autoreleasepool {
+        GPUEffectMiami* effect = [[GPUEffectMiami alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedLeftBottomImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectGirder* effect = [[GPUEffectGirder alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedLeftTopImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectSummers* effect = [[GPUEffectSummers alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedRightBottomImage = [effect process];
+    }
+    @autoreleasepool {
+        GPUEffectCavalleriaRusticana* effect = [[GPUEffectCavalleriaRusticana alloc] init];
+        effect.imageToProcess = self.appliedImageSaturation;
+        self.effectedRightTopImage = [effect process];
+    }
+}
+
+
+- (UIImage*)executeEffectSummerWithWeight:(UIImage *)inputImage
+{
+    
+    UIImage* resultImage = inputImage;
+    
+    if(self.weightLeftBottom > 0.0f){
+        @autoreleasepool {
+            GPUEffectMiami* effect = [[GPUEffectMiami alloc] init];
+            effect.imageToProcess = inputImage;
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftBottom];
+        }
+    }
+    
+    if(self.weightLeftTop > 0.0f){
+        @autoreleasepool {
+            GPUEffectGirder* effect = [[GPUEffectGirder alloc] init];
+            effect.imageToProcess = inputImage;
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightLeftTop];
+        }
+    }
+    
+    if(self.weightRightBottom > 0.0f){
+        @autoreleasepool {
+            GPUEffectSummers* effect = [[GPUEffectSummers alloc] init];
+            effect.imageToProcess = inputImage;
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightBottom];
+        }
+    }
+    
+    if(self.weightRightTop > 0.0f){
+        @autoreleasepool {
+            GPUEffectCavalleriaRusticana* effect = [[GPUEffectCavalleriaRusticana alloc] init];
+            effect.imageToProcess = inputImage;
+            GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
+            GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];
+            resultImage = [self merge2pictureBase:base overlay:overlay opacity:self.weightRightTop];
+        }
+    }
+    return resultImage;
+}
 
 
 

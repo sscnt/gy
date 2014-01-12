@@ -16,7 +16,7 @@
     self = [super initWithFrame:frame];
     if(self){
         scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen screenSize].width, frame.size.height)];
-        scrollView.contentSize = CGSizeMake(frame.size.width + 450.0f, frame.size.height);
+        scrollView.contentSize = CGSizeMake(frame.size.width + 530.0f, frame.size.height);
         scrollView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
         scrollView.showsHorizontalScrollIndicator = NO;
         scrollView.showsVerticalScrollIndicator = NO;
@@ -88,6 +88,13 @@
     [buttonSunset setX:left];
     buttonSunset.delegate = self;
     [scrollView addSubview:buttonSunset];
+    
+    // Summer
+    left += 80.0f;
+    buttonSummer = [[UIEffectSelectionButton alloc] initWithEffectId:EffectIdSummer previewImageBase:effectPreviewImage];
+    [buttonSummer setX:left];
+    buttonSummer.delegate = self;
+    [scrollView addSubview:buttonSummer];
 
     // Bloom
     left += 80.0f;
@@ -134,6 +141,7 @@
     buttonVivid.selected = NO;
     buttonVintage.selected = NO;
     buttonSunset.selected = NO;
+    buttonSummer.selected = NO;
     
     if(effectId == EffectIdNone){
         buttonNone.selected = YES;
@@ -167,6 +175,10 @@
         buttonSunset.selected = YES;
         return;
     }
+    if(effectId == EffectIdSummer){
+        buttonSummer.selected = YES;
+        return;
+    }
 
 }
 
@@ -177,12 +189,6 @@
     }
     if(effectId == EffectIdVintage){
         [buttonVintage unlock];return;
-    }
-    if(effectId == EffectIdVintage){
-        [buttonVintage unlock];return;
-    }
-    if(effectId == EffectIdSunset){
-        [buttonSunset unlock];return;
     }
     if(effectId == EffectIdFlare){
         [buttonFlare unlock];return;
