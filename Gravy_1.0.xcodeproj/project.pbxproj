@@ -93,6 +93,11 @@
 		58EDEC6A185DB388004C25BD /* FaerieVintage1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58EDEC69185DB388004C25BD /* FaerieVintage1.acv */; };
 		58EE66DA18823CD200FEECA3 /* Miami2.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58EE66D918823CD100FEECA3 /* Miami2.acv */; };
 		58EE66DF18823DFF00FEECA3 /* Miami3.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58EE66DE18823DFF00FEECA3 /* Miami3.acv */; };
+		58EE66E318823F6F00FEECA3 /* GPUEffectSummers.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EE66E218823F6F00FEECA3 /* GPUEffectSummers.m */; };
+		58EE66E61882408500FEECA3 /* Summers1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58EE66E51882408500FEECA3 /* Summers1.acv */; };
+		58EE66E8188240D100FEECA3 /* Summers2.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58EE66E7188240D100FEECA3 /* Summers2.acv */; };
+		58EE66EA188241AF00FEECA3 /* Summers3.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58EE66E9188241AF00FEECA3 /* Summers3.acv */; };
+		58EE66EE188242DF00FEECA3 /* Summers4.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58EE66ED188242DF00FEECA3 /* Summers4.acv */; };
 		58EEE5F41820D740008C4B2A /* icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 58EEE5E71820D740008C4B2A /* icon-29.png */; };
 		58EEE5F51820D740008C4B2A /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 58EEE5E81820D740008C4B2A /* icon-40.png */; };
 		58EEE5F61820D740008C4B2A /* icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 58EEE5E91820D740008C4B2A /* icon-50.png */; };
@@ -110,6 +115,7 @@
 		58F0271C181A8B6600938725 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F0271A181A8B6600938725 /* SVProgressHUD.m */; };
 		58F14A51182BB484009DA863 /* GPUImageSelectiveColorFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F14A50182BB484009DA863 /* GPUImageSelectiveColorFilter.m */; };
 		58F1B0481859D23E00C88724 /* buy_test@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F1B0471859D23E00C88724 /* buy_test@2x.png */; };
+		58F2577818825D780054FF18 /* Summers5.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F2577718825D780054FF18 /* Summers5.acv */; };
 		58F2A272183F883700C96E59 /* GPUEffectHazelnut.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F2A271183F883700C96E59 /* GPUEffectHazelnut.m */; };
 		58F2A277183F88E200C96E59 /* Hazelnut1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F2A275183F88E200C96E59 /* Hazelnut1.acv */; };
 		58F2A278183F88E200C96E59 /* Hazelnut2.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F2A276183F88E200C96E59 /* Hazelnut2.acv */; };
@@ -369,6 +375,12 @@
 		58EDEC69185DB388004C25BD /* FaerieVintage1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = FaerieVintage1.acv; sourceTree = "<group>"; };
 		58EE66D918823CD100FEECA3 /* Miami2.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Miami2.acv; sourceTree = "<group>"; };
 		58EE66DE18823DFF00FEECA3 /* Miami3.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Miami3.acv; sourceTree = "<group>"; };
+		58EE66E118823F6F00FEECA3 /* GPUEffectSummers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectSummers.h; sourceTree = "<group>"; };
+		58EE66E218823F6F00FEECA3 /* GPUEffectSummers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectSummers.m; sourceTree = "<group>"; };
+		58EE66E51882408500FEECA3 /* Summers1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Summers1.acv; sourceTree = "<group>"; };
+		58EE66E7188240D100FEECA3 /* Summers2.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Summers2.acv; sourceTree = "<group>"; };
+		58EE66E9188241AF00FEECA3 /* Summers3.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Summers3.acv; sourceTree = "<group>"; };
+		58EE66ED188242DF00FEECA3 /* Summers4.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Summers4.acv; sourceTree = "<group>"; };
 		58EEE5E71820D740008C4B2A /* icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-29.png"; sourceTree = "<group>"; };
 		58EEE5E81820D740008C4B2A /* icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40.png"; sourceTree = "<group>"; };
 		58EEE5E91820D740008C4B2A /* icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-50.png"; sourceTree = "<group>"; };
@@ -388,6 +400,7 @@
 		58F14A4F182BB484009DA863 /* GPUImageSelectiveColorFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageSelectiveColorFilter.h; sourceTree = "<group>"; };
 		58F14A50182BB484009DA863 /* GPUImageSelectiveColorFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageSelectiveColorFilter.m; sourceTree = "<group>"; };
 		58F1B0471859D23E00C88724 /* buy_test@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buy_test@2x.png"; sourceTree = "<group>"; };
+		58F2577718825D780054FF18 /* Summers5.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Summers5.acv; sourceTree = "<group>"; };
 		58F2A270183F883700C96E59 /* GPUEffectHazelnut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectHazelnut.h; sourceTree = "<group>"; };
 		58F2A271183F883700C96E59 /* GPUEffectHazelnut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectHazelnut.m; sourceTree = "<group>"; };
 		58F2A275183F88E200C96E59 /* Hazelnut1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Hazelnut1.acv; sourceTree = "<group>"; };
@@ -949,6 +962,7 @@
 		58E02DDC18822EEC005B2819 /* Summer */ = {
 			isa = PBXGroup;
 			children = (
+				58EE66E018823F5500FEECA3 /* Summers */,
 				58E02DE018822EFA005B2819 /* Miami */,
 			);
 			name = Summer;
@@ -1156,6 +1170,28 @@
 			children = (
 				58EDEC69185DB388004C25BD /* FaerieVintage1.acv */,
 				5816D612185DCC970007FCCE /* FaerieVintage2.acv */,
+			);
+			name = Curves;
+			sourceTree = "<group>";
+		};
+		58EE66E018823F5500FEECA3 /* Summers */ = {
+			isa = PBXGroup;
+			children = (
+				58EE66E41882407700FEECA3 /* Curves */,
+				58EE66E118823F6F00FEECA3 /* GPUEffectSummers.h */,
+				58EE66E218823F6F00FEECA3 /* GPUEffectSummers.m */,
+			);
+			name = Summers;
+			sourceTree = "<group>";
+		};
+		58EE66E41882407700FEECA3 /* Curves */ = {
+			isa = PBXGroup;
+			children = (
+				58F2577718825D780054FF18 /* Summers5.acv */,
+				58EE66ED188242DF00FEECA3 /* Summers4.acv */,
+				58EE66E9188241AF00FEECA3 /* Summers3.acv */,
+				58EE66E7188240D100FEECA3 /* Summers2.acv */,
+				58EE66E51882408500FEECA3 /* Summers1.acv */,
 			);
 			name = Curves;
 			sourceTree = "<group>";
@@ -1769,6 +1805,7 @@
 				589164FA184AE705007FCD5D /* FaerieBloom2.acv in Resources */,
 				58EEE5F41820D740008C4B2A /* icon-29.png in Resources */,
 				58F471A5180E5D7800C64E46 /* bottomEditorBg.png in Resources */,
+				58EE66EE188242DF00FEECA3 /* Summers4.acv in Resources */,
 				58F5A8A1184A1F3600E4FBEF /* Joyful1.acv in Resources */,
 				58F2BAE41858A07400DFAB7B /* libon_test3@2x.png in Resources */,
 				58F3D001184DB2AF0042C96C /* CreamyNoon2.acv in Resources */,
@@ -1800,6 +1837,7 @@
 				58F3D00C184DDC880042C96C /* GentleMemories1.acv in Resources */,
 				58EEE5F81820D740008C4B2A /* icon-58.png in Resources */,
 				58F3C6D3184E075600F51A3D /* GentleMemories3.acv in Resources */,
+				58EE66EA188241AF00FEECA3 /* Summers3.acv in Resources */,
 				58F3C6D1184E052400F51A3D /* GentleMemories2.acv in Resources */,
 				580055DD18547CE200979CDC /* demo_str@2x.png in Resources */,
 				5802E7F7180C0F8500AA2227 /* Default-568h@2x.png in Resources */,
@@ -1816,12 +1854,14 @@
 				58F31AAA1838FCD300122C65 /* VintageFilm.acv in Resources */,
 				5816D624185DCF810007FCCE /* Marshmallow1.acv in Resources */,
 				58F92BB21840D33100A4EDBE /* Vintage21.acv in Resources */,
+				58F2577818825D780054FF18 /* Summers5.acv in Resources */,
 				58EEE5FC1820D740008C4B2A /* icon-100.png in Resources */,
 				58EDEC3C185D955E004C25BD /* VividVintage1.acv in Resources */,
 				58EEE5F61820D740008C4B2A /* icon-50.png in Resources */,
 				58F3D003184DB4320042C96C /* CreamyNoon3.acv in Resources */,
 				58FBA53E1840ADDB00AF186F /* Vintage12.acv in Resources */,
 				58F471C1180E7B0500C64E46 /* icon_back.png in Resources */,
+				58EE66E61882408500FEECA3 /* Summers1.acv in Resources */,
 				58F3C6D5184E07A600F51A3D /* GentleMemories4.acv in Resources */,
 				58EEE5F91820D740008C4B2A /* icon-72.png in Resources */,
 				58EEE5FA1820D740008C4B2A /* icon-76.png in Resources */,
@@ -1837,6 +1877,7 @@
 				58FBB40218155FB4001CFDC8 /* slider@2x.png in Resources */,
 				58EEE5FF1820D740008C4B2A /* icon-144.png in Resources */,
 				58EEE6001820D740008C4B2A /* icon-152.png in Resources */,
+				58EE66E8188240D100FEECA3 /* Summers2.acv in Resources */,
 				58F6CB7C18509BC0006BC6F2 /* SpringLight1.acv in Resources */,
 				58FBAB751849EB9800F74156 /* WarmAutumn3.acv in Resources */,
 				5802E7C9180C0F1400AA2227 /* InfoPlist.strings in Resources */,
@@ -1974,6 +2015,7 @@
 				589164F1184ACB7E007FCD5D /* GPUEffectOldTone.m in Sources */,
 				58EDEC20185D5B97004C25BD /* GPUEffectSunkissed.m in Sources */,
 				5816D621185DCF590007FCCE /* GPUEffectMarshmallow.m in Sources */,
+				58EE66E318823F6F00FEECA3 /* GPUEffectSummers.m in Sources */,
 				58F82C05185C84F400012552 /* UICloseButton.m in Sources */,
 				58F3C6CC184DFE1C00F51A3D /* GPUImageLinearDodgeBlendFilter.m in Sources */,
 				58F9FD6A182330CB003D32F4 /* GPUEffectHaze3.m in Sources */,

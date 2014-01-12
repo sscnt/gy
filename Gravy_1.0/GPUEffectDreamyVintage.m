@@ -33,8 +33,8 @@
     // Gradient Map
     @autoreleasepool {
         GPUImageGradientMapFilter* gradientMap = [[GPUImageGradientMapFilter alloc] init];
-        [gradientMap addColorRed:111.0f Green:21.0f Blue:108.0f Opacity:1.0f Location:0 Midpoint:50];
-        [gradientMap addColorRed:253.0f Green:124.0f Blue:0.0f Opacity:1.0f Location:4096 Midpoint:50];
+        [gradientMap addColorRed:111.0f Green:21.0f Blue:108.0f Opacity:100.0f Location:0 Midpoint:50];
+        [gradientMap addColorRed:253.0f Green:124.0f Blue:0.0f Opacity:100.0f Location:4096 Midpoint:50];
         
         resultImage = [self mergeBaseImage:resultImage overlayFilter:gradientMap opacity:1.0f blendingMode:MergeBlendingModeSoftLight];
     }

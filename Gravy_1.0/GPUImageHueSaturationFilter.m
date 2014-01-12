@@ -265,7 +265,7 @@ NSString *const kGPUImageHueSaturationFilterFragmentShaderString = SHADER_STRING
 - (void)setSaturation:(float)saturation
 {
     _saturation = saturation / 100.0f;
-    _saturation = MAX(0.0f, MIN(1.0f, _saturation));
+    _saturation = MAX(-1.0f, MIN(1.0f, _saturation));
     [self setFloat:_saturation forUniform:saturationUniform program:filterProgram];
 }
 

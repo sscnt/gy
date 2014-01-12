@@ -37,3 +37,4 @@
 #import "GPUEffectMarshmallow.h"
 
 #import "GPUEffectMiami.h"
+#import "GPUEffectSummers.h"

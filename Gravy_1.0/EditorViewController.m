@@ -132,7 +132,7 @@
     [scrollView addSubview:wrapper];
     
     
-    GPUEffectMiami* effect = [[GPUEffectMiami alloc] init];
+    GPUEffectSummers* effect = [[GPUEffectSummers alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
     
@@ -1024,7 +1024,7 @@
         
         
         
-        GPUEffectMiami* effect = [[GPUEffectMiami alloc] init];
+        GPUEffectSummers* effect = [[GPUEffectSummers alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
         
