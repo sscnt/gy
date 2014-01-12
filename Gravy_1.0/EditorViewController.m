@@ -132,7 +132,7 @@
     [scrollView addSubview:wrapper];
     
     
-    GPUEffectGirder* effect = [[GPUEffectGirder alloc] init];
+    GPUEffectSummerVacation* effect = [[GPUEffectSummerVacation alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
     
@@ -1024,7 +1024,7 @@
         
         
         
-        GPUEffectGirder* effect = [[GPUEffectGirder alloc] init];
+        GPUEffectSummerVacation* effect = [[GPUEffectSummerVacation alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
         

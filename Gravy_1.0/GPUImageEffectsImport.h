@@ -39,3 +39,4 @@
 #import "GPUEffectMiami.h"
 #import "GPUEffectSummers.h"
 #import "GPUEffectGirder.h"
+#import "GPUEffectSummerVacation.h"

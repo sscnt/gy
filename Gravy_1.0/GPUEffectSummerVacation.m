@@ -7,11 +7,94 @@
 //
 
 #import "GPUEffectSummerVacation.h"
+#import "GPUAdjustmentsSaturation.h"
 
 @implementation GPUEffectSummerVacation
 - (UIImage*)process
 {
     UIImage* resultImage = self.imageToProcess;
+    
+    
+    // Curve
+    @autoreleasepool {
+        GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"SummerVacation1"];
+        
+        resultImage = [self mergeBaseImage:resultImage overlayFilter:curveFilter opacity:1.0f blendingMode:MergeBlendingModeNormal];
+    }
+    
+    
+    // Vibrance
+    @autoreleasepool {
+        GPUAdjustmentsSaturation* saturationFilter = [[GPUAdjustmentsSaturation alloc] init];
+        saturationFilter.saturation = 0.5f;
+        
+        resultImage = [self mergeBaseImage:resultImage overlayFilter:saturationFilter opacity:1.0f blendingMode:MergeBlendingModeNormal];
+    }
+    
+    // Selective Color
+    @autoreleasepool {
+        GPUImageSelectiveColorFilter* selectiveColor = [[GPUImageSelectiveColorFilter alloc] init];
+        [selectiveColor setRedsCyan:-31 Magenta:11 Yellow:7 Black:8];
+        [selectiveColor setGreensCyan:8 Magenta:-12 Yellow:29 Black:4];
+        [selectiveColor setCyansCyan:3 Magenta:-16 Yellow:-5 Black:-32];
+        [selectiveColor setNeutralsCyan:4 Magenta:-4 Yellow:5 Black:0];
+        
+        resultImage = [self mergeBaseImage:resultImage overlayFilter:selectiveColor opacity:1.0f blendingMode:MergeBlendingModeNormal];
+    }
+    
+    // Curve
+    @autoreleasepool {
+        GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"SummerVacation2"];
+        
+        resultImage = [self mergeBaseImage:resultImage overlayFilter:curveFilter opacity:1.0f blendingMode:MergeBlendingModeNormal];
+    }
+    
+    
+    // Fill Layer
+    @autoreleasepool {
+        GPUImageGradientColorGenerator* gradientColor = [[GPUImageGradientColorGenerator alloc] init];
+        [gradientColor forceProcessingAtSize:CGSizeMake(resultImage.size.width, resultImage.size.height)];
+        [gradientColor setStyle:GradientStyleLinear];
+        [gradientColor setAngleDegree:-125];
+        [gradientColor setScalePercent:66];
+        [gradientColor setOffsetX:0.0f Y:0.0f];
+        [gradientColor addColorRed:255.0f Green:158.0f Blue:65.0f Opacity:100.0f Location:0 Midpoint:50];
+        [gradientColor addColorRed:251.0f Green:230.0f Blue:180.0f Opacity:100.0f Location:4096 Midpoint:50];
+        
+        resultImage = [self mergeBaseImage:resultImage overlayFilter:gradientColor opacity:0.25f blendingMode:MergeBlendingModeSoftLight];
+    }
+    
+    
+    // Fill Layer
+    @autoreleasepool {
+        GPUImageGradientColorGenerator* gradientColor = [[GPUImageGradientColorGenerator alloc] init];
+        [gradientColor forceProcessingAtSize:CGSizeMake(resultImage.size.width, resultImage.size.height)];
+        [gradientColor setStyle:GradientStyleRadial];
+        [gradientColor setAngleDegree:50.0f];
+        [gradientColor setScalePercent:100];
+        [gradientColor setOffsetX:-30.0f Y:-30.0f];
+        [gradientColor addColorRed:255.0f Green:64.0f Blue:64.0f Opacity:100.0f Location:0 Midpoint:50];
+        [gradientColor addColorRed:251.0f Green:64.0f Blue:64.0f Opacity:0.0f Location:4096 Midpoint:50];
+        
+        resultImage = [self mergeBaseImage:resultImage overlayFilter:gradientColor opacity:0.31f blendingMode:MergeBlendingModeScreen];
+    }
+    
+    // Fill Layer
+    @autoreleasepool {
+        GPUImageGradientColorGenerator* gradientColor = [[GPUImageGradientColorGenerator alloc] init];
+        [gradientColor forceProcessingAtSize:CGSizeMake(resultImage.size.width, resultImage.size.height)];
+        [gradientColor setStyle:GradientStyleLinear];
+        [gradientColor setAngleDegree:-140];
+        [gradientColor setScalePercent:100];
+        [gradientColor setOffsetX:0.0f Y:0.0f];
+        [gradientColor addColorRed:241.0f Green:252.0f Blue:120.0f Opacity:100.0f Location:0 Midpoint:50];
+        [gradientColor addColorRed:241.0f Green:252.0f Blue:120.0f Opacity:0.0f Location:4096 Midpoint:50];
+        
+        resultImage = [self mergeBaseImage:resultImage overlayFilter:gradientColor opacity:0.12f blendingMode:MergeBlendingModeScreen];
+    }
+
+    
+    return resultImage;
     
     // Paind Daubs
     @autoreleasepool {
@@ -21,12 +104,6 @@
     }
     
     
-    // Curve
-    @autoreleasepool {
-        GPUImageToneCurveFilter* curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"Girder1"];
-        
-        resultImage = [self mergeBaseImage:resultImage overlayFilter:curveFilter opacity:1.0f blendingMode:MergeBlendingModeNormal];
-    }
     
     // Hue / Saturation
     @autoreleasepool {

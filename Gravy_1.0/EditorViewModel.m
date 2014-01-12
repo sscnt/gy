@@ -805,7 +805,7 @@
         self.effectedRightBottomImage = [effect process];
     }
     @autoreleasepool {
-        GPUEffectCavalleriaRusticana* effect = [[GPUEffectCavalleriaRusticana alloc] init];
+        GPUEffectSummerVacation* effect = [[GPUEffectSummerVacation alloc] init];
         effect.imageToProcess = self.appliedImageSaturation;
         self.effectedRightTopImage = [effect process];
     }
@@ -849,7 +849,7 @@
     
     if(self.weightRightTop > 0.0f){
         @autoreleasepool {
-            GPUEffectCavalleriaRusticana* effect = [[GPUEffectCavalleriaRusticana alloc] init];
+            GPUEffectSummerVacation* effect = [[GPUEffectSummerVacation alloc] init];
             effect.imageToProcess = inputImage;
             GPUImagePicture* base = [[GPUImagePicture alloc] initWithImage:resultImage];
             GPUImagePicture* overlay = [[GPUImagePicture alloc] initWithImage:[effect process]];

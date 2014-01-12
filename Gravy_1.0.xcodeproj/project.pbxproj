@@ -124,6 +124,8 @@
 		58F2578C18828C9C0054FF18 /* Girder3.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F2578B18828C9C0054FF18 /* Girder3.acv */; };
 		58F2578E18828DE10054FF18 /* Girder4.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F2578D18828DE10054FF18 /* Girder4.acv */; };
 		58F257921882939E0054FF18 /* GPUEffectSummerVacation.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F257911882939E0054FF18 /* GPUEffectSummerVacation.m */; };
+		58F25795188295100054FF18 /* SummerVacation1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F25794188295100054FF18 /* SummerVacation1.acv */; };
+		58F25797188297020054FF18 /* SummerVacation2.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F25796188297020054FF18 /* SummerVacation2.acv */; };
 		58F2A272183F883700C96E59 /* GPUEffectHazelnut.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F2A271183F883700C96E59 /* GPUEffectHazelnut.m */; };
 		58F2A277183F88E200C96E59 /* Hazelnut1.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F2A275183F88E200C96E59 /* Hazelnut1.acv */; };
 		58F2A278183F88E200C96E59 /* Hazelnut2.acv in Resources */ = {isa = PBXBuildFile; fileRef = 58F2A276183F88E200C96E59 /* Hazelnut2.acv */; };
@@ -421,6 +423,8 @@
 		58F2578D18828DE10054FF18 /* Girder4.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Girder4.acv; sourceTree = "<group>"; };
 		58F257901882939E0054FF18 /* GPUEffectSummerVacation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectSummerVacation.h; sourceTree = "<group>"; };
 		58F257911882939E0054FF18 /* GPUEffectSummerVacation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectSummerVacation.m; sourceTree = "<group>"; };
+		58F25794188295100054FF18 /* SummerVacation1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = SummerVacation1.acv; sourceTree = "<group>"; };
+		58F25796188297020054FF18 /* SummerVacation2.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = SummerVacation2.acv; sourceTree = "<group>"; };
 		58F2A270183F883700C96E59 /* GPUEffectHazelnut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUEffectHazelnut.h; sourceTree = "<group>"; };
 		58F2A271183F883700C96E59 /* GPUEffectHazelnut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUEffectHazelnut.m; sourceTree = "<group>"; };
 		58F2A275183F88E200C96E59 /* Hazelnut1.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = Hazelnut1.acv; sourceTree = "<group>"; };
@@ -1271,10 +1275,20 @@
 		58F2578F188293870054FF18 /* Summer Vacation */ = {
 			isa = PBXGroup;
 			children = (
+				58F25793188294F30054FF18 /* Curves */,
 				58F257901882939E0054FF18 /* GPUEffectSummerVacation.h */,
 				58F257911882939E0054FF18 /* GPUEffectSummerVacation.m */,
 			);
 			name = "Summer Vacation";
+			sourceTree = "<group>";
+		};
+		58F25793188294F30054FF18 /* Curves */ = {
+			isa = PBXGroup;
+			children = (
+				58F25796188297020054FF18 /* SummerVacation2.acv */,
+				58F25794188295100054FF18 /* SummerVacation1.acv */,
+			);
+			name = Curves;
 			sourceTree = "<group>";
 		};
 		58F2A26C183F87FB00C96E59 /* Hazelnut */ = {
@@ -1860,6 +1874,7 @@
 				5802E7F9180C0F8500AA2227 /* Default@2x.png in Resources */,
 				589164FA184AE705007FCD5D /* FaerieBloom2.acv in Resources */,
 				58EEE5F41820D740008C4B2A /* icon-29.png in Resources */,
+				58F25797188297020054FF18 /* SummerVacation2.acv in Resources */,
 				58F471A5180E5D7800C64E46 /* bottomEditorBg.png in Resources */,
 				58EE66EE188242DF00FEECA3 /* Summers4.acv in Resources */,
 				58F5A8A1184A1F3600E4FBEF /* Joyful1.acv in Resources */,
@@ -1958,6 +1973,7 @@
 				58F25782188260A80054FF18 /* Girder1.acv in Resources */,
 				580032AF180D275F0021F73C /* icon_camera.png in Resources */,
 				58FBB40118155FB4001CFDC8 /* slider.png in Resources */,
+				58F25795188295100054FF18 /* SummerVacation1.acv in Resources */,
 				58EE66DA18823CD200FEECA3 /* Miami2.acv in Resources */,
 				580032AA180D16FD0021F73C /* rounded-mplus-1p-thin.ttf in Resources */,
 				58F92BB01840CB1600A4EDBE /* Vintage22.acv in Resources */,

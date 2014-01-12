@@ -6,8 +6,9 @@
 //  Copyright (c) 2014年 SSC. All rights reserved.
 //
 
-#import "GPUImageFilter.h"
 
-@interface GPUEffectSummerVacation : GPUImageFilter
+#import "GPUImageEffects.h"
+
+@interface GPUEffectSummerVacation : GPUImageEffects
 
 @end
