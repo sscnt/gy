@@ -131,11 +131,11 @@
         
     [scrollView addSubview:wrapper];
     
-    
+    /*
     GPUEffectSummerVacation* effect = [[GPUEffectSummerVacation alloc] init];
     effect.imageToProcess = editor.originalImageResized;
     levelsImageView.image = [effect process];
-    
+    */
 }
 
 - (void)layoutWhiteBalanceEditor
@@ -843,24 +843,9 @@
     CGImageRef  cgImage = inputImage.CGImage;
     
     // 画像情報を取得する
-    size_t                  width;
-    size_t                  height;
-    size_t                  bitsPerComponent;
-    size_t                  bitsPerPixel;
-    size_t                  bytesPerRow;
-    CGColorSpaceRef         colorSpace;
-    CGBitmapInfo            bitmapInfo;
-    bool                    shouldInterpolate;
-    CGColorRenderingIntent  intent;
-    width = CGImageGetWidth(cgImage);
-    height = CGImageGetHeight(cgImage);
-    bitsPerComponent = CGImageGetBitsPerComponent(cgImage);
-    bitsPerPixel = CGImageGetBitsPerPixel(cgImage);
-    bytesPerRow = CGImageGetBytesPerRow(cgImage);
-    colorSpace = CGImageGetColorSpace(cgImage);
-    bitmapInfo = CGImageGetBitmapInfo(cgImage);
-    shouldInterpolate = CGImageGetShouldInterpolate(cgImage);
-    intent = CGImageGetRenderingIntent(cgImage);
+    size_t width = CGImageGetWidth(cgImage);
+    size_t height = CGImageGetHeight(cgImage);
+    size_t bytesPerRow = CGImageGetBytesPerRow(cgImage);
     
     
     // データプロバイダを取得する
@@ -1023,11 +1008,11 @@
         }
         
         
-        
+        /*
         GPUEffectSummerVacation* effect = [[GPUEffectSummerVacation alloc] init];
         effect.imageToProcess = self.originalImage;
         resultImage = [effect process];
-        
+        */
         
         UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil);
         

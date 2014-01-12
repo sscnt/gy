@@ -14,7 +14,6 @@
 - (UIImage*)process
 {
     UIImage* resultImage = self.imageToProcess;
-    UIImage* solidImage;
 
     // Curve
     @autoreleasepool {

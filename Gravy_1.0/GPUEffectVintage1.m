@@ -13,7 +13,6 @@
 - (UIImage*)process
 {
     UIImage* resultImage = self.imageToProcess;
-    UIImage* solidImage;
 
     
     // Fill Layer

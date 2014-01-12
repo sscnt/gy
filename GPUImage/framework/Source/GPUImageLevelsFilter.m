@@ -97,8 +97,8 @@ NSString *const kGPUImageLevelsFragmentShaderString = SHADER_STRING
 #pragma mark Accessors
 
 - (void)setMin:(CGFloat)min gamma:(CGFloat)mid max:(CGFloat)max minOut:(CGFloat)minOut maxOut:(CGFloat)maxOut {
-    CGFloat gamma = (max - min) / 2.0f * (1.0f + (1.0f - mid)) + min;
-    gamma = mid;
+    //CGFloat gamma = (max - min) / 2.0f * (1.0f + (1.0f - mid)) + min;
+    CGFloat gamma = mid;
     [self setRedMin:min gamma:gamma max:max minOut:minOut maxOut:maxOut];
     [self setGreenMin:min gamma:gamma max:max minOut:minOut maxOut:maxOut];
     [self setBlueMin:min gamma:gamma max:max minOut:minOut maxOut:maxOut];
@@ -109,8 +109,8 @@ NSString *const kGPUImageLevelsFragmentShaderString = SHADER_STRING
 }
 
 - (void)setRedMin:(CGFloat)min gamma:(CGFloat)mid max:(CGFloat)max minOut:(CGFloat)minOut maxOut:(CGFloat)maxOut {
-    CGFloat gamma = (max - min) / 2.0f * (1.0f + (1.0f - mid)) + min;
-    gamma = mid;
+    //CGFloat gamma = (max - min) / 2.0f * (1.0f + (1.0f - mid)) + min;
+    CGFloat gamma = mid;
     minVector.one = min;
     midVector.one = gamma;
     maxVector.one = max;
@@ -125,8 +125,8 @@ NSString *const kGPUImageLevelsFragmentShaderString = SHADER_STRING
 }
 
 - (void)setGreenMin:(CGFloat)min gamma:(CGFloat)mid max:(CGFloat)max minOut:(CGFloat)minOut maxOut:(CGFloat)maxOut {
-    CGFloat gamma = (max - min) / 2.0f * (1.0f + (1.0f - mid)) + min;
-    gamma = mid;
+    //CGFloat gamma = (max - min) / 2.0f * (1.0f + (1.0f - mid)) + min;
+    CGFloat gamma = mid;
     minVector.two = min;
     midVector.two = gamma;
     maxVector.two = max;
@@ -141,8 +141,8 @@ NSString *const kGPUImageLevelsFragmentShaderString = SHADER_STRING
 }
 
 - (void)setBlueMin:(CGFloat)min gamma:(CGFloat)mid max:(CGFloat)max minOut:(CGFloat)minOut maxOut:(CGFloat)maxOut {
-    CGFloat gamma = (max - min) / 2.0f * (1.0f + (1.0f - mid)) + min;
-    gamma = mid;
+    //CGFloat gamma = (max - min) / 2.0f * (1.0f + (1.0f - mid)) + min;
+    CGFloat gamma = mid;
     minVector.three = min;
     midVector.three = gamma;
     maxVector.three = max;
